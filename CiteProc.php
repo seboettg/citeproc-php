@@ -1,0 +1,1539 @@
+<?php
+// $Id$
+/**
+ *   CiteProc-PHP
+ *
+ *   Copyright (C) 2010  Ron Jerome, all rights reserved
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+class citeproc {
+  public 		$bibliography;
+  public 		$citation;
+  public 		$style;
+  protected $macros;
+  private 	$info;
+  protected $locale;
+  protected $style_locale;
+  private 	$mapper = NULL;
+
+  function __construct($csl = NULL, $lang = 'en') {
+    if ($csl) {
+      $this->init($csl, $lang);
+    }
+  }
+
+  function init($csl, $lang) {
+
+    // define field values appropriate to your data in the csl_mapper class and un-comment the next line.
+    //$this->mapper = new csl_mapper();
+
+    $csl_doc = new DOMDocument();
+
+    if ($csl_doc->loadXML($csl)) {
+
+      $style_nodes = $csl_doc->getElementsByTagName('style');
+      if ($style_nodes) {
+        foreach ($style_nodes as $style) {
+          $this->style = new csl_style($style);
+        }
+      }
+
+      $info_nodes = $csl_doc->getElementsByTagName('info');
+      if ($info_nodes) {
+        foreach ($info_nodes as $info) {
+          $this->info = new csl_info($info);
+        }
+      }
+
+      $this->locale = new csl_locale($lang);
+      $this->locale->set_style_locale($csl_doc);
+
+
+      $macro_nodes = $csl_doc->getElementsByTagName('macro');
+      if ($macro_nodes) {
+        $this->macros = new csl_macros($macro_nodes, $this);
+      }
+
+      $citation_nodes = $csl_doc->getElementsByTagName('citation');
+      foreach($citation_nodes as $citation) {
+        $this->citation = new csl_citation($citation, $this);
+      }
+
+      $bibliography_nodes = $csl_doc->getElementsByTagName('bibliography');
+      foreach($bibliography_nodes as $bibliography) {
+        $this->bibliography = new csl_bibliography($bibliography, $this);
+      }
+    }
+  }
+  function render($data) {
+    $text = '';
+  //  $text .=  (isset($this->citation))? $this->citation->render($data) : '';
+    $text .=  (isset($this->bibliography))? $this->bibliography->render($data) : '';
+    return $text;
+  }
+
+  function render_macro($name, $data, $mode) {
+    return $this->macros->render($name, $data, $mode);
+  }
+
+  function get_locale($type, $arg1, $arg2 = NULL, $arg3 = NULL) {
+    return $this->locale->get_locale($type, $arg1, $arg2, $arg3);
+  }
+
+  function map_field($field) {
+    if ($this->mapper) {
+      return $this->mapper->map_field($field);
+    }
+    return ($field);
+  }
+  function map_type($field) {
+    if ($this->mapper) {
+      return $this->mapper->map_type($field);
+    }
+    return ($field);
+  }
+}
+
+class csl_factory {
+  public static function create($dom_node, $citeproc = NULL) {
+    $class_name =  'csl_'.str_replace('-', '_', $dom_node->nodeName);
+    if (class_exists($class_name)) {
+      return new $class_name($dom_node, $citeproc);
+    }
+    else {
+      return NULL;
+    }
+  }
+}
+
+class csl_collection {
+  protected  $elements = array();
+
+  function add_element($elem) {
+    $this->elements[] = $elem;
+  }
+
+  function render($data, $mode) {}
+
+  function format($text) {return $text;}
+
+}
+
+class csl_element extends csl_collection {
+  protected $attributes = array();
+  protected $citeproc;
+
+  function __construct($dom_node = NULL, $citeproc = NULL) {
+
+    $this->citeproc   = &$citeproc;
+    $this->attributes = $this->set_attributes($dom_node);
+    $this->init($dom_node, $citeproc);
+
+  }
+
+  function init($dom_node, $citeproc) {
+    if (!$dom_node) return;
+
+    foreach($dom_node->childNodes as $node) {
+      if ($node->nodeType == 1){
+        $this->add_element(csl_factory::create($node, $citeproc));
+      }
+    }
+  }
+
+  function set_attribute($name, $value){
+    $this->attributes[$name] = $value;
+  }
+
+  function set_attributes($dom_node){
+    $att = array();
+    $element_name = $dom_node->nodeName;
+    for($i=0; $i < $dom_node->attributes->length; $i++) {
+      $value = $dom_node->attributes->item($i)->value;
+      $name  = str_replace(' ', '_', $dom_node->attributes->item($i)->name);
+      if ($name == 'type' ) {
+        $value = $this->citeproc->map_type($value);
+      }
+
+      if (($name == 'variable'  || $name == 'is-numeric') && $element_name != 'label') {
+        $value = $this->citeproc->map_field($value);
+      }
+      $att[$name]  = $value;
+    }
+    return $att;
+  }
+
+  function get_attributes($name = NULL) {
+    if ($name) {
+      return (isset($this->attributes[$name])) ? $this->attributes[$name] : NULL;
+    }
+    else {
+      return $this->attributes;
+    }
+  }
+
+  function get_hier_attributes() {
+    $hier_attr = array();
+    $hier_names = array('and', 'delimiter-precedes-last', 'et-al-min', 'et-al-use-first',
+                        'et-al-subsequent-min', 'et-al-subsequent-use-first', 'initialize-with',
+                        'name-as-sort-order', 'sort-separator', 'name-form', 'name-delimiter',
+                        'names-delimiter');
+    foreach ($hier_names as $name) {
+      if(isset($this->attributes[$name])) {
+        $hier_attr[$name] = $this->attributes[$name];
+      }
+    }
+    return $hier_attr;
+  }
+
+  function name($name = NULL) {
+    if($name) {
+      $this->attributes['name'] = $name;
+    }
+    else {
+      return str_replace(' ', '_', $this->attributes['name']);
+    }
+  }
+
+}
+
+class csl_rendering_element extends csl_element {
+
+  function render($data, $mode) {
+    $text = '';
+    $text_parts = array();
+
+    $delim = $this->get_attributes('delimiter');
+    foreach ($this->elements as $element) {
+      $text_parts[] = $element->render($data, $mode);
+    }
+    $text = implode($delim, $text_parts); // insert the delimiter if supplied.
+
+    return $this->format($text);
+  }
+
+}
+
+class csl_format extends csl_rendering_element {
+  protected $no_op;
+  protected $format;
+
+  function __construct($dom_node = NULL, $citeproc = NULL) {
+    parent::__construct($dom_node, $citeproc);
+    $this->init_formatting();
+  }
+
+  function init_formatting() {
+    $this->no_op = TRUE;
+    $this->format  = '';
+    if (isset($this->attributes['quotes'])) {
+      $this->attributes['quotes'] = array();
+      $this->attributes['quotes']['punctuation-in-quote'] = $this->citeproc->get_locale('style_option', 'punctuation-in-quote');
+      $this->attributes['quotes']['open-quote'] = $this->citeproc->get_locale('term', 'open-quote');
+      $this->attributes['quotes']['close-quote'] = $this->citeproc->get_locale('term', 'close-quote');
+      $this->attributes['quotes']['open-inner-quote'] = $this->citeproc->get_locale('term', 'open-inner-quote');
+      $this->attributes['quotes']['close-inner-quote'] = $this->citeproc->get_locale('term', 'close-inner-quote');
+      $this->no_op = FALSE;
+    }
+    if (isset($this->attributes['prefix'])) $this->no_op = FALSE;
+    if (isset($this->attributes['suffix'])) $this->no_op = FALSE;
+    if (isset($this->attributes['display'])) $this->no_op = FALSE;
+
+    $this->format .= (isset($this->attributes['font-style']))      ? 'font-style: '. $this->attributes['font-style'].';' : '';
+    $this->format .= (isset($this->attributes['font-family']))     ? 'font-family: '. $this->attributes['font-family'].';' : '';
+    $this->format .= (isset($this->attributes['font-weight']))     ? 'font-weight: '.    $this->attributes['font-weight'].';' : '';
+    $this->format .= (isset($this->attributes['font-variant']))    ? 'font-variant: '.   $this->attributes['font-variant'].';' : '';
+    $this->format .= (isset($this->attributes['text-decoration'])) ? 'text-decoration: '.$this->attributes['text-decoration'].';' : '';
+    $this->format .= (isset($this->attributes['vertical-align']))  ? 'vertical-align: '. $this->attributes['vertical-align'].';' : '';
+   // $this->format .= (isset($this->attributes['display'])  && $this->attributes['display']  == 'indent')  ? 'padding-left: 25px;' : '';
+
+    if (isset($this->attributes['text-case']) || !empty($this->format)) $this->no_op = FALSE;
+
+  }
+
+  function format($text) {
+
+    if (empty($text) || $this->no_op) return $text;
+    if (isset($this->attributes['text-case'])) {
+      switch ($this->attributes['text-case']) {
+        case 'uppercase':
+          $text = mb_strtoupper($text);
+          break;
+        case 'lowercase':
+          $text = mb_strtolower($text);
+          break;
+        case 'capitalize-all':
+        case 'title':
+          $text = mb_convert_case($text, MB_CASE_TITLE);
+          break;
+        case 'capitalize-first':
+          $text[0] = mb_strtoupper($text[0]);
+          break;
+      }
+    }
+    $open_quote = (isset($this->attributes['quotes']['open-quote'])) ? $this->attributes['quotes']['open-quote'] : '';
+    $close_quote = (isset($this->attributes['quotes']['close-quote'])) ? $this->attributes['quotes']['close-quote'] : '';
+    $prefix = (isset($this->attributes['prefix'])) ? $this->attributes['prefix'] . $open_quote : '' . $open_quote;
+    $suffix = (isset($this->attributes['suffix'])) ? $this->attributes['suffix'] : '';
+    if ($close_quote && !empty($suffix) && $this->attributes['quotes']['punctuation-in-quote']) {
+      if(strpos($suffix, '.') !== FALSE || strpos($suffix, ',') !== FALSE) {
+        $suffix =  $suffix . $close_quote;
+      }
+    }
+    elseif ($close_quote) {
+      $suffix =  $close_quote . $suffix;
+    }
+    elseif (!empty($suffix)) {
+      if ($text[(strlen($text)-1)] == $suffix[0]) $text = substr($text, 0, -1);
+    }
+
+    if (!empty($this->format)) {
+      $text = '<span style="'. $this->format .'">' . $text . '</span>';
+    }
+    if (isset($this->attributes['display'])  && $this->attributes['display']  == 'indent') {
+      return '<div style="text-indent: 0px; padding-left: 45px;">'.$prefix . $text . $suffix . '</div>';
+    }
+
+    return $prefix . $text . $suffix;
+  }
+
+}
+
+class csl_info {
+  public $title;
+  public $id;
+  public $authors = array();
+  public $links = array();
+
+  function __construct($dom_node) {
+    $name = array();
+    foreach($dom_node->childNodes as $node) {
+      if ($node->nodeType == 1){
+        switch ($node->nodeName) {
+          case 'author':
+          case 'contributor':
+            foreach($node->childNodes as $authnode) {
+              if ($node->nodeType == 1)
+                $name[$authnode->nodeName] = $authnode->nodeValue;
+            }
+            $this->authors[] = $name;
+            break;
+          case 'link':
+            foreach($node->attributes as $attribute) {
+              $this->links[] = $attribute->value;
+            }
+            break;
+          default:
+            $this->{$node->nodeName} = $node->nodeValue;
+        }
+      }
+    }
+
+  }
+}
+
+class csl_terms {
+
+}
+
+class csl_name extends csl_format {
+  private $name_parts = array();
+  private $attr_init = FALSE;
+
+  function __construct($dom_node, $citeproc = NULL) {
+
+    $tags = $dom_node->getElementsByTagName('name-part');
+    if($tags) {
+      foreach($tags as $tag) {
+        $name_part = $tag->getAttribute('name');
+        $tag->removeAttribute('name');
+        for($i=0; $i < $tag->attributes->length; $i++) {
+          $value = $tag->attributes->item($i)->value;
+          $name  = str_replace(' ', '_', $tag->attributes->item($i)->name);
+          $this->name_parts[$name_part][$name]  = $value;
+        }
+      }
+    }
+
+    parent::__construct($dom_node, $citeproc);
+  }
+
+  function init_formatting() {
+    $this->no_op = array();
+    $this->format = array();
+    $this->attributes['base'] = $this->get_attributes();
+    $this->format['base']  = '';
+    $this->format['family']  = '';
+    $this->format['given']  = '';
+    $this->no_op['base'] = TRUE;
+    $this->no_op['family'] = TRUE;
+    $this->no_op['given'] = TRUE;
+
+    if (isset($this->attributes['prefix'])) $this->no_op['base'] = FALSE;
+    if (isset($this->attributes['suffix'])) $this->no_op['base'] = FALSE;
+    $this->init_format($this->attributes['base']);
+
+
+    if (!empty($this->name_parts)) {
+      foreach($this->name_parts as $name => $formatting) {
+        $this->init_format($formatting, $name);
+      }
+    }
+  }
+
+  function init_attrs($mode) {
+    $and = $this->get_attributes('and');
+    if (isset($this->attributes['and']) && $this->attributes['and'] == 'text') {
+      $this->attributes['and'] = $this->citeproc->get_locale('term', 'and');
+    }
+    if (isset($this->attributes['and']) && $this->attributes['and'] == 'symbol') {
+      $this->attributes['and'] = ' & ';
+    }
+    $style_attrs = $this->citeproc->style->get_hier_attributes();
+    $mode_attrs = $this->citeproc->{$mode}->get_hier_attributes();
+    $this->attributes = array_merge($style_attrs, $mode_attrs, $this->attributes);
+    if (!isset($this->attributes['delimiter'])) {
+      $this->attributes['delimiter'] = (!empty($this->attributes['name-delimiter'])) ? $this->attributes['name-delimiter'] : ', ';
+    }
+    if(!isset($this->alnum)) {
+      list($this->alnum, $this->alpha, $this->cntrl, $this->dash,
+          $this->digit, $this->graph, $this->lower, $this->print,
+          $this->punct, $this->space, $this->upper, $this->word,
+          $this->patternModifiers) = $this->get_regex_patterns();
+    }
+    $this->dpl = $this->get_attributes('delimiter-precedes-last');
+    $this->sort_separator = ($this->get_attributes('sort-separator'))? $this->get_attributes('sort-separator') : ', ';
+    $this->form = ($this->get_attributes('form'))? $this->get_attributes('form') : 'long';
+    $this->attr_init = $mode;
+  }
+
+  function init_format($attribs, $part = 'base') {
+    if (isset($attribs['quotes'])) {
+      $this->attributes[$part]['open-quote'] = $this->citeproc->get_locale('term', 'open-quote');
+      $this->attributes[$part]['close-quote'] = $this->citeproc->get_locale('term', 'close-quote');
+      $this->attributes[$part]['open-inner-quote'] = $this->citeproc->get_locale('term', 'open-inner-quote');
+      $this->attributes[$part]['close-inner-quote'] = $this->citeproc->get_locale('term', 'close-inner-quote');
+      $this->no_op[$part] = FALSE;
+    }
+
+    if (isset($attribs['prefix']))  $this->attributes[$part]['prefix'] = $attribs['prefix'];
+    if (isset($attribs['suffix']))  $this->attributes[$part]['suffix'] = $attribs['suffix'];
+
+    $this->format[$part] .= (isset($attribs['font-style']))      ? 'font-style: '. $attribs['font-style'].';' : '';
+    $this->format[$part] .= (isset($attribs['font-family']))     ? 'font-family: '. $attribs['font-family'].';' : '';
+    $this->format[$part] .= (isset($attribs['font-weight']))     ? 'font-weight: '.    $attribs['font-weight'].';' : '';
+    $this->format[$part] .= (isset($attribs['font-variant']))    ? 'font-variant: '.   $attribs['font-variant'].';' : '';
+    $this->format[$part] .= (isset($attribs['text-decoration'])) ? 'text-decoration: '.$attribs['text-decoration'].';' : '';
+    $this->format[$part] .= (isset($attribs['vertical-align']))  ? 'vertical-align: '. $attribs['vertical-align'].';' : '';
+
+    if (isset($attribs['text-case']))  $this->no_op[$part] = FALSE;
+    if (!empty($this->format[$part])) $this->no_op[$part] = FALSE;
+
+  }
+
+  function format($text, $part = 'base') {
+
+    if (empty($text) || $this->no_op[$part]) return $text;
+    if (isset($this->attributes[$part]['text-case'])) {
+      switch ($this->attributes[$part]['text-case']) {
+        case 'uppercase':
+          $text = mb_strtoupper($text);
+          break;
+        case 'lowercase':
+          $text = mb_strtolower($text);
+          break;
+        case 'capitalize-all':
+          $text = mb_convert_case($text, MB_CASE_TITLE);
+          break;
+        case 'capitalize-first':
+          $text[0] = mb_strtoupper($text[0]);
+          break;
+      }
+    }
+    $open_quote = (isset($this->attributes[$part]['open-quote'])) ? $this->attributes[$part]['open-quote'] : '';
+    $close_quote = (isset($this->attributes[$part]['close-quote'])) ? $this->attributes[$part]['close-quote'] : '';
+    $prefix = (isset($this->attributes[$part]['prefix'])) ? $this->attributes[$part]['prefix'] : '';
+    $suffix = (isset($this->attributes[$part]['suffix'])) ? $this->attributes[$part]['suffix'] : '';
+    if ($text[(strlen($text) -1)] == $suffix) unset($suffix);
+    if (!empty($this->format[$part])) {
+      $text = '<span style="'. $this->format[$part] .'">' . $text . '</span>';
+    }
+    return $prefix . $open_quote . $text . $close_quote . $suffix;
+  }
+
+  function render($names, $mode) {
+    $text = '';
+    $authors = array();
+    $count = 0;
+    $auth_count = 0;
+    $et_al_triggered = FALSE;
+    $initialize_with = $this->get_attributes('initialize-with');
+
+    if (!$this->attr_init || $this->attr_init != $mode) $this->init_attrs($mode);
+
+    foreach($names as $rank => $name) {
+      $count++;
+      //$given = (!empty($name->firstname)) ? $name->firstname : '';
+      if (!empty($name->firstname) && isset($initialize_with)) {
+          $name->firstname = preg_replace("/([$this->upper])[$this->lower]+/$this->patternModifiers", '\\1', $name->firstname);
+          $name->firstname = preg_replace("/(?<=[-$this->upper]) +(?=[-$this->upper])/$this->patternModifiers", "", $name->firstname);
+          $name->initials = $name->firstname . $name->initials;
+      }
+      if (isset($name->initials)) {
+        // within initials, remove any dots:
+        $name->initials = preg_replace("/([$this->upper])\.+/$this->patternModifiers", "\\1", $name->initials);
+        // within initials, remove any spaces *between* initials:
+        $name->initials = preg_replace("/(?<=[-$this->upper]) +(?=[-$this->upper])/$this->patternModifiers", "", $name->initials);
+        // within initials, add a space after a hyphen, but only if ...
+        if (ereg(" $", $initialize_with)) {// ... the delimiter that separates initials ends with a space
+          $name->initials = preg_replace("/-(?=[$this->upper])/$this->patternModifiers", "- ", $name->initials);
+        }
+        // then, separate initials with the specified delimiter:
+        $name->initials = preg_replace("/([$this->upper])(?=[^$this->lower]+|$)/$this->patternModifiers", "\\1$initialize_with", $name->initials);
+
+        //      $shortenInitials = (isset($options['numberOfInitialsToKeep'])) ? $options['numberOfInitialsToKeep'] : FALSE;
+        //      if ($shortenInitials) $given = drupal_substr($given, 0, $shortenInitials);
+
+        if (isset($initialize_with) ) {
+          $name->firstname = $name->initials;
+          if ($shortenInitials) $name->firstname = drupal_substr($name->firstname, 0, $shortenInitials);
+        }
+        elseif(!empty($name->firstname)) {
+          $name->firstname = $name->firstname.' '.$name->initials;
+        }
+        elseif(empty($name->firstname)) {
+          $name->firstname = $name->initials;
+        }
+      }
+
+
+      if (isset($name->firstname)) {
+        $given = $this->format($name->firstname, 'given');
+      }
+      if(isset($name->lastname)) {
+        $name->lastname = $this->format($name->lastname, 'family');
+        if ($this->get_attributes('form') == 'short') {
+          $text = $name->lastname;
+        }
+        else {
+          switch ($this->get_attributes('name-as-sort-order')) {
+            case 'first':
+            case 'all':
+              $text = $name->lastname . $this->sort_separator . $given;
+              break;
+            default:
+              $text = $given .' '. $name->lastname ;
+          }
+        }
+        $authors[] = $this->format($text);
+      }
+      if (isset($this->attributes['et-al-min']) && $count >= $this->attributes['et-al-min']) break;
+    }
+    if (isset($this->attributes['et-al-min']) &&
+        $count >= $this->attributes['et-al-min'] &&
+        isset($this->attributes['et-al-use-first'])) {
+      if ($this->attributes['et-al-use-first'] < $this->attributes['et-al-min']) {
+        for ($i = $this->attributes['et-al-use-first']; $i < $count; $i++) {
+          unset($authors[$i]);
+        }
+      }
+      $authors[] = $this->citeproc->get_locale('term', 'et-al');
+      $et_al_triggered = TRUE;
+    }
+
+    if (!empty($authors) && !$et_al_triggered) {
+      $auth_count = count($authors);
+      if (isset($this->attributes['and']) && $auth_count > 1) {
+        $authors[$auth_count-1] = $this->attributes['and'] .' '. $authors[$auth_count-1]; //stick an "and" in front of the last author if "and" is defined
+      }
+    }
+    $text = implode($this->attributes['delimiter'], $authors);
+
+    // strip out the last delimiter if not required
+    if (isset($this->attributes['and']) && $auth_count > 1) {
+      $last_delim =  strrpos($text, $this->attributes['delimiter']);
+      switch ($this->dpl) { //dpl == delimiter proceeds last
+        case 'never':
+          return substr_replace($text, '', $last_delim, strlen($this->attributes['delimiter']));
+          break;
+        case 'contextual':
+        default:
+          if ($auth_count < 3) {
+            return substr_replace($text, '', $last_delim, strlen($this->attributes['delimiter']));
+          }
+      }
+    }
+
+    return $text;
+  }
+
+  function get_regex_patterns() {
+    // Checks if PCRE is compiled with UTF-8 and Unicode support
+    if (!@preg_match('/\pL/u', 'a')) {
+      // probably a broken PCRE library
+      return $this->get_latin1_regex();
+    } else {
+      // Unicode safe filter for the value
+      return $this->get_utf8_regex();
+    }
+  }
+
+  function get_latin1_regex() {
+    $alnum = "[:alnum:]ÄÅÁÀÂÃÇÉÈÊËÑÖØÓÒÔÕÜÚÙÛÍÌÎÏÆäåáàâãçéèêëñöøóòôõüúùûíìîïæÿß";
+    // Matches ISO-8859-1 letters:
+    $alpha = "[:alpha:]ÄÅÁÀÂÃÇÉÈÊËÑÖØÓÒÔÕÜÚÙÛÍÌÎÏÆäåáàâãçéèêëñöøóòôõüúùûíìîïæÿß";
+    // Matches ISO-8859-1 control characters:
+    $cntrl = "[:cntrl:]";
+    // Matches ISO-8859-1 dashes & hyphens:
+    $dash = "-–";
+    // Matches ISO-8859-1 digits:
+    $digit = "[\d]";
+    // Matches ISO-8859-1 printing characters (excluding space):
+    $graph = "[:graph:]ÄÅÁÀÂÃÇÉÈÊËÑÖØÓÒÔÕÜÚÙÛÍÌÎÏÆäåáàâãçéèêëñöøóòôõüúùûíìîïæÿß";
+    // Matches ISO-8859-1 lower case letters:
+    $lower = "[:lower:]äåáàâãçéèêëñöøóòôõüúùûíìîïæÿß";
+    // Matches ISO-8859-1 printing characters (including space):
+    $print = "[:print:]ÄÅÁÀÂÃÇÉÈÊËÑÖØÓÒÔÕÜÚÙÛÍÌÎÏÆäåáàâãçéèêëñöøóòôõüúùûíìîïæÿß";
+    // Matches ISO-8859-1 punctuation:
+    $punct = "[:punct:]";
+    // Matches ISO-8859-1 whitespace (separating characters with no visual representation):
+    $space = "[\s]";
+    // Matches ISO-8859-1 upper case letters:
+    $upper = "[:upper:]ÄÅÁÀÂÃÇÉÈÊËÑÖØÓÒÔÕÜÚÙÛÍÌÎÏÆ";
+    // Matches ISO-8859-1 "word" characters:
+    $word = "_[:alnum:]ÄÅÁÀÂÃÇÉÈÊËÑÖØÓÒÔÕÜÚÙÛÍÌÎÏÆäåáàâãçéèêëñöøóòôõüúùûíìîïæÿß";
+    // Defines the PCRE pattern modifier(s) to be used in conjunction with the above variables:
+    // More info: <http://www.php.net/manual/en/reference.pcre.pattern.modifiers.php>
+    $patternModifiers = "";
+
+    return array($alnum, $alpha, $cntrl, $dash, $digit, $graph, $lower,
+                 $print, $punct, $space, $upper, $word, $patternModifiers);
+
+  }
+  function get_utf8_regex() {
+    // Matches Unicode letters & digits:
+    $alnum = "\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}"; // Unicode-aware equivalent of "[:alnum:]"
+    // Matches Unicode letters:
+    $alpha = "\p{Ll}\p{Lu}\p{Lt}\p{Lo}"; // Unicode-aware equivalent of "[:alpha:]"
+    // Matches Unicode control codes & characters not in other categories:
+    $cntrl = "\p{C}"; // Unicode-aware equivalent of "[:cntrl:]"
+    // Matches Unicode dashes & hyphens:
+    $dash = "\p{Pd}";
+    // Matches Unicode digits:
+    $digit = "\p{Nd}"; // Unicode-aware equivalent of "[:digit:]"
+    // Matches Unicode printing characters (excluding space):
+    $graph = "^\p{C}\t\n\f\r\p{Z}"; // Unicode-aware equivalent of "[:graph:]"
+    // Matches Unicode lower case letters:
+    $lower = "\p{Ll}"; // Unicode-aware equivalent of "[:lower:]"
+    // Matches Unicode printing characters (including space):
+    $print = "\P{C}"; // same as "^\p{C}", Unicode-aware equivalent of "[:print:]"
+    // Matches Unicode punctuation (printing characters excluding letters & digits):
+    $punct = "\p{P}"; // Unicode-aware equivalent of "[:punct:]"
+    // Matches Unicode whitespace (separating characters with no visual representation):
+    $space = "\t\n\f\r\p{Z}"; // Unicode-aware equivalent of "[:space:]"
+    // Matches Unicode upper case letters:
+    $upper = "\p{Lu}\p{Lt}"; // Unicode-aware equivalent of "[:upper:]"
+    // Matches Unicode "word" characters:
+    $word = "_\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}"; // Unicode-aware equivalent of "[:word:]" (or "[:alnum:]" plus "_")
+    // Defines the PCRE pattern modifier(s) to be used in conjunction with the above variables:
+    // More info: <http://www.php.net/manual/en/reference.pcre.pattern.modifiers.php>
+    $patternModifiers = "u"; // the "u" (PCRE_UTF8) pattern modifier causes PHP/PCRE to treat pattern strings as UTF-8
+    return array($alnum, $alpha, $cntrl, $dash, $digit, $graph, $lower,
+                 $print, $punct, $space, $upper, $word, $patternModifiers);
+  }
+
+}
+
+class csl_names extends csl_format {
+  private $substitutes;
+
+  function init($dom_node, $citeproc) {
+
+    $tag = $dom_node->getElementsByTagName('substitute')->item(0);
+    if ($tag) {
+      $this->substitutes = csl_factory::create($tag, $citeproc);
+      $dom_node->removeChild($tag);
+    }
+
+    $var = $dom_node->getAttribute('variable');
+    foreach($dom_node->childNodes as $node) {
+      if ($node->nodeType == 1){
+        $element = csl_factory::create($node, $citeproc);
+        if(($element instanceof csl_label)) $element->set_attribute('variable', $var);
+        $this->add_element($element);
+      }
+    }
+  }
+
+  function render($data, $mode) {
+    $matches = 0;
+    $variable_parts = array();
+    if (!isset($this->attributes['delimiter'])) {
+      $style_delimiter = $this->citeproc->style->get_attributes('names-delimiter');
+      $mode_delimiter = $this->citeproc->{$mode}->get_attributes('names-delimiter');
+      $this->attributes['delimiter'] = (!empty($mode_delimiter)) ? $mode_delimiter : (!empty($style_delimiter)? $style_delimiter : '');
+    }
+
+    $variables  = explode(' ', $this->get_attributes('variable'));
+    foreach ($variables as $var) {
+      if (isset($data->{$var}) && (!empty($data->{$var}))) {
+        $matches++;
+        break;
+      }
+    }
+
+    if (!$matches) { // we don't have any primary suspects, so lets check the substitutes...
+      if (isset($this->substitutes)) {
+        foreach($this->substitutes->elements as $element) {
+          if (($element instanceof csl_names)) { //test to see if any of the other names variables has content
+            $variables  = explode(' ', $element->get_attributes('variable'));
+            foreach ($variables as $var) {
+              //list($contributor, $type) = explode(':', $var);
+              if (isset($data->{$var}) ) {
+                $matches++;
+                break;
+              }
+            }
+          }
+          else { // if it's not a "names" element, just render it
+            return $element->render($data, $mode);
+          }
+        }
+      }
+    }
+
+    foreach ($variables as $var) {
+      $text = '';
+      if (!empty($data->{$var})) {
+        foreach ($this->elements as $element) {
+          $text .= $element->render($data->{$var}, $mode);
+        }
+      }
+      if (!empty($text)) $variable_parts[] = $text;
+    }
+
+    if (!empty($variable_parts)) {
+      $text = implode($this->attributes['delimiter'], $variable_parts);
+      return $this->format($text);
+    }
+
+    return ;
+  }
+}
+
+class csl_date extends csl_format {
+
+  function init($dom_node, $citeproc) {
+    $locale_elements = array();
+
+    if ($form = $this->get_attributes('form')) {
+      $local_date = $this->citeproc->get_locale('date_options', $form);
+      $dom_elem = dom_import_simplexml($local_date[0]);
+      if($dom_elem) {
+        foreach($dom_elem->childNodes as $node) {
+          if ($node->nodeType == 1){
+            $locale_elements[] = csl_factory::create($node, $citeproc);
+          }
+        }
+      }
+      foreach($dom_node->childNodes as $node) {
+        if ($node->nodeType == 1){
+          $element = csl_factory::create($node, $citeproc);
+
+          foreach($locale_elements as $key => $locale_element) {
+            if ($locale_element->attributes['name'] == $element->attributes['name']) {
+              $locale_elements[$key]->attributes = array_merge($locale_element->attributes, $element->attributes);
+              $locale_elements[$key]->format =  $element->format;
+              break;
+            }
+
+            else {
+              $locale_elements[] = $element;
+            }
+          }
+        }
+      }
+      if ($date_parts = $this->get_attributes("date-parts")) {
+        $parts = explode('-', $date_parts);
+        foreach ($locale_elements as $key => $element) {
+          if (array_search($element->attributes['name'], $parts) === FALSE) {
+            unset($locale_elements[$key]);
+          }
+        }
+        if (count($locale_elements) != count($parts)) {
+          foreach($parts as $part) {
+            $element = new csl_date_part();
+            $element->set_attribute('name', $part);
+            $locale_elements[] = $element;
+          }
+        }
+        // now re-order the elements
+        foreach ($parts as $part) {
+          foreach($locale_elements as $key => $element)
+          if ($element->attributes['name'] == $part) {
+            $this->elements[] = $element;
+            unset($locale_elements[$key]);
+          }
+        }
+
+      }
+      else {
+        $this->elements = $locale_elements;
+      }
+    }
+    else {
+      parent::init($dom_node, $citeproc);
+    }
+
+
+  }
+  function render($data, $mode) {
+    $date_parts = array();
+    $date = '';
+    $text = '';
+
+    if (($var = $this->get_attributes('variable')) && isset($data->{$var})) {
+      $date = $data->{$var}->{'date-parts'}[0];
+      foreach ($this->elements as $element) {
+        $date_parts[] = $element->render($date, $mode);
+      }
+      $text = implode('', $date_parts);
+    }else {
+      $text = $this->citeproc->get_locale('term', 'no date');
+    }
+
+    return $this->format($text);
+  }
+}
+
+class csl_date_part extends csl_format {
+
+  function render($date, $mode) {
+    $text = '';
+
+    switch ($this->get_attributes('name')) {
+      case 'year':
+        $text = (isset($date[0])) ? $date[0] : '';
+        if ($text > 0 && $text < 500) {
+          $text = $text . $this->citeproc->get_locale('term', 'ad');
+        }
+        elseif ($text < 0) {
+          $text = $text * -1;
+          $text = $text . $this->citeproc->get_locale('term', 'bc');
+        }
+        //return ((isset($this->prefix))? $this->prefix : '') . $date[0] . ((isset($this->suffix))? $this->suffix : '');
+        break;
+      case 'month':
+        $text = (isset($date[1])) ? $date[1] : '';
+        if (empty($text) || $text < 1 || $text > 12) return;
+        $form = $this->get_attributes('form');
+        switch($form) {
+          case 'numeric': break;
+          case 'numeric-leading-zeros':
+            if ($text < 10) {
+              $text = '0'.$text;
+              break;
+            }
+            break;
+          case 'short':
+            $month = 'month-' . sprintf('%02d', $text);
+            $text = $this->citeproc->get_locale('term', $month, 'short');
+            break;
+          default:
+            $month = 'month-' . sprintf('%02d', $text);
+            $text = $this->citeproc->get_locale('term', $month);
+            break;
+        }
+        break;
+      case 'day':
+        $text = (isset($date[2])) ? $date[2] : '';
+        break;
+    }
+
+    return $this->format($text);
+  }
+}
+
+class csl_number extends csl_format {
+
+  function render($data, $mode) {
+    $var = $this->get_attributes('variable');
+
+    if (!$var || empty($data->$var)) return;
+
+    $form = $this->get_attributes('form');
+
+    switch ($form) {
+      case 'ordinal':
+        $text = $this->ordinal($data->$var);
+        break;
+      case 'long-ordinal':
+        $text = $this->long_ordinal($data->$var);
+        break;
+      case 'roman':
+        $text = $this->roman($data->$var);
+        break;
+      case 'numeric':
+      default:
+        $text = $data->$var;
+        break;
+    }
+    return $this->format($text);
+  }
+
+  function ordinal($num) {
+    if ( ($num/10)%10 == 1){
+      $num .= $this->citeproc->get_locale('term', 'ordinal-04');
+    } else if ( $num%10 == 1) {
+      $num .= $this->citeproc->get_locale('term', 'ordinal-01');
+    } else if ( $num%10 == 2){
+      $num .= $this->citeproc->get_locale('term', 'ordinal-02');
+    } else if ( $num%10 == 3){
+      $num .= $this->citeproc->get_locale('term', 'ordinal-03');
+    } else {
+      $num .= $this->citeproc->get_locale('term', 'ordinal-04');
+    }
+    return $num;
+
+  }
+
+  function long_ordinal($num) {
+    $num = sprintf("%02d", $num);
+    $ret = $this->citeproc->get_locale('term', 'long-ordinal-'.$num);
+    if(!$ret) {
+      return $this->ordinal($num);
+    }
+    return $ret;
+  }
+
+  function roman($num) {
+    $ret = "";
+    if ($num < 6000) {
+      $ROMAN_NUMERALS = array(
+        array( "", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix" ),
+        array( "", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc" ),
+        array( "", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm" ),
+        array( "", "m", "mm", "mmm", "mmmm", "mmmmm")
+      );
+      $numstr = strrev($num);
+      $len = strlen($numstr);
+      for ($pos = 0; $pos < $len; $pos++) {
+        $n = $numstr[$pos];
+        $ret = $ROMAN_NUMERALS[$pos][$n] . $ret;
+      }
+    }
+
+    return $ret;
+  }
+
+}
+
+class csl_text extends csl_format {
+  public $source;
+  protected $var;
+
+  function init($dom_node, $citeproc) {
+    foreach (array('variable', 'macro', 'term', 'value') as $attr) {
+      if ($dom_node->hasAttribute($attr)) {
+        $this->source = $attr;
+        if ($this->source == 'macro') {
+          $this->var =  str_replace(' ', '_', $dom_node->getAttribute($attr));
+        }
+        else {
+          $this->var =  $dom_node->getAttribute($attr);
+        }
+      }
+    }
+  }
+
+  function render($data, $mode) {
+    $text = '';
+
+    switch ($this->source) {
+      case 'variable':
+        if(!isset($data->{$this->attributes['variable']})) return;
+        $text = $data->{$this->attributes['variable']}; //$this->data[$this->var];  // include the contents of a variable
+        break;
+      case 'macro':
+        $macro = $this->var;
+        $text = $this->citeproc->render_macro($macro, $data, $mode); //trigger the macro process
+        break;
+      case 'term':
+        $form = (($form = $this->get_attributes('form'))) ? $form : '';
+        $text = $this->citeproc->get_locale('term', $this->var, $form);
+        break;
+      case 'value':
+        $text = $this->var; //$this->var;  // dump the text verbatim
+        break;
+    }
+
+    if (empty($text)) return;
+    return $this->format($text);
+  }
+}
+
+class csl_label extends csl_format {
+  private $plural;
+
+  function render($data, $mode) {
+    $text = '';
+
+    $variables = explode(' ', $this->get_attributes('variable'));
+    $form = (($form = $this->get_attributes('form'))) ? $form : 'long';
+    $plural = (($plural = $this->get_attributes('plural'))) ? $plural : 'contextual';
+    switch ($this->get_attributes('plural')) {
+      case 'never':
+        $plural = 'single';
+        break;
+      case 'always':
+        $plural = 'multiple';
+        break;
+      case 'contextual':
+      default:
+        if (count($data) == 1) {
+          $plural = 'single';
+        }
+        elseif(count($data) > 1) {
+          $plural = 'multiple';
+        }
+    }
+    foreach ($variables as $variable) {
+      if (($term = $this->citeproc->get_locale('term', $variable, $form, $plural))) {
+        $text = $term;
+        break;
+      }
+    }
+
+    if (empty($text)) return;
+    if ($this->get_attributes('strip-periods')) $text = str_replace('.', '', $text);
+    return $this->format($text);
+  }
+}
+
+class csl_macro extends csl_format{
+
+}
+
+class csl_macros extends csl_collection{
+
+  function __construct($macro_nodes, $citeproc) {
+    foreach ($macro_nodes as $macro) {
+      $macro = csl_factory::create($macro, $citeproc);
+      $this->elements[$macro->name()] = $macro;
+    }
+  }
+
+  function render($name, $data, $mode) {
+    return $this->elements[$name]->render($data, $mode);
+  }
+}
+
+class csl_group extends csl_format{
+
+  function render($data, $mode) {
+    $text = '';
+    $text_parts = array();
+
+    $terms=0;
+    foreach ($this->elements as $element) {
+      if (($element instanceof csl_text) && ($element->source == 'term' || $element->source == 'value')) {
+        $terms++;
+      }
+      $text = $element->render($data, $mode);
+      if(!empty($text)) {
+        $text_parts[] = $text;
+      }
+    }
+
+    if (empty($text_parts)) return;
+    if ($terms && count($text_parts) <= $terms) return; // there has to be at least one other none empty value before the term is output
+
+    $delimiter = $this->get_attributes('delimiter');
+    $text = implode($delimiter, $text_parts); // insert the delimiter if supplied.
+
+
+    return $this->format($text);
+  }
+}
+
+class csl_layout extends csl_format {
+
+  function render($data, $mode) {
+    $text = '';
+    $parts = array();
+    $delimiter = $this->get_attributes('delimiter');
+
+    foreach ($this->elements as $element) {
+      $parts[] = $element->render($data, $mode);
+    }
+
+    $text = implode($delimiter, $parts);
+
+    return $this->format($text);
+  }
+
+}
+
+class csl_citation extends csl_element{
+  private $layout = NULL;
+
+  function init($dom_node, $citeproc) {
+    $options = $dom_node->getElementsByTagName('option');
+    foreach ($options as $option) {
+      $value = $option->getAttribute('value');
+      $name  = $option->getAttribute('name');
+      $this->attributes[$name]  = $value;
+    }
+
+    $layouts = $dom_node->getElementsByTagName('layout');
+    foreach ($layouts as $layout) {
+      $this->layout = new csl_layout($layout, $citeproc);
+    }
+  }
+
+  function render($data) {
+    $text = $this->layout->render($data, 'citation');
+
+    return $text;
+  }
+
+}
+class csl_bibliography  extends csl_element {
+  private $layout = NULL;
+
+  function init($dom_node, $citeproc) {
+    $hier_name_attr = $this->get_hier_attributes();
+    $options = $dom_node->getElementsByTagName('option');
+    foreach ($options as $option) {
+      $value = $option->getAttribute('value');
+      $name  = $option->getAttribute('name');
+      $this->attributes[$name]  = $value;
+    }
+
+    $layouts = $dom_node->getElementsByTagName('layout');
+    foreach ($layouts as $layout) {
+      $this->layout = new csl_layout($layout, $citeproc);
+    }
+
+  }
+
+  function render($data) {
+    $text = $this->layout->render($data, 'bibliography');
+    if($this->get_attributes('hanging-indent') == 'true') {
+      $text = '<div style="  text-indent: -25px; padding-left: 25px;">' . $text . '</div>';
+    }
+    $text = str_replace('?.', '?', str_replace('..', '.', $text));
+    return $text;
+  }
+}
+
+class csl_option  {
+  private $name;
+  private $value;
+
+  function get() {
+    return array($this->name => $this->value);
+  }
+}
+
+class csl_options extends csl_element{
+
+}
+
+class csl_sort extends csl_element{
+
+}
+class csl_style extends csl_element{
+
+  function __construct($dom_node = NULL, $citeproc = NULL) {
+    if ($dom_node) {
+      $this->attributes = $this->set_attributes($dom_node);
+    }
+  }
+}
+
+class csl_choose extends csl_element{
+
+  function render($data, $mode){
+    foreach($this->elements as $choice) {
+      if ($choice->evaluate($data)) {
+        return $choice->render($data, $mode);
+      }
+    }
+  }
+}
+
+class csl_if extends csl_rendering_element {
+
+  function evaluate($data) {
+    $match = (($match = $this->get_attributes('match'))) ? $match : 'all';
+    if (($types = $this->get_attributes('type'))) {
+      $types  = explode(' ', $types);
+      $matches = 0;
+      foreach ($types as $type) {
+        if (isset($data->type)) {
+          if ($data->type == $type && $match == 'any') return TRUE;
+          if ($data->type != $type && $match == 'all') return FALSE;
+          if ($data->type == $type) $matches++;
+        }
+      }
+      if ($match == 'all' && $matches = count($types)) return TRUE;
+      if ($match == 'none' && $matches = 0) return TRUE;
+      return FALSE;
+    }
+    if (($variables = $this->get_attributes('variable'))) {
+      $variables  = explode(' ', $variables);
+      $matches = 0;
+      foreach ($variables as $var) {
+        if (isset($data->$var) && $match == 'any') return TRUE;
+        if (!isset($data->$var) && $match == 'all') return FALSE;
+        if (isset($data->$var)) $matches++;
+      }
+      if ($match == 'all' && $matches = count($variables)) return TRUE;
+      if ($match == 'none' && $matches = 0) return TRUE;
+      return FALSE;
+    }
+    if (($is_numeric = $this->get_attributes('is-numeric'))) {
+      $variables  = explode(' ', $is_numeric);
+      $matches = 0;
+      foreach ($variables as $var) {
+        if (isset($data->$var)) {
+          if (is_numeric($data->$var) && $match == 'any') return TRUE;
+          if (!is_numeric($data->$var) && $match == 'all') return FALSE;
+          if (is_numeric($data->$var)) $matches++;
+        }
+      }
+      if ($match == 'all' && $matches == count($variables)) return TRUE;
+      if ($match == 'none' && $matches == 0) return TRUE;
+      return FALSE;
+    }
+    if (isset($this->locator))  $test  = explode(' ', $this->type);
+
+    return FALSE;
+  }
+}
+
+class csl_else_if extends csl_if {
+
+}
+
+class csl_else extends csl_if {
+
+  function evaluate() {
+    return TRUE; // the last else always returns true
+  }
+}
+
+class csl_substitute extends csl_element{
+
+}
+
+class csl_locale  {
+  protected $locale_xmlstring = NULL;
+  protected $style_locale_xmlstring = NULL;
+  protected $locale = NULL;
+  protected $style_locale = NULL;
+  private   $module_path;
+
+  function __construct($lang = 'en') {
+    $this->module_path = '.';
+    $this->locale = new SimpleXMLElement($this->get_locales_file_name($lang));
+    if ($this->locale) {
+      $this->locale->registerXPathNamespace('cs', 'http://purl.org/net/xbiblio/csl');
+    }
+  }
+
+  // SimpleXML objects cannot be serialized, so we must convert to an XML string prior to serialization
+  function __sleep() {
+    $this->locale_xmlstring       = ($this->locale)       ? $this->locale->asXML()       : '';
+    $this->style_locale_xmlstring = ($this->style_locale) ? $this->style_locale->asXML() : '';
+    return array('locale_xmlstring', 'style_locale_xmlstring');
+  }
+  // SimpleXML objects cannot be serialized, so when un-serializing them, they must rebuild from the serialized XML string.
+  function __wakeup() {
+    $this->style_locale = (!empty($this->style_locale_xmlstring)) ? new SimpleXMLElement($this->style_locale_xmlstring) : NULL;
+    $this->locale       = (!empty($this->locale_xmlstring))       ? new SimpleXMLElement($this->locale_xmlstring)       : NULL;
+    if ($this->locale) {
+      $this->locale->registerXPathNamespace('cs', 'http://purl.org/net/xbiblio/csl');
+    }
+  }
+
+  function get_locales_file_name($lang) {
+    $lang_bases = array(
+        "af" => "af-ZA",
+        "ar" => "ar-AR",
+        "bg" => "bg-BG",
+        "ca" => "ca-AD",
+        "cs" => "cs-CZ",
+        "da" => "da-DK",
+        "de" => "de-DE",
+        "el" => "el-GR",
+        "en" => "en-US",
+        "es" => "es-ES",
+        "et" => "et-EE",
+        "fr" => "fr-FR",
+        "he" => "he-IL",
+        "hu" => "hu-HU",
+        "is" => "is-IS",
+        "it" => "it-IT",
+        "ja" => "ja-JP",
+        "ko" => "ko-KR",
+        "mn" => "mn-MN",
+        "nb" => "nb-NO",
+        "nl" => "nl-NL",
+        "pl" => "pl-PL",
+        "pt" => "pt-PT",
+        "ro" => "ro-RO",
+        "ru" => "ru-RU",
+        "sk" => "sk-SK",
+        "sl" => "sl-SI",
+        "sr" => "sr-RS",
+        "sv" => "sv-SE",
+        "th" => "th-TH",
+        "tr" => "tr-TR",
+        "uk" => "uk-UA",
+        "vi" => "vi-VN",
+        "zh" => "zh-CN",
+    );
+    return (isset($lang_bases[$lang])) ? file_get_contents($this->module_path.'/locale/locales-'.$lang_bases[$lang].'.xml') : file_get_contents($this->module_path.'/locale/locales-en-US.xml');
+  }
+
+  function get_locale($type, $arg1, $arg2 = NULL, $arg3 = NULL) {
+    switch ($type) {
+      case 'term':
+        $term = '';
+        $form = $arg2 ? " and @form='$arg2'" : '';
+        $plural = $arg3 ? "/cs:$arg3" : '';
+        if ($this->style_locale) {
+          $term = $this->style_locale->xpath("//locale[@xml:lang='en']/terms/term[@name='$arg1'$form]$plural");
+          if (!$term) {
+            $term = $this->style_locale->xpath("//locale/terms/term[@name='$arg1'$form]$plural");
+          }
+        }
+        if (!$term) {
+          $term = $this->locale->xpath("//cs:term[@name='$arg1'$form]$plural");
+        }
+        if (isset($term[0])) return (string)$term[0];
+        break;
+      case 'date_option':
+        $attribs = array();
+        if ($this->style_locale) {
+          $date_part = $this->style_locale->xpath("//date[@form='$arg1']/date-part[@name='$arg2']");
+        }
+        if (!isset($date_part)) {
+          $date_part = $this->locale->xpath("//cs:date[@form='$arg1']/cs:date-part[@name='$arg2']");
+        }
+        if (isset($date_part)) {
+          foreach($$date_part->attributes()  as $name => $value) {
+            $attribs[$name] = (string)$value;
+          }
+        }
+        return $attribs;
+        break;
+      case 'date_options':
+        if ($this->style_locale) {
+          $options = $this->style_locale->xpath("//locale[@xml:lang='en']/date[@form='$arg1']");
+          if (!$options) {
+            $options = $this->style_locale->xpath("//locale/date[@form='$arg1']");
+          }
+        }
+        if (!$options) {
+          $options = $this->locale->xpath("//cs:date[@form='$arg1']");
+        }
+        if (isset($options[0]))return $options[0];
+        break;
+      case 'style_option':
+        $attribs = array();
+        if ($this->style_locale) {
+          $option = $this->style_locale->xpath("//locale[@xml:lang='en']/style-options[@$arg1]");
+          if (!$option) {
+            $option = $this->style_locale->xpath("//locale/style-options[@$arg1]");
+          }
+        }
+        if(isset($option)) {
+          $attribs = $option[0]->attributes();
+        }
+        if (empty($attribs)) {
+          $option = $this->locale->xpath("//cs:style-options[@$arg1]");
+        }
+        foreach($option[0]->attributes()  as $name => $value) {
+          if ($name == $arg1) return (string)$value;
+        }
+        break;
+    }
+  }
+
+  public function set_style_locale($csl_doc) {
+    $xml = '';
+    $locale_nodes = $csl_doc->getElementsByTagName('locale');
+    if ($locale_nodes) {
+      $xml_open = '<style-locale>';
+      $xml_close = '</style-locale>';
+      foreach ($locale_nodes as $key => $locale_node) {
+        $xml .= $csl_doc->saveXML($locale_node);
+      }
+      if (!empty($xml)) {
+        $this->style_locale = new SimpleXMLElement($xml_open . $xml . $xml_close);
+      }
+    }
+  }
+
+}
+
+class csl_mapper {
+
+    function map_field($field) {
+    if (!$this->field_map) {
+      $this->field_map = array ('title' => 'title',
+                                'container-title' => 'biblio_secondary_title',
+                                'collection-title' => 'biblio_secondary_title',
+                                'original-title' => 'biblio_alternate_title',
+                                'publisher' => 'biblio_publisher',
+                                'publisher-place' => 'biblio_place_published',
+                                'original-publisher' => 'no_match',
+                                'original-publisher-place' => 'no_match',
+                                'archive' => 'no_match',
+                                'archive-place' => 'no_match',
+                                'authority' => 'no_match',
+                                'archive_location' => 'no_match',
+                                'event' => 'biblio_secondary_title',
+                                'event-place' => 'biblio_place_published',
+                                'page' => 'biblio_pages',
+                                'page-first' => 'no_match',
+                                'locator' => 'no_match',
+                                'version' => 'biblio_edition',
+                                'volume' => 'biblio_volume',
+                                'number-of-volumes' => 'biblio_number_of_volumes',
+                                'number-of-pages' => 'no_match',
+                                'issue' => 'biblio_issue',
+                                'chapter-number' => 'biblio_section',
+                                'medium' => 'no_match',
+                                'status' => 'no_match',
+                                'edition' => 'biblio_edition',
+                                'section' => 'biblio_section',
+                                'genre' => 'no_match',
+                                'note' => 'biblio_notes',
+                                'annote' => 'no_match',
+                                'abstract'  => 'biblio_abst_e',
+                                'keyword' => 'biblio_keywords',
+                                'number' => 'biblio_number',
+                                'references' => 'no_match',
+                                'URL' => 'biblio_url',
+                                'DOI' => 'biblio_doi',
+                                'ISBN' => 'biblio_isbn',
+                                'call-number' => 'biblio_call_number',
+                                'citation-number' => 'no_match',
+                                'citation-label' => 'biblio_citekey',
+                                'first-reference-note-number' => 'no_match',
+                                'year-suffix' => 'no_match',
+                                'jurisdiction' => 'no_match',
+
+                                    //Date Variables'
+
+                                'issued' => 'biblio_year',
+                                'event' => 'biblio_date',
+                                'accessed' => 'biblio_date',
+                                'container' => 'biblio_date',
+                                'original-date' => 'biblio_date',
+
+                                    //Name Variables'
+
+                                'author' => 'biblio_contributors:1',
+                                'editor' => 'biblio_contributors:2',
+                                'translator' => 'biblio_contributors:3',
+                                'recipient' => 'no_match',
+                                'interviewer' => 'biblio_contributors:1',
+                                'publisher' => 'biblio_publisher',
+                                'composer' => 'biblio_contributors:1',
+                                'original-publisher' => '',
+                                'original-author' => '',
+                                'container-author' => '',
+                                'collection-editor' => '',
+                              );
+    }
+    $vars = explode(' ', $field);
+    foreach ($vars as $key => $value) {
+      $vars[$key] = (!empty($this->field_map[$value])) ? $this->field_map[$value] : '';
+    }
+
+    return implode(' ', $vars);
+  }
+
+  function map_type($types) {
+    if (!$this->type_map) {
+      $this->type_map = array(
+                        'article' => '',
+                        'article-magazine'  => 106,
+                        'article-newspaper' => 105,
+                        'article-journal' => 102,
+                        'bill' => 117,
+                        'book'  => 100,
+                        'broadcast' => 111,
+                        'chapter' => 101,
+                        'entry' => '',
+                        'entry-dictionary'  => '',
+                        'entry-encyclopedia'  => '',
+                        'figure'  => '',
+                        'graphic'  => '',
+                        'interview'  => '',
+                        'legislation' => 118,
+                        'legal_case' => 128,
+                        'manuscript' => 121,
+                        'map' => 122,
+                        'motion_picture' => 110,
+                        'musical_score'  => '',
+                        'pamphlet'  => '',
+                        'paper-conference' => 103,
+                        'patent' => 119,
+                        'post'  => '',
+                        'post-weblog'  => '',
+                        'personal\_communication' => 120,
+                        'report' => 109,
+                        'review'  => '',
+                        'review-book'  => '',
+                        'song'  => '',
+                        'speech'  => '',
+                        'thesis' => 108,
+                        'treaty'  => '',
+                        'webpage' => 107,
+      );
+    }
+    $vars = explode(' ', $types);
+    foreach ($vars as $key => $value) {
+      $vars[$key] = (!empty($this->type_map[$value])) ? $this->type_map[$value] : '';
+    }
+
+    return implode(' ', $vars);
+
+  }
+
+}
+//$csl_data = simplexml_load_file('./style/chicago-fullnote-bibliography.csl');
+ //     $local_xml = simplexml_load_file('./locale/locales-en-US.xml');
+$csl_data ='./style/chicago-fullnote-bibliography.csl';
+$csl_data = file_get_contents($csl_data);
+$test_data = file_get_contents("./tests/testdata.json");
+$test_data = json_decode($test_data);
+
+$citeproc = new citeproc($csl_data);
+$input_data  = (array)$test_data;
+$count =  count($input_data);
+foreach($input_data as $data) {
+ print $citeproc->render($data).'<br>';
+}
+//print $text;
+//print($csl_parse);
