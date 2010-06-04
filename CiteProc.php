@@ -488,10 +488,10 @@ class csl_name extends csl_format {
     foreach($names as $rank => $name) {
       $count++;
       //$given = (!empty($name->firstname)) ? $name->firstname : '';
-      if (!empty($name->firstname) && isset($initialize_with)) {
-          $name->firstname = preg_replace("/([$this->upper])[$this->lower]+/$this->patternModifiers", '\\1', $name->firstname);
-          $name->firstname = preg_replace("/(?<=[-$this->upper]) +(?=[-$this->upper])/$this->patternModifiers", "", $name->firstname);
-          $name->initials = $name->firstname . $name->initials;
+      if (!empty($name->given) && isset($initialize_with)) {
+          $name->given = preg_replace("/([$this->upper])[$this->lower]+/$this->patternModifiers", '\\1', $name->given);
+          $name->given = preg_replace("/(?<=[-$this->upper]) +(?=[-$this->upper])/$this->patternModifiers", "", $name->given);
+          $name->initials = $name->given . $name->initials;
       }
       if (isset($name->initials)) {
         // within initials, remove any dots:
@@ -509,34 +509,34 @@ class csl_name extends csl_format {
         //      if ($shortenInitials) $given = drupal_substr($given, 0, $shortenInitials);
 
         if (isset($initialize_with) ) {
-          $name->firstname = $name->initials;
-          if ($shortenInitials) $name->firstname = drupal_substr($name->firstname, 0, $shortenInitials);
+          $name->given = $name->initials;
+          if ($shortenInitials) $name->given = drupal_substr($name->given, 0, $shortenInitials);
         }
-        elseif(!empty($name->firstname)) {
-          $name->firstname = $name->firstname.' '.$name->initials;
+        elseif(!empty($name->given)) {
+          $name->given = $name->given.' '.$name->initials;
         }
-        elseif(empty($name->firstname)) {
-          $name->firstname = $name->initials;
+        elseif(empty($name->given)) {
+          $name->given = $name->initials;
         }
       }
 
 
-      if (isset($name->firstname)) {
-        $given = $this->format($name->firstname, 'given');
+      if (isset($name->given)) {
+        $given = $this->format($name->given, 'given');
       }
-      if(isset($name->lastname)) {
-        $name->lastname = $this->format($name->lastname, 'family');
+      if(isset($name->family)) {
+        $name->family = $this->format($name->family, 'family');
         if ($this->get_attributes('form') == 'short') {
-          $text = $name->lastname;
+          $text = $name->family;
         }
         else {
           switch ($this->get_attributes('name-as-sort-order')) {
             case 'first':
             case 'all':
-              $text = $name->lastname . $this->sort_separator . $given;
+              $text = $name->family . $this->sort_separator . $given;
               break;
             default:
-              $text = $given .' '. $name->lastname ;
+              $text = $given .' '. $name->family ;
           }
         }
         $authors[] = $this->format($text);
@@ -1526,11 +1526,11 @@ class csl_mapper {
  //     $local_xml = simplexml_load_file('./locale/locales-en-US.xml');
 $csl_data ='./style/chicago-fullnote-bibliography.csl';
 $csl_data = file_get_contents($csl_data);
-$test_data = file_get_contents("./tests/testdata.json");
+$test_data = file_get_contents("./tests/fullstyles_ChicagoNoteWithBibliographyWithPublisher.json");
 $test_data = json_decode($test_data);
 
 $citeproc = new citeproc($csl_data);
-$input_data  = (array)$test_data;
+$input_data  = (array)$test_data->input;
 $count =  count($input_data);
 foreach($input_data as $data) {
  print $citeproc->render($data).'<br>';
