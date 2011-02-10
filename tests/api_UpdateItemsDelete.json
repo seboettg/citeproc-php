@@ -1,0 +1,147 @@
+/*
+ * Copyright (c) 2009 and 2010 Frank G. Bennett, Jr. All Rights Reserved.
+ *
+ * The contents of this file are subject to the Common Public
+ * Attribution License Version 1.0 (the “License”); you may not use
+ * this file except in compliance with the License. You may obtain a
+ * copy of the License at:
+ *
+ * http://bitbucket.org/fbennett/citeproc-js/src/tip/LICENSE.
+ *
+ * The License is based on the Mozilla Public License Version 1.1 but
+ * Sections 14 and 15 have been added to cover use of software over a
+ * computer network and provide for limited attribution for the
+ * Original Developer. In addition, Exhibit A has been modified to be
+ * consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an “AS IS”
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+ * the License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * The Original Code is the citation formatting software known as
+ * "citeproc-js" (an implementation of the Citation Style Language
+ * [CSL]), including the original test fixtures and software located
+ * under the ./std subdirectory of the distribution archive.
+ *
+ * The Original Developer is not the Initial Developer and is
+ * __________. If left blank, the Original Developer is the Initial
+ * Developer.
+ *
+ * The Initial Developer of the Original Code is Frank G. Bennett,
+ * Jr. All portions of the code written by Frank G. Bennett, Jr. are
+ * Copyright (c) 2009 and 2010 Frank G. Bennett, Jr. All Rights Reserved.
+ */{
+    "bibentries": [
+        [
+            "ITEM-1", 
+            "ITEM-2", 
+            "ITEM-3", 
+            "ITEM-4", 
+            "ITEM-5"
+        ], 
+        [
+            "ITEM-1", 
+            "ITEM-4", 
+            "ITEM-5"
+        ]
+    ], 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"in-text\"\n      version=\"1.0\">\n  <info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated>\n  </info>\n  <citation>\n    <layout delimiter=\"; \" suffix=\".\">\n      <group delimiter=\" \">\n        <names variable=\"author\">\n          <name form=\"short\" />\n        </names>\n        <date variable=\"issued\">\n          <date-part name=\"year\" />\n        </date>\n      </group>\n    </layout>\n  </citation>\n</style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Doe", 
+                    "given": "John", 
+                    "static-ordering": false
+                }
+            ], 
+            "id": "ITEM-1", 
+            "issued": {
+                "date-parts": [
+                    [
+                        1960
+                    ]
+                ]
+            }, 
+            "title": "Book A"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Roe", 
+                    "given": "Jane", 
+                    "static-ordering": false
+                }
+            ], 
+            "id": "ITEM-2", 
+            "issued": {
+                "date-parts": [
+                    [
+                        1970
+                    ]
+                ]
+            }, 
+            "title": "Book B"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Smith", 
+                    "given": "John", 
+                    "static-ordering": false
+                }
+            ], 
+            "id": "ITEM-3", 
+            "issued": {
+                "date-parts": [
+                    [
+                        1980
+                    ]
+                ]
+            }, 
+            "title": "Book C"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Brown", 
+                    "given": "Robert", 
+                    "static-ordering": false
+                }
+            ], 
+            "id": "ITEM-4", 
+            "issued": {
+                "date-parts": [
+                    [
+                        1990
+                    ]
+                ]
+            }, 
+            "title": "Book D"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Ichi", 
+                    "given": "Taro", 
+                    "static-ordering": false
+                }
+            ], 
+            "id": "ITEM-5", 
+            "issued": {
+                "date-parts": [
+                    [
+                        2000
+                    ]
+                ]
+            }, 
+            "title": "Book E"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "Doe 1960; Brown 1990; Ichi 2000."
+}

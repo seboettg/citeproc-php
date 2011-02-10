@@ -1,0 +1,80 @@
+/*
+ * Copyright (c) 2009 and 2010 Frank G. Bennett, Jr. All Rights Reserved.
+ *
+ * The contents of this file are subject to the Common Public
+ * Attribution License Version 1.0 (the “License”); you may not use
+ * this file except in compliance with the License. You may obtain a
+ * copy of the License at:
+ *
+ * http://bitbucket.org/fbennett/citeproc-js/src/tip/LICENSE.
+ *
+ * The License is based on the Mozilla Public License Version 1.1 but
+ * Sections 14 and 15 have been added to cover use of software over a
+ * computer network and provide for limited attribution for the
+ * Original Developer. In addition, Exhibit A has been modified to be
+ * consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an “AS IS”
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+ * the License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * The Original Code is the citation formatting software known as
+ * "citeproc-js" (an implementation of the Citation Style Language
+ * [CSL]), including the original test fixtures and software located
+ * under the ./std subdirectory of the distribution archive.
+ *
+ * The Original Developer is not the Initial Developer and is
+ * __________. If left blank, the Original Developer is the Initial
+ * Developer.
+ *
+ * The Initial Developer of the Original Code is Frank G. Bennett,
+ * Jr. All portions of the code written by Frank G. Bennett, Jr. are
+ * Copyright (c) 2009 and 2010 Frank G. Bennett, Jr. All Rights Reserved.
+ */{
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"in-text\"\n      version=\"1.1x\"\n      default-locale=\"en\">\n  <info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated>\n  </info>\n  <macro name=\"un-sales-number-identifier\">\n    <group delimiter=\" \">\n      <text term=\"un-sales-number-label\"/>\n      <text variable=\"un-sales-number\"/>\n    </group>\n  </macro>\n  <macro name=\"document-number-identifier\">\n    <choose>\n      <if variable=\"authority\">\n        <group delimiter=\" \">\n          <text variable=\"authority\" form=\"short\"/>\n          <text term=\"document-number-authority-suffix\"/>\n          <text variable=\"number\"/>\n        </group>\n      </if>\n      <else>\n        <group delimiter=\" \">\n          <text term=\"document-number-label\"/>\n          <text variable=\"number\"/>\n        </group>\n      </else>\n    </choose>\n  </macro>\n  <macro name=\"publisher\">\n    <names variable=\"publisher\">\n      <name/>\n      <institution delimiter=\" - \" reverse-order=\"true\" institution-parts=\"short\">\n        <institution-part name=\"long\"/>\n      </institution>\n    </names>\n  </macro>\n  <macro name=\"publisher-place\">\n    <text variable=\"publisher-place\"/>\n  </macro>\n  <macro name=\"collection-identifier\">\n    <group delimiter=\" \">\n      <text variable=\"collection-title\"/>\n      <text term=\"collection-number-label\" />\n      <text variable=\"collection-number\"/>\n    </group>\n  </macro>\n  <macro name=\"title-smallcaps\">\n    <text variable=\"title\" font-variant=\"small-caps\"/>\n  </macro>\n  <macro name=\"issued-yearmonth\">\n    <date variable=\"issued\" form=\"text\" date-parts=\"year-month\">\n      <date-part name=\"month\" form=\"short\"/>\n    </date>\n  </macro>\n  <macro name=\"author-full-smallcaps-symboland\">\n    <names variable=\"author\">\n      <name and=\"symbol\" delimiter-precedes-last=\"never\" font-variant=\"small-caps\"/>\n    </names>\n  </macro>\n  <citation>\n    <layout>\n      <group delimiter=\", \" suffix=\".\">\n        <group delimiter=\" \">\n          <group delimiter=\", \">\n            <text macro=\"author-full-smallcaps-symboland\"/>\n            <text macro=\"title-smallcaps\"/>\n            <text macro=\"document-number-identifier\"/>\n            <text macro=\"un-sales-number-identifier\"/>\n          </group>\n          <group delimiter=\", \" prefix=\"(\" suffix=\")\">\n            <text macro=\"publisher\"/>\n            <text macro=\"publisher-place\"/>\n            <text macro=\"collection-identifier\"/>\n            <text macro=\"issued-yearmonth\"/>\n          </group>\n        </group>\n      </group>\n    </layout>\n  </citation>\n</style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Rosales", 
+                    "given": "Osvaldo", 
+                    "static-ordering": false
+                }, 
+                {
+                    "family": "Kuwayama", 
+                    "given": "Mikio", 
+                    "static-ordering": false
+                }
+            ], 
+            "authority": "United Nations", 
+            "collection-number": "81", 
+            "collection-title": "Serie de Comercio Internacional", 
+            "id": "ITEM-1", 
+            "issued": {
+                "date-parts": [
+                    [
+                        "2007", 
+                        "1"
+                    ]
+                ]
+            }, 
+            "number": "LC/L.2656-P", 
+            "publisher": [
+                {
+                    "literal": "Economic Commission for Latin America and the Carribean, United Nations"
+                }
+            ], 
+            "publisher-place": "Santiago de Chile :en:Santiago", 
+            "title": "América latina y china e india: hacia una nueva alianza de comercio e inversión", 
+            "type": "book", 
+            "un-sales-number": "S.07.II.G.6"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "<span style=\"font-variant:small-caps;\">Osvaldo Rosales & Mikio Kuwayama</span>, <span style=\"font-variant:small-caps;\">América latina y china e india: hacia una nueva alianza de comercio e inversión</span>, U.N. Doc. LC/L.2656-P, U.N. Sales No. S.07.II.G.6 (United Nations - ECLAC, Santiago, Serie de Comercio Internacional No. 81, Jan. 2007)."
+}

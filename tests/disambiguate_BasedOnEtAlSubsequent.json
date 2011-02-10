@@ -1,0 +1,140 @@
+/*
+ * Copyright (c) 2009 and 2010 Frank G. Bennett, Jr. All Rights Reserved.
+ *
+ * The contents of this file are subject to the Common Public
+ * Attribution License Version 1.0 (the “License”); you may not use
+ * this file except in compliance with the License. You may obtain a
+ * copy of the License at:
+ *
+ * http://bitbucket.org/fbennett/citeproc-js/src/tip/LICENSE.
+ *
+ * The License is based on the Mozilla Public License Version 1.1 but
+ * Sections 14 and 15 have been added to cover use of software over a
+ * computer network and provide for limited attribution for the
+ * Original Developer. In addition, Exhibit A has been modified to be
+ * consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an “AS IS”
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+ * the License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * The Original Code is the citation formatting software known as
+ * "citeproc-js" (an implementation of the Citation Style Language
+ * [CSL]), including the original test fixtures and software located
+ * under the ./std subdirectory of the distribution archive.
+ *
+ * The Original Developer is not the Initial Developer and is
+ * __________. If left blank, the Original Developer is the Initial
+ * Developer.
+ *
+ * The Initial Developer of the Original Code is Frank G. Bennett,
+ * Jr. All portions of the code written by Frank G. Bennett, Jr. are
+ * Copyright (c) 2009 and 2010 Frank G. Bennett, Jr. All Rights Reserved.
+ */{
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"in-text\"\n      version=\"1.0\">\n  <info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated>\n  </info>\n  <citation \n         disambiguate-add-year-suffix=\"true\"\n         et-al-min=\"3\"\n         et-al-subsequent-min=\"1\"\n         et-al-subsequent-use-first=\"1\"\n         et-al-use-first=\"3\">\n    <layout delimiter=\"; \" prefix=\"(\" suffix=\")\">\n      <names variable=\"author\">\n        <name and=\"symbol\" delimiter=\", \" delimiter-precedes-last=\"never\" form=\"short\" />\n      </names>\n      <date prefix=\" \" variable=\"issued\">\n        <date-part name=\"year\" />\n      </date>\n      <text font-style=\"italic\" variable=\"year-suffix\" />\n    </layout>\n  </citation>\n</style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Baur", 
+                    "given": "Bruno", 
+                    "static-ordering": false
+                }, 
+                {
+                    "family": "Fröberg", 
+                    "given": "Lars", 
+                    "static-ordering": false
+                }, 
+                {
+                    "family": "Baur", 
+                    "given": "Anette", 
+                    "static-ordering": false
+                }, 
+                {
+                    "family": "Guggenheim", 
+                    "given": "Richard", 
+                    "static-ordering": false
+                }, 
+                {
+                    "family": "Haase", 
+                    "given": "Martin", 
+                    "static-ordering": false
+                }
+            ], 
+            "container-title": "Nordic Journal of Botany", 
+            "id": "ITEM-1", 
+            "issued": {
+                "date-parts": [
+                    [
+                        "2000"
+                    ]
+                ]
+            }, 
+            "page-range": "119-128", 
+            "title": "Ultrastructure of snail grazing damage to calcicolous lichens", 
+            "type": "article-journal", 
+            "volume": "20"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Baur", 
+                    "given": "Bruno", 
+                    "static-ordering": false
+                }, 
+                {
+                    "family": "Schileyko", 
+                    "given": "Anatoly A.", 
+                    "static-ordering": false
+                }, 
+                {
+                    "family": "Baur", 
+                    "given": "Anette", 
+                    "static-ordering": false
+                }
+            ], 
+            "container-title": "Journal of Molluscan Studies", 
+            "id": "ITEM-2", 
+            "issued": {
+                "date-parts": [
+                    [
+                        "2000"
+                    ]
+                ]
+            }, 
+            "page-range": "285-289", 
+            "title": "Ecological observations on _Arianta aethiops aethiops_ (Helicidae), a land snail endemic to the South Carpathian mountains, Romania", 
+            "type": "article-journal", 
+            "volume": "66"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Doe", 
+                    "given": "John", 
+                    "static-ordering": false
+                }
+            ], 
+            "container-title": "Journal of Irreproducible Results", 
+            "id": "ITEM-3", 
+            "issued": {
+                "date-parts": [
+                    [
+                        "2000"
+                    ]
+                ]
+            }, 
+            "page-range": "000-1", 
+            "title": "Some bogus title", 
+            "type": "article-journal", 
+            "volume": "666"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "(Baur, Fröberg, Baur, et al. 2000<i>a</i>; Baur, Schileyko & Baur 2000<i>b</i>; Doe 2000)"
+}

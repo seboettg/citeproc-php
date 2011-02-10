@@ -1,0 +1,75 @@
+/*
+ * Copyright (c) 2009 and 2010 Frank G. Bennett, Jr. All Rights Reserved.
+ *
+ * The contents of this file are subject to the Common Public
+ * Attribution License Version 1.0 (the “License”); you may not use
+ * this file except in compliance with the License. You may obtain a
+ * copy of the License at:
+ *
+ * http://bitbucket.org/fbennett/citeproc-js/src/tip/LICENSE.
+ *
+ * The License is based on the Mozilla Public License Version 1.1 but
+ * Sections 14 and 15 have been added to cover use of software over a
+ * computer network and provide for limited attribution for the
+ * Original Developer. In addition, Exhibit A has been modified to be
+ * consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an “AS IS”
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+ * the License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * The Original Code is the citation formatting software known as
+ * "citeproc-js" (an implementation of the Citation Style Language
+ * [CSL]), including the original test fixtures and software located
+ * under the ./std subdirectory of the distribution archive.
+ *
+ * The Original Developer is not the Initial Developer and is
+ * __________. If left blank, the Original Developer is the Initial
+ * Developer.
+ *
+ * The Initial Developer of the Original Code is Frank G. Bennett,
+ * Jr. All portions of the code written by Frank G. Bennett, Jr. are
+ * Copyright (c) 2009 and 2010 Frank G. Bennett, Jr. All Rights Reserved.
+ */{
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"in-text\"\n      version=\"1.1x\"\n      default-locale=\"es\">\n  <info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated>\n  </info>\n  <locale xml:lang=\"en\">\n    <style-options punctuation-in-quote=\"true\"/>\n    <terms>\n      <term name=\"un-sales-number-label\">United Nations Publication, sales N°</term>\n      <term name=\"collection-number-label\">N°</term>\n    </terms>\n  </locale>\n  <locale xml:lang=\"es\">\n    <style-options punctuation-in-quote=\"true\"/>\n    <terms>\n      <term name=\"un-sales-number-label\">Publicación de las Naciones Unidas, Nº de venta</term>\n      <term name=\"collection-number-label\">N°</term>\n      <term name=\"month-01\">enero</term>\n      <term name=\"month-02\">febrero</term>\n      <term name=\"month-03\">marzo</term>\n      <term name=\"month-04\">abril</term>\n      <term name=\"month-05\">mayo</term>\n      <term name=\"month-06\">junio</term>\n      <term name=\"month-07\">julio</term>\n      <term name=\"month-08\">agosto</term>\n      <term name=\"month-09\">septiembre</term>\n      <term name=\"month-10\">octubre</term>\n      <term name=\"month-11\">noviembre</term>\n      <term name=\"month-12\">diciembre</term>\n      <term name=\"month-01\" form=\"short\">ene</term>\n      <term name=\"month-02\" form=\"short\">feb</term>\n      <term name=\"month-03\" form=\"short\">mar</term>\n      <term name=\"month-04\" form=\"short\">abr</term>\n      <term name=\"month-05\" form=\"short\">may</term>\n      <term name=\"month-06\" form=\"short\">jun</term>\n      <term name=\"month-07\" form=\"short\">jul</term>\n      <term name=\"month-08\" form=\"short\">ago</term>\n      <term name=\"month-09\" form=\"short\">sep</term>\n      <term name=\"month-10\" form=\"short\">oct</term>\n      <term name=\"month-11\" form=\"short\">nov</term>\n      <term name=\"month-12\" form=\"short\">dic</term>\n    </terms>\n  </locale>\n  <macro name=\"un-sales-number-identifier\">\n    <group delimiter=\": \">\n      <text term=\"un-sales-number-label\"/>\n      <text variable=\"un-sales-number\"/>\n    </group>\n  </macro>\n  <macro name=\"issued-month\">\n    <date variable=\"issued\">\n      <date-part name=\"month\"/>\n    </date>\n  </macro>\n  <macro name=\"publisher\">\n    <text variable=\"publisher\"/>\n  </macro>\n  <macro name=\"publisher-place\">\n    <text variable=\"publisher-place\"/>\n  </macro>\n  <macro name=\"document-number-parens\">\n    <text variable=\"number\" prefix=\"(\" suffix=\")\"/>\n  </macro>\n  <macro name=\"collection-identifier\">\n    <group delimiter=\", \">\n      <text variable=\"collection-title\"/>\n      <group delimiter=\" \">\n        <text term=\"collection-number-label\" />\n        <text variable=\"collection-number\"/>\n      </group>\n    </group>\n  </macro>\n  <macro name=\"title-quotes\">\n    <text variable=\"title\" quotes=\"true\"/>\n  </macro>\n  <macro name=\"issued-year-parens\">\n    <date variable=\"issued\" form=\"text\" date-parts=\"year\" prefix=\"(\" suffix=\")\"/>\n  </macro>\n  <macro name=\"author-full-sofirst\">\n    <names variable=\"author\">\n      <name name-as-sort-order=\"first\" sort-separator=\", \" and=\"text\"/>\n      <substitute>\n        <text variable=\"publisher\"/>\n      </substitute>\n    </names>\n  </macro>\n  <citation>\n    <layout>\n      <group delimiter=\" \" suffix=\".\">\n        <group suffix=\".\">\n          <group delimiter=\", \">\n            <group delimiter=\" \">\n              <text macro=\"author-full-sofirst\"/>\n              <text macro=\"issued-year-parens\"/>\n            </group>\n            <text macro=\"title-quotes\"/>\n            <group delimiter=\" \">\n              <text macro=\"collection-identifier\"/>\n              <text macro=\"document-number-parens\"/>\n            </group>\n            <text macro=\"publisher-place\"/>\n            <text macro=\"publisher\"/>\n            <text macro=\"issued-month\"/>\n          </group>\n        </group>\n        <text macro=\"un-sales-number-identifier\"/>\n      </group>\n    </layout>\n  </citation>\n</style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Rosales", 
+                    "given": "Osvaldo", 
+                    "static-ordering": false
+                }, 
+                {
+                    "family": "Kuwayama", 
+                    "given": "Mikio", 
+                    "static-ordering": false
+                }
+            ], 
+            "collection-number": "81", 
+            "collection-title": "Serie de Comercio Internacional", 
+            "id": "ITEM-1", 
+            "issued": {
+                "date-parts": [
+                    [
+                        "2007", 
+                        "1"
+                    ]
+                ]
+            }, 
+            "number": "LC/L.2656-P", 
+            "publisher": "Naciones Unidas - ECLAC :en:United Nations - ECLAC", 
+            "publisher-place": "Santiago de Chile :en:Santiago", 
+            "title": "América latina y china e india: hacia una nueva alianza de comercio e inversión", 
+            "type": "book", 
+            "un-sales-number": "S.07.II.G.6"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "Rosales, Osvaldo y Mikio Kuwayama (2007), “América latina y china e india: hacia una nueva alianza de comercio e inversión,” Serie de Comercio Internacional, N° 81 (LC/L.2656-P), Santiago de Chile, Naciones Unidas - ECLAC, enero. Publicación de las Naciones Unidas, Nº de venta: S.07.II.G.6."
+}
