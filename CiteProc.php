@@ -253,12 +253,13 @@ class csl_format extends csl_rendering_element {
     $this->no_op = TRUE;
     $this->format  = '';
     if (isset($this->quotes)) {
-      $this->quotes = array();
-      $this->quotes['punctuation-in-quote'] = $this->citeproc->get_locale('style_option', 'punctuation-in-quote');
-      $this->quotes['open-quote'] = $this->citeproc->get_locale('term', 'open-quote');
-      $this->quotes['close-quote'] = $this->citeproc->get_locale('term', 'close-quote');
-      $this->quotes['open-inner-quote'] = $this->citeproc->get_locale('term', 'open-inner-quote');
-      $this->quotes['close-inner-quote'] = $this->citeproc->get_locale('term', 'close-inner-quote');
+      $quotes = array();
+      $quotes['punctuation-in-quote'] = $this->citeproc->get_locale('style_option', 'punctuation-in-quote');
+      $quotes['open-quote'] = $this->citeproc->get_locale('term', 'open-quote');
+      $quotes['close-quote'] = $this->citeproc->get_locale('term', 'close-quote');
+      $quotes['open-inner-quote'] = $this->citeproc->get_locale('term', 'open-inner-quote');
+      $quotes['close-inner-quote'] = $this->citeproc->get_locale('term', 'close-inner-quote');
+      $this->quotes =  $quotes;
       $this->no_op = FALSE;
     }
     if (isset($this->{'prefix'})) $this->no_op = FALSE;
@@ -719,8 +720,8 @@ class csl_names extends csl_format {
     $matches = 0;
     $variable_parts = array();
     if (!isset($this->delimiter)) {
-      $style_delimiter = $this->citeproc->style->{names-delimiter};
-      $mode_delimiter = $this->citeproc->{$mode}->{names-delimiter};
+      $style_delimiter = $this->citeproc->style->{'names-delimiter'};
+      $mode_delimiter = $this->citeproc->{$mode}->{'names-delimiter'};
       $this->delimiter = (isset($mode_delimiter)) ? $mode_delimiter : (isset($style_delimiter) ? $style_delimiter : '');
     }
 
@@ -844,7 +845,7 @@ class csl_date extends csl_format {
     $text = '';
 
     if (($var = $this->variable) && isset($data->{$var})) {
-      $date[] = $data->{$var};
+      $date = $data->{$var}->date_parts[0];
       foreach ($this->elements as $element) {
         $date_parts[] = $element->render($date, $mode);
       }
@@ -1583,8 +1584,9 @@ $test_data = json_decode($test_data);
 $citeproc = new citeproc($csl_data);
 $input_data  = (array)$test_data->input;
 $count =  count($input_data);
+$output = '';
 foreach($input_data as $data) {
- print $citeproc->render($data).'<br>';
+ $output .= $citeproc->render($data).'<br>';
 }
-//print $text;
+print $output;
 //print($csl_parse);
