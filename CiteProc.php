@@ -38,7 +38,7 @@ class citeproc {
 
   function init($csl, $lang) {
     // define field values appropriate to your data in the csl_mapper class and un-comment the next line.
-    //$this->mapper = new csl_mapper();
+    $this->mapper = new csl_mapper();
 
     $csl_doc = new DOMDocument();
 
@@ -133,7 +133,7 @@ class csl_collection {
     $this->elements[] = $elem;
   }
 
-  function render($data, $mode) {}
+  function render($data, $mode = NULL) {}
 
   function format($text) {return $text;}
 
@@ -535,7 +535,10 @@ class csl_name extends csl_format {
       if (!empty($name->given) && isset($initialize_with)) {
           $name->given = preg_replace("/([$this->upper])[$this->lower]+/$this->patternModifiers", '\\1', $name->given);
           $name->given = preg_replace("/(?<=[-$this->upper]) +(?=[-$this->upper])/$this->patternModifiers", "", $name->given);
-          $name->initials = $name->given . $name->initials;
+          if(isset($name->initials)) {
+            $name->initials = $name->given .  $name->initials;
+          }
+          $name->initials = $name->given;
       }
       if (isset($name->initials)) {
         // within initials, remove any dots:
@@ -543,7 +546,7 @@ class csl_name extends csl_format {
         // within initials, remove any spaces *between* initials:
         $name->initials = preg_replace("/(?<=[-$this->upper]) +(?=[-$this->upper])/$this->patternModifiers", "", $name->initials);
         // within initials, add a space after a hyphen, but only if ...
-        if (ereg(" $", $initialize_with)) {// ... the delimiter that separates initials ends with a space
+        if (preg_match("/ $/", $initialize_with)) {// ... the delimiter that separates initials ends with a space
           $name->initials = preg_replace("/-(?=[$this->upper])/$this->patternModifiers", "- ", $name->initials);
         }
         // then, separate initials with the specified delimiter:
@@ -554,7 +557,6 @@ class csl_name extends csl_format {
 
         if (isset($initialize_with) ) {
           $name->given = $name->initials;
-          if ($shortenInitials) $name->given = drupal_substr($name->given, 0, $shortenInitials);
         }
         elseif(!empty($name->given)) {
           $name->given = $name->given.' '.$name->initials;
@@ -564,6 +566,7 @@ class csl_name extends csl_format {
         }
       }
 
+      $ndp = (isset($name->{'non-dropping-particle'})) ? $name->{'non-dropping-particle'} . ' ' : '';
 
       if (isset($name->given)) {
         $given = $this->format($name->given, 'given');
@@ -571,16 +574,16 @@ class csl_name extends csl_format {
       if(isset($name->family)) {
         $name->family = $this->format($name->family, 'family');
         if ($this->form == 'short') {
-          $text = $name->family;
+          $text = $ndp . $name->family;
         }
         else {
           switch ($this->{'name-as-sort-order'}) {
             case 'first':
             case 'all':
-              $text = $name->family . $this->sort_separator . $given;
+              $text = $ndp . $name->family . $this->sort_separator . $given;
               break;
             default:
-              $text = $given .' '. $name->family ;
+              $text = $given .' '. $ndp . $name->family ;
           }
         }
         $authors[] = $this->format($text);
@@ -770,7 +773,10 @@ class csl_names extends csl_format {
       $text = '';
       if (!empty($data->{$var})) {
         foreach ($this->elements as $element) {
-          $text .= $element->render($data->{$var}, $mode);
+            if(is_a($element, 'csl_label')) {
+              $data->{$var}['variable'] = $var;
+            }
+           $text .= $element->render($data->{$var}, $mode);
         }
       }
       if (!empty($text)) $variable_parts[] = $text;
@@ -858,7 +864,7 @@ class csl_date extends csl_format {
     $text = '';
 
     if (($var = $this->variable) && isset($data->{$var})) {
-      $date = $data->{$var}->date_parts[0];
+      $date = $data->{$var}->{'date-parts'}[0];
       foreach ($this->elements as $element) {
         $date_parts[] = $element->render($date, $mode);
       }
@@ -1015,9 +1021,9 @@ class csl_text extends csl_format {
     }
   }
   function init_formatting() {
-    if ($this->variable == 'title') {
-      $this->span_class = 'title';
-    }
+//    if ($this->variable == 'title') {
+//      $this->span_class = 'title';
+//    }
     parent::init_formatting();
 
   }
@@ -1051,7 +1057,7 @@ class csl_text extends csl_format {
 class csl_label extends csl_format {
   private $plural;
 
-  function render($data, $mode) {
+  function render($data, $mode = NULL) {
     $text = '';
 
     $variables = explode(' ', $this->variable);
@@ -1072,13 +1078,17 @@ class csl_label extends csl_format {
           $plural = 'multiple';
         }
     }
+    if (isset($data['variable'])) {
+      $text = $this->citeproc->get_locale('term', $data['variable'], $form, $plural);
+    }
+    if (empty($text)) {
     foreach ($variables as $variable) {
       if (($term = $this->citeproc->get_locale('term', $variable, $form, $plural))) {
         $text = $term;
         break;
       }
     }
-
+    }
     if (empty($text)) return;
     if ($this->{'strip-periods'}) $text = str_replace('.', '', $text);
     return $this->format($text);
@@ -1144,13 +1154,13 @@ class csl_layout extends csl_format {
   function render($data, $mode) {
     $text = '';
     $parts = array();
-    $delimiter = $this->delimiter;
+   // $delimiter = $this->delimiter;
 
     foreach ($this->elements as $element) {
       $parts[] = $element->render($data, $mode);
     }
 
-    $text = implode($delimiter, $parts);
+    $text = implode($this->delimiter, $parts);
 
     if ($mode == 'bibliography') {
       return $this->format($text);
@@ -1241,14 +1251,14 @@ class csl_style extends csl_element{
 
   function __construct($dom_node = NULL, $citeproc = NULL) {
     if ($dom_node) {
-      $this->attributes = $this->set_attributes($dom_node);
+      $this->set_attributes($dom_node);
     }
   }
 }
 
 class csl_choose extends csl_element{
 
-  function render($data, $mode) {
+  function render($data, $mode = NULL) {
     foreach ($this->elements as $choice) {
       if ($choice->evaluate($data)) {
         return $choice->render($data, $mode);
@@ -1434,6 +1444,7 @@ class csl_locale  {
         return $attribs;
         break;
       case 'date_options':
+        $options = array();
         if ($this->style_locale) {
           $options = $this->style_locale->xpath("//locale[@xml:lang='en']/date[@form='$arg1']");
           if (!$options) {
@@ -1484,74 +1495,78 @@ class csl_locale  {
 }
 
 class csl_mapper {
+  // In the map_field and map_type function below, the array keys hold the "CSL" variable and type names
+  // and the array values contain the variable and type names of the incomming data object.  If the naming
+  // convention of your incomming data object differs from the CSL standard (http://citationstyles.org/downloads/specification.html#id78)
+  // you should adjust the array values accordingly.
 
   function map_field($field) {
     if (!isset($this->field_map)) {
       $this->field_map = array('title' => 'title',
-                                'container-title' => 'biblio_secondary_title',
-                                'collection-title' => 'biblio_secondary_title',
-                                'original-title' => 'biblio_alternate_title',
-                                'publisher' => 'biblio_publisher',
-                                'publisher-place' => 'biblio_place_published',
-                                'original-publisher' => 'no_match',
-                                'original-publisher-place' => 'no_match',
-                                'archive' => 'no_match',
-                                'archive-place' => 'no_match',
-                                'authority' => 'no_match',
-                                'archive_location' => 'no_match',
-                                'event' => 'biblio_secondary_title',
-                                'event-place' => 'biblio_place_published',
-                                'page' => 'biblio_pages',
-                                'page-first' => 'no_match',
-                                'locator' => 'no_match',
-                                'version' => 'biblio_edition',
-                                'volume' => 'biblio_volume',
-                                'number-of-volumes' => 'biblio_number_of_volumes',
-                                'number-of-pages' => 'no_match',
-                                'issue' => 'biblio_issue',
-                                'chapter-number' => 'biblio_section',
-                                'medium' => 'no_match',
-                                'status' => 'no_match',
-                                'edition' => 'biblio_edition',
-                                'section' => 'biblio_section',
-                                'genre' => 'no_match',
-                                'note' => 'biblio_notes',
-                                'annote' => 'no_match',
-                                'abstract'  => 'biblio_abst_e',
-                                'keyword' => 'biblio_keywords',
-                                'number' => 'biblio_number',
-                                'references' => 'no_match',
-                                'URL' => 'biblio_url',
-                                'DOI' => 'biblio_doi',
-                                'ISBN' => 'biblio_isbn',
-                                'call-number' => 'biblio_call_number',
-                                'citation-number' => 'no_match',
-                                'citation-label' => 'biblio_citekey',
-                                'first-reference-note-number' => 'no_match',
-                                'year-suffix' => 'no_match',
-                                'jurisdiction' => 'no_match',
+                                'container-title' => 'container-title',
+                                'collection-title' => 'collection-title',
+                                'original-title' => 'original-title',
+                                'publisher' => 'publisher',
+                                'publisher-place' => 'publisher-place',
+                                'original-publisher' => 'original-publisher',
+                                'original-publisher-place' => 'original-publisher-place',
+                                'archive' => 'archive',
+                                'archive-place' => 'archive-place',
+                                'authority' => 'authority',
+                                'archive_location' => 'authority',
+                                'event' => 'event',
+                                'event-place' => 'event-place',
+                                'page' => 'page',
+                                'page-first' => 'page',
+                                'locator' => 'locator',
+                                'version' => 'version',
+                                'volume' => 'volume',
+                                'number-of-volumes' => 'number-of-volumes',
+                                'number-of-pages' => 'number-of-pages',
+                                'issue' => 'issue',
+                                'chapter-number' => 'chapter-number',
+                                'medium' => 'medium',
+                                'status' => 'status',
+                                'edition' => 'edition',
+                                'section' => 'section',
+                                'genre' => 'genre',
+                                'note' => 'note',
+                                'annote' => 'annote',
+                                'abstract'  => 'abstract',
+                                'keyword' => 'keyword',
+                                'number' => 'number',
+                                'references' => 'references',
+                                'URL' => 'URL',
+                                'DOI' => 'DOI',
+                                'ISBN' => 'ISBN',
+                                'call-number' => 'call-number',
+                                'citation-number' => 'citation-number',
+                                'citation-label' => 'citation-label',
+                                'first-reference-note-number' => 'first-reference-note-number',
+                                'year-suffix' => 'year-suffix',
+                                'jurisdiction' => 'jurisdiction',
 
       //Date Variables'
 
-                                'issued' => 'biblio_year',
-                                'event' => 'biblio_date',
-                                'accessed' => 'biblio_accessed',
-                                'container' => 'biblio_date',
-                                'original-date' => 'biblio_date',
+                                'issued' => 'issued',
+                                'event' => 'event',
+                                'accessed' => 'accessed',
+                                'container' => 'container',
+                                'original-date' => 'original-date',
 
                                     //Name Variables'
 
-                                'author' => 'biblio_contributors:1',
-                                'editor' => 'biblio_contributors:2',
-                                'translator' => 'biblio_contributors:3',
-                                'recipient' => 'no_match',
-                                'interviewer' => 'biblio_contributors:1',
-                                'publisher' => 'biblio_publisher',
-                                'composer' => 'biblio_contributors:1',
-                                'original-publisher' => '',
-                                'original-author' => '',
-                                'container-author' => '',
-                                'collection-editor' => '',
+                                'author' => 'author',
+                                'editor' => 'editor',
+                                'translator' => 'translator',
+                                'recipient' => 'recipient',
+                                'interviewer' => 'interviewer',
+                                'publisher' => 'publisher',
+                                'composer' => 'composer',
+                                'original-publisher' => 'original-publisher',
+                                'original-author' => 'original-author',
+                                'container-author' => 'container-author',
+                                'collection-editor' => 'collection-editor',
                               );
     }
     $vars = explode(' ', $field);
@@ -1565,40 +1580,40 @@ class csl_mapper {
   function map_type($types) {
     if (!isset($this->type_map)) {
       $this->type_map = array(
-                        'article' => '',
-                        'article-magazine'  => 106,
-                        'article-newspaper' => 105,
-                        'article-journal' => 102,
-                        'bill' => 117,
-                        'book'  => 100,
-                        'broadcast' => 111,
-                        'chapter' => 101,
-                        'entry' => '',
-                        'entry-dictionary'  => '',
-                        'entry-encyclopedia'  => '',
-                        'figure'  => '',
-                        'graphic'  => '',
-                        'interview'  => '',
-                        'legislation' => 118,
-                        'legal_case' => 128,
-                        'manuscript' => 121,
-                        'map' => 122,
-                        'motion_picture' => 110,
-                        'musical_score'  => '',
-                        'pamphlet'  => '',
-                        'paper-conference' => 103,
-                        'patent' => 119,
-                        'post'  => '',
-                        'post-weblog'  => '',
-                        'personal\_communication' => 120,
-                        'report' => 109,
-                        'review'  => '',
-                        'review-book'  => '',
-                        'song'  => '',
-                        'speech'  => '',
-                        'thesis' => 108,
-                        'treaty'  => '',
-                        'webpage' => 107,
+                        'article' => 'article',
+                        'article-magazine'  => 'article-magazine',
+                        'article-newspaper' => 'article-newspaper',
+                        'article-journal' => 'article-journal',
+                        'bill' => 'bill',
+                        'book'  => 'book',
+                        'broadcast' => 'broadcast',
+                        'chapter' => 'chapter',
+                        'entry' => 'entry',
+                        'entry-dictionary'  => 'entry-dictionary',
+                        'entry-encyclopedia'  => 'entry-encyclopedia',
+                        'figure'  => 'figure',
+                        'graphic'  => 'graphic',
+                        'interview'  => 'interview',
+                        'legislation' => 'legislation',
+                        'legal_case' => 'legal_case',
+                        'manuscript' => 'manuscript',
+                        'map' => 'map',
+                        'motion_picture' => 'motion_picture',
+                        'musical_score'  => 'musical_score',
+                        'pamphlet'  => 'pamphlet',
+                        'paper-conference' => 'paper-conference',
+                        'patent' => 'patent',
+                        'post'  => 'post',
+                        'post-weblog'  => 'post-weblog',
+                        'personal_communication' => 'personal_communication',
+                        'report' => 'report',
+                        'review'  => 'review',
+                        'review-book'  => 'review-book',
+                        'song'  => 'song',
+                        'speech'  => 'speech',
+                        'thesis' => 'thesis',
+                        'treaty'  => 'treaty',
+                        'webpage' => 'webpage',
       );
     }
     $vars = explode(' ', $types);
