@@ -78,10 +78,17 @@ class citeproc {
       }
     }
   }
-  function render($data) {
+  function render($data, $mode = NULL) {
     $text = '';
-  //  $text .=  (isset($this->citation))? $this->citation->render($data) : '';
-    $text .=  (isset($this->bibliography))? $this->bibliography->render($data) : '';
+    switch($mode) {
+      case 'citation':
+        $text .=  (isset($this->citation))? $this->citation->render($data) : '';
+        break;
+      case  'bibliography':
+      default:
+        $text .=  (isset($this->bibliography))? $this->bibliography->render($data) : '';
+        break;
+    }
     return $text;
   }
 
@@ -139,7 +146,7 @@ class csl_element extends csl_collection {
   function __construct($dom_node = NULL, $citeproc = NULL) {
 
     $this->citeproc   = &$citeproc;
-    $this->attributes = $this->set_attributes($dom_node);
+    $this->set_attributes($dom_node);
     $this->init($dom_node, $citeproc);
 
   }
@@ -166,11 +173,12 @@ class csl_element extends csl_collection {
     unset($this->attributes[$name]);
   }
 
-  function __get($name = NULL) {
+  function &__get($name = NULL) {
+    $null = NULL;
     if (array_key_exists($name, $this->attributes)) {
       return $this->attributes[$name];
     }
-    return null;
+    return $null;
 
   }
 
@@ -188,10 +196,9 @@ class csl_element extends csl_collection {
         if (($name == 'variable'  || $name == 'is-numeric') && $element_name != 'label') {
           $value = $this->citeproc->map_field($value);
         }
-        $att[$name]  = $value;
+        $this->{$name}  = $value;
       }
     }
-    return $att;
   }
 
   function get_attributes() {
@@ -253,13 +260,12 @@ class csl_format extends csl_rendering_element {
     $this->no_op = TRUE;
     $this->format  = '';
     if (isset($this->quotes)) {
-      $quotes = array();
-      $quotes['punctuation-in-quote'] = $this->citeproc->get_locale('style_option', 'punctuation-in-quote');
-      $quotes['open-quote'] = $this->citeproc->get_locale('term', 'open-quote');
-      $quotes['close-quote'] = $this->citeproc->get_locale('term', 'close-quote');
-      $quotes['open-inner-quote'] = $this->citeproc->get_locale('term', 'open-inner-quote');
-      $quotes['close-inner-quote'] = $this->citeproc->get_locale('term', 'close-inner-quote');
-      $this->quotes =  $quotes;
+      $this->quotes = array();
+      $this->quotes['punctuation-in-quote'] = $this->citeproc->get_locale('style_option', 'punctuation-in-quote');
+      $this->quotes['open-quote'] = $this->citeproc->get_locale('term', 'open-quote');
+      $this->quotes['close-quote'] = $this->citeproc->get_locale('term', 'close-quote');
+      $this->quotes['open-inner-quote'] = $this->citeproc->get_locale('term', 'open-inner-quote');
+      $this->quotes['close-inner-quote'] = $this->citeproc->get_locale('term', 'close-inner-quote');
       $this->no_op = FALSE;
     }
     if (isset($this->{'prefix'})) $this->no_op = FALSE;
@@ -276,7 +282,8 @@ class csl_format extends csl_rendering_element {
 
     if (isset($this->{'text-case'}) ||
         !empty($this->format) ||
-        !empty($this->span_class)) {
+        !empty($this->span_class) ||
+        !empty($this->div_class)) {
           $this->no_op = FALSE;
         }
 
@@ -322,11 +329,18 @@ class csl_format extends csl_rendering_element {
 
     if (!empty($this->format) || !empty($this->span_class)) {
       $style = (!empty($this->format)) ? 'style="' . $this->format . '" ' : '';
-      $class = (!empty($this->span_class)) ? 'class="' . $this->span_class . '" ' : '';
+      $class = (!empty($this->span_class)) ? 'class="' . $this->span_class . '"' : '';
       $text = '<span ' . $class . $style . '>' . $text . '</span>';
     }
+    $div_class = $div_style = '';
+    if (!empty($this->div_class)) {
+       $div_class = (!empty($this->div_class)) ? 'class="' . $this->div_class . '"' : '';
+    }
     if ($this->display  == 'indent') {
-      return '<div style="text-indent: 0px; padding-left: 45px;">' . $prefix . $text . $suffix . '</div>';
+       $div_style =  'style="text-indent: 0px; padding-left: 45px;"';
+    }
+    if ($div_class || $div_style) {
+      return '<div ' . $div_class . $div_style . '>' . $prefix . $text . $suffix . '</div>';
     }
 
     return $prefix . $text . $suffix;
@@ -437,7 +451,7 @@ class csl_name extends csl_format {
       $this->attributes = array_merge($style_attrs, $mode_attrs, $this->attributes);
     }
     if (!isset($this->delimiter)) {
-      $this->delimiter = isset($this->{'name-delimiter'}) ? $this->{'name-delimiter'} : ', ';
+      $this->delimiter =  $this->{'name-delimiter'} ;
     }
     if (!isset($this->alnum)) {
       list($this->alnum, $this->alpha, $this->cntrl, $this->dash,
@@ -453,15 +467,15 @@ class csl_name extends csl_format {
 
   function init_format($attribs, $part = 'base') {
     if (isset($attribs['quotes'])) {
-      $this->$part['open-quote'] = $this->citeproc->get_locale('term', 'open-quote');
-      $this->$part['close-quote'] = $this->citeproc->get_locale('term', 'close-quote');
-      $this->$part['open-inner-quote'] = $this->citeproc->get_locale('term', 'open-inner-quote');
-      $this->$part['close-inner-quote'] = $this->citeproc->get_locale('term', 'close-inner-quote');
+      $this->{$part}['open-quote'] = $this->citeproc->get_locale('term', 'open-quote');
+      $this->{$part}['close-quote'] = $this->citeproc->get_locale('term', 'close-quote');
+      $this->{$part}['open-inner-quote'] = $this->citeproc->get_locale('term', 'open-inner-quote');
+      $this->{$part}['close-inner-quote'] = $this->citeproc->get_locale('term', 'close-inner-quote');
       $this->no_op[$part] = FALSE;
     }
 
-    if (isset($attribs['prefix']))  $this->$part['prefix'] = $attribs['prefix'];
-    if (isset($attribs['suffix']))  $this->$part['suffix'] = $attribs['suffix'];
+    if (isset($attribs['prefix']))  $this->{$part}['prefix'] = $attribs['prefix'];
+    if (isset($attribs['suffix']))  $this->{$part}['suffix'] = $attribs['suffix'];
 
     $this->format[$part] .= (isset($attribs['font-style']))      ? 'font-style: ' . $attribs['font-style'] . ';' : '';
     $this->format[$part] .= (isset($attribs['font-family']))     ? 'font-family: ' . $attribs['font-family'] . ';' : '';
@@ -478,8 +492,8 @@ class csl_name extends csl_format {
   function format($text, $part = 'base') {
 
     if (empty($text) || $this->no_op[$part]) return $text;
-    if (isset($this->$part['text-case'])) {
-      switch ($this->$part['text-case']) {
+    if (isset($this->{$part}['text-case'])) {
+      switch ($this->{$part}['text-case']) {
         case 'uppercase':
           $text = mb_strtoupper($text);
           break;
@@ -494,10 +508,10 @@ class csl_name extends csl_format {
           break;
       }
     }
-    $open_quote = (isset($this->$part['open-quote'])) ? $this->$part['open-quote'] : '';
-    $close_quote = (isset($this->$part['close-quote'])) ? $this->$part['close-quote'] : '';
-    $prefix = (isset($this->$part['prefix'])) ? $this->$part['prefix'] : '';
-    $suffix = (isset($this->$part['suffix'])) ? $this->$part['suffix'] : '';
+    $open_quote = isset($this->{$part}['open-quote']) ? $this->{$part}['open-quote'] : '';
+    $close_quote = isset($this->{$part}['close-quote']) ? $this->{$part}['close-quote'] : '';
+    $prefix =  isset($this->{$part}['prefix']) ? $this->{$part}['prefix'] : '';
+    $suffix = isset($this->{$part}['suffix']) ? $this->{$part}['suffix'] : '';
     if ($text[(strlen($text) -1)] == $suffix) unset($suffix);
     if (!empty($this->format[$part])) {
       $text = '<span style="' . $this->format[$part] . '">' . $text . '</span>';
@@ -693,9 +707,8 @@ class csl_names extends csl_format {
   private $substitutes;
 
   function init_formatting() {
-    $this->span_class = 'authors';
+ //   $this->span_class = 'authors';
     parent::init_formatting();
-
   }
 
   function init($dom_node, $citeproc) {
@@ -1123,6 +1136,11 @@ class csl_group extends csl_format{
 
 class csl_layout extends csl_format {
 
+  function init_formatting() {
+    $this->div_class = 'csl-entry';
+    parent::init_formatting();
+  }
+
   function render($data, $mode) {
     $text = '';
     $parts = array();
@@ -1134,12 +1152,18 @@ class csl_layout extends csl_format {
 
     $text = implode($delimiter, $parts);
 
-    return $this->format($text);
+    if ($mode == 'bibliography') {
+      return $this->format($text);
+    }
+    else {
+      return $text;
+    }
+
   }
 
 }
 
-class csl_citation extends csl_element{
+class csl_citation extends csl_format{
   private $layout = NULL;
 
   function init($dom_node, $citeproc) {
@@ -1159,11 +1183,11 @@ class csl_citation extends csl_element{
   function render($data, $mode = NULL) {
     $text = $this->layout->render($data, 'citation');
 
-    return $text;
+    return $this->format($text);
   }
 
 }
-class csl_bibliography  extends csl_element {
+class csl_bibliography  extends csl_format {
   private $layout = NULL;
 
   function init($dom_node, $citeproc) {
@@ -1182,13 +1206,18 @@ class csl_bibliography  extends csl_element {
 
   }
 
+  function init_formatting() {
+    $this->div_class = 'csl-bib-body';
+    parent::init_formatting();
+  }
+
   function render($data, $mode = NULL) {
     $text = $this->layout->render($data, 'bibliography');
     if ($this->{'hanging-indent'} == 'true') {
       $text = '<div style="  text-indent: -25px; padding-left: 25px;">' . $text . '</div>';
     }
     $text = str_replace('?.', '?', str_replace('..', '.', $text));
-    return $text;
+    return $this->format($text);
   }
 }
 
@@ -1264,8 +1293,16 @@ class csl_if extends csl_rendering_element {
       foreach ($variables as $var) {
         if (isset($data->$var)) {
           if (is_numeric($data->$var) && $match == 'any') return TRUE;
-          if (!is_numeric($data->$var) && $match == 'all') return FALSE;
+          if (!is_numeric($data->$var)) {
+            if (preg_match('/(?:^\d+|\d+$)/', $data->$var)) {
+              $matches++;
+            }
+            elseif ($match == 'all') {
+              return FALSE;
+            }
+          }
           if (is_numeric($data->$var)) $matches++;
+
         }
       }
       if ($match == 'all' && $matches == count($variables)) return TRUE;
@@ -1572,21 +1609,4 @@ class csl_mapper {
     return implode(' ', $vars);
 
   }
-
 }
-//$csl_data = simplexml_load_file('./style/chicago-fullnote-bibliography.csl');
- //     $local_xml = simplexml_load_file('./locale/locales-en-US.xml');
-$csl_data ='./style/chicago-fullnote-bibliography.csl';
-$csl_data = file_get_contents($csl_data);
-$test_data = file_get_contents("./tests/fullstyles_ChicagoNoteWithBibliographyWithPublisher.json");
-$test_data = json_decode($test_data);
-
-$citeproc = new citeproc($csl_data);
-$input_data  = (array)$test_data->input;
-$count =  count($input_data);
-$output = '';
-foreach($input_data as $data) {
- $output .= $citeproc->render($data).'<br>';
-}
-print $output;
-//print($csl_parse);
