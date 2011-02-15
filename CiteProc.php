@@ -442,7 +442,7 @@ class csl_name extends csl_format {
         $this->and = $this->citeproc->get_locale('term', 'and');
        }
        elseif ($this->and == 'symbol') {
-        $this->and = ' & ';
+        $this->and = '&';
        }
     }
     if (isset($this->citeproc)) {
@@ -545,6 +545,9 @@ class csl_name extends csl_format {
         $name->initials = preg_replace("/([$this->upper])\.+/$this->patternModifiers", "\\1", $name->initials);
         // within initials, remove any spaces *between* initials:
         $name->initials = preg_replace("/(?<=[-$this->upper]) +(?=[-$this->upper])/$this->patternModifiers", "", $name->initials);
+        if ($this->citeproc->style->{'initialize-with-hyphen'} == 'false') {
+          $name->initials = preg_replace("/-/", '', $name->initials);
+        }
         // within initials, add a space after a hyphen, but only if ...
         if (preg_match("/ $/", $initialize_with)) {// ... the delimiter that separates initials ends with a space
           $name->initials = preg_replace("/-(?=[$this->upper])/$this->patternModifiers", "- ", $name->initials);
@@ -567,6 +570,7 @@ class csl_name extends csl_format {
       }
 
       $ndp = (isset($name->{'non-dropping-particle'})) ? $name->{'non-dropping-particle'} . ' ' : '';
+      $suffix = (isset($name->{'suffix'})) ? ' ' . $name->{'suffix'}  : '';
 
       if (isset($name->given)) {
         $given = $this->format($name->given, 'given');
@@ -583,10 +587,10 @@ class csl_name extends csl_format {
               $text = $ndp . $name->family . $this->sort_separator . $given;
               break;
             default:
-              $text = $given .' '. $ndp . $name->family ;
+              $text = $given .' '. $ndp . $name->family . $suffix;
           }
         }
-        $authors[] = $this->format($text);
+        $authors[] = trim($this->format($text));
       }
       if (isset($this->{'et-al-min'}) && $count >= $this->{'et-al-min'}) break;
     }
@@ -610,10 +614,21 @@ class csl_name extends csl_format {
     }
     $text = implode($this->delimiter, $authors);
 
+   if ($this->form == 'count') {
+     if (!$et_al_triggered) {
+       return (int)count($authors);
+     }
+     else {
+       return (int)(count($authors) - 1);
+     }
+   }
     // strip out the last delimiter if not required
     if (isset($this->and) && $auth_count > 1) {
       $last_delim =  strrpos($text, $this->delimiter);
       switch ($this->dpl) { //dpl == delimiter proceeds last
+        case 'always':
+          return $text;
+          break;
         case 'never':
           return substr_replace($text, '', $last_delim, strlen($this->delimiter));
           break;
@@ -624,7 +639,6 @@ class csl_name extends csl_format {
           }
       }
     }
-
    return  $text ;
   }
 
