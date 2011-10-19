@@ -1334,8 +1334,8 @@ class csl_if extends csl_rendering_element {
           if ($data->type == $type) $matches++;
         }
       }
-      if ($match == 'all' && $matches = count($types)) return TRUE;
-      if ($match == 'none' && $matches = 0) return TRUE;
+      if ($match == 'all' && $matches == count($types)) return TRUE;
+      if ($match == 'none' && $matches == 0) return TRUE;
       return FALSE;
     }
     if (($variables = $this->variable)) {
@@ -1346,8 +1346,8 @@ class csl_if extends csl_rendering_element {
         if ((!isset($data->$var) || empty($data->$var)) && $match == 'all') return FALSE;
         if (isset($data->$var) && !empty($data->$var)) $matches++;
       }
-      if ($match == 'all' && $matches = count($variables)) return TRUE;
-      if ($match == 'none' && $matches = 0) return TRUE;
+      if ($match == 'all' && $matches == count($variables)) return TRUE;
+      if ($match == 'none' && $matches == 0) return TRUE;
       return FALSE;
     }
     if (($is_numeric = $this->{'is-numeric'})) {
