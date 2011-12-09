@@ -1,9 +1,8 @@
 <?php
-// $Id$
 /**
  *   CiteProc-PHP
  *
- *   Copyright (C) 2010  Ron Jerome, all rights reserved
+ *   Copyright (C) 2010 - 2011  Ron Jerome, all rights reserved
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -80,7 +79,7 @@ class citeproc {
   }
   function render($data, $mode = NULL) {
     $text = '';
-    switch($mode) {
+    switch ($mode) {
       case 'citation':
         $text .=  (isset($this->citation))? $this->citation->render($data) : '';
         break;
@@ -305,7 +304,8 @@ class csl_format extends csl_rendering_element {
           $text = mb_convert_case($text, MB_CASE_TITLE);
           break;
         case 'capitalize-first':
-          $text[0] = mb_strtoupper($text[0]);
+          $chr1 = mb_strtoupper(mb_substr($text, 0, 1));
+          $text = $chr1 . mb_substr($text, 1);
           break;
       }
     }
@@ -510,7 +510,8 @@ class csl_name extends csl_format {
           $text = mb_convert_case($text, MB_CASE_TITLE);
           break;
         case 'capitalize-first':
-          $text[0] = mb_strtoupper($text[0]);
+          $chr1 = mb_strtoupper(mb_substr($text, 0, 1));
+          $text = $chr1 . mb_substr($text, 1);
           break;
       }
     }
@@ -612,7 +613,7 @@ class csl_name extends csl_format {
         $authors[] = $this->etal->render();
       }
       else {
-      $authors[] = $this->citeproc->get_locale('term', 'et-al');
+        $authors[] = $this->citeproc->get_locale('term', 'et-al');
       }
       $et_al_triggered = TRUE;
     }
@@ -641,12 +642,12 @@ class csl_name extends csl_format {
           return $text;
           break;
         case 'never':
-          return substr_replace($text, '', $last_delim, strlen($this->delimiter));
+          return substr_replace($text, ' ', $last_delim, strlen($this->delimiter));
           break;
         case 'contextual':
         default:
           if ($auth_count < 3) {
-            return substr_replace($text, '', $last_delim, strlen($this->delimiter));
+            return substr_replace($text, ' ', $last_delim, strlen($this->delimiter));
           }
       }
     }
@@ -1062,7 +1063,7 @@ class csl_text extends csl_format {
 
   }
 
-  function render($data, $mode) {
+  function render($data = NULL, $mode = NULL) {
     $text = '';
 
     switch ($this->source) {
@@ -1178,6 +1179,7 @@ class csl_group extends csl_format{
       }
 
       $text = $element->render($data, $mode);
+
       if (!empty($text)) {
         $text_parts[] = $text;
         if ($element->source == 'variable' || isset($element->variable)) $have_variables++;
@@ -1365,7 +1367,6 @@ class csl_if extends csl_rendering_element {
             }
           }
           if (is_numeric($data->$var)) $matches++;
-
         }
       }
       if ($match == 'all' && $matches == count($variables)) return TRUE;
