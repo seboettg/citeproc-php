@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<locale xmlns="http://purl.org/net/xbiblio/csl" version="1.0" xml:lang="en-US">
-  <style-options punctuation-in-quote="true"/>
+<locale xmlns="http://purl.org/net/xbiblio/csl" version="1.0" xml:lang="km-KH">
+  <style-options punctuation-in-quote="false"/>
   <date form="text">
-    <date-part name="month" suffix=" "/>
-    <date-part name="day" form="numeric-leading-zeros" suffix=", "/>
+    <date-part name="day" form="numeric" suffix="​"/>
+    <date-part name="month" suffix="​"/>
     <date-part name="year"/>
   </date>
   <date form="numeric">
-    <date-part name="month" form="numeric-leading-zeros" suffix="/"/>
     <date-part name="day" form="numeric-leading-zeros" suffix="/"/>
+    <date-part name="month" form="numeric-leading-zeros" suffix="/"/>
     <date-part name="year"/>
   </date>
   <terms>
@@ -30,7 +30,7 @@
     <term name="et-al">et al.</term>
     <term name="forthcoming">forthcoming</term>
     <term name="from">from</term>
-    <term name="ibid">ibid.</term>
+    <term name="ibid">ibid</term>
     <term name="in">in</term>
     <term name="in press">in press</term>
     <term name="internet">internet</term>
@@ -67,95 +67,95 @@
     <term name="ordinal-04">th</term>
 
     <!-- LONG ORDINALS -->
-    <term name="long-ordinal-01">first</term>
-    <term name="long-ordinal-02">second</term>
-    <term name="long-ordinal-03">third</term>
-    <term name="long-ordinal-04">fourth</term>
-    <term name="long-ordinal-05">fifth</term>
-    <term name="long-ordinal-06">sixth</term>
-    <term name="long-ordinal-07">seventh</term>
-    <term name="long-ordinal-08">eighth</term>
-    <term name="long-ordinal-09">ninth</term>
-    <term name="long-ordinal-10">tenth</term>
+    <term name="long-ordinal-01">ទីមួយ</term>
+    <term name="long-ordinal-02">ទីពីរ</term>
+    <term name="long-ordinal-03">ទីបី</term>
+    <term name="long-ordinal-04">ទីបួន</term>
+    <term name="long-ordinal-05">ទីប្រាំ</term>
+    <term name="long-ordinal-06">ទីប្រាំមួយ</term>
+    <term name="long-ordinal-07">ទីប្រាំពីរ</term>
+    <term name="long-ordinal-08">ទីប្រាំបី</term>
+    <term name="long-ordinal-09">ទីប្រាំបួន</term>
+    <term name="long-ordinal-10">ទីដប់មួយ</term>
 
     <!-- CATEGORIES -->
-    <term name="anthropology">anthropology</term>
-    <term name="astronomy">astronomy</term>
-    <term name="biology">biology</term>
-    <term name="botany">botany</term>
-    <term name="chemistry">chemistry</term>
-    <term name="engineering">engineering</term>
+    <term name="anthropology">នរវិទ្យា</term>
+    <term name="astronomy">តារាវិទ្យា</term>
+    <term name="biology">ជីវវិទ្យា</term>
+    <term name="botany">រុក្ខវិទ្យា</term>
+    <term name="chemistry">គីមីវិទ្យា</term>
+    <term name="engineering">វិស្វកម្ម</term>
     <term name="generic-base">generic base</term>
-    <term name="geography">geography</term>
-    <term name="geology">geology</term>
-    <term name="history">history</term>
-    <term name="humanities">humanities</term>
-    <term name="linguistics">linguistics</term>
-    <term name="literature">literature</term>
-    <term name="math">math</term>
-    <term name="medicine">medicine</term>
-    <term name="philosophy">philosophy</term>
-    <term name="physics">physics</term>
-    <term name="psychology">psychology</term>
-    <term name="sociology">sociology</term>
-    <term name="science">science</term>
-    <term name="political_science">political science</term>
-    <term name="social_science">social science</term>
-    <term name="theology">theology</term>
-    <term name="zoology">zoology</term>
+    <term name="geography">ភូមិវិទ្យា</term>
+    <term name="geology">ភូគព្ភវិទ្យា</term>
+    <term name="history">ប្រវត្តិវិទ្យា</term>
+    <term name="humanities">មនុស្សវិទ្យា</term>
+    <term name="linguistics">ភាសាវិទ្យា</term>
+    <term name="literature">អក្សរសាស្ត្រ</term>
+    <term name="math">គណិតវិទ្យា</term>
+    <term name="medicine">វេជ្ជសាស្ត្រ</term>
+    <term name="philosophy">ទស្សនវិទ្យា</term>
+    <term name="physics">រូបវិទ្យា</term>
+    <term name="psychology">ចិត្តវិទ្យា</term>
+    <term name="sociology">សង្គមវិទ្យា</term>
+    <term name="science">វិទ្យាសាស្ត្រ</term>
+    <term name="political_science">វិទ្យាសាស្ត្រនយោបាយ</term>
+    <term name="social_science">សង្គមវិទ្យា</term>
+    <term name="theology">ទេវវិទ្យា</term>
+    <term name="zoology">សត្តវិទ្យា</term>
 
     <!-- LONG LOCATOR FORMS -->
     <term name="book">
-      <single>book</single>
-      <multiple>books</multiple>
+      <single>សៀវភៅ</single>
+      <multiple>សៀវភៅ</multiple>
     </term>
     <term name="chapter">
-      <single>chapter</single>
-      <multiple>chapters</multiple>
+      <single>ជំពូក</single>
+      <multiple>ជំពូក</multiple>
     </term>
     <term name="column">
-      <single>column</single>
-      <multiple>columns</multiple>
+      <single>កាឡោន</single>
+      <multiple>កាឡោន</multiple>
     </term>
     <term name="figure">
-      <single>figure</single>
-      <multiple>figures</multiple>
+      <single>តួលេខ</single>
+      <multiple>តួលេខ</multiple>
     </term>
     <term name="folio">
       <single>folio</single>
       <multiple>folios</multiple>
     </term>
     <term name="issue">
-      <single>number</single>
-      <multiple>numbers</multiple>
+      <single>ចំនួន</single>
+      <multiple>ចំនួន</multiple>
     </term>
     <term name="line">
-      <single>line</single>
-      <multiple>lines</multiple>
+      <single>បន្ទាត់</single>
+      <multiple>បន្ទាត់</multiple>
     </term>
     <term name="note">
-      <single>note</single>
-      <multiple>notes</multiple>
+      <single>កំណត់ចំណាំ</single>
+      <multiple>កំណត់ចំណាំ</multiple>
     </term>
     <term name="opus">
       <single>opus</single>
       <multiple>opera</multiple>
     </term>
     <term name="page">
-      <single>page</single>
-      <multiple>pages</multiple>
+      <single>ទំព័រ</single>
+      <multiple>ទំព័រ</multiple>
     </term>
     <term name="paragraph">
-      <single>paragraph</single>
-      <multiple>paragraph</multiple>
+      <single>កថាខណ្ឌ</single>
+      <multiple>កថាខណ្ឌ</multiple>
     </term>
     <term name="part">
-      <single>part</single>
-      <multiple>parts</multiple>
+      <single>ជំពូក</single>
+      <multiple>ជំពូក</multiple>
     </term>
     <term name="section">
-      <single>section</single>
-      <multiple>sections</multiple>
+      <single>ផ្នែក</single>
+      <multiple>ផ្នែក</multiple>
     </term>
     <term name="sub verbo">
       <single>sub verbo</single>
@@ -166,8 +166,8 @@
       <multiple>verses</multiple>
     </term>
     <term name="volume">
-      <single>volume</single>
-      <multiple>volumes</multiple>
+      <single>វ៉ុល</single>
+      <multiple>វ៉ុល</multiple>
     </term>
 
     <!-- SHORT LOCATOR FORMS -->
@@ -218,12 +218,12 @@
       <multiple>editors</multiple>
     </term>
     <term name="editorial-director">
-      <single>editor</single>
+      <single/>
       <multiple>editors</multiple>
     </term>
     <term name="translator">
       <single>translator</single>
-      <multiple>translators</multiple>
+      <multiple>translator</multiple>
     </term>
     <term name="editortranslator">
       <single>editor &amp; translator</single>
@@ -268,18 +268,18 @@
     <term name="editortranslator" form="verb-short">ed. &amp; trans. by</term>
 
     <!-- LONG MONTH FORMS -->
-    <term name="month-01">January</term>
-    <term name="month-02">February</term>
-    <term name="month-03">March</term>
-    <term name="month-04">April</term>
-    <term name="month-05">May</term>
-    <term name="month-06">June</term>
-    <term name="month-07">July</term>
-    <term name="month-08">August</term>
-    <term name="month-09">September</term>
-    <term name="month-10">October</term>
-    <term name="month-11">November</term>
-    <term name="month-12">December</term>
+    <term name="month-01">មករា</term>
+    <term name="month-02">កុម្ភៈ</term>
+    <term name="month-03">មីនា</term>
+    <term name="month-04">មេសា</term>
+    <term name="month-05">ឧសភា</term>
+    <term name="month-06">មិថុនា</term>
+    <term name="month-07">កក្កដា</term>
+    <term name="month-08">សីហា</term>
+    <term name="month-09">កញ្ញា</term>
+    <term name="month-10">តុលា</term>
+    <term name="month-11">វិច្ឆិកា</term>
+    <term name="month-12">ធ្នូ</term>
 
     <!-- SHORT MONTH FORMS -->
     <term name="month-01" form="short">Jan.</term>

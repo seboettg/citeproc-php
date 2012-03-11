@@ -1,42 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<terms xmlns="http://purl.org/net/xbiblio/csl">
-  <locale xml:lang="ar">
-    <term name="at">عند</term>
-    <term name="in">في</term>
-    <term name="ibid">آيبيد</term>
-    <term name="accessed">زير</term>
-    <term name="retrieved">جلب</term>
-    <term name="from">من</term>
-    <term name="forthcoming">القادم</term>
-    <term name="references">مراجع</term>
-    <term name="reference item">
-      <single>source</single>
-      <multiple>sources</multiple>
-    </term>
-    <term name="no date"/>
+<locale xmlns="http://purl.org/net/xbiblio/csl" version="1.0" xml:lang="ar-AR">
+  <style-options punctuation-in-quote="false"/>
+  <date form="text">
+    <date-part name="day" suffix=" "/>
+    <date-part name="month" suffix=", "/>
+    <date-part name="year"/>
+  </date>
+  <date form="numeric">
+    <date-part name="day" suffix="/"/>
+    <date-part name="month" form="numeric" suffix="/"/>
+    <date-part name="year"/>
+  </date>
+  <terms>
+    <term name="accessed">تاريخ الوصول</term>
     <term name="and">و</term>
-    <term name="et-al">et al.</term>
-    <term name="interview">مقابلة</term>
-    <term name="letter">رسالة</term>
+    <term name="and others">وآخرون</term>
     <term name="anonymous">مجهول</term>
     <term name="anonymous" form="short">مجهول</term>
-    <term name="and others">وآخرون</term>
-    <term name="in press">تحت الطبع</term>
-    <term name="online">ربط مباشر</term>
-    <term name="cited">وثِّقَ</term>
-    <term name="internet">الإنترنت</term>
+    <term name="at">عند</term>
+    <term name="by">عن طريق</term>
+    <term name="circa">حوالي</term>
+    <term name="circa" form="short">حو.</term>
+    <term name="cited">وثق</term>
+    <term name="edition">
+      <single>الطبعة</single>
+      <multiple>الطبعات</multiple>
+    </term>
+    <term name="edition" form="short">ط.</term>
+    <term name="et-al">وآخ.</term>
+    <term name="forthcoming">التالي</term>
+    <term name="from">من</term>
+    <term name="ibid">المرجع السابق</term>
+    <term name="in">في</term>
+    <term name="in press">قيد النشر</term>
+    <term name="internet">انترنت</term>
+    <term name="interview">مقابلة</term>
+    <term name="letter">خطاب</term>
+    <term name="no date">دون تاريخ</term>
+    <term name="no date" form="short">د.ت</term>
+    <term name="online">على الخط المباشر</term>
     <term name="presented at">قُدَّم في</term>
-    <term name="anthropology">علم الإنسان</term>
-    <term name="astronomy">علم الفلك</term>
-    <term name="biology">علم الأحياء</term>
-    <term name="botany">علم النبات</term>
-    <term name="chemistry">علم الكيمياء</term>
+    <term name="reference">
+      <single>مرجع</single>
+      <multiple>مراجع</multiple>
+    </term>
+    <term name="reference" form="short">
+      <single>مرجع</single>
+      <multiple>مراجع</multiple>
+    </term>
+    <term name="retrieved">استرجع في</term>
+
+    <!-- ANNO DOMINI; BEFORE CHRIST -->
+    <term name="ad">ب.م.</term>
+    <term name="bc">ق.م.</term>
+
+    <!-- QUOTES -->
+    <!-- Source: http://www.w3.org/International/tutorials/bidi-xhtml/ -->
+    <!-- Use of single straight quote for inner is a guess -->
+    <term name="open-quote">"</term>
+    <term name="close-quote">"</term>
+    <term name="open-inner-quote">'</term>
+    <term name="close-inner-quote">'</term>
+
+    <!-- ORDINALS st., nd., rd.-->
+    <term name="ordinal-01"/>
+    <term name="ordinal-02"/>
+    <term name="ordinal-03"/>
+    <term name="ordinal-04"/>
+
+    <!-- LONG ORDINALS -->
+    <term name="long-ordinal-01">الاول</term>
+    <term name="long-ordinal-02">الثاني</term>
+    <term name="long-ordinal-03">الثالث</term>
+    <term name="long-ordinal-04">الرابع</term>
+    <term name="long-ordinal-05">الخامس</term>
+    <term name="long-ordinal-06">السادس</term>
+    <term name="long-ordinal-07">السابع</term>
+    <term name="long-ordinal-08">الثامن</term>
+    <term name="long-ordinal-09">التاسع</term>
+    <term name="long-ordinal-10">العاشر</term>
+
+    <!-- CATEGORIES -->
+    <term name="anthropology">الاناسة</term>
+    <term name="astronomy">الفلك</term>
+    <term name="biology">الأحياء</term>
+    <term name="botany">النبات</term>
+    <term name="chemistry">الكيمياء</term>
     <term name="engineering">الهندسة</term>
-    <term name="generic-base">أساس عام</term>
-    <term name="geography">جغرافيا</term>
-    <term name="geology">علم الأرض</term>
+    <term name="generic-base">العلوم العامة</term>
+    <term name="geography">الجغرافيا</term>
+    <term name="geology">الجيولوجيا</term>
     <term name="history">التاريخ</term>
     <term name="humanities">الإنسانيات</term>
+    <term name="linguistics">اللغويات</term>
     <term name="literature">الأدب</term>
     <term name="math">الرياضيات</term>
     <term name="medicine">الطب</term>
@@ -44,14 +100,16 @@
     <term name="physics">الفيزياء</term>
     <term name="psychology">علم النفس</term>
     <term name="sociology">علم الإجتماع</term>
-    <term name="science">العلوم</term>
+    <term name="science">العلوم البحتة</term>
     <term name="political_science">العلوم السياسية</term>
     <term name="social_science">العلوم الإجتماعية</term>
-    <term name="theology">العلوم الإلهية</term>
+    <term name="theology">الإلهيات</term>
     <term name="zoology">علم الحيوان</term>
+
+    <!-- LONG LOCATOR FORMS -->
     <term name="book">
       <single>كتاب</single>
-      <multiple>كُتُب</multiple>
+      <multiple>كتب</multiple>
     </term>
     <term name="chapter">
       <single>فصل</single>
@@ -82,8 +140,8 @@
       <multiple>ملاحظات</multiple>
     </term>
     <term name="opus">
-      <single>قطعة موسيقية</single>
-      <multiple>أوبرا</multiple>
+      <single>نوته موسيقية</single>
+      <multiple>نوت موسيقية</multiple>
     </term>
     <term name="page">
       <single>صفحة</single>
@@ -101,50 +159,48 @@
       <single>قسم</single>
       <multiple>أقسام</multiple>
     </term>
+    <term name="sub verbo">
+      <single>تفسير فرعي</single>
+      <multiple>تفسيرات فرعية</multiple>
+    </term>
+    <term name="verse">
+      <single>بيت شعر</single>
+      <multiple>أبيات شعر</multiple>
+    </term>
     <term name="volume">
       <single>مجلد</single>
       <multiple>مجلدات</multiple>
     </term>
-    <term name="edition">
-      <single>الطبعة</single>
-      <multiple>الطبعات</multiple>
-    </term>
-    <term name="verse">
-      <single>بيت</single>
-      <multiple>أبيات</multiple>
-    </term>
-    <term name="sub verbo">
-      <single>sub verbo</single>
-      <multiple>s.vv</multiple>
-    </term>
-    <term name="book" form="short">ك</term>
-    <term name="chapter" form="short">ف</term>
-    <term name="column" form="short">عم</term>
-    <term name="figure" form="short">ر</term>
-    <term name="folio" form="short">و</term>
-    <term name="issue" form="short">عد</term>
-    <term name="opus" form="short">مم</term>
+
+    <!-- SHORT LOCATOR FORMS -->
+    <term name="book" form="short">كتاب</term>
+    <term name="chapter" form="short">فصل</term>
+    <term name="column" form="short">عمود</term>
+    <term name="figure" form="short">رسم توضيحي</term>
+    <term name="folio" form="short">مطوية</term>
+    <term name="issue" form="short">عدد</term>
+    <term name="opus" form="short">نوتة موسيقية</term>
     <term name="page" form="short">
       <single>ص</single>
-      <multiple>ص.ص</multiple>
+      <multiple>ص.ص.</multiple>
     </term>
-    <term name="paragraph" form="short">فق</term>
-    <term name="part" form="short">جز</term>
-    <term name="section" form="short">ق</term>
+    <term name="paragraph" form="short">فقرة</term>
+    <term name="part" form="short">ج.</term>
+    <term name="section" form="short">قسم</term>
     <term name="sub verbo" form="short">
-      <single>s.v</single>
-      <multiple>s.vv</multiple>
+      <single>تفسير فرعي</single>
+      <multiple>تفسيرات فرعية</multiple>
     </term>
     <term name="verse" form="short">
-      <single>ب</single>
-      <multiple>بب</multiple>
+      <single>بيت شعر</single>
+      <multiple>أبيات شعر</multiple>
     </term>
     <term name="volume" form="short">
-      <single>مج</single>
-      <multiple>مجج</multiple>
+      <single>مج.</single>
+      <multiple>مج.</multiple>
     </term>
-    <term name="edition">edition</term>
-    <term name="edition" form="short">ط</term>
+
+    <!-- SYMBOL LOCATOR FORMS -->
     <term name="paragraph" form="symbol">
       <single>¶</single>
       <multiple>¶¶</multiple>
@@ -153,36 +209,67 @@
       <single>§</single>
       <multiple>§§</multiple>
     </term>
+
+    <!-- LONG ROLE FORMS -->
     <term name="author">
-      <single/>
-      <multiple/>
+      <single>مؤلف</single>
+      <multiple>مؤلفين</multiple>
     </term>
     <term name="editor">
-      <single>تحرير</single>
-      <multiple>تحرير</multiple>
+      <single>محرر</single>
+      <multiple>محررين</multiple>
+    </term>
+    <term name="editorial-director">
+      <single>رئيس التحرير</single>
+      <multiple>رؤساء التحرير</multiple>
     </term>
     <term name="translator">
-      <single>ترجمة</single>
-      <multiple>ترجمة</multiple>
+      <single>مترجم</single>
+      <multiple>مترجمين</multiple>
     </term>
+    <term name="editortranslator">
+      <single>مترجم ومحرر</single>
+      <multiple>مترجمين ومحررين</multiple>
+    </term>
+
+    <!-- SHORT ROLE FORMS -->
     <term name="author" form="short">
-      <single/>
-      <multiple/>
+      <single>مؤلف</single>
+      <multiple>مؤلفين</multiple>
     </term>
     <term name="editor" form="short">
-      <single>مح</single>
-      <multiple>محح</multiple>
+      <single>محرر</single>
+      <multiple>محررين</multiple>
+    </term>
+    <term name="editorial-director" form="short">
+      <single>مشرف على الطبعة</single>
+      <multiple>مشرفين على الطبعة</multiple>
     </term>
     <term name="translator" form="short">
-      <single>تر</single>
-      <multiple>ترر</multiple>
+      <single>مترجم</single>
+      <multiple>مترجمين</multiple>
     </term>
-    <term name="editor" form="verb">حرره</term>
-    <term name="translator" form="verb">ترجمه</term>
-    <term name="recipient" form="verb">إلى</term>
+    <term name="editortranslator" form="short">
+      <single>مترجم ومشرف على الطباعه</single>
+      <multiple>مترجمين ومشرفين على الطباعه</multiple>
+    </term>
+
+    <!-- VERB ROLE FORMS -->
+    <term name="editor" form="verb">تحرير</term>
+    <term name="editorial-director" form="verb">اعداد</term>
+    <term name="translator" form="verb">ترجمة</term>
+    <term name="editortranslator" form="verb">اعداد وترجمة</term>
+    <term name="recipient" form="verb">مرسل الى</term>
     <term name="interviewer" form="verb">مقابلة بواسطة</term>
-    <term name="editor" form="verb-short">مح</term>
-    <term name="translator" form="verb-short">مت</term>
+
+    <!-- SHORT VERB ROLE FORMS -->
+    <term name="container-author" form="verb-short"></term>
+    <term name="editor" form="verb-short">تحرير</term>
+    <term name="editorial-director" form="verb-short">اشرف على الطبعة</term>
+    <term name="translator" form="verb-short">ترجمة</term>
+    <term name="editortranslator" form="verb-short">ترجمه واشرف على الطباعه</term>
+
+    <!-- LONG MONTH FORMS -->
     <term name="month-01">يناير</term>
     <term name="month-02">فبراير</term>
     <term name="month-03">مارس</term>
@@ -195,6 +282,8 @@
     <term name="month-10">اكتوبر</term>
     <term name="month-11">نوفمبر</term>
     <term name="month-12">ديسمبر</term>
+
+    <!-- SHORT MONTH FORMS -->
     <term name="month-01" form="short">يناير</term>
     <term name="month-02" form="short">فبراير</term>
     <term name="month-03" form="short">مارس</term>
@@ -207,5 +296,11 @@
     <term name="month-10" form="short">اكتوبر</term>
     <term name="month-11" form="short">نوفمبر</term>
     <term name="month-12" form="short">ديسمبر</term>
-  </locale>
-</terms>
+
+    <!-- SEASONS -->
+    <term name="season-01">الربيع</term>
+    <term name="season-02">الصيف</term>
+    <term name="season-03">الخريف</term>
+    <term name="season-04">الشتاء</term>
+  </terms>
+</locale>
