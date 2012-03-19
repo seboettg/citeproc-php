@@ -603,7 +603,8 @@ class csl_name extends csl_format {
     }
     if (isset($this->{'et-al-min'}) &&
     $count >= $this->{'et-al-min'} &&
-    isset($this->{'et-al-use-first'})) {
+    isset($this->{'et-al-use-first'}) &&
+    $count > $this->{'et-al-use-first'}) {
       if ($this->{'et-al-use-first'} < $this->{'et-al-min'}) {
         for ($i = $this->{'et-al-use-first'}; $i < $count; $i++) {
           unset($authors[$i]);
