@@ -824,7 +824,7 @@ class csl_names extends csl_format {
         foreach ($this->substitutes->elements as $element) {
           if (($element instanceof csl_names)) { //test to see if any of the other names variables has content
             $sub_variables  = explode(' ', $element->variable);
-            foreach ($variables as $var) {
+            foreach ($sub_variables as $var) {
               if (isset($data->{$var}) ) {
                 $matches[] =  $var;
                 $this->citeproc->quash[] = $var;
