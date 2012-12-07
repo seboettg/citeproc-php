@@ -1,0 +1,23 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><macro name=\"title-or-title-and-translator\">\n    <choose>\n      <if type=\"webpage\">\n        <text macro=\"title\"/>\n      </if>\n      <else>\n        <text macro=\"title\" suffix=\", \"/>\n        <names variable=\"translator\">\n          <name/>\n        </names>\n      </else>\n    </choose></macro><macro name=\"title\">\n    <text variable=\"title\"/></macro><citation>\n    <layout>\n      <group delimiter=\": \">\n        <names variable=\"author\">\n          <name name-as-sort-order=\"all\">\n            <name-part name=\"family\" text-case=\"uppercase\"/>\n          </name>\n          <substitute>\n            <text macro=\"title-or-title-and-translator\"/>\n          </substitute>\n        </names>\n        <text variable=\"title\" text-case=\"uppercase\"/>\n      </group>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Smith", 
+                    "given": "John"
+                }
+            ], 
+            "id": "ITEM-1", 
+            "title": "This is a pen that is a <span class=\"nocase\">Smith</span> pencil", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "SMITH, John: THIS IS A PEN THAT IS A SMITH PENCIL"
+}
