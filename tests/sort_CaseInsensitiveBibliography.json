@@ -1,0 +1,30 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><macro name=\"author\">\n    <names variable=\"author\">\n      <name name-as-sort-order=\"all\" and=\"symbol\" sort-separator=\", \" \n            initialize-with=\".\" delimiter-precedes-last=\"never\" delimiter=\", \"/>\n      <label form=\"short\" prefix=\" (\" suffix=\".)\" text-case=\"capitalize-first\"/>\n      <substitute>\n        <names variable=\"editor\"/>\n        <text value=\"Anon\"/>\n      </substitute>\n    </names></macro><citation>\n    <layout>\n      <text value=\"dummy\"/>\n    </layout></citation><bibliography>\n    <sort>\n      <key macro=\"author\"/>\n    </sort>\n    <layout>\n      <text macro=\"author\"/>\n    </layout></bibliography></style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "ABC"
+                }
+            ], 
+            "id": "ITEM-1", 
+            "type": "book"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Aaa"
+                }
+            ], 
+            "id": "ITEM-2", 
+            "type": "book"
+        }
+    ], 
+    "mode": "bibliography", 
+    "result": "<div class=\"csl-bib-body\"><div class=\"csl-entry\">Aaa</div><div class=\"csl-entry\">ABC</div></div>"
+}

@@ -1,0 +1,109 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": [
+        [
+            {
+                "citationID": "CITATION-1", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-1"
+                    }, 
+                    {
+                        "id": "ITEM-2"
+                    }, 
+                    {
+                        "id": "ITEM-3"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 1
+                }
+            }, 
+            [], 
+            []
+        ]
+    ], 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"in-text\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info>\n   <macro name=\"author\">\n      <names variable=\"author\">\n         <name name-as-sort-order=\"first\" and=\"text\" sort-separator=\", \" delimiter=\", \" form=\"long\" delimiter-precedes-last=\"always\" initialize-with=\". \"/>\n         <label form=\"short\" prefix=\" (\" suffix=\".)\" text-case=\"capitalize-first\" strip-periods=\"true\"/>\n         <substitute>\n            <names variable=\"editor\"/>\n         </substitute>\n      </names>\n   </macro>\n   <macro name=\"author-short\">\n      <names variable=\"author\">\n         <name form=\"short\" and=\"text\" delimiter=\", \" initialize-with=\". \"/>\n         <substitute>\n            <names variable=\"editor\"/>\n            <names variable=\"translator\"/>\n         </substitute>\n      </names>\n   </macro>\n   <macro name=\"year-date\">\n      <choose>\n         <if variable=\"issued\">\n            <date variable=\"issued\">\n               <date-part name=\"year\"/>\n            </date>\n         </if>\n         <else>\n            <text term=\"no date\" form=\"short\"/>\n         </else>\n      </choose>\n   </macro>\n   <citation et-al-min=\"3\" et-al-use-first=\"1\" et-al-subsequent-min=\"3\" et-al-subsequent-use-first=\"1\" disambiguate-add-year-suffix=\"true\" disambiguate-add-names=\"false\" disambiguate-add-givenname=\"false\" collapse=\"year\">\n      <sort>\n         <key macro=\"author\"/>\n         <key macro=\"year-date\"/>\n      </sort>\n      <layout prefix=\"[\" suffix=\"]\" delimiter=\"; \">\n         <group delimiter=\", \">\n            <group delimiter=\", \">\n               <text macro=\"author-short\" font-style=\"italic\"/>\n               <text macro=\"year-date\"/>\n            </group>\n            <text variable=\"locator\" prefix=\"p.\"/>\n         </group>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Aalto", 
+                    "given": "Alan"
+                }, 
+                {
+                    "family": "Quintuffle", 
+                    "given": "Qlark"
+                }, 
+                {
+                    "family": "Crank", 
+                    "given": "Christoper"
+                }
+            ], 
+            "id": "ITEM-1", 
+            "issued": {
+                "date-parts": [
+                    [
+                        2001
+                    ]
+                ]
+            }, 
+            "type": "book"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Aalto", 
+                    "given": "Alan"
+                }, 
+                {
+                    "family": "Baseballhat", 
+                    "given": "Bernie"
+                }, 
+                {
+                    "family": "Crank", 
+                    "given": "Christoper"
+                }
+            ], 
+            "id": "ITEM-2", 
+            "issued": {
+                "date-parts": [
+                    [
+                        1999
+                    ]
+                ]
+            }, 
+            "type": "book"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Aalto", 
+                    "given": "Alan"
+                }, 
+                {
+                    "family": "Zipgpot", 
+                    "given": "Zody"
+                }, 
+                {
+                    "family": "Crank", 
+                    "given": "Christoper"
+                }
+            ], 
+            "id": "ITEM-3", 
+            "issued": {
+                "date-parts": [
+                    [
+                        2000
+                    ]
+                ]
+            }, 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": ">>[0] [<i>Aalto et al.</i>, 1999, 2000, 2001]"
+}

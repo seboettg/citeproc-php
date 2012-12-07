@@ -1,0 +1,17 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><citation>\n    <layout suffix=\".\">\n      <text variable=\"title\" text-case=\"title\"/>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "id": "ITEM-1", 
+            "title": "One but two or three yet four so five for six and seven nor eight a nine an ten the eleven at twelve by thirteen from fourteen in fifteen into sixteen of seventeen on eighteen to nineteen with twenty up twenty-one down twenty-two as twenty-three via twenty-four till twenty-five onto twenty-six over twenty-seven.", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "One but Two or Three yet Four so Five for Six and Seven nor Eight a Nine an Ten the Eleven at Twelve by Thirteen from Fourteen in Fifteen into Sixteen of Seventeen on Eighteen to Nineteen with Twenty up Twenty-one down Twenty-two as Twenty-three via Twenty-four till Twenty-five onto Twenty-six over Twenty-seven."
+}

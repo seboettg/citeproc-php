@@ -1,0 +1,120 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": [
+        [
+            {
+                "citationID": "CITATION-1", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-1"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 1
+                }
+            }, 
+            [], 
+            []
+        ], 
+        [
+            {
+                "citationID": "CITATION-2", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-2"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 1
+                }
+            }, 
+            [
+                [
+                    "CITATION-1", 
+                    1
+                ]
+            ], 
+            []
+        ], 
+        [
+            {
+                "citationID": "CITATION-3", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-2"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 2
+                }
+            }, 
+            [
+                [
+                    "CITATION-1", 
+                    1
+                ], 
+                [
+                    "CITATION-2", 
+                    1
+                ]
+            ], 
+            []
+        ], 
+        [
+            {
+                "citationID": "CITATION-4", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-2"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 3
+                }
+            }, 
+            [
+                [
+                    "CITATION-1", 
+                    1
+                ], 
+                [
+                    "CITATION-2", 
+                    1
+                ], 
+                [
+                    "CITATION-3", 
+                    2
+                ]
+            ], 
+            []
+        ]
+    ], 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><macro name=\"author\">\n    <names variable=\"author\">\n      <name form=\"short\" />\n    </names></macro><citation>\n    <sort>\n      <key macro=\"author\" />\n    </sort>\n    <layout delimiter=\"; \">\n      <choose>\n        <if position=\"ibid\">\n          <text term=\"ibid\"/>\n        </if>\n        <else>\n          <text macro=\"author\" />\n        </else>\n      </choose>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Aalto", 
+                    "given": "Alan"
+                }
+            ], 
+            "id": "ITEM-1", 
+            "type": "book"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Álvarez", 
+                    "given": "Ajax"
+                }
+            ], 
+            "id": "ITEM-2", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "..[0] Aalto\n..[1] Álvarez\n..[2] Álvarez\n>>[3] Ibid."
+}

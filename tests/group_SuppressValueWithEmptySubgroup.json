@@ -1,0 +1,16 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><citation>\n    <layout>\n      <text variable=\"title\"/>\n      <group prefix=\", \">\n         <text value=\"Disponible sur : \" prefix=\" \"/>\n         <group prefix=\"&lt; \" suffix=\" &gt;\">\n            <choose>\n               <if variable=\"DOI\">\n                  <text variable=\"DOI\"/>\n               </if>\n               <else>\n                  <text variable=\"URL\"/>\n               </else>\n            </choose>\n         </group>\n      </group>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "title": "His Anonymous Life", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "His Anonymous Life"
+}

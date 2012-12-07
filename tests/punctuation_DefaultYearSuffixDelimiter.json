@@ -1,0 +1,85 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": [
+        [
+            {
+                "citationID": "CITATION-1", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-1"
+                    }, 
+                    {
+                        "id": "ITEM-2"
+                    }, 
+                    {
+                        "id": "ITEM-3"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 1
+                }
+            }, 
+            [], 
+            []
+        ]
+    ], 
+    "csl": "<?xml version=\"1.0\" encoding=\"utf-8\"?><style xmlns=\"http://purl.org/net/xbiblio/csl\" class=\"in-text\" version=\"1.0\" demote-non-dropping-particle=\"sort-only\"><info>\n    <title>British Ecological Society Journals</title>\n    <id>http://www.zotero.org/styles/besj</id>\n    <link href=\"http://www.zotero.org/styles/besj\" rel=\"self\"/>\n    <link href=\"http://www.functionalecology.org/view/0/authorGuideline.html\" rel=\"documentation\"/>\n    <author>\n      <name>Johan Asplund</name>\n      <email>asplundj@gmail.com</email>\n    </author>\n    <contributor>\n      <name> Sebastian Karcher</name>\n    </contributor>\n    <category field=\"biology\"/>\n    <category field=\"generic-base\"/>\n    <updated>2009-01-24T10:42:15+00:00</updated>\n    <rights>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License: http://creativecommons.org/licenses/by-sa/3.0/</rights></info><macro name=\"editor-translator\">\n    <names variable=\"editor translator\" prefix=\"(\" suffix=\")\" delimiter=\", \">\n      <label form=\"short\" suffix=\" \" text-case=\"lowercase\" strip-periods=\"true\"/>      \n      <name and=\"text\" initialize-with=\"\" delimiter=\", \"/>\n    </names></macro><macro name=\"author\">\n    <names variable=\"author\">\n      <name name-as-sort-order=\"all\" and=\"symbol\" sort-separator=\", \" initialize-with=\".\" delimiter=\", \" delimiter-precedes-last=\"never\"/>\n      <label form=\"short\" prefix=\" (\" suffix=\")\" text-case=\"lowercase\" strip-periods=\"true\"/>\n      <substitute>\n\t\t<names variable=\"editor\"/>\n\t\t<names variable=\"translator\"/>\n\t\t<text macro=\"title\"/>\n      </substitute>\n    </names></macro><macro name=\"author-short\">\n    <names variable=\"author\">\n      <name form=\"short\" and=\"symbol\" delimiter=\", \" initialize-with=\". \"/>\n      <et-al font-style=\"italic\"/>\n      <substitute>\n\t\t<names variable=\"editor\"/>\n\t\t<names variable=\"translator\"/>\n\t\t<choose>\n\t\t  <if type=\"bill book graphic legal_case motion_picture report song\" match=\"any\">\n\t\t\t<text variable=\"title\" form=\"short\" font-style=\"italic\"/>\n\t\t  </if>\n\t\t  <else>\n\t\t\t<text variable=\"title\" form=\"short\" quotes=\"true\"/>\n\t\t  </else>\n\t\t</choose>\n      </substitute>\n    </names></macro><macro name=\"title\">\n    <choose>\n      <if type=\"bill book thesis graphic legal_case motion_picture report song\" match=\"any\">\n\t\t<text variable=\"title\" font-style=\"italic\" text-case=\"title\"/>\n      </if>\n      <else>\n\t\t<text variable=\"title\" text-case=\"title\"/>\n      </else>\n    </choose></macro><macro name=\"edition\">\n    <choose>\n      <if is-numeric=\"edition\">\n\t\t<group delimiter=\" \">\n\t\t  <number variable=\"edition\" form=\"ordinal\"/>\n\t\t  <text term=\"edition\" form=\"short\" text-case=\"lowercase\" strip-periods=\"true\"/>\n\t\t</group>\n      </if>\n      <else>\n\t\t<text variable=\"edition\"/>\n      </else>\n    </choose></macro><macro name=\"publisher\">\n    <group delimiter=\", \">\n      <text variable=\"genre\"/>\n      <text variable=\"publisher\"/>\n      <text variable=\"publisher-place\"/>\n    </group></macro><citation collapse=\"year-suffix\" et-al-min=\"4\" et-al-use-first=\"1\" et-al-subsequent-min=\"3\" et-al-subsequent-use-first=\"1\" disambiguate-add-year-suffix=\"true\" disambiguate-add-names=\"true\">\n    <sort>\n      <key variable=\"issued\"/>\n      <key variable=\"author\"/>\n    </sort>\n    <layout prefix=\"(\" suffix=\")\" delimiter=\"; \">\n      <group delimiter=\" \">\n\t\t<text macro=\"author-short\"/>\n\t\t<date variable=\"issued\">\n\t\t  <date-part name=\"year\"/>\n\t\t</date>\n\t\t<group>\n\t\t  <label variable=\"locator\" suffix=\".\" form=\"short\" strip-periods=\"true\"/>\n\t\t  <text variable=\"locator\" prefix=\" \"/>\n\t\t</group>\n      </group>\n    </layout></citation><bibliography hanging-indent=\"true\">\n    <sort>\n      <key macro=\"author-short\"/>\n      <key variable=\"issued\"/>\n    </sort>\n    <layout>\n      <text macro=\"author\" suffix=\".\"/>\n      <date variable=\"issued\" prefix=\" (\" suffix=\")\">\n\t\t<date-part name=\"year\"/>\n      </date>\n      <choose>\n\t\t<if type=\"bill book thesis graphic legal_case motion_picture report song\" match=\"any\">\n\t\t  <group suffix=\".\">\n\t\t\t<text macro=\"title\" prefix=\" \"/>\n\t\t\t<text macro=\"edition\" prefix=\", \"/>\n\t\t\t<text macro=\"editor-translator\" prefix=\" \"/>\n\t\t  </group>\n\t\t  <text prefix=\" \" suffix=\".\" macro=\"publisher\"/>\n\t\t</if>\n\t\t<else-if type=\"chapter paper-conference\" match=\"any\">\n\t\t  <text macro=\"title\" prefix=\" \"/>\n\t\t  <group prefix=\".\">\n\t\t\t<group prefix=\"\" suffix=\"\">\n\t\t\t  <text variable=\"container-title\" font-style=\"italic\" prefix=\" \" suffix=\"\"/>\n\t\t\t  <text variable=\"collection-title\" prefix=\" \" suffix=\".\"/>\n\t\t\t  <group suffix=\".\">\n\t\t\t\t<text macro=\"edition\" prefix=\", \"/>\n\t\t\t\t<names variable=\"editor translator\">\n\t\t\t\t  <label form=\"short\" prefix=\" (\" suffix=\" \" strip-periods=\"true\"/>\n\t\t\t\t  <name and=\"symbol\" sort-separator=\", \" initialize-with=\".\" delimiter=\", \" delimiter-precedes-last=\"never\" suffix=\"),\"/>\n\t\t\t\t</names>\n\t\t\t\t<label variable=\"page\" form=\"short\" prefix=\" \" suffix=\". \" strip-periods=\"true\"/>\n\t\t\t\t<text variable=\"page\" suffix=\".\"/>\n\t\t\t\t<text macro=\"publisher\" prefix=\" \"/>\n\t\t\t  </group>\n\t\t\t</group>\n\t\t  </group>\n\t\t</else-if>\n\t\t<else-if type=\"webpage\">\n\t\t  <group prefix=\" \" delimiter=\", \">\n\t\t\t<text variable=\"title\"/>\n\t\t\t<text variable=\"URL\"/>\n\t\t  </group>\n\t\t</else-if>\n\t\t<else>\n\t\t  <group suffix=\".\">\n\t\t\t<text macro=\"title\" prefix=\" \"/>\n\t\t\t<text macro=\"editor-translator\" prefix=\" \"/>\n\t\t  </group>\n\t\t  <group prefix=\" \" suffix=\".\">\n\t\t\t<text variable=\"container-title\" font-style=\"italic\"/>\n\t\t\t<group prefix=\", \">\n\t\t\t  <text variable=\"volume\" font-weight=\"bold\"/>\n\t\t\t</group>\n\t\t\t<text variable=\"page\" prefix=\", \"/>\n\t\t  </group>\n\t\t</else>\n      </choose>\n    </layout></bibliography></style>\n", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Aalto", 
+                    "given": "Alan"
+                }
+            ], 
+            "id": "ITEM-1", 
+            "issued": {
+                "date-parts": [
+                    [
+                        2000
+                    ]
+                ]
+            }, 
+            "type": "book"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Aalto", 
+                    "given": "Alan"
+                }
+            ], 
+            "id": "ITEM-2", 
+            "issued": {
+                "date-parts": [
+                    [
+                        2000
+                    ]
+                ]
+            }, 
+            "type": "book"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Aalto", 
+                    "given": "Alan"
+                }
+            ], 
+            "id": "ITEM-3", 
+            "issued": {
+                "date-parts": [
+                    [
+                        2000
+                    ]
+                ]
+            }, 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": ">>[0] (Aalto 2000a; b; c)"
+}

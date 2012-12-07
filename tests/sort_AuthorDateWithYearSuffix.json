@@ -1,0 +1,141 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": [
+        [
+            {
+                "citationID": "21j4228k5n", 
+                "citationItems": [
+                    {
+                        "id": 30, 
+                        "label": "page"
+                    }, 
+                    {
+                        "id": 32, 
+                        "label": "page"
+                    }, 
+                    {
+                        "id": 29, 
+                        "label": "page"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 0
+                }
+            }, 
+            [], 
+            []
+        ]
+    ], 
+    "csl": "<?xml version=\"1.0\" encoding=\"utf-8\"?><style xmlns=\"http://purl.org/net/xbiblio/csl\" class=\"in-text\" version=\"1.0\" demote-non-dropping-particle=\"sort-only\"><info>\n    <title>The Journal of Neuroscience (Author-Date)</title>\n    <id>http://www.zotero.org/styles/journal-neuroscience</id>\n    <link href=\"http://www.zotero.org/styles/journal-neuroscience\" rel=\"self\"/>\n    <author>\n      <name>Ullrich Bartsch</name>\n      <email>ubartsch@gmail.com</email>\n    </author>\n    <category citation-format=\"author-date\"/>\n    <category field=\"medicine\"/>\n    <updated>2008-01-04T12:25:13+00:00</updated>\n    <summary>The Journal of Neuroscience style</summary>\n    <link href=\"http://www.jneurosci.org/misc/ifa_organization.shtml\" rel=\"documentation\"/>\n    <!-- modified from Harvard1 style by Julian Onions-->\n    <rights>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License: http://creativecommons.org/licenses/by-sa/3.0/</rights></info><!-- Problems:\n       author disambiguation if not in the same citation!--><macro name=\"editor\">\n    <names variable=\"editor\" delimiter=\", \">\n      <name and=\"symbol\" initialize-with=\". \" delimiter=\", \"/>\n      <label form=\"short\" prefix=\", \" text-case=\"lowercase\" suffix=\".\" strip-periods=\"true\"/>\n    </names></macro><macro name=\"anon\">\n    <text term=\"anonymous\" form=\"short\" text-case=\"capitalize-first\" strip-periods=\"true\"/></macro><macro name=\"author-bib\">\n    <names variable=\"author\">\n      <name name-as-sort-order=\"all\" sort-separator=\" \" initialize-with=\"\" delimiter=\", \" delimiter-precedes-last=\"always\"/>\n      <label form=\"short\" prefix=\" \" suffix=\".\" text-case=\"lowercase\" strip-periods=\"true\"/>\n      <substitute>\n\t<names variable=\"editor\"/>\n\t<text macro=\"anon\"/>\n      </substitute>\n    </names></macro><macro name=\"author-cit\">\n    <names variable=\"author\">\n      <name form=\"short\" and=\"text\" delimiter=\" \" initialize-with=\"\"/>\n      <substitute>\n\t<names variable=\"editor\"/>\n\t<names variable=\"translator\"/>\n\t<text macro=\"anon\"/>\n      </substitute>\n    </names></macro><macro name=\"access\">\n    <choose>\n      <if variable=\"URL\">\n\t<text value=\"Available at:\" suffix=\" \"/>\n\t<text variable=\"URL\"/>\n\t<group prefix=\" [\" suffix=\"]\">\n\t  <text term=\"accessed\" text-case=\"capitalize-first\" suffix=\" \"/>\n\t  <date variable=\"accessed\">\n\t    <date-part name=\"month\" suffix=\" \"/>\n\t    <date-part name=\"day\" suffix=\", \"/>\n\t    <date-part name=\"year\"/>\n\t  </date>\n\t</group>\n      </if>\n    </choose></macro><macro name=\"title\">\n    <choose>\n      <if type=\"bill book graphic legal_case motion_picture report song\" match=\"any\">\n\t<text variable=\"title\"/>\n      </if>\n      <else>\n\t<text variable=\"title\"/>\n      </else>\n    </choose></macro><macro name=\"publisher\">\n    <group delimiter=\": \">\n      <text variable=\"publisher-place\"/>\n      <text variable=\"publisher\"/>\n    </group></macro><macro name=\"year-date\">\n    <choose>\n      <if variable=\"issued\">\n\t<date variable=\"issued\">\n\t  <date-part name=\"year\"/>\n\t</date>\n      </if>\n      <else>\n\t<text term=\"no date\" form=\"short\"/>\n      </else>\n    </choose></macro><macro name=\"year-sort\">\n    <choose>\n      <if variable=\"issued\">\n\t<date variable=\"issued\">\n\t  <date-part name=\"year\"/>\n\t</date>\n      </if>\n    </choose></macro><macro name=\"edition\">\n    <choose>\n      <if is-numeric=\"edition\">\n\t<group delimiter=\" \">\n\t  <number variable=\"edition\" form=\"ordinal\"/>\n\t  <text term=\"edition\" form=\"short\" suffix=\".\" strip-periods=\"true\"/>\n\t</group>\n      </if>\n      <else>\n\t<text variable=\"edition\" suffix=\".\"/>\n      </else>\n    </choose></macro><!--   formatting citation      --><citation et-al-min=\"3\" et-al-use-first=\"1\" disambiguate-add-year-suffix=\"true\" collapse=\"year\">\n    <sort>\n      <key variable=\"issued\"/>\n    </sort>\n    <layout prefix=\"(\" suffix=\")\" delimiter=\"; \">\n      <group delimiter=\" \">\n\t<group delimiter=\", \">\n\t  <text macro=\"author-cit\"/>\n\t  <text macro=\"year-date\"/>\n\t</group>\n\t<text variable=\"locator\" prefix=\"p.\"/>\n      </group>\n    </layout></citation><!--  formatting bibliography  --><bibliography hanging-indent=\"true\" et-al-min=\"20\" et-al-use-first=\"1\">\n    <sort>\n      <key macro=\"author-bib\"/>\n      <key macro=\"year-date\"/>\n    </sort>\n    <layout suffix=\".\">\n      <group delimiter=\" \">\n\t<text macro=\"author-bib\"/>\n\t<text macro=\"year-date\" prefix=\"(\" suffix=\")\"/>  \n      </group>     \n      <choose>\n\t<if type=\"bill book graphic legal_case motion_picture report song\" match=\"any\">\n\t  <group prefix=\" \" delimiter=\" \" suffix=\".\">\n\t    <text macro=\"title\"/>\n\t    <text macro=\"edition\"/>\n\t    <text macro=\"editor\"/>\n\t  </group>\n\t  <text prefix=\" \" suffix=\".\" macro=\"publisher\"/>\n\t</if>\n\t<else-if type=\"chapter paper-conference\" match=\"any\">\n\t  <text macro=\"title\" prefix=\" \"/>\n\t  <group prefix=\" \">\n\t    <text term=\"in\" text-case=\"capitalize-first\"/>\n\t    <text macro=\"editor\" prefix=\" \"/>\n\t    <text variable=\"container-title\" font-style=\"normal\" prefix=\" \" suffix=\" \"/>\n\t    <text variable=\"collection-title\" prefix=\" \" suffix=\".\"/>\n\t    <group suffix=\".\">\n\t      <text macro=\"publisher\" prefix=\" \"/>\n\t      <group prefix=\", \">\n\t\t<text variable=\"page\" prefix=\"p. \"/>\n\t      </group>\n\t    </group>\n\t  </group>\n\t</else-if>\n\t<else>\n\t  <group suffix=\".\" delimiter=\" \" prefix=\" \">\n\t    <text macro=\"title\"/>\n\t    <text macro=\"editor\"/>\n\t  </group>\n\t  <group prefix=\" \">\n\t    <text variable=\"container-title\" font-style=\"normal\" form=\"short\" strip-periods=\"true\"/>\n\t    <text variable=\"volume\" prefix=\" \"/>\n\t    <group prefix=\":\">\n\t      <text variable=\"page\" prefix=\"\"/>\n\t    </group>\n\t  </group>\n\t</else>\n      </choose>\n      <text prefix=\" \" macro=\"access\" suffix=\"\"/>\n    </layout></bibliography></style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Day", 
+                    "given": "B. L.", 
+                    "isInstitution": ""
+                }, 
+                {
+                    "family": "Fitzpatrick", 
+                    "given": "R. C.", 
+                    "isInstitution": ""
+                }
+            ], 
+            "container-title": "Curr Biol", 
+            "id": 30, 
+            "issue": "15", 
+            "issued": {
+                "date-parts": [
+                    [
+                        2005
+                    ]
+                ]
+            }, 
+            "multi": {
+                "_keys": {}
+            }, 
+            "page": "R583-6", 
+            "title": "The vestibular system", 
+            "type": "article-journal", 
+            "volume": "15"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Mian", 
+                    "given": "O.S.", 
+                    "isInstitution": ""
+                }, 
+                {
+                    "family": "Thom", 
+                    "given": "J. M.", 
+                    "isInstitution": ""
+                }, 
+                {
+                    "family": "Narici", 
+                    "given": "M. V.", 
+                    "isInstitution": ""
+                }, 
+                {
+                    "family": "Baltzopoulos", 
+                    "given": "V.", 
+                    "isInstitution": ""
+                }
+            ], 
+            "event": "European College of Sport Science 10th Annual Congress", 
+            "event-place": "Belgrade, Serbia", 
+            "id": 32, 
+            "issued": {
+                "date-parts": [
+                    [
+                        2005
+                    ]
+                ]
+            }, 
+            "multi": {
+                "_keys": {}
+            }, 
+            "page": "129-130", 
+            "publisher-place": "Belgrade, Serbia", 
+            "title": "Stair descent: kinematics in healthy young and older adults", 
+            "type": "paper-conference"
+        }, 
+        {
+            "abstract": "The vestibular organs can feed perceptual processes that build a picture of our route as we move about in the world. However, raw vestibular signals do not define the path taken because, during travel, the head can undergo accelerations unrelated to the route and also be orientated in any direction to vary the signal. This study investigated the computational process by which the brain transforms raw vestibular signals for the purpose of route reconstruction. We electrically stimulated the vestibular nerves of human subjects to evoke a virtual head rotation fixed in skull co-ordinates and measure its perceptual effect. The virtual head rotation caused subjects to perceive an illusory whole-body rotation that was a cyclic function of head-pitch angle. They perceived whole-body yaw rotation in one direction with the head pitched forwards, the opposite direction with the head pitched backwards, and no rotation with the head in an intermediate position. A model based on vector operations and the anatomy and firing properties of semicircular canals precisely predicted these perceptions. In effect, a neural process computes the vector dot product between the craniocentric vestibular vector of head rotation and the gravitational unit vector. This computation yields the signal of body rotation in the horizontal plane that feeds our perception of the route travelled.", 
+            "author": [
+                {
+                    "family": "Day", 
+                    "given": "B. L.", 
+                    "isInstitution": ""
+                }, 
+                {
+                    "family": "Fitzpatrick", 
+                    "given": "R. C.", 
+                    "isInstitution": ""
+                }
+            ], 
+            "container-title": "J Physiol", 
+            "id": 29, 
+            "issue": "Pt 2", 
+            "issued": {
+                "date-parts": [
+                    [
+                        2005
+                    ]
+                ]
+            }, 
+            "multi": {
+                "_keys": {}
+            }, 
+            "page": "591-7", 
+            "title": "Virtual head rotation reveals a process of route reconstruction from human vestibular signals", 
+            "type": "article-journal", 
+            "volume": "567"
+        }
+    ], 
+    "mode": "citation", 
+    "result": ">>[0] (Day and Fitzpatrick, 2005a, 2005b; Mian et al., 2005)"
+}

@@ -1,0 +1,32 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style xmlns=\"http://purl.org/net/xbiblio/csl\" version=\"1.0\" class=\"in-text\"><info>\n    <title>Associação Brasileira de Normas Técnicas (ABNT)</title>\n    <id>http://www.zotero.org/styles/abnt</id>\n    <link href=\"http://www.zotero.org/styles/abnt\" rel=\"self\"/>\n    <author>\n      <name>Iuri Gavronski</name>\n      <email>iuri at ufrgs dot br</email>\n    </author>\n    <contributor>\n        <name>Eduardo Bettoni</name>\n        <email>webtur @ ufpr dot br</email>\n    </contributor>\n    <contributor>\n        <name>José Antonio Meira da Rocha</name>\n        <email>joseantoniorocha@gmail.com</email>\n        <uri>http://meiradarocha.jor.br</uri>\n    </contributor>\n    <contributor>\n        <name>Mario José</name>\n        <email>mariognu-biounesp@yahoo.com.br</email>\n    </contributor>\n    <category citation-format=\"author-date\"/>\n    <category field=\"generic-base\"/>\n    <updated>2011-04-03T00:00:00+00:00</updated>\n    <summary>The Brazilian standard style</summary>\n    <rights>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License: http://creativecommons.org/licenses/by-sa/3.0/</rights></info>\n\n  <citation>\n    <layout>\n      <group>\n\t    <names variable=\"author\">\n\t\t  <name form=\"short\">\n\t\t    <name-part name=\"given\"/>\n\t\t  </name>\n\t    </names>\n      </group>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Doe", 
+                    "given": "John"
+                }
+            ], 
+            "id": "ITEM-1", 
+            "issued": {
+                "date-parts": [
+                    [
+                        "1965", 
+                        "6", 
+                        "1"
+                    ]
+                ]
+            }, 
+            "title": "His Anonymous Life", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "Doe"
+}

@@ -1,0 +1,18 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"\n      default-locale=\"fr-FR\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><citation>\n    <layout>\n      <text variable=\"title\" text-case=\"title\"/>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "id": "ITEM-1", 
+            "language": "french language", 
+            "title": "His anonymous life", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "His anonymous life"
+}

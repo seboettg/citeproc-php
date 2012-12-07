@@ -1,0 +1,42 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><citation>\n    <layout>\n      <names variable=\"author\">\n        <name initialize-with=\"\" delimiter=\"; \"/>\n      </names>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Doe", 
+                    "given": "John J."
+                }, 
+                {
+                    "family": "Jones", 
+                    "given": "Gregory"
+                }, 
+                {
+                    "family": "Smith", 
+                    "given": "Bob"
+                }, 
+                {
+                    "family": "Alfred Benzon Foundation", 
+                    "isInstitution": "true"
+                }, 
+                {
+                    "family": "James Benson Foundation", 
+                    "isInstitution": "true"
+                }, 
+                {
+                    "family": "John Candy Foundation", 
+                    "isInstitution": "true"
+                }
+            ], 
+            "id": "ITEM-1", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "JJ Doe; G Jones; B Smith; Alfred Benzon Foundation; James Benson Foundation; John Candy Foundation"
+}

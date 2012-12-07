@@ -1,0 +1,32 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><macro name=\"issued\">\n    <date variable=\"issued\" form=\"text\" date-parts=\"year\" prefix=\"(\" suffix=\")\"/></macro><citation>\n    <layout>\n      <names variable=\"author\">\n        <name/>\n      </names>\n    </layout></citation><bibliography et-al-min=\"7\" et-al-use-first=\"1\" entry-spacing=\"0\" second-field-align=\"flush\">\n    <sort>\n      <key macro=\"issued\"/>\n    </sort> \n    <layout suffix=\".\">\n      <names variable=\"author\"/>\n      <group delimiter=\" \">\n        <group delimiter=\", \">\n          <text variable=\"title\"/>\n        </group>\n        <text macro=\"issued\"/>\n      </group>\n    </layout></bibliography></style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Doe", 
+                    "given": "John"
+                }
+            ], 
+            "id": "ITEM-1", 
+            "issued": {
+                "date-parts": [
+                    [
+                        "1965", 
+                        "6", 
+                        "1"
+                    ]
+                ]
+            }, 
+            "title": "His Anonymous Life", 
+            "type": "book"
+        }
+    ], 
+    "mode": "bibliography", 
+    "result": "<div class=\"csl-bib-body\"><div class=\"csl-entry\">\n    <div class=\"csl-left-margin\">John Doe</div><div class=\"csl-right-inline\">His Anonymous Life (1965).</div></div></div>"
+}

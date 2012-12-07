@@ -1,0 +1,19 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><citation>\n    <layout delimiter=\"; \">\n      <text value=\"DUMMY\"/>\n    </layout></citation><bibliography>\n    <layout>\n      <group delimiter=\"[x]\">\n        <text variable=\"title\"/>\n        <number variable=\"volume\"/>\n        <number variable=\"issue\" prefix=\":\"/>\n      </group>\n    </layout></bibliography></style>", 
+    "input": [
+        {
+            "id": "ITEM-1", 
+            "issue": 555, 
+            "title": "His Anonymous Life", 
+            "type": "book", 
+            "volume": 100
+        }
+    ], 
+    "mode": "bibliography", 
+    "result": "<div class=\"csl-bib-body\"><div class=\"csl-entry\">His Anonymous Life[x]100:555</div></div>"
+}

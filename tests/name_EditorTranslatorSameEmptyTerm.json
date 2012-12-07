@@ -1,0 +1,28 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><locale>\n    <terms>\n      <term name=\"editortranslator\"></term>\n    </terms></locale><citation>\n    <layout>\n      <names variable=\"editor translator\" delimiter=\", \">\n        <name />\n        <label prefix=\" (\" suffix=\")\"/>\n      </names>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "editor": [
+                {
+                    "family": "Doe", 
+                    "given": "John"
+                }
+            ], 
+            "id": "ITEM-1", 
+            "translator": [
+                {
+                    "family": "Doe", 
+                    "given": "John"
+                }
+            ], 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "John Doe (editor), John Doe (translator)"
+}

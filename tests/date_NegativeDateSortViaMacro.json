@@ -1,0 +1,68 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><macro name=\"mydate\">\n      <date variable=\"issued\" delimiter=\"-\">\n        <date-part name=\"year\"/>\n        <date-part name=\"month\" form=\"numeric\"/>\n        <date-part name=\"day\" form=\"numeric\"/>\n      </date></macro><citation>\n    <sort>\n      <key macro=\"mydate\"/>\n    </sort>\n    <layout delimiter=\", \">\n      <text macro=\"mydate\"/>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "id": "ITEM-1", 
+            "issued": {
+                "date-parts": [
+                    [
+                        -100, 
+                        7, 
+                        13
+                    ]
+                ]
+            }, 
+            "title": "BookA", 
+            "type": "book"
+        }, 
+        {
+            "id": "ITEM-2", 
+            "issued": {
+                "date-parts": [
+                    [
+                        54, 
+                        10, 
+                        13
+                    ]
+                ]
+            }, 
+            "title": "BookB", 
+            "type": "book"
+        }, 
+        {
+            "id": "ITEM-3", 
+            "issued": {
+                "date-parts": [
+                    [
+                        -44, 
+                        3, 
+                        15
+                    ]
+                ]
+            }, 
+            "title": "BookC", 
+            "type": "book"
+        }, 
+        {
+            "id": "ITEM-4", 
+            "issued": {
+                "date-parts": [
+                    [
+                        68, 
+                        6, 
+                        11
+                    ]
+                ]
+            }, 
+            "title": "BookD", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "100BC-7-13, 44BC-3-15, 54AD-10-13, 68AD-6-11"
+}

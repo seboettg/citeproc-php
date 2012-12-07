@@ -1,0 +1,86 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<?xml version=\"1.0\" encoding=\"utf-8\"?><style xmlns=\"http://purl.org/net/xbiblio/csl\" class=\"in-text\" version=\"1.0\" demote-non-dropping-particle=\"sort-only\">\n\t<info>\n\t\t<title>American Psychological Association 6th Edition</title>\n\t\t<id>http://www.zotero.org/styles/apa</id>\n\t\t<link href=\"http://www.zotero.org/styles/apa\" rel=\"self\"/>\n\t\t<link href=\"http://owl.english.purdue.edu/owl/resource/560/01/\" rel=\"documentation\"/>\n\t\t<author>\n\t\t\t<name>Simon Kornblith</name>\n\t\t\t<email>simon@simonster.com</email>\n\t\t</author>\n\t\t<contributor>\n\t\t\t<name>Bruce D'Arcus</name>\n\t\t</contributor>\n\t\t<contributor>\n\t\t\t<name>Curtis M. Humphrey</name>\n\t\t</contributor>\n\t\t<contributor>\n\t\t\t<name>Richard Karnesky</name>\n\t\t\t<email>karnesky+zotero@gmail.com</email>\n\t\t\t<uri>http://arc.nucapt.northwestern.edu/Richard_Karnesky</uri>\n\t\t</contributor>\n\t\t<contributor>\n\t\t\t<name>Sebastian Karcher</name>\n\t\t</contributor>\n\t\t<category field=\"psychology\"/>\n\t\t<category field=\"generic-base\"/>\n\t\t<category citation-format=\"author-date\"/>\n\t\t<updated>2010-01-27T20:08:03+00:00</updated>\n\t\t<rights>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License: http://creativecommons.org/licenses/by-sa/3.0/</rights>\n\t</info>\n\t<locale xml:lang=\"en\">\n\t\t<terms>\n\t\t\t<term name=\"translator\" form=\"short\">\n\t\t\t\t<single>trans.</single>\n\t\t\t\t<multiple>trans.</multiple>\n\t\t\t</term>\n\t\t</terms>\n\t</locale>\n\t<macro name=\"container-contributors\">\n\t\t<choose>\n\t\t\t<if type=\"chapter paper-conference\" match=\"any\">\n\t\t\t\t<text term=\"in\" text-case=\"capitalize-first\" suffix=\" \"/>\n\t\t\t\t<names variable=\"editor\" delimiter=\", \" suffix=\", \">\n\t\t\t\t\t<name and=\"symbol\" initialize-with=\". \" delimiter=\", \"/>\n\t\t\t\t\t<label form=\"short\" prefix=\" (\" text-case=\"capitalize-first\" suffix=\")\"/>\n\t\t\t\t\t<substitute>\n\t\t\t\t\t\t<names variable=\"translator\"/>\n\t\t\t\t\t</substitute>\n\t\t\t\t</names>\n\t\t\t</if>\n\t\t</choose>\n\t</macro>\n\t<macro name=\"secondary-contributors\">\n\t\t<choose>\n\t\t\t<if type=\"chapter paper-conference\" match=\"none\">\n\t\t\t\t<names variable=\"translator\" delimiter=\", \" prefix=\" (\" suffix=\")\">\n\t\t\t\t\t<name and=\"symbol\" initialize-with=\". \" delimiter=\", \"/>\n\t\t\t\t\t<label form=\"short\" prefix=\", \" text-case=\"capitalize-first\" suffix=\"\"/>\n\t\t\t\t\t<substitute>\n\t\t\t\t\t\t<names variable=\"editor\"/>\n\t\t\t\t\t</substitute>            \n\t\t\t\t</names>\n\t\t\t</if>\n\t\t</choose>\n\t</macro>\n\t<macro name=\"author\">\n\t\t<names variable=\"author\">\n\t\t\t<name name-as-sort-order=\"all\" and=\"symbol\" sort-separator=\", \" initialize-with=\". \" delimiter=\", \" delimiter-precedes-last=\"always\"/>\n\t\t\t<label form=\"short\" prefix=\" (\" suffix=\".)\" text-case=\"capitalize-first\" strip-periods=\"true\"/>\n\t\t\t<substitute>\n\t\t\t\t<names variable=\"editor\"/>\n\t\t\t\t<names variable=\"translator\"/>\n\t\t\t\t<choose>\n\t\t\t\t\t<if type=\"report\">\n\t\t\t\t\t\t<text variable=\"publisher\"/>\n\t\t\t\t\t\t<text macro=\"title\"/>\n\t\t\t\t\t</if>\n\t\t\t\t\t<else>\n\t\t\t\t\t\t<text macro=\"title\"/>\n\t\t\t\t\t</else>\n\t\t\t\t</choose>\n\t\t\t</substitute>\n\t\t</names>\n\t</macro>\n\t<macro name=\"author-short\">\n\t\t<names variable=\"author\">\n\t\t\t<name form=\"short\" and=\"symbol\" delimiter=\", \" initialize-with=\". \"/>\n\t\t\t<substitute>\n\t\t\t\t<names variable=\"editor\"/>\n\t\t\t\t<names variable=\"translator\"/>\n\t\t\t\t<choose>\n\t\t\t\t\t<if type=\"report\">\n\t\t\t\t\t\t<text variable=\"publisher\"/>\n\t\t\t\t\t\t<text variable=\"title\" form=\"short\" font-style=\"italic\"/>\n\t\t\t\t\t</if>\n\t\t\t\t\t<else-if type=\"bill book graphic legal_case motion_picture song\" match=\"any\">\n\t\t\t\t\t\t<text variable=\"title\" form=\"short\" font-style=\"italic\"/>\n\t\t\t\t\t</else-if>\n\t\t\t\t\t<else>\n\t\t\t\t\t\t<text variable=\"title\" form=\"short\" quotes=\"true\"/>\n\t\t\t\t\t</else>\n\t\t\t\t</choose>\n\t\t\t</substitute>\n\t\t</names>\n\t</macro>\n\t<macro name=\"access\">\n\t\t<choose>\n\t\t\t<if type=\"thesis\">\n\t\t\t\t<choose>\n\t\t\t\t\t<if variable=\"archive\" match=\"any\">\n\t\t\t\t\t\t<group>\n\t\t\t\t\t\t\t<text term=\"retrieved\" text-case=\"capitalize-first\" suffix=\" \"/>\n\t\t\t\t\t\t\t<text term=\"from\" suffix=\" \"/>\n\t\t\t\t\t\t\t<text variable=\"archive\" suffix=\".\"/>\n\t\t\t\t\t\t\t<text variable=\"archive_location\" prefix=\" (\" suffix=\")\"/>\n\t\t\t\t\t\t</group>\n\t\t\t\t\t</if>\n\t\t\t\t\t<else>\n\t\t\t\t\t\t<group>\n\t\t\t\t\t\t\t<text term=\"retrieved\" text-case=\"capitalize-first\" suffix=\" \"/>\n\t\t\t\t\t\t\t<text term=\"from\" suffix=\" \"/>\n\t\t\t\t\t\t\t<text variable=\"URL\"/>\n\t\t\t\t\t\t</group>\n\t\t\t\t\t</else>\n\t\t\t\t</choose>\n\t\t\t</if>\n\t\t\t<else>\n\t\t\t\t<choose>\n\t\t\t\t\t<if variable=\"DOI\">\n\t\t\t\t\t\t<text variable=\"DOI\" prefix=\"doi:\"/>\n\t\t\t\t\t</if>\n\t\t\t\t\t<else>\n\t\t\t\t\t\t<choose>\n\t\t\t\t\t\t\t<if type=\"webpage\">\n\t\t\t\t\t\t\t\t<group>\n\t\t\t\t\t\t\t\t\t<text term=\"retrieved\" text-case=\"capitalize-first\" suffix=\" \"/>\n\t\t\t\t\t\t\t\t\t<date variable=\"accessed\" suffix=\", \">\n\t\t\t\t\t\t\t\t\t\t<date-part name=\"month\" suffix=\" \"/>\n\t\t\t\t\t\t\t\t\t\t<date-part name=\"day\" suffix=\", \"/>\n\t\t\t\t\t\t\t\t\t\t<date-part name=\"year\"/>\n\t\t\t\t\t\t\t\t\t</date>\n\t\t\t\t\t\t\t\t\t<group>\n\t\t\t\t\t\t\t\t\t\t<text term=\"from\" suffix=\" \"/>\n\t\t\t\t\t\t\t\t\t\t<text variable=\"URL\"/>\n\t\t\t\t\t\t\t\t\t</group>\n\t\t\t\t\t\t\t\t</group>\n\t\t\t\t\t\t\t</if>\n\t\t\t\t\t\t\t<else>\n\t\t\t\t\t\t\t\t<group>\n\t\t\t\t\t\t\t\t\t<text term=\"retrieved\" text-case=\"capitalize-first\" suffix=\" \"/>\n\t\t\t\t\t\t\t\t\t<text term=\"from\" suffix=\" \"/>\n\t\t\t\t\t\t\t\t\t<text variable=\"URL\"/>\n\t\t\t\t\t\t\t\t</group>\n\t\t\t\t\t\t\t</else>\n\t\t\t\t\t\t</choose>\n\t\t\t\t\t</else>\n\t\t\t\t</choose>\n\t\t\t</else>\n\t\t</choose>\n\t</macro>\n\t<macro name=\"title\">\n\t\t<choose>\n\t\t\t<if type=\"report thesis\" match=\"any\">\n\t\t\t\t<text variable=\"title\" font-style=\"italic\"/>\n\t\t\t\t<group prefix=\" (\" suffix=\")\">\n\t\t\t\t\t<text variable=\"genre\"/>\n\t\t\t\t\t<text variable=\"number\" prefix=\" No. \"/>\n\t\t\t\t</group>\n\t\t\t</if>\n\t\t\t<else-if type=\"bill book graphic legal_case motion_picture report song manuscript speech\" match=\"any\">\n\t\t\t\t<text variable=\"title\" font-style=\"italic\"/>\n\t\t\t</else-if>\n\t\t\t<else>\n\t\t\t\t<text variable=\"title\"/>\n\t\t\t</else>\n\t\t</choose>\n\t</macro>\n\t<macro name=\"publisher\">\n\t\t<choose>\n\t\t\t<if type=\"report\" match=\"any\">\n\t\t\t\t<group delimiter=\": \">\n\t\t\t\t\t<text variable=\"publisher-place\"/>\n\t\t\t\t\t<text variable=\"publisher\"/>\n\t\t\t\t</group>\n\t\t\t</if>\n\t\t\t<else-if type=\"thesis\" match=\"any\">\n\t\t\t\t<group delimiter=\", \">\n\t\t\t\t\t<text variable=\"publisher\"/>\n\t\t\t\t\t<text variable=\"publisher-place\"/>\n\t\t\t\t</group>\n\t\t\t</else-if>\n\t\t\t<else>\n\t\t\t\t<choose>\n\t\t\t\t\t<if variable=\"event\" match=\"none\">\n\t\t\t\t\t\t<text variable=\"genre\" suffix=\", \"/>\n\t\t\t\t\t</if>\n\t\t\t\t</choose>\n\t\t\t\t<group delimiter=\": \">\n\t\t\t\t\t<text variable=\"publisher-place\"/>\n\t\t\t\t\t<text variable=\"publisher\"/>\n\t\t\t\t</group>\n\t\t\t</else>\n\t\t</choose>\n\t</macro>\n\t<macro name=\"event\">\n\t\t<choose>\n\t\t\t<if variable=\"event\">\n\t\t\t\t<choose>\n\t\t\t\t\t<if variable=\"genre\" match=\"none\">\n\t\t\t\t\t\t<text term=\"presented at\" text-case=\"capitalize-first\" suffix=\" \"/>\n\t\t\t\t\t\t<text variable=\"event\"/>\n\t\t\t\t\t</if>\n\t\t\t\t\t<else>\n\t\t\t\t\t\t<group delimiter=\" \">\n\t\t\t\t\t\t\t<text variable=\"genre\" text-case=\"capitalize-first\"/>\n\t\t\t\t\t\t\t<text term=\"presented at\"/>\n\t\t\t\t\t\t\t<text variable=\"event\"/>\n\t\t\t\t\t\t</group>\n\t\t\t\t\t</else>\n\t\t\t\t</choose>\n\t\t\t</if>\n\t\t</choose>\n\t</macro>\n\t<macro name=\"issued\">\n\t\t<choose>\n\t\t\t<if variable=\"issued\">\n\t\t\t\t<group prefix=\" (\" suffix=\").\">\n\t\t\t\t\t<date variable=\"issued\">\n\t\t\t\t\t\t<date-part name=\"year\"/>\n\t\t\t\t\t</date>\n\t\t\t\t\t<choose>\n\t\t\t\t\t\t<if type=\"bill book graphic legal_case motion_picture report song article-journal chapter paper-conference\" match=\"none\">\n\t\t\t\t\t\t\t<date variable=\"issued\">\n\t\t\t\t\t\t\t\t<date-part prefix=\", \" name=\"month\"/>\n\t\t\t\t\t\t\t\t<date-part prefix=\" \" name=\"day\"/>\n\t\t\t\t\t\t\t</date>\n\t\t\t\t\t\t</if>\n\t\t\t\t\t</choose>\n\t\t\t\t</group>\n\t\t\t</if>\n\t\t\t<else>\n\t\t\t\t<group prefix=\" (\" suffix=\").\">\n\t\t\t\t\t<text  term=\"no date\" form=\"short\"/>\n\t\t\t\t\t<text variable=\"year-suffix\" prefix=\"-\"/>\n\t\t\t\t</group>    \n\t\t\t</else>\n\t\t</choose>\n\t</macro>\n\t<macro name=\"issued-sort-key\">\n\t\t\t\t\t<choose>\n\t\t\t\t\t\t<if type=\"bill book graphic legal_case motion_picture report song article-journal chapter paper-conference\" match=\"none\">\n\t\t\t\t\t\t\t<date variable=\"issued\">\n\t\t\t\t\t\t\t  <date-part name=\"year\"/>\n\t\t\t\t\t\t\t\t<date-part prefix=\", \" name=\"month\"/>\n\t\t\t\t\t\t\t\t<date-part prefix=\" \" name=\"day\"/>\n\t\t\t\t\t\t\t</date>\n\t\t\t\t\t\t</if>\n                        <else>\n\t\t\t\t\t<date variable=\"issued\">\n\t\t\t\t\t\t<date-part name=\"year\"/>\n\t\t\t\t\t</date>\n                        </else>\n\t\t\t\t\t</choose>\n\t</macro>\n\t<macro name=\"issued-year\">\n\t\t<choose>\n\t\t\t<if variable=\"issued\">\n\t\t\t\t<date variable=\"issued\">\n\t\t\t\t\t<date-part name=\"year\"/>\n\t\t\t\t</date>\n\t\t\t\t<text variable=\"year-suffix\"/>\n\t\t\t</if>\n\t\t\t<else>\n\t\t\t\t<text term=\"no date\" form=\"short\"/>\n\t\t\t\t<text variable=\"year-suffix\" prefix=\"-\"/>\n\t\t\t</else>\n\t\t</choose>\n\t</macro>\n\t<macro name=\"edition\">\n\t\t<choose>\n\t\t\t<if is-numeric=\"edition\">\n\t\t\t\t<group delimiter=\" \">\n\t\t\t\t\t<number variable=\"edition\" form=\"ordinal\"/>\n\t\t\t\t\t<text term=\"edition\" form=\"short\" suffix=\".\" strip-periods=\"true\"/>\n\t\t\t\t</group>\n\t\t\t</if>\n\t\t\t<else>\n\t\t\t\t<text variable=\"edition\" suffix=\".\"/>\n\t\t\t</else>\n\t\t</choose>\n\t</macro>\n\t<macro name=\"locators\">\n\t\t<choose>\n\t\t\t<if type=\"article-journal article-magazine\" match=\"any\">\n\t\t\t\t<group prefix=\", \" delimiter=\", \">\n\t\t\t\t\t<group>\n\t\t\t\t\t\t<text variable=\"volume\" font-style=\"italic\"/>\n\t\t\t\t\t\t<text variable=\"issue\" prefix=\"(\" suffix=\")\"/>\n\t\t\t\t\t</group>\n\t\t\t\t\t<text variable=\"page\"/>\n\t\t\t\t</group>\n\t\t\t</if>\n\t\t\t<else-if type=\"article-newspaper\">\n\t\t\t\t<group delimiter=\" \" prefix=\", \">\n\t\t\t\t\t<label variable=\"page\" form=\"short\"/>\n\t\t\t\t\t<text variable=\"page\"/>\n\t\t\t\t</group>\n\t\t\t</else-if>\n\t\t\t<else-if type=\"bill book graphic legal_case motion_picture report song chapter paper-conference\" match=\"any\">\n\t\t\t\t<group prefix=\" (\" suffix=\")\" delimiter=\", \">\n\t\t\t\t\t<text macro=\"edition\"/>\n\t\t\t\t\t<group>\n\t\t\t\t\t\t<text term=\"volume\" form=\"short\" plural=\"true\" text-case=\"capitalize-first\" suffix=\". \" strip-periods=\"true\"/>\n\t\t\t\t\t\t<number variable=\"number-of-volumes\" form=\"numeric\" prefix=\"1-\"/>\n\t\t\t\t\t</group>\n\t\t\t\t\t<group>\n\t\t\t\t\t\t<text term=\"volume\" form=\"short\" text-case=\"capitalize-first\" suffix=\". \" strip-periods=\"true\"/>\n\t\t\t\t\t\t<number variable=\"volume\" form=\"numeric\"/>\n\t\t\t\t\t</group>\n\t\t\t\t\t<group>\n\t\t\t\t\t\t<label variable=\"page\" form=\"short\" suffix=\" \"/>\n\t\t\t\t\t\t<text variable=\"page\"/>\n\t\t\t\t\t</group>\n\t\t\t\t</group>\n\t\t\t</else-if>\n\t\t</choose>\n\t</macro>\n\t<macro name=\"citation-locator\">\n\t\t<group>\n\t\t\t<label variable=\"locator\" form=\"short\"/>\n\t\t\t<text variable=\"locator\" prefix=\" \"/>\n\t\t</group>\n\t</macro>\n\t<citation et-al-min=\"6\" et-al-use-first=\"1\" et-al-subsequent-min=\"3\" et-al-subsequent-use-first=\"1\" disambiguate-add-year-suffix=\"true\" disambiguate-add-names=\"true\" disambiguate-add-givenname=\"true\" collapse=\"year\" givenname-disambiguation-rule=\"primary-name\">\n\t\t<sort>\n\t\t\t<key macro=\"author\"/>\n\t\t\t<key macro=\"issued-sort-key\"/>\n\t\t</sort>\n\t\t<layout prefix=\"(\" suffix=\")\" delimiter=\", \">\n\t\t\t<group delimiter=\", \">\n\t\t\t\t<text macro=\"author-short\"/>\n\t\t\t\t<text macro=\"issued-year\"/>\n\t\t\t\t<text macro=\"citation-locator\"/>\n\t\t\t</group>\n\t\t</layout>\n\t</citation>\n\t<bibliography hanging-indent=\"true\" et-al-min=\"8\" et-al-use-first=\"7\" entry-spacing=\"0\" line-spacing=\"2\">\n\t\t<sort>\n\t\t\t<key macro=\"author\"/>\n\t\t\t<key macro=\"issued-sort-key\" sort=\"ascending\"/>\n\t\t</sort>\n\t\t<layout>\n\t\t\t<group suffix=\".\">\n\t\t\t\t<text macro=\"author\" suffix=\".\"/>\n\t\t\t\t<text macro=\"issued\"/>\n\t\t\t\t<group delimiter=\". \">\n\t\t\t\t\t<text macro=\"title\" prefix=\" \"/>\n\t\t\t\t\t<group>\n\t\t\t\t\t\t<text macro=\"container-contributors\"/>\n\t\t\t\t\t\t<text macro=\"secondary-contributors\"/>\n\t\t\t\t\t\t<group delimiter=\", \">\n\t\t\t\t\t\t\t<text variable=\"container-title\" font-style=\"italic\"/>\n\t\t\t\t\t\t\t<text variable=\"collection-title\"/>\n\t\t\t\t\t\t</group>\n\t\t\t\t\t</group>\n\t\t\t\t</group>\n\t\t\t\t<text macro=\"locators\"/>\n\t\t\t\t<group delimiter=\", \" prefix=\". \">\n\t\t\t\t\t<text macro=\"event\"/>\n\t\t\t\t\t<text macro=\"publisher\"/>\n\t\t\t\t</group>\n\t\t\t</group>\n\t\t\t<text macro=\"access\" prefix=\" \"/>\n\t\t</layout>\n\t</bibliography></style>", 
+    "input": [
+        {
+            "URL": "http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking", 
+            "accessed": {
+                "date-parts": [
+                    [
+                        2011, 
+                        7, 
+                        31
+                    ]
+                ]
+            }, 
+            "author": [
+                {
+                    "family": "Brooker", 
+                    "given": "Charlie", 
+                    "isInstitution": ""
+                }
+            ], 
+            "container-title": "The Guardian", 
+            "event-place": "London", 
+            "id": 67, 
+            "issued": {
+                "date-parts": [
+                    [
+                        2011, 
+                        7, 
+                        31
+                    ]
+                ]
+            }, 
+            "multi": {
+                "_keys": {}
+            }, 
+            "publisher-place": "London", 
+            "title": "Let's think outside the box here: maybe blue-sky thinking is nonsense", 
+            "type": "article-newspaper"
+        }, 
+        {
+            "URL": "http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings", 
+            "accessed": {
+                "date-parts": [
+                    [
+                        2011, 
+                        7, 
+                        31
+                    ]
+                ]
+            }, 
+            "author": [
+                {
+                    "family": "Brooker", 
+                    "given": "Charlie", 
+                    "isInstitution": ""
+                }
+            ], 
+            "container-title": "The Guardian", 
+            "event-place": "London", 
+            "id": 66, 
+            "issued": {
+                "date-parts": [
+                    [
+                        "2011", 
+                        7, 
+                        24
+                    ]
+                ]
+            }, 
+            "multi": {
+                "_keys": {}
+            }, 
+            "publisher-place": "London", 
+            "title": "The news coverage of the Norway mass-killings was fact-free conjecture", 
+            "type": "article-newspaper"
+        }
+    ], 
+    "mode": "bibliography", 
+    "result": "<div class=\"csl-bib-body\"><div class=\"csl-entry\">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div><div class=\"csl-entry\">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div></div>"
+}

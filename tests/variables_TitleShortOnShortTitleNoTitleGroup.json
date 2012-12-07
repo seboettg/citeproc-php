@@ -1,0 +1,87 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": [
+        [
+            {
+                "citationID": "CITATION-1", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-1"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 1
+                }
+            }, 
+            [], 
+            []
+        ], 
+        [
+            {
+                "citationID": "CITATION-2", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-2"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 2
+                }
+            }, 
+            [
+                [
+                    "CITATION-1", 
+                    1
+                ]
+            ], 
+            []
+        ], 
+        [
+            {
+                "citationID": "CITATION-3", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-3"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 3
+                }
+            }, 
+            [
+                [
+                    "CITATION-1", 
+                    1
+                ], 
+                [
+                    "CITATION-2", 
+                    2
+                ]
+            ], 
+            []
+        ]
+    ], 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><citation>\n    <layout>\n      <text value=\"Check this out:\"/>\n      <group delimiter=\" \" prefix=\" \">\n        <text variable=\"title-short\"/>\n        <text value=\"is from title-short\"/>\n      </group>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "id": "ITEM-1", 
+            "shortTitle": "My Short Title", 
+            "title": "My Long Title 1", 
+            "type": "book"
+        }, 
+        {
+            "id": "ITEM-2", 
+            "title": "My Long Title 2", 
+            "type": "book"
+        }, 
+        {
+            "id": "ITEM-3", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "..[0] Check this out: My Short Title is from title-short\n..[1] Check this out:\n>>[2] Check this out:"
+}

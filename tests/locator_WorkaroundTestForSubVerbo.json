@@ -1,0 +1,62 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": [
+        [
+            {
+                "citationID": "CITATION-1", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-1", 
+                        "label": "opus", 
+                        "locator": "100"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 1
+                }
+            }, 
+            [], 
+            []
+        ], 
+        [
+            {
+                "citationID": "CITATION-2", 
+                "citationItems": [
+                    {
+                        "id": "ITEM-2", 
+                        "label": "sub verbo", 
+                        "locator": "200"
+                    }
+                ], 
+                "properties": {
+                    "noteIndex": 2
+                }
+            }, 
+            [
+                [
+                    "CITATION-1", 
+                    1
+                ]
+            ], 
+            []
+        ]
+    ], 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><macro name=\"locator-refs\">\n    <choose>\n      <if locator=\"book chapter column figure folio issue line note opus page paragraph part section verse volume\" match=\"none\">\n        <text variable=\"locator\" prefix=\", \"/>\n      </if>\n      <else>\n        <label variable=\"locator\" form=\"short\" prefix=\", \"/>\n        <text variable=\"locator\" prefix=\" \"/>\n      </else>\n    </choose></macro><citation>\n    <layout>\n      <text variable=\"title\"/>\n      <text macro=\"locator-refs\" />\n    </layout></citation></style>", 
+    "input": [
+        {
+            "id": "ITEM-1", 
+            "title": "Book With Opus", 
+            "type": "book"
+        }, 
+        {
+            "id": "ITEM-2", 
+            "title": "Book With Sub Verbo", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "..[0] Book With Opus, op. 100\n>>[1] Book With Sub Verbo, 200"
+}

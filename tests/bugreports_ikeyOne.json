@@ -1,0 +1,96 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": [
+        [
+            {
+                "citationID": "13hs217jtl", 
+                "citationItems": [
+                    {
+                        "id": 4
+                    }
+                ], 
+                "properties": {
+                    "index": 0, 
+                    "noteIndex": 0
+                }
+            }, 
+            [], 
+            []
+        ], 
+        [
+            {
+                "citationID": "m6h52lmhh", 
+                "citationItems": [
+                    {
+                        "id": 5
+                    }
+                ], 
+                "properties": {
+                    "index": 1, 
+                    "noteIndex": 0
+                }
+            }, 
+            [
+                [
+                    "13hs217jtl", 
+                    0
+                ]
+            ], 
+            []
+        ], 
+        [
+            {
+                "citationID": "m6h52lmhh", 
+                "citationItems": [
+                    {
+                        "id": 5
+                    }
+                ], 
+                "properties": {
+                    "index": 1, 
+                    "noteIndex": 0
+                }
+            }, 
+            [], 
+            []
+        ]
+    ], 
+    "csl": "<?xml version=\"1.0\" encoding=\"utf-8\"?><style xmlns=\"http://purl.org/net/xbiblio/csl\" class=\"in-text\" version=\"1.0\">\n   <info>\n      <title>Modern Language Association</title>\n      <id>http://www.zotero.org/styles/mla</id>\n      <link href=\"http://www.zotero.org/styles/mla\" rel=\"self\"/>\n      <author>\n         <name>modified by Sebastian Karcher</name>\n         <email>karcher@u.northwestern.edu</email>\n      </author>\n      <contributor>\n         <name>modified by Christian Werthschulte</name>\n         <email>Christian.Werthschulte@rub.de</email>\n      </contributor>\n      <contributor>\n         <name>Simon Kornblith</name>\n         <email>simon@simonster.com</email>\n      </contributor>\n      <contributor>\n         <name>modified by James Johnston</name>\n         <email>thejamesjohnston@gmail.com</email>\n      </contributor>\n      <category field=\"generic-base\"/>\n      <category citation-format=\"author-date\"/>\n      <link href=\"http://owl.english.purdue.edu/owl/section/2/11/\" rel=\"documentation\"/>\n      <updated>2009-11-10T07:33:51+00:00</updated>\n      <summary>This style requires the \"Include URLs\" box to be checked in the Style tab of the Zotero preferences</summary>\n      <rights>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License: http://creativecommons.org/licenses/by-sa/3.0/</rights>\n   </info>\n   <locale xml:lang=\"en\">\n      <terms>\n         <term name=\"month-01\" form=\"short\">Jan.</term>\n         <term name=\"month-02\" form=\"short\">Feb.</term>\n         <term name=\"month-03\" form=\"short\">Mar.</term>\n         <term name=\"month-04\" form=\"short\">Apr.</term>\n         <term name=\"month-05\" form=\"short\">May</term>\n         <term name=\"month-06\" form=\"short\">June</term>\n         <term name=\"month-07\" form=\"short\">July</term>\n         <term name=\"month-08\" form=\"short\">Aug.</term>\n         <term name=\"month-09\" form=\"short\">Sept.</term>\n         <term name=\"month-10\" form=\"short\">Oct.</term>\n         <term name=\"month-11\" form=\"short\">Nov.</term>\n         <term name=\"month-12\" form=\"short\">Dec.</term>\n      </terms>\n   </locale>\n   <macro name=\"editor-translator\">\n      <names variable=\"editor translator\" delimiter=\". \">\n         <label form=\"verb-short\" text-case=\"capitalize-first\" suffix=\". \" strip-periods=\"true\"/>\n         <name and=\"symbol\" delimiter=\", \"/>\n      </names>\n   </macro>\n   <macro name=\"author\">\n      <names variable=\"author\">\n         <name name-as-sort-order=\"first\" and=\"text\" sort-separator=\", \" delimiter=\", \" delimiter-precedes-last=\"always\"/>\n         <label form=\"short\" prefix=\", \" suffix=\".\" strip-periods=\"true\"/>\n         <substitute>\n            <names variable=\"editor\"/>\n            <names variable=\"translator\"/>\n            <text macro=\"title\"/>\n         </substitute>\n      </names>\n   </macro>\n   <macro name=\"author-short\">\n      <names variable=\"author\">\n         <name form=\"short\" and=\"text\" delimiter=\", \" initialize-with=\". \"/>\n         <substitute>\n            <names variable=\"editor\"/>\n            <names variable=\"translator\"/>\n            <text macro=\"title-short\"/>\n         </substitute>\n      </names>\n   </macro>\n   <macro name=\"access\">\n      <group delimiter=\" \">\n         <date variable=\"accessed\">\n            <date-part name=\"day\" suffix=\" \"/>\n            <date-part name=\"month\" form=\"short\" suffix=\" \" strip-periods=\"true\"/>\n            <date-part name=\"year\"/>\n         </date>\n      </group>\n   </macro>\n   <macro name=\"medium\">\n      <choose>\n         <if type=\"motion_picture\">\n            <choose>\n               <if variable=\"medium\">\n                  <text variable=\"medium\" prefix=\" \"/>\n               </if>\n               <else>\n                  <text value=\"Film\" prefix=\" \"/>\n               </else>\n            </choose>\n         </if>\n         <else-if type=\"song\">\n            <choose>\n               <if variable=\"medium\">\n                  <text variable=\"medium\" prefix=\" \"/>\n               </if>\n               <else>\n                  <text value=\"Audio Recording\" prefix=\" \"/>\n               </else>\n            </choose>\n         </else-if>\n         <else>\n            <choose>\n               <if variable=\"URL DOI\" match=\"any\">\n                  <text variable=\"archive\" prefix=\" \" suffix=\". \"/>\n                  <text value=\"Web\" prefix=\" \"/>\n                  <text prefix=\". \" suffix=\".\" macro=\"access\"/>\n               </if>\n               <else>\n                  <text value=\"Print\" prefix=\" \"/>\n               </else>\n            </choose>\n         </else>\n      </choose>\n   </macro>\n   <macro name=\"title\">\n      <choose>\n         <if type=\"bill book graphic legal_case motion_picture report song\" match=\"any\">\n            <text variable=\"title\" font-style=\"italic\" text-case=\"title\"/>\n         </if>\n         <else>\n            <text variable=\"title\" quotes=\"true\" text-case=\"title\"/>\n         </else>\n      </choose>\n   </macro>\n   <macro name=\"title-short\">\n      <choose>\n         <if type=\"bill book graphic legal_case motion_picture report song\" match=\"any\">\n            <text variable=\"title\" form=\"short\" font-style=\"italic\" text-case=\"title\"/>\n         </if>\n         <else>\n            <text variable=\"title\" form=\"short\" quotes=\"true\" text-case=\"title\"/>\n         </else>\n      </choose>\n   </macro>\n   <macro name=\"pages\">\n      <choose>\n         <if variable=\"page\">\n            <text variable=\"page\"/>\n         </if>\n         <else>\n            <text value=\"n. pag\"/>\n         </else>\n      </choose>\n   </macro>\n   <macro name=\"edition\">\n      <choose>\n         <if is-numeric=\"edition\">\n            <group delimiter=\" \">\n               <number variable=\"edition\" form=\"ordinal\"/>\n               <text term=\"edition\" form=\"short\" suffix=\".\" strip-periods=\"true\"/>\n            </group>\n         </if>\n         <else>\n            <text variable=\"edition\"/>\n         </else>\n      </choose>\n   </macro>\n   <macro name=\"publisher-year\">\n      <group delimiter=\", \">\n         <group delimiter=\": \">\n            <text variable=\"publisher-place\"/>\n            <text variable=\"publisher\"/>\n         </group>\n         <date variable=\"issued\">\n            <date-part name=\"year\"/>\n         </date>\n      </group>\n   </macro>\n   <citation et-al-min=\"4\" et-al-use-first=\"1\" disambiguate-add-names=\"true\" disambiguate-add-givenname=\"true\">\n      <layout prefix=\"(\" suffix=\")\" delimiter=\"; \">\n         <group delimiter=\" \">\n            <choose>\n               <if variable=\"author editor translator\" match=\"any\">\n                  <group delimiter=\", \">\n                     <text macro=\"author-short\"/>\n                     <choose>\n                        <if disambiguate=\"true\">\n                           <text macro=\"title-short\"/>\n                        </if>\n                     </choose>\n                  </group>\n               </if>\n               <else>\n                  <text macro=\"title-short\"/>\n               </else>\n            </choose>\n            <text variable=\"locator\"/>\n         </group>\n      </layout>\n   </citation>\n   <bibliography hanging-indent=\"true\" et-al-min=\"4\" et-al-use-first=\"1\" line-spacing=\"2\" entry-spacing=\"0\" subsequent-author-substitute=\"---\">\n      <sort>\n         <key macro=\"author\"/>\n         <key variable=\"title\"/>\n      </sort>\n      <layout suffix=\".\">\n         <text macro=\"author\" suffix=\".\"/>\n         <text macro=\"title\" prefix=\" \" suffix=\".\"/>\n         <choose>\n            <if type=\"bill book graphic legal_case motion_picture report song\" match=\"any\">\n               <text macro=\"edition\" prefix=\" \" suffix=\".\"/>\n               <text macro=\"editor-translator\" prefix=\" \" suffix=\".\"/>\n               <text macro=\"publisher-year\" prefix=\" \" suffix=\".\"/>\n            </if>\n            <else-if type=\"chapter paper-conference\" match=\"any\">\n               <group>\n                  <text variable=\"container-title\" font-style=\"italic\" text-case=\"title\" prefix=\" \" suffix=\".\"/>\n                  <text macro=\"edition\" prefix=\" \" suffix=\".\"/>\n                  <text macro=\"editor-translator\" prefix=\" \" suffix=\".\"/>\n                  <text macro=\"publisher-year\" prefix=\" \" suffix=\".\"/>\n               </group>\n               <text variable=\"page\" prefix=\" \" suffix=\".\"/>\n            </else-if>\n            <else>\n               <group prefix=\" \" suffix=\".\" delimiter=\": \">\n                  <group delimiter=\" \">\n                     <text macro=\"editor-translator\" suffix=\".\"/>\n                     <text variable=\"container-title\" font-style=\"italic\" text-case=\"title\"/>\n                     <choose>\n                        <if type=\"article-journal\">\n                           <group delimiter=\" \">\n                              <group delimiter=\".\">\n                                 <text variable=\"volume\"/>\n                                 <text variable=\"issue\"/>\n                              </group>\n                              <date variable=\"issued\" prefix=\"(\" suffix=\")\">\n                                 <date-part name=\"year\"/>\n                              </date>\n                           </group>\n                           <text macro=\"pages\" prefix=\": \"/>\n                        </if>\n                        <else>\n                           <date variable=\"issued\">\n                              <date-part name=\"day\" suffix=\" \"/>\n                              <date-part name=\"month\" form=\"short\" suffix=\" \" strip-periods=\"true\"/>\n                              <date-part name=\"year\"/>\n                           </date>\n                           <choose>\n                              <if variable=\"URL DOI\" match=\"any\">\n                                 <text variable=\"page\"/>\n                              </if>\n                              <else>\n                                 <text macro=\"pages\" prefix=\": \"/>\n                              </else>\n                           </choose>\n                        </else>\n                     </choose>\n                  </group>\n               </group>\n            </else>\n         </choose>\n         <text macro=\"medium\"/>\n      </layout>\n   </bibliography></style>", 
+    "input": [
+        {
+            "author": [
+                {
+                    "family": "Smith", 
+                    "given": "James", 
+                    "isInstitution": ""
+                }
+            ], 
+            "id": 5, 
+            "multi": {
+                "_keys": {}
+            }, 
+            "title": "Book B", 
+            "type": "book"
+        }, 
+        {
+            "author": [
+                {
+                    "family": "Smith", 
+                    "given": "John", 
+                    "isInstitution": ""
+                }
+            ], 
+            "id": 4, 
+            "multi": {
+                "_keys": {}
+            }, 
+            "title": "Book C", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": ">>[0] (Smith)"
+}

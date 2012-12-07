@@ -1,0 +1,37 @@
+{
+    "abbreviations": false, 
+    "bibentries": false, 
+    "bibsection": false, 
+    "citation_items": false, 
+    "citations": false, 
+    "csl": "<style \n      xmlns=\"http://purl.org/net/xbiblio/csl\"\n      class=\"note\"\n      version=\"1.0\"><info>\n    <id />\n    <title />\n    <updated>2009-08-10T04:49:00+09:00</updated></info><citation>\n    <layout delimiter=\"&#x0A;\">\n      <text variable=\"title\" text-case=\"title\"/>\n    </layout></citation></style>", 
+    "input": [
+        {
+            "id": "ITEM-1", 
+            "title": "UK", 
+            "type": "book"
+        }, 
+        {
+            "id": "ITEM-2", 
+            "title": "Review of Book by A.N. Author", 
+            "type": "book"
+        }, 
+        {
+            "id": "ITEM-3", 
+            "title": "Writings on UK people and places", 
+            "type": "book"
+        }, 
+        {
+            "id": "ITEM-4", 
+            "title": "All for one. For all.", 
+            "type": "book"
+        }, 
+        {
+            "id": "ITEM-5", 
+            "title": "OC 1", 
+            "type": "book"
+        }
+    ], 
+    "mode": "citation", 
+    "result": "UK\nReview of Book by A.N. Author\nWritings on UK People and Places\nAll for One. For All.\nOC 1"
+}
