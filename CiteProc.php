@@ -847,8 +847,8 @@ class csl_names extends csl_format {
       if (!empty($data->{$var})) {
         foreach ($this->elements as $element) {
             if(is_a($element, 'csl_label')) {
-              $data->{$var}['variable'] = $var;
-              $text .= $element->render($data->{$var}, $mode);
+              $element->variable = $var;
+              $text .= $element->render($data, $mode);
             }
             elseif (is_a($element, 'csl_name')) {
              $text .= $element->render($data->{$var}, $mode);
@@ -1155,27 +1155,54 @@ class csl_label extends csl_format {
         break;
       case 'contextual':
       default:
-        if (count($data) == 1) {
-          $plural = 'single';
-        }
-        elseif (count($data) > 1) {
-          $plural = 'multiple';
-        }
     }
-    if (is_array($data) && isset($data['variable'])) {
-      $text = $this->citeproc->get_locale('term', $data['variable'], $form, $plural);
-    }
-    if (empty($text)) {
     foreach ($variables as $variable) {
-      if (($term = $this->citeproc->get_locale('term', $variable, $form, $plural))) {
-        $text = $term;
-        break;
+      if (isset($data->{$variable})) {
+        if (!isset($this->plural) && empty($plural) && is_array($data->{$variable})) {
+          $count = count($data->{$variable});
+          if ($count == 1) {
+            $plural = 'single';
+          }
+          elseif ($count > 1) {
+            $plural = 'multiple';
+          }
+        }
+        else {
+          $plural = $this->evaluateStringPluralism($data, $variable);
+        }
+        if (($term = $this->citeproc->get_locale('term', $variable, $form, $plural))) {
+          $text = $term;
+          break;
+        }
       }
     }
-    }
+
     if (empty($text)) return;
     if ($this->{'strip-periods'}) $text = str_replace('.', '', $text);
     return $this->format($text);
+  }
+
+  function evaluateStringPluralism($data, $variable) {
+    $str = $data->{$variable};
+    $plural = 'single';
+
+    if (!empty($str)) {
+//      $regex = '/(?:[0-9],\s*[0-9]|\s+and\s+|&|([0-9]+)\s*[\-\x2013]\s*([0-9]+))/';
+      switch ($variable) {
+        case 'page':
+          $page_regex = "/([a-zA-Z]*)([0-9]+)\s*(?:–|-)\s*([a-zA-Z]*)([0-9]+)/";
+          $err = preg_match($page_regex, $str, $m);
+          if ($err !== FALSE && count($m) == 0) {
+            $plural = 'single';
+          }
+          elseif ($err !== FALSE && count($m)) {
+            $plural = 'multiple';
+          }
+          break;
+        default:
+      }
+    }
+    return $plural;
   }
 }
 
