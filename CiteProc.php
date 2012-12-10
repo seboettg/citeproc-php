@@ -1558,11 +1558,12 @@ class csl_locale  {
         $term = '';
         $form = $arg2 ? " and @form='$arg2'" : '';
         $plural = $arg3 ? "/cs:$arg3" : '';
+        $local_plural = $arg3 ? "/$arg3" : '';
         if ($arg2 == 'verb' || $arg2 == 'verb-short') $plural = '';
         if ($this->style_locale) {
           $term = @$this->style_locale->xpath("//locale[@xml:lang='en']/terms/term[@name='$arg1'$form]$plural");
           if (!$term) {
-            $term = @$this->style_locale->xpath("//locale/terms/term[@name='$arg1'$form]$plural");
+            $term = @$this->style_locale->xpath("//locale/terms/term[@name='$arg1'$form]/$local_plural");
           }
         }
         if (!$term) {
