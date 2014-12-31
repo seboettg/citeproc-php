@@ -1,0 +1,7 @@
+\.orig$
+\.orig\..*$
+\.chg\..*$
+\.rej$
+\.conflict\~$
+^vendor$
+^composer\.lock$

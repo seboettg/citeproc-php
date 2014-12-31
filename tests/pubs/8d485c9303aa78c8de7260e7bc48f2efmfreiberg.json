@@ -1,0 +1,36 @@
+{
+    "DOI": "",
+    "ISBN": "",
+    "URL": "",
+    "abstract": "",
+    "author": [{
+            "family": "Freiberg",
+            "given": "Martina"
+        }, {
+            "family": "Herrmann",
+            "given": "Felix"
+        }, {
+            "family": "Puppe",
+            "given": "Frank"
+        }],
+    "citation-label": "freiberg2014spreadsheetbased",
+    "container-title": "Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear",
+    "documents": [],
+    "edition": "",
+    "editor": [],
+    "event-place": "",
+    "id": "8d485c9303aa78c8de7260e7bc48f2efmfreiberg",
+    "issue": "",
+    "issued": {
+        "date-parts": [["2014"]],
+        "literal": "2014"
+    },
+    "note": "",
+    "number": "",
+    "page": "",
+    "publisher": "",
+    "publisher-place": "",
+    "title": "Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation",
+    "type": "paper-conference",
+    "volume": ""
+}
