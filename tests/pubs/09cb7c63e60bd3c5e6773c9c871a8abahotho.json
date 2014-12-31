@@ -1,0 +1,46 @@
+{
+    "DOI": "",
+    "ISBN": "",
+    "URL": "http://ceur-ws.org/Vol-1271",
+    "abstract": "",
+    "author": [],
+    "citation-label": "jannach2014proceedings",
+    "collection-title": "CEUR Workshop Proceedings",
+    "container-title": "",
+    "documents": [],
+    "edition": "",
+    "editor": [{
+            "family": "Jannach",
+            "given": "Dietmar"
+        }, {
+            "family": "Freyne",
+            "given": "Jill"
+        }, {
+            "family": "Geyer",
+            "given": "Werner"
+        }, {
+            "family": "Guy",
+            "given": "Ido"
+        }, {
+            "family": "Hotho",
+            "given": "Andreas"
+        }, {
+            "family": "Mobasher",
+            "given": "Bamshad"
+        }],
+    "event-place": "",
+    "id": "09cb7c63e60bd3c5e6773c9c871a8abahotho",
+    "issue": "",
+    "issued": {
+        "date-parts": [["2014"]],
+        "literal": "2014"
+    },
+    "note": "",
+    "number": "",
+    "page": "",
+    "publisher": "CEUR-WS.org",
+    "publisher-place": "",
+    "title": "Proceedings of the 6th Workshop on Recommender Systems and the Social\r\n               Web RSWeb 2014 co-located with the 8th ACM Conference on Recommender\r\n               Systems RecSys 2014, Foster City, CA, USA, October 6, 2014",
+    "type": "book",
+    "volume": "1271"
+}

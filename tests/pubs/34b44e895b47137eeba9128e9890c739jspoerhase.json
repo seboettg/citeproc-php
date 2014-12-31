@@ -1,0 +1,33 @@
+{
+    "DOI": "",
+    "ISBN": "",
+    "URL": "http://arxiv.org/abs/1409.6551",
+    "abstract": "",
+    "author": [{
+            "family": "Chimani",
+            "given": "Markus"
+        }, {
+            "family": "Spoerhase",
+            "given": "Joachim"
+        }],
+    "citation-label": "chimani2015network",
+    "container-title": "Proc. 32nd Symp. Theoretical Aspects of Computer Science STACS'15",
+    "documents": [],
+    "edition": "",
+    "editor": [],
+    "event-place": "",
+    "id": "34b44e895b47137eeba9128e9890c739jspoerhase",
+    "issue": "",
+    "issued": {
+        "date-parts": [["2015"]],
+        "literal": "2015"
+    },
+    "note": "to appear",
+    "number": "",
+    "page": "",
+    "publisher": "",
+    "publisher-place": "",
+    "title": "Network Design Problems with Bounded Distances via Shallow-Light Steiner Trees",
+    "type": "paper-conference",
+    "volume": ""
+}
