@@ -2,14 +2,14 @@
 
 require_once '../vendor/autoload.php';
 
-use academicpuma\citeproc\php\CSLUtils;
-use academicpuma\citeproc\php\CiteProc;
+use academicpuma\citeproc\CSLUtils;
+use academicpuma\citeproc\CiteProc;
 
 $publications = array();
 
 function init() {
     global $publications;
-    //$pubs_folder = dirname('.') . CSLUtils::PUBLICATIONS_FOLDER;  //\academicpuma\citeproc\php\CSLUtils::PUBLICATIONS_FOLDER;
+    //$pubs_folder = dirname('.') . CSLUtils::PUBLICATIONS_FOLDER;  //\academicpuma\citeproc\CSLUtils::PUBLICATIONS_FOLDER;
         
     $file = file_get_contents("data.json");
     
@@ -30,7 +30,8 @@ function render() {
             $cslFilename = dirname('..').CSLUtils::STYLES_FOLDER.$styleName.".csl";
 
             $csl = file_get_contents($cslFilename);
-            $citeProc = new CiteProc($csl);
+            $lang = substr($publications->{$dataId}->locales, 0, 2);
+            $citeProc = new CiteProc($csl, $lang);
 
             //$actual = preg_replace("!(\s{2,})!","",strip_tags($citeProc->render($pub)));
             $actual = $citeProc->render($dataObject->rawdata);

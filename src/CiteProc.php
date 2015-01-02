@@ -20,7 +20,7 @@
  *
  */
 
-namespace academicpuma\citeproc\php;
+namespace academicpuma\citeproc;
 use \DOMDocument;
 
 class CiteProc {

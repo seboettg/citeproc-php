@@ -2,7 +2,7 @@
 
 require_once '../vendor/autoload.php';
 
-use academicpuma\citeproc\php\CiteProc;
+use academicpuma\citeproc\CiteProc;
 
 const TEST_FOLDER = './json/';
 
