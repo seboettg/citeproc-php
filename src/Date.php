@@ -57,7 +57,7 @@ class Date extends Format {
                 }
                 if (count($locale_elements) != count($parts)) {
                     foreach ($parts as $part) {
-                        $element = new csl_date_part();
+                        $element = new DatePart();
                         $element->name = $part;
                         $locale_elements[] = $element;
                     }
@@ -74,7 +74,7 @@ class Date extends Format {
             //Changes @ 2012-06-23 from Sebastian Böttger
             /*
             else if (isset($this->{'literal'})) {
-                $element = new csl_date_part();
+                $element = new DatePart();
                 $element->name = $this->{'literal'};
                 $this->elements[] = $element;
             }
