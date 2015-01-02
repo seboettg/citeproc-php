@@ -1,7 +1,7 @@
 <?php
 
 
-namespace academicpuma\citeproc\php;
+namespace academicpuma\citeproc;
 
 /**
  * Description of csl_collection

@@ -1,6 +1,6 @@
 <?php
 
-namespace academicpuma\citeproc\php;
+namespace academicpuma\citeproc;
 use \Exception;
 
 class Factory {
@@ -27,7 +27,7 @@ class Factory {
                 $className = 'P'.$className;
         }
         
-        $className = 'academicpuma\\citeproc\\php\\'.$className;
+        $className = 'academicpuma\\citeproc\\'.$className;
         
         if(class_exists($className)) {
             return new $className($dom_node, $citeproc);

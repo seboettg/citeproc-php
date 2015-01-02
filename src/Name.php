@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace academicpuma\citeproc\php;
+namespace academicpuma\citeproc;
 
 /**
  * Description of csl_name
