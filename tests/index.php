@@ -9,57 +9,95 @@ $publications = array();
 
 function init() {
     global $publications;
-    $pubs_folder = dirname('.') . CSLUtils::PUBLICATIONS_FOLDER;  //\academicpuma\citeproc\php\CSLUtils::PUBLICATIONS_FOLDER;
+    //$pubs_folder = dirname('.') . CSLUtils::PUBLICATIONS_FOLDER;  //\academicpuma\citeproc\php\CSLUtils::PUBLICATIONS_FOLDER;
         
-        if ($handle = opendir($pubs_folder)) {
-            while (false !== ($file = readdir($handle))) {
-                if (!is_dir($pubs_folder . "/$file") && $file[0] != '.') {
-                    $json_data = file_get_contents($pubs_folder . "/$file");
-                    $publications[str_replace('.json', '', $file)] = json_decode($json_data);
-                    if(JSON_ERROR_NONE !== json_last_error()) {
-                        throw new Exception("json error");
-                    }
-                }
-            }
-            closedir($handle);
-        }
-    }
+    $file = file_get_contents("data.json");
+    
+    $publications = json_decode($file);
+    
+    
+}
     
 function render() {
     global $publications;   
     
     echo "<dl>";
     
-    foreach($publications as $key => $pub) {
-        echo "<dt>$key</dt>";
+    foreach($publications as $dataId => $dataObject) {
+        echo "<dt><h3>$dataId</h3></dt>";
         echo "<dd><ul>";
-        foreach(CSLUtils::$styles as $styleName) {
+        foreach($dataObject->rendereddata as $styleName => $renderedText) {
             $cslFilename = dirname('..').CSLUtils::STYLES_FOLDER.$styleName.".csl";
 
             $csl = file_get_contents($cslFilename);
             $citeProc = new CiteProc($csl);
 
             //$actual = preg_replace("!(\s{2,})!","",strip_tags($citeProc->render($pub)));
-            $actual = $citeProc->render($pub);
-            echo "<li>$styleName:<br />$actual</li>";
+            $actual = $citeProc->render($dataObject->rawdata);
+            echo '<li><h4>'.$styleName.':</h4>'
+                    . '<div id="'.$dataId.'-'.$styleName.'" data-pub-ident="'.$dataId.'" data-style="'.$styleName.'">'
+                    . '<strong>rendered:</strong><br />'
+                    . '<div class="actual">'.$actual.'</div>'
+                    . '<strong>expected:</strong><br />'
+                    . '<div class="expected"></div>'
+                    . '<strong>diff:</strong><br />'
+                    . '<div class="diff"></div>'
+                    . '</div></li>';
                 
-                //$expected = file_get_contents($key.'_'.$styleName.'.html');
-                //$this->assertSame("", $actual);
         }
         echo "</ul></dd>";
     }
 }
+
+init();
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
        "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="de">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    
+    <style type="text/css">
+        body {
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        }
+        dl {
+            font-size: 12px;
+        }
+    </style>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="diff_match_patch.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+           
+            $(function() {
+                $.getJSON('data.json', function(data) {
+                    
+                    $.each(data, function(dataId, val) {
+                        
+                        $.each(val.rendereddata, function(styleId, expectedText) {
+                            console.log(dataId+"-"+styleId);
+                            $("#"+dataId+"-"+styleId + " .expected").text(expectedText);
+                            
+                            var dmp = new diff_match_patch();
+                            var actualText = $("#"+dataId+"-"+styleId + " .actual").text();
+                            var d = dmp.diff_main(actualText, expectedText);
+                            dmp.diff_cleanupSemantic(d);
+                            dmp.diff_cleanupEfficiency(d);
+                            var ds = dmp.diff_prettyHtml(d);
+                            $("#"+dataId+"-"+styleId + " .diff").html(ds);
+                        });
+                    });
+                });
+            });
+            
+
+        //]]>
+    </script>
+        
 </head>
 <body>
 <?php
-    init();
     render();
 ?>
 </body>
