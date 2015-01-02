@@ -22,20 +22,12 @@ class CiteProcTest extends \PHPUnit_Framework_TestCase {
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $pubs_folder = dirname('..') . CSLUtils::PUBLICATIONS_FOLDER;
+            global $publications;
+    //$pubs_folder = dirname('.') . CSLUtils::PUBLICATIONS_FOLDER;  //\academicpuma\citeproc\php\CSLUtils::PUBLICATIONS_FOLDER;
         
-        if ($handle = opendir($pubs_folder)) {
-            while (false !== ($file = readdir($handle))) {
-                if (!is_dir($pubs_folder . "/$file") && $file[0] != '.') {
-                    $json_data = file_get_contents($pubs_folder . "/$file");
-                    $this->publications[str_replace('.json', '', $file)] = json_decode($json_data);
-                    if(JSON_ERROR_NONE !== json_last_error()) {
-                        throw new Exception("json error");
-                    }
-                }
-            }
-            closedir($handle);
-        }
+            $file = file_get_contents("data.json");
+    
+            $this->publications = json_decode($file);
     }
 
     /**
@@ -69,20 +61,19 @@ class CiteProcTest extends \PHPUnit_Framework_TestCase {
      * @todo   Implement testRender().
      */
     public function testRender() {
-        foreach($this->publications as $key => $pub) {
+        foreach($this->publications as $key => $dataObject) {
             
-            foreach(CSLUtils::$styles as $styleName) {
+            foreach($dataObject->rendereddata as $styleName => $renderedText) {
+                
                 $cslFilename = dirname('..').CSLUtils::STYLES_FOLDER.$styleName.".csl";
                 
                 $csl = file_get_contents($cslFilename);
                 $citeProc = new CiteProc($csl);
 
-                $actual = preg_replace("!(\s{2,})!","",strip_tags($citeProc->render($pub)));
+                $actual = preg_replace("!(\s{2,})!","",strip_tags($citeProc->render($dataObject->rawdata)));
                 
-                echo "\n$key in $styleName:\n$actual\n";
-                
-                //$expected = file_get_contents($key.'_'.$styleName.'.html');
-                //$this->assertSame("", $actual);
+                echo $renderedText."\n";
+                $this->assertSame($renderedText, $actual);
             }
         }
     }
