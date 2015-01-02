@@ -100,10 +100,10 @@ class Names extends Format {
             $text = '';
             if (!empty($data->{$var})) {
                 foreach ($this->elements as $element) {
-                    if (is_a($element, 'Label')) {
+                    if ($element instanceof Label) {
                         $element->variable = $var;
                         $text .= $element->render($data, $mode);
-                    } elseif (is_a($element, 'Name')) {
+                    } elseif ($element instanceof Name) {
                         $text .= $element->render($data->{$var}, $mode);
                     }
                 }
