@@ -100,10 +100,10 @@ class Names extends Format {
             $text = '';
             if (!empty($data->{$var})) {
                 foreach ($this->elements as $element) {
-                    if (is_a($element, 'csl_label')) {
+                    if (is_a($element, 'Label')) {
                         $element->variable = $var;
                         $text .= $element->render($data, $mode);
-                    } elseif (is_a($element, 'csl_name')) {
+                    } elseif (is_a($element, 'Name')) {
                         $text .= $element->render($data->{$var}, $mode);
                     }
                 }

@@ -21,12 +21,12 @@ class Group extends Format {
         $terms = $variables = $have_variables = $element_count = 0;
         foreach ($this->elements as $element) {
             $element_count++;
-            if (($element instanceof csl_text) &&
+            if (($element instanceof Text) &&
                     ($element->source == 'term' ||
                     $element->source == 'value' )) {
                 $terms++;
             }
-            if (($element instanceof csl_label))
+            if (($element instanceof Label))
                 $terms++;
             if ($element->source == 'variable' &&
                     isset($element->variable) &&
