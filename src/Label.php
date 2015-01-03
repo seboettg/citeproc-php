@@ -45,7 +45,7 @@ class Label extends Format {
                 } else {
                     $plural = $this->evaluateStringPluralism($data, $variable);
                 }
-                if (($term = $this->citeproc->get_locale('term', $variable, $form, $plural))) {
+                if (!empty($data->{$variable}) && ($term = $this->citeproc->get_locale('term', $variable, $form, $plural))) {
                     $text = $term;
                     break;
                 }
