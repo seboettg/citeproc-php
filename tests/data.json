@@ -1,4 +1,12 @@
 {
+    "8d485c9303aa78c8de7260e7bc48f2efmfreiberg":{
+        "locales":"de-DE",
+        "rawdata":{"DOI":"","ISBN":"","URL":"","abstract":"","author":[{"family":"Freiberg","given":"Martina"},{"family":"Herrmann","given":"Felix"},{"family":"Puppe","given":"Frank"}],"citation-label":"freiberg2014spreadsheetbased","container-title":"Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear","documents":[],"edition":"","editor":[],"event-place":"","id":"8d485c9303aa78c8de7260e7bc48f2efmfreiberg","issue":"","issued":{"date-parts":[["2014"]],"literal":"2014"},"note":"","number":"","page":"","publisher":"","publisher-place":"","title":"Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation","type":"paper-conference","volume":""},
+        "rendereddata": {
+            "din-1505-2": "Freiberg, Martina ; Herrmann, Felix ; Puppe, Frank: Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation. In: Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear, 2014",
+            "apa": "Freiberg, M., Herrmann, F., & Puppe, F. (2014). Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation. In Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear."
+        }
+    },
     "cfea9fe6a18518a41393e9999a4a5184jspoerhase": {
         "locales":"de-DE",
         "rawdata" : {"DOI":"","ISBN":"","URL":"http://dx.doi.org/10.1007/s00453-013-9778-z","abstract":"","author":[{"family":"Das","given":"Aparna"},{"family":"Gansner","given":"Emden R."},{"family":"Kaufmann","given":"Michael"},{"family":"Kobourov","given":"Stephen"},{"family":"Spoerhase","given":"Joachim"},{"family":"Wolff","given":"Alexander"}],"citation-label":"das-etal:mmn-journal","container-title":"Algorithmica","documents":[],"edition":"","editor":[],"event-place":"","id":"cfea9fe6a18518a41393e9999a4a5184jspoerhase","issue":"","issued":{"date-parts":[["2013"]],"literal":"2013"},"note":"","number":"","number-of-pages":"1-17","page":"1-17","page-first":"1-17","publisher":"Springer-Verlag","publisher-place":"","title":"Approximating Minimum Manhattan Networks in Higher Dimensions","type":"article-journal","volume":""},
@@ -30,13 +38,5 @@
             "din-1505-2": "Mitzlaff, Folke ; Atzmueller, Martin ; Hotho, Andreas ; Stumme, Gerd: The Social Distributional Hypothesis. In: Journal of Social Network Analysis and Mining Bd. 4 (2014), Nr. 216",
             "apa": "Mitzlaff, F., Atzmueller, M., Hotho, A., & Stumme, G. (2014). The Social Distributional Hypothesis. Journal of Social Network Analysis and Mining, 4(216)."
         }    
-    },
-    "8d485c9303aa78c8de7260e7bc48f2efmfreiberg":{
-        "locales":"de-DE",
-        "rawdata":{"DOI":"","ISBN":"","URL":"","abstract":"","author":[{"family":"Freiberg","given":"Martina"},{"family":"Herrmann","given":"Felix"},{"family":"Puppe","given":"Frank"}],"citation-label":"freiberg2014spreadsheetbased","container-title":"Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear","documents":[],"edition":"","editor":[],"event-place":"","id":"8d485c9303aa78c8de7260e7bc48f2efmfreiberg","issue":"","issued":{"date-parts":[["2014"]],"literal":"2014"},"note":"","number":"","page":"","publisher":"","publisher-place":"","title":"Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation","type":"paper-conference","volume":""},
-        "rendereddata": {
-            "din-1505-2": "Freiberg, Martina ; Herrmann, Felix ; Puppe, Frank: Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation. In: Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear, 2014",
-            "apa": "Freiberg, M., Herrmann, F., & Puppe, F. (2014). Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation. In Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear."
-        }
     }
 }

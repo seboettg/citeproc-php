@@ -28,13 +28,11 @@ function render() {
         echo "<dd><ul>";
         foreach($dataObject->rendereddata as $styleName => $renderedText) {
             $cslFilename = dirname('..').CSLUtils::STYLES_FOLDER.$styleName.".csl";
-
+            
             $csl = file_get_contents($cslFilename);
             $lang = substr($publications->{$dataId}->locales, 0, 2);
             $citeProc = new CiteProc($csl, $lang);
-
-            //$actual = preg_replace("!(\s{2,})!","",strip_tags($citeProc->render($pub)));
-            $actual = $citeProc->render($dataObject->rawdata);
+            $actual = preg_replace("!(\s{2,})!"," ",strip_tags($citeProc->render($dataObject->rawdata)));
             echo '<li><h4>'.$styleName.':</h4>'
                     . '<div id="'.$dataId.'-'.$styleName.'" data-pub-ident="'.$dataId.'" data-style="'.$styleName.'">'
                     . '<strong>rendered:</strong><br />'
@@ -44,7 +42,7 @@ function render() {
                     . '<strong>diff:</strong><br />'
                     . '<div class="diff"></div>'
                     . '</div></li>';
-                
+            
         }
         echo "</ul></dd>";
     }
