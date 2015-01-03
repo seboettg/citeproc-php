@@ -72,7 +72,7 @@ class CiteProcTest extends \PHPUnit_Framework_TestCase {
 
                 $citeProc = new CiteProc($csl, $lang);
 
-                $actual = preg_replace("!(\s{2,})!","",strip_tags($citeProc->render($dataObject->rawdata)));
+                $actual = preg_replace("!(\s{2,})!"," ",strip_tags($citeProc->render($dataObject->rawdata)));
                 
                 echo $renderedText."\n";
                 $this->assertSame($renderedText, $actual);
