@@ -1,7 +1,10 @@
 \.orig$
 \.orig\..*$
+\.DS_Store$
+\.DS_Store\..*$
 \.chg\..*$
 \.rej$
 \.conflict\~$
 ^vendor$
+^nbproject$
 ^composer\.lock$
