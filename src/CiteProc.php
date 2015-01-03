@@ -33,8 +33,8 @@ class CiteProc {
     private $info = null;
     protected $locale = null;
     protected $style_locale = null;
-    private $mapper = NULL;
-
+    private $mapper = null;
+    public $quash = null;
     /**
      * 
      * @return citeproc 
@@ -54,9 +54,9 @@ class CiteProc {
             $this->init($csl, $lang);
         }
     }
-
+    
     function init($csl, $lang) {
-        // define field values appropriate to your data in the csl_mapper class and un-comment the next line.
+        // define field values appropriate to your data in the csl_mapper class and un-comment the next line.        
         $this->mapper = new Mapper();
         $this->quash = array();
 
