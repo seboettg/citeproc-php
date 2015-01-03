@@ -22,9 +22,7 @@ class CiteProcTest extends \PHPUnit_Framework_TestCase {
      * This method is called before a test is executed.
      */
     protected function setUp() {
-            global $publications;
-    //$pubs_folder = dirname('.') . CSLUtils::PUBLICATIONS_FOLDER;  //\academicpuma\citeproc\CSLUtils::PUBLICATIONS_FOLDER;
-        
+            
             $file = file_get_contents("data.json");
     
             $this->publications = json_decode($file);
@@ -35,26 +33,10 @@ class CiteProcTest extends \PHPUnit_Framework_TestCase {
      * This method is called after a test is executed.
      */
     protected function tearDown() {
-        
+        //noop
     }
 
-    /**
-     * @covers academicpuma\citeproc\CiteProc::getInstance
-     * @todo   Implement testGetInstance().
-     */
-    public function testGetInstance() {
-        
-        $this->markTestSkipped();
-    }
 
-    /**
-     * @covers academicpuma\citeproc\CiteProc::init
-     * @todo   Implement testInit().
-     */
-    public function testInit() {
-        
-        $this->markTestSkipped();
-    }
 
     /**
      * @covers academicpuma\citeproc\CiteProc::render
@@ -75,7 +57,7 @@ class CiteProcTest extends \PHPUnit_Framework_TestCase {
                 $actual = preg_replace("!(\s{2,})!"," ",strip_tags($citeProc->render($dataObject->rawdata)));
                 
                 echo $renderedText."\n";
-                $this->assertSame($renderedText, $actual);
+                $this->assertSame($renderedText, $actual, "Testing $key");
             }
         }
     }

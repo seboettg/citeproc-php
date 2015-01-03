@@ -30,5 +30,29 @@
             "din-1505-2": "Mitzlaff, Folke ; Atzmueller, Martin ; Hotho, Andreas ; Stumme, Gerd: The Social Distributional Hypothesis. In: Journal of Social Network Analysis and Mining vol. 4 (2014), Nr. 216",
             "apa": "Mitzlaff, F., Atzmueller, M., Hotho, A., & Stumme, G. (2014). The Social Distributional Hypothesis. Journal Of Social Network Analysis And Mining, 4(216)."
         }    
+    },
+    "62303a12ab2aa7f02a5ad163adcf9203awolff":{
+        "locales":"en-US",
+        "rawdata": {"DOI":"","ISBN":"","URL":"","abstract":"","author":[{"family":"Wolff","given":"Alexander"}],"citation-label":"w-ml-95","container-title":"","documents":[],"edition":"","editor":[],"event-place":"","genre":"Master thesis","id":"62303a12ab2aa7f02a5ad163adcf9203awolff","issue":"","issued":{"date-parts":[["1995"]],"literal":"1995"},"note":"","number":"","page":"","publisher":"Fachbereich Mathematik und Informatik, \n                Freie Universität Berlin","publisher-place":"","title":"Map Labeling","type":"thesis","volume":""},
+        "rendereddata": {
+            "din-1505-2": "Wolff, Alexander: Map Labeling, Fachbereich Mathematik und Informatik, Freie Universität Berlin, Master thesis, 1995",
+            "apa": "Wolff, A. (1995). Map Labeling (Master thesis). Fachbereich Mathematik und Informatik, Freie Universität Berlin."
+        }
+    },
+    "3a8b6409c8e753eaa46e3da453b5757fawolff":{
+        "locales":"en-US",
+        "rawdata": {"DOI":"","ISBN":"","URL":"","abstract":"","author":[{"family":"Wolff","given":"Alexander"}],"citation-label":"w-alptp-99","container-title":"","documents":[],"edition":"","editor":[],"event-place":"","genre":"PhD dissertation","id":"3a8b6409c8e753eaa46e3da453b5757fawolff","issue":"","issued":{"date-parts":[["1999"]],"literal":"1999"},"note":"","number":"","page":"","publisher":"Fachbereich Mathematik und Informatik, \n                Freie Universität Berlin","publisher-place":"","title":"Automated Label Placement in Theory and Practice","type":"thesis","volume":""},
+        "rendereddata": {
+            "din-1505-2": "Wolff, Alexander: Automated Label Placement in Theory and Practice, Fachbereich Mathematik und Informatik, Freie Universität Berlin, PhD dissertation, 1999",
+            "apa": "Wolff, A. (1999). Automated Label Placement in Theory and Practice (PhD dissertation). Fachbereich Mathematik und Informatik, Freie Universität Berlin."
+        }
+    },
+    "eb4818ba044f52ec9da9c3a4ff76e7b4awolff":{
+        "locales":"en-US",
+        "rawdata": {"DOI":"","ISBN":"","URL":"http://www.cs.ust.hk/tcsc/RR/index_3.html","abstract":"","author":[{"family":"Qin","given":"Zhongping"},{"family":"Wolff","given":"Alexander"},{"family":"Xu","given":"Yinfeng"},{"family":"Zhu","given":"Binhai"}],"citation-label":"qwxz-na2lp-00t","container-title":"","documents":[],"edition":"","editor":[],"event-place":"","id":"eb4818ba044f52ec9da9c3a4ff76e7b4awolff","issue":"HKUST-TCSC-2000-06","issued":{"date-parts":[["2000"]],"literal":"2000"},"note":"","number":"HKUST-TCSC-2000-06","page":"","publisher":"Hongkong University of Science and Technology","publisher-place":"","title":"New Algorithms for Two-Label Point Labeling","type":"report","volume":""},
+        "rendereddata": {
+            "din-1505-2": "Qin, Zhongping ; Wolff, Alexander ; Xu, Yinfeng ; Zhu, Binhai: New Algorithms for Two-Label Point Labeling ( Nr. HKUST-TCSC-2000-06) : Hongkong University of Science and Technology, 2000",
+            "apa": "Qin, Z., Wolff, A., Xu, Y., & Zhu, B. (2000). New Algorithms for Two-Label Point Labeling (No. HKUST-TCSC-2000-06). Hongkong University of Science and Technology. Retrieved from http://www.cs.ust.hk/tcsc/RR/index_3.html"
+        }
     }
 }
