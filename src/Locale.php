@@ -24,7 +24,7 @@ class Locale {
     //private $module_path;
 
     function __construct($lang = 'en') {
-        //$this->module_path = dirname(__FILE__);
+        $this->module_path = dirname(__FILE__);
         $this->locale = new SimpleXMLElement($this->get_locales_file_name($lang));
         if ($this->locale) {
             $this->locale->registerXPathNamespace('cs', 'http://purl.org/net/xbiblio/csl');
@@ -89,7 +89,14 @@ class Locale {
             "vi" => "vi-VN",
             "zh" => "zh-CN",
         );
-        return (isset($lang_bases[$lang])) ? file_get_contents('../locale/locales-' . $lang_bases[$lang] . '.xml') : file_get_contents($this->module_path . '/locale/locales-en-US.xml');
+        
+        if(isset($lang_bases[$lang])) {
+            $locale_file = file_get_contents($this->module_path . '/../locale/locales-' . $lang_bases[$lang] . '.xml');
+        } else {
+            $locale_file = file_get_contents($this->module_path . '/../locale/locales-en-US.xml');
+        }
+        
+        return $locale_file;
     }
 
     function get_locale($type, $arg1, $arg2 = NULL, $arg3 = NULL) {
