@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace academicpuma\citeproc;
+namespace AcademicPuma\CiteProc;
 
 /**
  * Description of csl_date_part
