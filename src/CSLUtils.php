@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace academicpuma\citeproc;
+namespace AcademicPuma\CiteProc;
 
 /**
  * Description of CitationStyles
@@ -26,9 +26,9 @@ namespace academicpuma\citeproc;
  */
 class CSLUtils {
     
-    const STYLES_FOLDER = '/styles/';
+    const STYLES_FOLDER = '/data/styles';
     
-    const PUBLICATIONS_FOLDER = '/pubs/';
+    /* const PUBLICATIONS_FOLDER = '/pubs'; */
     
     static $styles = array(
         'apa',
