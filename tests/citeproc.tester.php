@@ -2,9 +2,9 @@
 
 require_once '../vendor/autoload.php';
 
-use academicpuma\citeproc\CiteProc;
+use AcademicPuma\CiteProc\CiteProc;
 
-const TEST_FOLDER = './json/';
+const TEST_FOLDER = '../json/';
 
 $dir_handle = opendir(TEST_FOLDER);
 while (FALSE !== ($filename = readdir($dir_handle))) {

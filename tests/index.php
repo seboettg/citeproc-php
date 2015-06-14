@@ -2,8 +2,8 @@
 
 require_once '../vendor/autoload.php';
 
-use academicpuma\citeproc\CSLUtils;
-use academicpuma\citeproc\CiteProc;
+
+use AcademicPuma\CiteProc\CiteProc;
 
 $publications = array();
 
@@ -26,13 +26,15 @@ function render() {
     foreach($publications as $dataId => $dataObject) {
         echo "<dt><h3>$dataId</h3></dt>";
         echo "<dd><ul>";
+
         foreach($dataObject->rendereddata as $styleName => $renderedText) {
-            $cslFilename = dirname('..').CSLUtils::STYLES_FOLDER.$styleName.".csl";
-            
-            $csl = file_get_contents($cslFilename);
+            $style = CiteProc::loadStyleSheet($styleName);
+            print_r($style);
             $lang = substr($publications->{$dataId}->locales, 0, 2);
-            $citeProc = new CiteProc($csl, $lang);
-            $actual = preg_replace("!(\s{2,})!"," ",strip_tags($citeProc->render($dataObject->rawdata)));
+            $citeProc = new CiteProc($style, $lang);
+
+            $actual = preg_replace('!(\s{2,})!', ' ', strip_tags($citeProc->render($dataObject->rawdata)));
+
             echo '<li><h4>'.$styleName.':</h4>'
                     . '<div id="'.$dataId.'-'.$styleName.'" data-pub-ident="'.$dataId.'" data-style="'.$styleName.'">'
                     . '<strong>rendered:</strong><br />'

@@ -135,4 +135,8 @@ class CiteProc {
         return ($field);
     }
 
+    public static function loadStyleSheet($name) {
+        return file_get_contents(__DIR__.'/../styles/'.$name.'.csl');
+
+    }
 }
