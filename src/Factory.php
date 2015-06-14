@@ -44,7 +44,7 @@ class Factory {
                 $className = 'P'.$className;
         }
         
-        $className = 'academicpuma\\citeproc\\'.$className;
+        $className = 'AcademicPuma\\CiteProc\\'.$className;
         
         if(class_exists($className)) {
             return new $className($dom_node, $citeproc);
