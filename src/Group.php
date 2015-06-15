@@ -99,8 +99,12 @@ class Group extends Format {
         $i = 0;
         foreach ($text_parts as $key => $val) {
             if (!is_numeric($key)) {
-                //surround named text parts with classed span tags
-                $text .= '<span class="citeproc-' . $key . '">' . $val . '</span>';
+                if (is_string($key) && is_string($val)) {
+                    //surround named text parts with classed span tags
+                    $text .= '<span class="citeproc-' . $key . '">' . $val . '</span>';
+                } else if (is_object($val)) {
+                    //TODO: 'page' can not be handle as group because page has children like 'page-first'.
+                }
             } else {
                 $text .= $val;
             }
