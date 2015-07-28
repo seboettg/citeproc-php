@@ -136,7 +136,6 @@ class CiteProc {
     }
 
     public static function loadStyleSheet($name) {
-        return file_get_contents(__DIR__.'/../styles/'.$name.'.csl');
-
+        return file_get_contents(__DIR__.'/../vendor/citation-style-language/styles/'.$name.'.csl');
     }
 }
