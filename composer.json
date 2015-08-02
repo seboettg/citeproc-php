@@ -34,8 +34,8 @@
         "phpunit/phpunit-skeleton-generator": "2.0.*"
     },
     "require": {
-        "citation-style-language/styles":"*",
-        "citation-style-language/locales":"*"
+        "citation-style-language/styles":"1",
+        "citation-style-language/locales":"1"
     },
     "autoload": {
         "psr-4": {"AcademicPuma\\CiteProc\\": "src/"}
@@ -46,6 +46,5 @@
             "name": "Sebastian Böttger",
             "email": "boettger@cs.uni-kassel.de"
         }
-    ],
-    "minimum-stability": "dev"
+    ]
 }
