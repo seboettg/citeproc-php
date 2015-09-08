@@ -49,17 +49,13 @@ class CiteProc {
         return self::$instance;
     }
 
-    function __construct($csl = NULL, $lang = 'en', $locale = null) {
-        if ($csl && empty($locale)) {
-	        $this->locale = new Locale($lang);
-        } else if ($csl && !empty($locale)) {
-	        $this->locale = new Locale('', $locale);
+    function __construct($csl = NULL, $lang = 'en') {
+        if ($csl) {
+	        $this->init($csl, $lang);
         }
-
-	    $this->init($csl);
     }
 
-    function init($csl) {
+    function init($csl, $lang) {
         // define field values appropriate to your data in the csl_mapper class and un-comment the next line.        
         $this->mapper = new Mapper();
         $this->quash = array();
@@ -82,6 +78,7 @@ class CiteProc {
                 }
             }
 
+            $this->locale = new Locale($lang);
             $this->locale->set_style_locale($csl_doc);
 
 
@@ -139,6 +136,12 @@ class CiteProc {
     }
 
     public static function loadStyleSheet($name) {
-        return file_get_contents(__DIR__.'/../vendor/academicpuma/styles/'.$name.'.csl');
+	    include_once __DIR__.'/../vendorPath.php';
+
+	    if (!($vendorPath = vendorPath())) {
+		    throw new \Exception('Error: vendor path not found. Use composer to initialize your project');
+	    }
+
+        return file_get_contents($vendorPath.'/academicpuma/styles/'.$name.'.csl');
     }
 }
