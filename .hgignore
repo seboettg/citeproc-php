@@ -1,10 +1,7 @@
-\.orig$
-\.orig\..*$
-\.DS_Store$
-\.DS_Store\..*$
-\.chg\..*$
-\.rej$
-\.conflict\~$
-^vendor$
-^nbproject$
-^composer\.lock$
+syntax: glob
+
+*~
+.DS_Store
+.composer.json.swp
+.idea
+
