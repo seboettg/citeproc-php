@@ -34,9 +34,16 @@ class Locale {
     protected $style_locale = NULL;
     //private $module_path;
 
-    function __construct($lang = 'en') {
+    function __construct($lang = 'en', $locale = null) {
+
         $this->module_path = dirname(__FILE__);
-        $this->locale = new SimpleXMLElement($this->get_locales_file_name($lang));
+
+	    if (empty($locale)) {
+            $this->locale = new SimpleXMLElement($this->get_locales_file_name($lang));
+	    } else {
+		    $this->locale = new SimpleXMLElement($locale);
+	    }
+
         if ($this->locale) {
             $this->locale->registerXPathNamespace('cs', 'http://purl.org/net/xbiblio/csl');
         }
