@@ -53,7 +53,7 @@ class CiteProc {
         if ($csl && empty($locale)) {
 	        $this->locale = new Locale($lang);
         } else if ($csl && !empty($locale)) {
-	        $this->locale = new Locale($locale);
+	        $this->locale = new Locale('', $locale);
         }
 
 	    $this->init($csl);
@@ -139,6 +139,6 @@ class CiteProc {
     }
 
     public static function loadStyleSheet($name) {
-        return file_get_contents(__DIR__.'/../vendor/citation-style-language/styles/'.$name.'.csl');
+        return file_get_contents(__DIR__.'/../vendor/academicpuma/styles/'.$name.'.csl');
     }
 }
