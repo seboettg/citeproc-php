@@ -23,7 +23,7 @@ class CiteProcTest extends \PHPUnit_Framework_TestCase {
      */
     protected function setUp() {
             
-            $file = file_get_contents("../data.json");
+            $file = file_get_contents(__DIR__."/../data.json");
     
             $this->publications = json_decode($file);
     }

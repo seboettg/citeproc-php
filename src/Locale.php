@@ -34,15 +34,10 @@ class Locale {
     protected $style_locale = NULL;
     //private $module_path;
 
-    function __construct($lang = 'en', $locale = null) {
+    function __construct($lang = 'en') {
 
         $this->module_path = dirname(__FILE__);
-
-	    if (empty($locale)) {
-            $this->locale = new SimpleXMLElement($this->get_locales_file_name($lang));
-	    } else {
-		    $this->locale = new SimpleXMLElement($locale);
-	    }
+	    $this->locale = new SimpleXMLElement($this->get_locales_file_name($lang));
 
         if ($this->locale) {
             $this->locale->registerXPathNamespace('cs', 'http://purl.org/net/xbiblio/csl');
@@ -107,11 +102,17 @@ class Locale {
             "vi" => "vi-VN",
             "zh" => "zh-CN",
         );
-        
+
+	    include_once __DIR__.'/../vendorPath.php';
+
+	    if (!($vendorPath = vendorPath())) {
+		    throw new \Exception('Error: vendor path not found. Use composer to initialize your project');
+	    }
+
         if(isset($lang_bases[$lang])) {
-            $locale_file = file_get_contents($this->module_path . '/../vendor/academicpuma/locales/locales-' . $lang_bases[$lang] . '.xml');
+            $locale_file = file_get_contents($vendorPath.'/academicpuma/locales/locales-' . $lang_bases[$lang] . '.xml');
         } else {
-            $locale_file = file_get_contents($this->module_path . '/../vendor/academicpuma/locales/locales-en-US.xml');
+            $locale_file = file_get_contents($vendorPath.'/academicpuma/locales/locales-en-US.xml');
         }
         
         return $locale_file;
