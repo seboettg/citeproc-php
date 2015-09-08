@@ -109,9 +109,9 @@ class Locale {
         );
         
         if(isset($lang_bases[$lang])) {
-            $locale_file = file_get_contents($this->module_path . '/../vendor/citation-style-language/locales/locales-' . $lang_bases[$lang] . '.xml');
+            $locale_file = file_get_contents($this->module_path . '/../vendor/academicpuma/locales/locales-' . $lang_bases[$lang] . '.xml');
         } else {
-            $locale_file = file_get_contents($this->module_path . '/../vendor/citation-style-language/locales/locales-en-US.xml');
+            $locale_file = file_get_contents($this->module_path . '/../vendor/academicpuma/locales/locales-en-US.xml');
         }
         
         return $locale_file;
