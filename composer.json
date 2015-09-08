@@ -1,41 +1,13 @@
 {
     "name": "academicpuma/citeproc-php",
     "description": "This is an effort to implement a full-featured standalone CSL processor in PHP. The code based on the implementation of Ron Jerome.",
-    "repositories": [
-      {
-        "type":"package",
-        "package":{
-          "name":"citation-style-language/styles",
-          "description":"CSL Stylesheets",
-          "version":"1",
-          "source": {
-            "type": "git",
-            "url": "https://github.com/citation-style-language/styles.git",
-            "reference": "master"
-          }
-        }
-      },
-      {
-        "type":"package",
-        "package":{
-          "name":"citation-style-language/locales",
-          "description":"CSL Locales",
-          "version":"1",
-          "source": {
-            "type": "git",
-            "url": "https://github.com/citation-style-language/locales.git",
-            "reference": "master"
-          }
-        }
-      }
-    ],
     "require-dev": {
         "phpunit/phpunit":"3.7.*",
         "phpunit/phpunit-skeleton-generator": "2.0.*"
     },
     "require": {
-        "citation-style-language/styles":"1",
-        "citation-style-language/locales":"1"
+        "academicpuma/styles":"1.0.0",
+        "academicpuma/locales":"1.0.0"
     },
     "autoload": {
         "psr-4": {"AcademicPuma\\CiteProc\\": "src/"}
