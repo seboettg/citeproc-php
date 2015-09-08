@@ -135,6 +135,12 @@ class CiteProc {
         return ($field);
     }
 
+	/**
+	 * @param $name
+	 *
+	 * @return string
+	 * @throws \Exception
+	 */
     public static function loadStyleSheet($name) {
 	    include_once __DIR__.'/../vendorPath.php';
 
