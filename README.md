@@ -1,7 +1,7 @@
 # citeproc-php
 [![Latest Version](https://img.shields.io/packagist/v/academicpuma/citeproc-php.svg?style=flat-square)](https://packagist.org/packages/academicpuma/citeproc-php)
-[![License](https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square)](https://bitbucket.org/bibsonomy/restclient-php/raw/default/license.txt)
-[![PHP](https://img.shields.io/badge/PHP-%3E=5.3-green.svg?style=flat-square)](http://docs.php.net/manual/en/migration54.new-features.php)
+[![License](https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square)](https://bitbucket.org/bibsonomy/citeproc-php/raw/default/license.txt)
+[![PHP](https://img.shields.io/badge/PHP-%3E=5.3-green.svg?style=flat-square)](http://docs.php.net/manual/en/migration53.new-features.php)
 
 This is an effort to implement a full-featured standalone CSL processor in PHP. This program can be used to render bibliographies using [CSL](http://citationstyles.org/) templates. This sources are a fork of the [implementation of rjerome](https://bitbucket.org/rjerome/citeproc-php).
 
