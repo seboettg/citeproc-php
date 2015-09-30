@@ -87,3 +87,4 @@ $citeProc = new CiteProc($csl, $lang);
 // $data is a JSON encoded string
 echo $citeProc->render(json_decode($data));
 ?>
+```
