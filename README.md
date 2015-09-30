@@ -69,3 +69,21 @@ $ sudo /etc/init.d/apache2 restart
 ```
 
 Open your browser and enter your chosen host address, as soon as apache has finished.
+
+## How to use ##
+
+```
+<?php
+include 'vendor/autoload.php';
+use \AcademicPuma\CiteProc\CiteProc;
+
+$bibliographyStyleName = 'apa';
+$lang = "en-US";
+
+$csl = CiteProc::loadStyleSheet($bibliographyStyleName); // xml code of your csl stylesheet
+
+$citeProc = new CiteProc($csl, $lang);
+
+// $data is a JSON encoded string
+echo $citeProc->render(json_decode($data));
+?>
