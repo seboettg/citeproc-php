@@ -13,7 +13,7 @@ Some advantages:
 * uses the autoloader of Composer
 * uses PHPUnit for testing
 
-## Installation using Composer ##
+## Installing citeproc-php using Composer ##
 
 Use Composer to add citeproc-php to your app:
 
@@ -22,7 +22,7 @@ $ composer require academicpuma/citeproc-php
 ```
 
 
-## How to use ##
+## How to use citeproc-php ##
 
 ```
 <?php
@@ -87,3 +87,9 @@ $ sudo /etc/init.d/apache2 restart
 ```
 
 Open your browser and enter your chosen host address, as soon as apache has finished.
+
+
+## Known packages using citeproc-php ##
+
+* [lib-php-kar](https://packagist.org/packages/unikent/lib-php-kar) (GitHub)
+* [BibSonomy restclient-php](http://bitbucket.org/bibsonomy/restclient-php) (BitBucket)
