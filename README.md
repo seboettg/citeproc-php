@@ -13,9 +13,7 @@ Some advantages:
 * uses the autoloader of Composer
 * uses PHPUnit for testing
 
-## Installation
-
-### Setup to use citeproc-php as library ###
+## Installation using Composer ##
 
 Use Composer to add citeproc-php to your app:
 
@@ -23,7 +21,27 @@ Use Composer to add citeproc-php to your app:
 $ composer require academicpuma/citeproc-php
 ```
 
-### Setup to work on citeproc-php ###
+
+## How to use ##
+
+```
+<?php
+include 'vendor/autoload.php';
+use \AcademicPuma\CiteProc\CiteProc;
+
+$bibliographyStyleName = 'apa';
+$lang = "en-US";
+
+$csl = CiteProc::loadStyleSheet($bibliographyStyleName); // xml code of your csl stylesheet
+
+$citeProc = new CiteProc($csl, $lang);
+
+// $data is a JSON encoded string
+echo $citeProc->render(json_decode($data));
+?>
+```
+
+## Setup a workspace ##
 
 ```
 $ cd /path/to/your/php/workspace
@@ -69,22 +87,3 @@ $ sudo /etc/init.d/apache2 restart
 ```
 
 Open your browser and enter your chosen host address, as soon as apache has finished.
-
-## How to use ##
-
-```
-<?php
-include 'vendor/autoload.php';
-use \AcademicPuma\CiteProc\CiteProc;
-
-$bibliographyStyleName = 'apa';
-$lang = "en-US";
-
-$csl = CiteProc::loadStyleSheet($bibliographyStyleName); // xml code of your csl stylesheet
-
-$citeProc = new CiteProc($csl, $lang);
-
-// $data is a JSON encoded string
-echo $citeProc->render(json_decode($data));
-?>
-```
