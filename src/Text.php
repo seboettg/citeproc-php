@@ -57,9 +57,17 @@ class Text extends Format {
 
         switch ($this->source) {
             case 'variable':
-                if (!isset($data->{$this->variable}) || empty($data->{$this->variable}))
-                    return;
-                $text = $data->{$this->variable}; //$this->data[$this->var];  // include the contents of a variable
+                if (!isset($data->{$this->variable}) || empty($data->{$this->variable})) {
+                    break;
+                }
+                if ($this->var == "URL") {
+                    $url = $data->{$this->variable};
+                    if (preg_match('/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?\/?/i', $url)) {
+                        $text = '<a href="'.$url.'">'.htmlspecialchars($url, ENT_QUOTES, "UTF-8").'</a>';
+                        break;
+                    }
+                }
+                $text = htmlspecialchars($data->{$this->variable}, ENT_QUOTES, "UTF-8"); //$this->data[$this->var];  // include the contents of a variable
                 break;
             case 'macro':
                 $macro = $this->var;
@@ -74,8 +82,9 @@ class Text extends Format {
                 break;
         }
 
-        if (empty($text))
+        if (empty($text)) {
             return;
+        }
         return $this->format($text);
     }
     
