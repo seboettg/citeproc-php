@@ -37,13 +37,14 @@ class Group extends Format {
                     $element->source == 'value' )) {
                 $terms++;
             }
-            if (($element instanceof Label))
-                $terms++;
+            if (($element instanceof Label)) {
+                ++$terms;
+            }
             if ($element->source == 'variable' &&
                     isset($element->variable) &&
                     !empty($data->{$element->variable})
             ) {
-                $variables++;
+                ++$variables;
             }
             $text = $element->render($data, $mode);
             $delimiter = $this->delimiter;
