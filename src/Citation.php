@@ -25,26 +25,36 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Citation extends Format {
+class Citation extends Format implements Renderable
+{
 
+    /**
+     * @var Layout $layout
+     */
     private $layout = NULL;
 
-    function init($dom_node, $citeproc) {
-        $options = $dom_node->getElementsByTagName('option');
+    /**
+     * @param \DOMElement $domNode
+     * @param CiteProc $citeProc
+     */
+    protected function init($domNode, $citeProc) {
+        $options = $domNode->getElementsByTagName('option');
+
+        /** @var \DOMElement $option */
         foreach ($options as $option) {
             $value = $option->getAttribute('value');
             $name = $option->getAttribute('name');
             $this->attributes[$name] = $value;
         }
 
-        $layouts = $dom_node->getElementsByTagName('layout');
+        $layouts = $domNode->getElementsByTagName('layout');
         foreach ($layouts as $layout) {
-            $this->layout = new Layout($layout, $citeproc);
+            $this->layout = new Layout($layout, $citeProc);
         }
     }
 
-    function render($data, $mode = NULL) {
-        $this->citeproc->quash = array();
+    public function render($data, $mode = null) {
+        $this->citeProc->quash = array();
 
         $text = $this->layout->render($data, 'citation');
 

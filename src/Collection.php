@@ -24,20 +24,33 @@ namespace AcademicPuma\CiteProc;
  *
  * @author sebastian
  */
-class Collection {
+class Collection implements Renderable {
 
     protected $elements = array();
 
-    function addElement($elem) {
-        if (isset($elem))
+    protected $delimiter;
+
+    protected function addElement($elem)
+    {
+        if (isset($elem)) {
             $this->elements[] = $elem;
+        }
     }
 
-    function render($data, $mode = NULL) {
-        
+    public function render($data, $mode = null)
+    {
+        $textParts = array();
+        $delimiter = $this->delimiter;
+        foreach ($this->elements as $element) {
+            $textParts[] = $element->render($data, $mode);
+        }
+        $text = implode($delimiter, $textParts); // insert the delimiter if supplied.
+
+        return $this->format($text);
     }
 
-    function format($text) {
+    protected function format($text)
+    {
         return $text;
     }
 

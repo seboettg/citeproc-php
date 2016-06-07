@@ -27,98 +27,126 @@ namespace AcademicPuma\CiteProc;
 
 class Element extends Collection {
 
+    /**
+     * @var array
+     */
     protected $attributes = array();
-    protected $citeproc;
-    protected $dom_node;
 
-    function __construct($dom_node = NULL, $citeproc = NULL) {
-        $this->dom_node = $dom_node;
-        $this->citeproc = &$citeproc;
-        $this->set_attributes($dom_node);
-        $this->init($dom_node, $citeproc);
+    /**
+     * @var CiteProc
+     */
+    protected $citeProc;
+
+    /**
+     * @var \DOMNode
+     */
+    protected $domNode;
+
+    public function __construct($domNode = NULL, $citeProc = NULL) {
+        $this->domNode = $domNode;
+        $this->citeProc = &$citeProc;
+        $this->setAttributes($domNode);
+        $this->init($domNode, $citeProc);
     }
 
-    function init($dom_node, $citeproc) {
-        if (!$dom_node)
+    /**
+     * @param \DOMNode $domNode
+     * @param CiteProc $citeProc
+     */
+    protected function init($domNode, $citeProc) {
+        if (!$domNode) {
             return;
+        }
 
-        foreach ($dom_node->childNodes as $node) {
+        foreach ($domNode->childNodes as $node) {
             if ($node->nodeType == 1) {
-                $this->addElement(Factory::create($node, $citeproc));
+                $this->addElement(Factory::create($node, $citeProc));
             }
         }
     }
 
-    function __set($name, $value) {
-        $this->attributes[$name] = $value;
-    }
 
-    function __isset($name) {
-        return isset($this->attributes[$name]);
-    }
-
-    function __unset($name) {
-        unset($this->attributes[$name]);
-    }
-
-    function &__get($name = NULL) {
-        $null = NULL;
-        if (array_key_exists($name, $this->attributes)) {
-            return $this->attributes[$name];
-        }
-        if (isset($this->{$name})) {
-            return $this->{$name};
-        }
-        return $null;
-    }
-
-    function set_attributes($dom_node) {
+    public function setAttributes($domNode) {
         $att = array();
-        $element_name = $dom_node->nodeName;
-        if (isset($dom_node->attributes->length)) {
-            for ($i = 0; $i < $dom_node->attributes->length; $i++) {
-                $value = $dom_node->attributes->item($i)->value;
-                $name = str_replace(' ', '_', $dom_node->attributes->item($i)->name);
+        $element_name = $domNode->nodeName;
+        if (isset($domNode->attributes->length)) {
+            for ($i = 0; $i < $domNode->attributes->length; $i++) {
+                $value = $domNode->attributes->item($i)->value;
+                $name = str_replace(' ', '_', $domNode->attributes->item($i)->name);
                 if ($name == 'type') {
-                    $value = $this->citeproc->map_type($value);
+                    $value = $this->citeProc->getMapper()->mapType($value);
                 }
 
                 if (($name == 'variable' || $name == 'is-numeric') && $element_name != 'label') {
-                    $value = $this->citeproc->map_field($value);
+                    $value = $this->citeProc->getMapper()->mapField($value);
                 }
                 $this->{$name} = $value;
             }
         }
     }
 
-    function get_attributes() {
+    public function getAttributes() {
         return $this->attributes;
     }
 
-    function get_hier_attributes() {
-        $hier_attr = array();
-        $hier_names = array('and', 'delimiter-precedes-last', 'et-al-min', 'et-al-use-first',
+    public function getHierAttributes() {
+        $hierAttr = array();
+        $hierNames = HierAttributes::getAllAttributes();
+
+            /* array('and', 'delimiter-precedes-last', 'et-al-min', 'et-al-use-first',
             'et-al-subsequent-min', 'et-al-subsequent-use-first', 'initialize-with',
             'name-as-sort-order', 'sort-separator', 'name-form', 'name-delimiter',
-            'names-delimiter');
-        foreach ($hier_names as $name) {
+            'names-delimiter');*/
+        foreach ($hierNames as $name) {
             if (isset($this->attributes[$name])) {
-                $hier_attr[$name] = $this->attributes[$name];
+                $hierAttr[$name] = $this->attributes[$name];
             }
         }
-        return $hier_attr;
+        return $hierAttr;
     }
 
-    function name($name = NULL) {
-        if ($name) {
-            $this->name = $name;
-        } else {
-            return str_replace(' ', '_', $this->name);
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+    
+    public function getName()
+    {
+        return str_replace(' ', '_', $this->name);
+    }
+    
+
+    public function getDomNode() {
+        return $this->domNode;
+    }
+
+    public function __set($name, $value) {
+        $this->attributes[$name] = $value;
+    }
+
+    public function __isset($name) {
+        return isset($this->attributes[$name]);
+    }
+
+    public function __unset($name) {
+        unset($this->attributes[$name]);
+    }
+
+    public function __get($name = null) {
+
+        if ($name == null) {
+            return $name;
         }
-    }
 
-    function getDomNode() {
-        return $this->dom_node;
+        if (array_key_exists($name, $this->attributes)) {
+            return $this->attributes[$name];
+        }
+
+        if (isset($this->{$name})) {
+            return $this->{$name};
+        }
+
+        return null;
     }
 
 }

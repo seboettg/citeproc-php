@@ -27,15 +27,17 @@ namespace AcademicPuma\CiteProc;
 
 class Macros extends Collection {
 
-    function __construct($macro_nodes, $citeProc) {
-        foreach ($macro_nodes as $macro) {
+    public function __construct($macroNodes, $citeProc)
+    {
+        foreach ($macroNodes as $macro) {
+            /** @var Macro $macroObject */
             $macroObject = Factory::create($macro, $citeProc);
-            $this->elements[$macroObject->name()] = $macroObject;
+            $this->elements[$macroObject->getName()] = $macroObject;
         }
     }
 
-    function render_macro($name, $data, $mode) {
+    public function renderMacro($name, $data, $mode)
+    {
         return $this->elements[$name]->render($data, $mode);
     }
-
 }

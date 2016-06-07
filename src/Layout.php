@@ -26,15 +26,18 @@ namespace AcademicPuma\CiteProc;
  */
 
 
-class Layout extends Format {
+class Layout extends Format implements Renderable
+{
 
-    function init_formatting() {
+    protected function initFormatting()
+    {
         $this->div_class = 'csl-entry';
-        parent::init_formatting();
+        parent::initFormatting();
     }
 
-    function render($data, $mode = NULL) {
-        $text = '';
+    public function render($data, $mode = null)
+    {
+        //$text = '';
         $parts = array();
         // $delimiter = $this->delimiter;
 

@@ -26,19 +26,21 @@ namespace AcademicPuma\CiteProc;
  */
 
 
-class DatePart extends Format {
+class DatePart extends Format implements Renderable
+{
 
-    function render($date, $mode = NULL) {
+    public function render($date, $mode = null)
+    {
         $text = '';
 
         switch ($this->name) {
             case 'year':
                 $text = (isset($date[0])) ? $date[0] : '';
                 if ($text > 0 && $text < 500) {
-                    $text = $text . $this->citeproc->get_locale('term', 'ad');
+                    $text = $text . $this->citeProc->getLocale()->locale('term', 'ad');
                 } elseif ($text < 0) {
                     $text = $text * -1;
-                    $text = $text . $this->citeproc->get_locale('term', 'bc');
+                    $text = $text . $this->citeProc->getLocale()->locale('term', 'bc');
                 }
                 //return ((isset($this->prefix))? $this->prefix : '') . $date[0] . ((isset($this->suffix))? $this->suffix : '');
                 break;
@@ -57,11 +59,11 @@ class DatePart extends Format {
                         break;
                     case 'short':
                         $month = 'month-' . sprintf('%02d', $text);
-                        $text = $this->citeproc->get_locale('term', $month, 'short');
+                        $text = $this->citeProc->getLocale()->locale('term', $month, 'short');
                         break;
                     default:
                         $month = 'month-' . sprintf('%02d', $text);
-                        $text = $this->citeproc->get_locale('term', $month);
+                        $text = $this->citeProc->getLocale()->locale('term', $month);
                         break;
                 }
                 break;

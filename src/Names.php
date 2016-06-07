@@ -25,33 +25,36 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Names extends Format {
+class Names extends Format implements Renderable
+{
 
     private $substitutes;
 
-    function init_formatting() {
+    function initFormatting()
+    {
         //   $this->span_class = 'authors';
-        parent::init_formatting();
+        parent::initFormatting();
     }
 
-    function init($dom_node, $citeproc) {
+    function init($domNode, $citeProc)
+    {
         $etal = '';
-        $tag = $dom_node->getElementsByTagName('substitute')->item(0);
+        $tag = $domNode->getElementsByTagName('substitute')->item(0);
         if ($tag) {
-            $this->substitutes = Factory::create($tag, $citeproc);
-            $dom_node->removeChild($tag);
+            $this->substitutes = Factory::create($tag, $citeProc);
+            $domNode->removeChild($tag);
         }
 
-        $tag = $dom_node->getElementsByTagName('et-al')->item(0);
+        $tag = $domNode->getElementsByTagName('et-al')->item(0);
         if ($tag) {
-            $etal = Factory::create($tag, $citeproc);
-            $dom_node->removeChild($tag);
+            $etal = Factory::create($tag, $citeProc);
+            $domNode->removeChild($tag);
         }
 
-        $var = $dom_node->getAttribute('variable');
-        foreach ($dom_node->childNodes as $node) {
+        $var = $domNode->getAttribute('variable');
+        foreach ($domNode->childNodes as $node) {
             if ($node->nodeType == 1) {
-                $element = Factory::create($node, $citeproc);
+                $element = Factory::create($node, $citeProc);
                 if (($element instanceof Label))
                     $element->variable = $var;
                 if (($element instanceof Name) && $etal) {
@@ -62,20 +65,21 @@ class Names extends Format {
         }
     }
 
-    function render($data, $mode = NULL) {
+    public function render($data, $mode = null)
+    {
         $matches = array();
         $variable_parts = array();
 
         if (!isset($this->delimiter)) {
-            $style_delimiter = $this->citeproc->style->{'names-delimiter'};
-            $mode_delimiter = $this->citeproc->{$mode}->{'names-delimiter'};
+            $style_delimiter = $this->citeProc->style->{'names-delimiter'};
+            $mode_delimiter = $this->citeProc->{$mode}->{'names-delimiter'};
             $this->delimiter = (isset($mode_delimiter)) ? $mode_delimiter : (isset($style_delimiter) ? $style_delimiter : '');
         }
 
         $variables = explode(' ', $this->variable);
 
         foreach ($variables as $var) {
-            if (in_array($var, $this->citeproc->quash))
+            if (in_array($var, $this->citeProc->quash))
                 continue;
             if (isset($data->{$var}) && (!empty($data->{$var}))) {
                 $matches[] = $var;
@@ -90,12 +94,12 @@ class Names extends Format {
                         foreach ($sub_variables as $var) {
                             if (isset($data->{$var})) {
                                 $matches[] = $var;
-                                $this->citeproc->quash[] = $var;
+                                $this->citeProc->quash[] = $var;
                             }
                         }
                     } else { // if it's not a "names" element, just render it
                         $text = $element->render($data, $mode);
-                        $this->citeproc->quash[] = isset($element->variable) ? $element->variable : $element->var;
+                        $this->citeProc->quash[] = isset($element->variable) ? $element->variable : $element->var;
                         if (!empty($text))
                             $variable_parts[] = $text;
                     }
@@ -106,7 +110,7 @@ class Names extends Format {
         }
 
         foreach ($matches as $var) {
-            if (in_array($var, $this->citeproc->quash) && in_array($var, $variables))
+            if (in_array($var, $this->citeProc->quash) && in_array($var, $variables))
                 continue;
             $text = '';
             if (!empty($data->{$var})) {

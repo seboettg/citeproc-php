@@ -25,36 +25,19 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Text extends Format {
-
+class Text extends Format implements Renderable
+{
     public $source;
+
     protected $var;
 
-    function init($dom_node, $citeproc) {
-        foreach (array('variable', 'macro', 'term', 'value') as $attr) {
-            if ($dom_node->hasAttribute($attr)) {
-                $this->source = $attr;
-                if ($this->source == 'macro') {
-                    $this->var = str_replace(' ', '_', $dom_node->getAttribute($attr));
-                } else {
-                    $this->var = $dom_node->getAttribute($attr);
-                }
-            }
-        }
-    }
-
-    function init_formatting() {
-//    if ($this->variable == 'title') {
-//      $this->span_class = 'title';
-//    }
-        parent::init_formatting();
-    }
-
-    function render($data = NULL, $mode = NULL) {
+    public function render($data, $mode = null)
+    {
         $text = '';
-        if (in_array($this->var, $this->citeproc->quash))
+        if (in_array($this->var, $this->citeProc->quash)) {
             return;
-
+        }
+        
         switch ($this->source) {
             case 'variable':
                 if (!isset($data->{$this->variable}) || empty($data->{$this->variable})) {
@@ -63,7 +46,7 @@ class Text extends Format {
                 if ($this->var == "URL") {
                     $url = $data->{$this->variable};
                     if (preg_match('/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?\/?/i', $url)) {
-                        $text = '<a href="'.$url.'">'.htmlspecialchars($url, ENT_QUOTES, "UTF-8").'</a>';
+                        $text = '<a href="' . $url . '" rel="nofollow">' . htmlspecialchars($url, ENT_QUOTES, "UTF-8") . '</a>';
                         break;
                     }
                 }
@@ -71,11 +54,11 @@ class Text extends Format {
                 break;
             case 'macro':
                 $macro = $this->var;
-                $text = $this->citeproc->render_macro($macro, $data, $mode); //trigger the macro process
+                $text = $this->citeProc->getMarcos()->renderMacro($macro, $data, $mode); //trigger the macro process
                 break;
             case 'term':
                 $form = (($form = $this->form)) ? $form : '';
-                $text = $this->citeproc->get_locale('term', $this->var, $form);
+                $text = $this->citeProc->getLocale()->locale('term', $this->var, $form);
                 break;
             case 'value':
                 $text = $this->var; //$this->var;  // dump the text verbatim
@@ -87,9 +70,28 @@ class Text extends Format {
         }
         return $this->format($text);
     }
-    
-    public function getVar() {
+
+    public function getVar()
+    {
         return $this->var;
+    }
+
+    /**
+     * @param \DOMElement $domNode
+     * @param CiteProc $citeProc
+     */
+    protected function init($domNode, $citeProc)
+    {
+        foreach (array('variable', 'macro', 'term', 'value') as $attr) {
+            if ($domNode->hasAttribute($attr)) {
+                $this->source = $attr;
+                if ($this->source == 'macro') {
+                    $this->var = str_replace(' ', '_', $domNode->getAttribute($attr));
+                } else {
+                    $this->var = $domNode->getAttribute($attr);
+                }
+            }
+        }
     }
 
 }

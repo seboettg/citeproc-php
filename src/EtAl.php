@@ -26,12 +26,14 @@ namespace AcademicPuma\CiteProc;
  */
 
 
-class EtAl extends Text {
+class EtAl extends Text
+{
 
-    function __construct($dom_node = NULL, $citeproc = NULL) {
+    public function __construct($domNode = NULL, $citeProc = null)
+    {
         $this->var = 'et-al';
         $this->source = 'term';
-        parent::__construct($dom_node, $citeproc);
+        parent::__construct($domNode, $citeProc);
     }
 
 }

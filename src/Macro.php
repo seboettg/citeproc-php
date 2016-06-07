@@ -24,6 +24,11 @@ namespace AcademicPuma\CiteProc;
  *
  * @author sebastian
  */
-class Macro extends Format {
-    
+class Macro extends Format implements Renderable
+{
+
+    public function render($data, $mode = null)
+    {
+        return parent::render($data, $mode);
+    }
 }

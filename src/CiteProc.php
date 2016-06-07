@@ -25,16 +25,51 @@ use \DOMDocument;
 
 class CiteProc {
 
+    /**
+     * @var CiteProc
+     */
     private static $instance;
-    public $bibliography = null;
-    public $citation = null;
-    public $style = null;
-    protected $macros = null;
-    private $info = null;
-    protected $locale = null;
-    protected $style_locale = null;
-    private $mapper = null;
-    public $quash = null;
+
+    /**
+     * @var Bibliography
+     */
+    public $bibliography;
+
+    /**
+     * @var Citation
+     */
+    public $citation;
+
+    /**
+     * @var Style
+     */
+    public $style;
+
+    /**
+     * @var Macros
+     */
+    protected $macros;
+
+    /**
+     * @var Info
+     */
+    private $info;
+
+    /**
+     * @var Locale
+     */
+    protected $locale;
+    
+    /**
+     * @var Mapper
+     */
+    private $mapper;
+
+    /**
+     * @var array
+     */
+    public $quash;
+
     /**
      * 
      * @return citeproc 
@@ -49,57 +84,78 @@ class CiteProc {
         return self::$instance;
     }
 
+
+    /**
+     * @param $name
+     *
+     * @return string
+     * @throws \Exception
+     */
+    public static function loadStyleSheet($name) {
+        include_once __DIR__.'/../vendorPath.php';
+
+        if (!($vendorPath = vendorPath())) {
+            throw new \Exception('Error: vendor path not found. Use composer to initialize your project');
+        }
+
+        return file_get_contents($vendorPath.'/academicpuma/styles/'.$name.'.csl');
+    }
+
+    /**
+     * CiteProc constructor.
+     * @param string $csl xml formatted csl stylesheet
+     * @param string $lang
+     */
     function __construct($csl = NULL, $lang = 'en') {
         if ($csl) {
 	        $this->init($csl, $lang);
         }
     }
 
-    function init($csl, $lang) {
+    private function init($csl, $lang) {
         // define field values appropriate to your data in the csl_mapper class and un-comment the next line.        
         $this->mapper = new Mapper();
         $this->quash = array();
 
-        $csl_doc = new DOMDocument();
+        $cslDoc = new \DOMDocument();
 
-        if ($csl_doc->loadXML($csl)) {
+        if ($cslDoc->loadXML($csl)) {
 
-            $style_nodes = $csl_doc->getElementsByTagName('style');
-            if ($style_nodes) {
-                foreach ($style_nodes as $style) {
+            $styleNodes = $cslDoc->getElementsByTagName('style');
+            if ($styleNodes) {
+                foreach ($styleNodes as $style) {
                     $this->style = new Style($style);
                 }
             }
 
-            $info_nodes = $csl_doc->getElementsByTagName('info');
-            if ($info_nodes) {
-                foreach ($info_nodes as $info) {
+            $infoNodes = $cslDoc->getElementsByTagName('info');
+            if ($infoNodes) {
+                foreach ($infoNodes as $info) {
                     $this->info = new Info($info);
                 }
             }
 
             $this->locale = new Locale($lang);
-            $this->locale->set_style_locale($csl_doc);
+            $this->locale->setStyleLocale($cslDoc);
 
-
-            $macro_nodes = $csl_doc->getElementsByTagName('macro');
-            if ($macro_nodes) {
-                $this->macros = new Macros($macro_nodes, $this);
+            $macroNodes = $cslDoc->getElementsByTagName('macro');
+            if ($macroNodes) {
+                $this->macros = new Macros($macroNodes, $this);
             }
 
-            $citation_nodes = $csl_doc->getElementsByTagName('citation');
-            foreach ($citation_nodes as $citation) {
+            $citationNodes = $cslDoc->getElementsByTagName('citation');
+            foreach ($citationNodes as $citation) {
                 $this->citation = new Citation($citation, $this);
             }
 
-            $bibliography_nodes = $csl_doc->getElementsByTagName('bibliography');
-            foreach ($bibliography_nodes as $bibliography) {
+            $bibliographyNodes = $cslDoc->getElementsByTagName('bibliography');
+            foreach ($bibliographyNodes as $bibliography) {
                 $this->bibliography = new Bibliography($bibliography, $this);
             }
         }
     }
 
-    function render($data, $mode = NULL) {
+    function render($data, $mode = null) {
         $text = '';
         switch ($mode) {
             case 'citation':
@@ -113,41 +169,18 @@ class CiteProc {
         return $text;
     }
 
-    function render_macro($name, $data, $mode) {
-        return $this->macros->render_macro($name, $data, $mode);
+    public function getMarcos()
+    {
+        return $this->macros;
     }
 
-    function get_locale($type, $arg1, $arg2 = NULL, $arg3 = NULL) {
-        return $this->locale->get_locale($type, $arg1, $arg2, $arg3);
+    public function getLocale()
+    {
+        return $this->locale;
     }
 
-    function map_field($field) {
-        if ($this->mapper) {
-            return $this->mapper->map_field($field);
-        }
-        return ($field);
-    }
-
-    function map_type($field) {
-        if ($this->mapper) {
-            return $this->mapper->map_type($field);
-        }
-        return ($field);
-    }
-
-	/**
-	 * @param $name
-	 *
-	 * @return string
-	 * @throws \Exception
-	 */
-    public static function loadStyleSheet($name) {
-	    include_once __DIR__.'/../vendorPath.php';
-
-	    if (!($vendorPath = vendorPath())) {
-		    throw new \Exception('Error: vendor path not found. Use composer to initialize your project');
-	    }
-
-        return file_get_contents($vendorPath.'/academicpuma/styles/'.$name.'.csl');
+    public function getMapper()
+    {
+        return $this->mapper;
     }
 }
