@@ -25,6 +25,7 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Terms {
+class Terms
+{
     
 }

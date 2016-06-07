@@ -25,6 +25,7 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Sort extends Element {
+class Sort extends Element
+{
     
 }
