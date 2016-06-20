@@ -3,7 +3,6 @@
         "locales":"en-US",
         "rawdata":{"DOI":"","ISBN":"","URL":"","abstract":"","author":[{"family":"Freiberg","given":"Martina"},{"family":"Herrmann","given":"Felix"},{"family":"Puppe","given":"Frank"}],"citation-label":"freiberg2014spreadsheetbased","container-title":"Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear","documents":[],"edition":"","editor":[],"event-place":"","id":"8d485c9303aa78c8de7260e7bc48f2efmfreiberg","issue":"","issued":{"date-parts":[["2014"]],"literal":"2014"},"note":"","number":"","page":"","publisher":"","publisher-place":"","title":"Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation","type":"paper-conference","volume":""},
         "rendereddata": {
-            "din-1505-2": "Freiberg, Martina ; Herrmann, Felix ; Puppe, Frank: Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation. In: Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear, 2014",
             "apa": "Freiberg, M., Herrmann, F., & Puppe, F. (2014). Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation. In Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear."
         }
     },
@@ -60,6 +59,16 @@
         "rawdata": {"DOI":"","ISBN":"","URL":"<www.google.com>","abstract":"","author":[{"family":"Potter", "given":"Heribert"}],"citation-label":"google","container-title":"","documents":[],"edition":"","editor":[],"event-place":"","id":"eb4818ba044f52ec9da9c3a4ff76e7b4awolff","issue":"HKUST-TCSC-2000-06","issued":{"date-parts":[["2016"]],"literal":"2016"},"note":"","number":"","page":"","publisher":"","publisher-place":"","title":"People will never learn","type":"report","volume":""},
         "rendereddata": {
             "apa": "Potter, H. (2016). People will never learn. Retrieved from &lt;www.google.com&gt;"
+        }
+
+    },
+    "google2": {
+        "locales":"en-US",
+        "rawdata": {"DOI":"","ISBN":"","URL":"http://www.google.com","abstract":"","author":[{"family":"Potter", "given":"Heribert"}],"citation-label":"google","container-title":"","documents":[],"edition":"","editor":[],"event-place":"","id":"eb4818ba044f52ec9da9c3a4ff76e7b4awolff","issue":"HKUST-TCSC-2000-06","issued":{"date-parts":[["2016"]],"literal":"2016"},"note":"","number":"","page":"","publisher":"","publisher-place":"","title":"People will never learn","type":"report","volume":""},
+        "rendereddata": {
+            "apa": "Potter, H. (2016). People will never learn. Retrieved from http://www.google.com",
+            "acta-philosophica": "Potter, H. , People will never learn (2016) [http://www.google.com].",
+            "international-journal-of-humanoid-robotics": "H. Potter, People will never learn (2016)."
         }
 
     }
