@@ -24,9 +24,11 @@ namespace AcademicPuma\CiteProc;
  *
  * @author Sebastian Böttger
  */
-class Group extends Format {
+class Group extends Format implements Renderable 
+{
 
-    function render($data, $mode = NULL) {
+    public function render($data, $mode = null) 
+    {
         $text = '';
         $text_parts = array();
         $terms = $variables = $have_variables = $element_count = 0;
@@ -37,13 +39,14 @@ class Group extends Format {
                     $element->source == 'value' )) {
                 $terms++;
             }
-            if (($element instanceof Label))
-                $terms++;
+            if (($element instanceof Label)) {
+                ++$terms;
+            }
             if ($element->source == 'variable' &&
                     isset($element->variable) &&
                     !empty($data->{$element->variable})
             ) {
-                $variables++;
+                ++$variables;
             }
             $text = $element->render($data, $mode);
             $delimiter = $this->delimiter;
@@ -66,10 +69,13 @@ class Group extends Format {
                 }
                 
                 
-                if ($element->source == 'variable' || isset($element->variable))
+                if ($element->source == 'variable' || isset($element->variable)) {
                     $have_variables++;
-                if ($element->source == 'macro')
+                }
+
+                if ($element->source == 'macro') {
                     $have_variables++;
+                }
             }
         }
         if (empty($text_parts))
@@ -94,7 +100,8 @@ class Group extends Format {
      * @param array $text_parts text snippets for merging
      * @return string 
      */
-    function implodeGroup($delimiter, $text_parts) {
+    private function implodeGroup($delimiter, $text_parts) 
+    {
         $text = '';
         $i = 0;
         foreach ($text_parts as $key => $val) {

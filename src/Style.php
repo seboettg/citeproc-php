@@ -25,11 +25,16 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Style extends Element {
+class Style extends Element
+{
 
-    function __construct($dom_node = NULL, $citeproc = NULL) {
-        if ($dom_node) {
-            $this->set_attributes($dom_node);
+    public function __construct($domNode = null, $citeProc = null)
+    {
+        //TODO: Constructor of an inherited class needs the call to the parent constructor, but doing so an error appears.
+        // Removing inheritance does not work as well, because the setAttributes-Method is missing.
+
+        if ($domNode) {
+            $this->setAttributes($domNode);
         }
     }
 

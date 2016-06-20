@@ -25,6 +25,7 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Substitute extends Element {
+class Substitute extends Element
+{
     
 }

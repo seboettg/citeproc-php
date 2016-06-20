@@ -25,9 +25,11 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class PIf extends RenderingElement {
+class PIf extends RenderingElement
+{
 
-    function evaluate($data) {
+    public function evaluate($data)
+    {
         $match = (($match = $this->match)) ? $match : 'all';
         if (($types = $this->type)) {
             $types = explode(' ', $types);
@@ -35,35 +37,35 @@ class PIf extends RenderingElement {
             foreach ($types as $type) {
                 if (isset($data->type)) {
                     if ($data->type == $type && $match == 'any')
-                        return TRUE;
+                        return true;
                     if ($data->type != $type && $match == 'all')
-                        return FALSE;
+                        return false;
                     if ($data->type == $type)
                         $matches++;
                 }
             }
             if ($match == 'all' && $matches == count($types))
-                return TRUE;
+                return true;
             if ($match == 'none' && $matches == 0)
-                return TRUE;
-            return FALSE;
+                return true;
+            return false;
         }
         if (($variables = $this->variable)) {
             $variables = explode(' ', $variables);
             $matches = 0;
             foreach ($variables as $var) {
                 if (isset($data->$var) && !empty($data->$var) && $match == 'any')
-                    return TRUE;
+                    return true;
                 if ((!isset($data->$var) || empty($data->$var)) && $match == 'all')
-                    return FALSE;
+                    return false;
                 if (isset($data->$var) && !empty($data->$var))
                     $matches++;
             }
             if ($match == 'all' && $matches == count($variables))
-                return TRUE;
+                return true;
             if ($match == 'none' && $matches == 0)
-                return TRUE;
-            return FALSE;
+                return true;
+            return false;
         }
         if (($is_numeric = $this->{'is-numeric'})) {
             $variables = explode(' ', $is_numeric);
@@ -71,12 +73,12 @@ class PIf extends RenderingElement {
             foreach ($variables as $var) {
                 if (isset($data->$var)) {
                     if (is_numeric($data->$var) && $match == 'any')
-                        return TRUE;
+                        return true;
                     if (!is_numeric($data->$var)) {
                         if (preg_match('/(?:^\d+|\d+$)/', $data->$var)) {
                             $matches++;
                         } elseif ($match == 'all') {
-                            return FALSE;
+                            return false;
                         }
                     }
                     if (is_numeric($data->$var))
@@ -84,15 +86,15 @@ class PIf extends RenderingElement {
                 }
             }
             if ($match == 'all' && $matches == count($variables))
-                return TRUE;
+                return true;
             if ($match == 'none' && $matches == 0)
-                return TRUE;
-            return FALSE;
+                return true;
+            return false;
         }
         if (isset($this->locator))
             $test = explode(' ', $this->type);
 
-        return FALSE;
+        return false;
     }
 
 }

@@ -27,32 +27,69 @@ namespace AcademicPuma\CiteProc;
 
 class Format extends RenderingElement {
 
-    protected $no_op;
+    /**
+     * @var bool
+     */
+    protected $noOp;
+
+    /**
+     * @var string
+     */
     protected $format;
 
-    function __construct($dom_node = NULL, $citeproc = NULL) {
-        parent::__construct($dom_node, $citeproc);
-        $this->init_formatting();
+    /**
+     * @var string
+     */
+    protected $divClass;
+
+    /**
+     * @var array
+     */
+    protected $quotes;
+
+    /**
+     * @var string
+     */
+    protected $prefix;
+
+    /**
+     * @var string
+     */
+    protected $suffix;
+
+    /**
+     * @var string
+     */
+    protected $display;
+
+
+    public function __construct($domNode, $citeProc)
+    {
+        parent::__construct($domNode, $citeProc);
+        $this->initFormatting();
     }
 
-    function init_formatting() {
-        $this->no_op = TRUE;
+    protected function initFormatting() {
+        $this->noOp = true;
         $this->format = '';
         if (isset($this->quotes) && strtolower($this->quotes) == "true") {
             $this->quotes = array();
-            $this->quotes['punctuation-in-quote'] = $this->citeproc->get_locale('style_option', 'punctuation-in-quote');
-            $this->quotes['open-quote'] = $this->citeproc->get_locale('term', 'open-quote');
-            $this->quotes['close-quote'] = $this->citeproc->get_locale('term', 'close-quote');
-            $this->quotes['open-inner-quote'] = $this->citeproc->get_locale('term', 'open-inner-quote');
-            $this->quotes['close-inner-quote'] = $this->citeproc->get_locale('term', 'close-inner-quote');
-            $this->no_op = FALSE;
+            $this->quotes['punctuation-in-quote'] = $this->citeProc->getLocale()->locale('style_option', 'punctuation-in-quote');
+            $this->quotes['open-quote'] = $this->citeProc->getLocale()->locale('term', 'open-quote');
+            $this->quotes['close-quote'] = $this->citeProc->getLocale()->locale('term', 'close-quote');
+            $this->quotes['open-inner-quote'] = $this->citeProc->getLocale()->locale('term', 'open-inner-quote');
+            $this->quotes['close-inner-quote'] = $this->citeProc->getLocale()->locale('term', 'close-inner-quote');
+            $this->noOp = false;
         }
-        if (isset($this->{'prefix'}))
-            $this->no_op = FALSE;
-        if (isset($this->{'suffix'}))
-            $this->no_op = FALSE;
-        if (isset($this->{'display'}))
-            $this->no_op = FALSE;
+        if (isset($this->{'prefix'})) {
+            $this->noOp = false;
+        }
+        if (isset($this->{'suffix'})) {
+            $this->noOp = false;
+        }
+        if (isset($this->{'display'})) {
+            $this->noOp = false;
+        }
 
         $this->format .= (isset($this->{'font-style'})) ? 'font-style: ' . $this->{'font-style'} . ';' : '';
         $this->format .= (isset($this->{'font-family'})) ? 'font-family: ' . $this->{'font-family'} . ';' : '';
@@ -66,14 +103,16 @@ class Format extends RenderingElement {
                 !empty($this->format) ||
                 !empty($this->span_class) ||
                 !empty($this->div_class)) {
-            $this->no_op = FALSE;
+            $this->noOp = false;
         }
     }
 
-    function format($text) {
+    protected function format($text) {
 
-        if (empty($text) || $this->no_op)
+        if (empty($text) || $this->noOp) {
             return $text;
+        }
+
         $quotes = $this->quotes;
         $quotes = is_array($quotes) ? $quotes : array();
 
@@ -98,7 +137,9 @@ class Format extends RenderingElement {
 
         $prefix = $this->prefix;
         $prefix .= isset($quotes['open-quote']) ? $quotes['open-quote'] : '';
+
         $suffix = $this->suffix;
+
         if (isset($quotes['close-quote']) && !empty($suffix) && isset($quotes['punctuation-in-quote'])) {
             if (strpos($suffix, '.') !== FALSE || strpos($suffix, ',') !== FALSE) {
                 $suffix = $suffix . $quotes['close-quote'];
@@ -106,6 +147,7 @@ class Format extends RenderingElement {
         } elseif (isset($quotes['close-quote'])) {
             $suffix = $quotes['close-quote'] . $suffix;
         }
+
         if (!empty($suffix)) { // gaurd against repeaded suffixes...
             $no_tags = strip_tags($text);
             if (strlen($no_tags) && ($no_tags[(strlen($no_tags) - 1)] == $suffix[0])) {
@@ -118,15 +160,17 @@ class Format extends RenderingElement {
             $class = (!empty($this->span_class)) ? 'class="' . $this->span_class . '"' : '';
             $text = '<span ' . $class . $style . '>' . $text . '</span>';
         }
-        $div_class = $div_style = '';
+
+        $divClass = $divStyle = '';
+
         if (!empty($this->div_class)) {
-            $div_class = (!empty($this->div_class)) ? 'class="' . $this->div_class . '"' : '';
+            $divClass = (!empty($this->divClass)) ? 'class="' . $this->divClass . '"' : '';
         }
         if ($this->display == 'indent') {
-            $div_style = 'style="text-indent: 0px; padding-left: 45px;"';
+            $divStyle = 'style="text-indent: 0px; padding-left: 45px;"';
         }
-        if ($div_class || $div_style) {
-            return '<div ' . $div_class . $div_style . '>' . $prefix . $text . $suffix . '</div>';
+        if ($divClass || $divStyle) {
+            return '<div ' . $divClass . $divStyle . '>' . $prefix . $text . $suffix . '</div>';
         }
 
         return $prefix . $text . $suffix;

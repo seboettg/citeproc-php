@@ -25,7 +25,8 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Choose extends Element {
+class Choose extends Element implements Renderable
+{
 
     function render($data, $mode = NULL) {
         foreach ($this->elements as $choice) {

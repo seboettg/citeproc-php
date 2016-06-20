@@ -25,32 +25,33 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Bibliography extends Format {
+class Bibliography extends Format implements Renderable
+{
 
     private $layout = NULL;
 
-    function init($dom_node, $citeproc) {
-        $hier_name_attr = $this->get_hier_attributes();
-        $options = $dom_node->getElementsByTagName('option');
+    protected function init($domNode, $citeProc) {
+
+        $options = $domNode->getElementsByTagName('option');
         foreach ($options as $option) {
             $value = $option->getAttribute('value');
             $name = $option->getAttribute('name');
             $this->attributes[$name] = $value;
         }
 
-        $layouts = $dom_node->getElementsByTagName('layout');
+        $layouts = $domNode->getElementsByTagName('layout');
         foreach ($layouts as $layout) {
-            $this->layout = new Layout($layout, $citeproc);
+            $this->layout = new Layout($layout, $citeProc);
         }
     }
 
-    function init_formatting() {
+    protected function initFormatting() {
         $this->div_class = 'csl-bib-body';
-        parent::init_formatting();
+        parent::initFormatting();
     }
 
-    function render($data, $mode = NULL) {
-        $this->citeproc->quash = array();
+    public function render($data, $mode = null) {
+        $this->citeProc->quash = array();
         $text = $this->layout->render($data, 'bibliography');
         if ($this->{'hanging-indent'} == 'true') {
             $text = '<div style="text-indent: -25px; padding-left: 25px;">' . $text . '</div>';

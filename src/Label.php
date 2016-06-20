@@ -25,11 +25,12 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Label extends Format {
+class Label extends Format implements Renderable {
 
     private $plural;
 
-    function render($data, $mode = NULL) {
+    public function render($data, $mode = null)
+    {
         $text = '';
 
         $variables = explode(' ', $this->variable);
@@ -56,7 +57,7 @@ class Label extends Format {
                 } else {
                     $plural = $this->evaluateStringPluralism($data, $variable);
                 }
-                if (!empty($data->{$variable}) && ($term = $this->citeproc->get_locale('term', $variable, $form, $plural))) {
+                if (!empty($data->{$variable}) && ($term = $this->citeProc->getLocale()->locale('term', $variable, $form, $plural))) {
                     $text = $term;
                     break;
                 }
@@ -70,7 +71,8 @@ class Label extends Format {
         return $this->format($text);
     }
 
-    function evaluateStringPluralism($data, $variable) {
+    private function evaluateStringPluralism($data, $variable)
+    {
         $str = $data->{$variable};
         $plural = 'single';
 
@@ -80,9 +82,9 @@ class Label extends Format {
                 case 'page':
                     $page_regex = "/([a-zA-Z]*)([0-9]+)\s*(?:–|-)\s*([a-zA-Z]*)([0-9]+)/";
                     $err = preg_match($page_regex, $str, $m);
-                    if ($err !== FALSE && count($m) == 0) {
+                    if ($err !== false && count($m) == 0) {
                         $plural = 'single';
-                    } elseif ($err !== FALSE && count($m)) {
+                    } elseif ($err !== false && count($m)) {
                         $plural = 'multiple';
                     }
                     break;

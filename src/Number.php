@@ -25,9 +25,9 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class Number extends Format {
+class Number extends Format implements Renderable {
 
-    function render($data, $mode = NULL) {
+    public function render($data, $mode = NULL) {
         $var = $this->variable;
 
         if (!$var || empty($data->$var))
@@ -53,31 +53,31 @@ class Number extends Format {
         return $this->format($text);
     }
 
-    function ordinal($num) {
+    private function ordinal($num) {
         if (($num / 10) % 10 == 1) {
-            $num .= $this->citeproc->get_locale('term', 'ordinal-04');
+            $num .= $this->citeProc->getLocale()->locale('term', 'ordinal-04');
         } elseif ($num % 10 == 1) {
-            $num .= $this->citeproc->get_locale('term', 'ordinal-01');
+            $num .= $this->citeProc->getLocale()->locale('term', 'ordinal-01');
         } elseif ($num % 10 == 2) {
-            $num .= $this->citeproc->get_locale('term', 'ordinal-02');
+            $num .= $this->citeProc->getLocale()->locale('term', 'ordinal-02');
         } elseif ($num % 10 == 3) {
-            $num .= $this->citeproc->get_locale('term', 'ordinal-03');
+            $num .= $this->citeProc->getLocale()->locale('term', 'ordinal-03');
         } else {
-            $num .= $this->citeproc->get_locale('term', 'ordinal-04');
+            $num .= $this->citeProc->getLocale()->locale('term', 'ordinal-04');
         }
         return $num;
     }
 
-    function long_ordinal($num) {
+    private function long_ordinal($num) {
         $num = sprintf("%02d", $num);
-        $ret = $this->citeproc->get_locale('term', 'long-ordinal-' . $num);
+        $ret = $this->citeProc->getLocale()->locale('term', 'long-ordinal-' . $num);
         if (!$ret) {
             return $this->ordinal($num);
         }
         return $ret;
     }
 
-    function roman($num) {
+    private function roman($num) {
         $ret = "";
         if ($num < 6000) {
             $ROMAN_NUMERALS = array(

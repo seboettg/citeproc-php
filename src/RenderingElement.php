@@ -25,19 +25,22 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class RenderingElement extends Element {
+class RenderingElement extends Element implements Renderable {
 
-    function render($data, $mode = NULL) {
-        $text_parts = array();
 
-        $delim = $this->delimiter;
+    public function render($data, $mode = null)
+    {
+
+        $textParts = array();
+        $delimiter = $this->delimiter;
         foreach ($this->elements as $element) {
-            $text_parts[] = $element->render($data, $mode);
+            $textParts[] = $element->render($data, $mode);
         }
-        $text = implode($delim, $text_parts); // insert the delimiter if supplied.
+        $text = implode($delimiter, $textParts); // insert the delimiter if supplied.
 
         return $this->format($text);
     }
+
 
 }
 

@@ -25,6 +25,7 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class PElseIf extends PIf {
+class PElseIf extends PIf
+{
     
 }

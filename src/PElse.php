@@ -25,7 +25,8 @@ namespace AcademicPuma\CiteProc;
  * @author sebastian
  */
 
-class PElse extends PIf {
+class PElse extends PIf
+{
 
     function evaluate($data = NULL) {
         return TRUE; // the last else always returns TRUE

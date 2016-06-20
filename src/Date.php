@@ -26,27 +26,46 @@ namespace AcademicPuma\CiteProc;
  */
 
 
-class Date extends Format {
+class Date extends Format implements Renderable
+{
 
-    function init($dom_node, $citeproc) {
+    public function render($data, $mode = null)
+    {
+        $date_parts = array();
+        //$date = '';
+        $text = '';
+
+        if (($var = $this->variable) && isset($data->{$var})) {
+            $date = $data->{$var}->{'date-parts'}[0];
+            foreach ($this->elements as $element) {
+                $date_parts[] = $element->render($date, $mode);
+            }
+            $text = implode('', $date_parts);
+        }
+
+        return $this->format($text);
+    }
+
+    protected function init($domNode, $citeProc)
+    {
         $locale_elements = array();
 
         if ($form = $this->form) {
-            $local_date = $this->citeproc->get_locale('date_options', $form);
+            $local_date = $this->citeProc->getLocale()->locale('date_options', $form);
             $dom_elem = dom_import_simplexml($local_date[0]);
             if ($dom_elem) {
                 foreach ($dom_elem->childNodes as $node) {
                     if ($node->nodeType == 1) {
-                        $locale_elements[] = Factory::create($node, $citeproc);
+                        $locale_elements[] = Factory::create($node, $citeProc);
                     }
                 }
             }
 
             //debug($dom_node->childNodes);
 
-            foreach ($dom_node->childNodes as $node) {
+            foreach ($domNode->childNodes as $node) {
                 if ($node->nodeType == 1) {
-                    $element = Factory::create($node, $citeproc);
+                    $element = Factory::create($node, $citeProc);
 
                     foreach ($locale_elements as $key => $locale_element) {
                         if ($locale_element->name == $element->name) {
@@ -96,24 +115,8 @@ class Date extends Format {
                 $this->elements = $locale_elements;
             }
         } else {
-            parent::init($dom_node, $citeproc);
+            parent::init($domNode, $citeProc);
         }
-    }
-
-    function render($data, $mode = NULL) {
-        $date_parts = array();
-        $date = '';
-        $text = '';
-
-        if (($var = $this->variable) && isset($data->{$var})) {
-            $date = $data->{$var}->{'date-parts'}[0];
-            foreach ($this->elements as $element) {
-                $date_parts[] = $element->render($date, $mode);
-            }
-            $text = implode('', $date_parts);
-        }
-
-        return $this->format($text);
     }
 
 }

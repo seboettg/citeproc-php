@@ -22,7 +22,7 @@ use \Exception;
 
 class Factory {
 
-    public static function create($dom_node, $citeproc = NULL) {
+    public static function create($dom_node, $citeproc = null) {
         //$class_name = 'csl_' . str_replace('-', '_', $dom_node->nodeName);
         $className = ucfirst($dom_node->nodeName);
         
@@ -46,10 +46,10 @@ class Factory {
         
         $className = 'AcademicPuma\\CiteProc\\'.$className;
         
-        if(class_exists($className)) {
-            return new $className($dom_node, $citeproc);
+        if(!class_exists($className)) {
+            new \Exception("Class \"$className\" does not exist.");
         }
-        return null;
+        return new $className($dom_node, $citeproc);
         
     }
 
