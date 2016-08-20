@@ -25,12 +25,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace Seboettg\CiteProc\Format;
+namespace Seboettg\CiteProc\Style;
 
 
 use Seboettg\Collection\ArrayList;
 
-trait FormatTrait
+trait FormattingTrait
 {
 
     /**
@@ -43,20 +43,6 @@ trait FormatTrait
      */
     private $formattingOptions;
 
-    /**
-     * @var ArrayList
-     */
-    private $quotes;
-
-    /**
-     * @var string
-     */
-    private $prefix;
-
-    /**
-     * @var string
-     */
-    private $suffix;
 
     /**
      * @var string
@@ -92,12 +78,6 @@ trait FormatTrait
             }
 
             switch ($name) {
-                case 'prefix':
-                    $this->prefix = $value;
-                    break;
-                case 'suffix':
-                    $this->suffix = $value;
-                    break;
                 case 'display':
                     $this->display = $value;
                     break;
@@ -156,7 +136,7 @@ trait FormatTrait
         if (empty($text)) {
             return $text;
         }
-
+        /*
         $quotes = $this->{'quotes'};
         $quotes = is_array($quotes) ? $quotes : array();
 
@@ -179,10 +159,14 @@ trait FormatTrait
             }
         }
 
+        */
+
+        /*
         $prefix = $this->prefix;
         $prefix .= isset($quotes['open-quote']) ? $quotes['open-quote'] : '';
 
         $suffix = $this->suffix;
+
 
         if (isset($quotes['close-quote']) && !empty($suffix) && isset($quotes['punctuation-in-quote'])) {
             if (strpos($suffix, '.') !== FALSE || strpos($suffix, ',') !== FALSE) {
@@ -198,6 +182,7 @@ trait FormatTrait
                 $suffix = substr($suffix, 1);
             }
         }
+        */
 
         if (!empty($this->format) || !empty($this->span_class)) {
             $style = (!empty($this->format)) ? 'style="' . $this->format . '" ' : '';
@@ -205,14 +190,14 @@ trait FormatTrait
             $text = '<span ' . $class . $style . '>' . $text . '</span>';
         }
 
-
+        /*
         $divClass = (!empty($this->divClass)) ? 'class="' . $this->divClass . '"' : '';
         $divStyle = ($this->display === "indent") ? 'style="text-indent: 0px; padding-left: 45px;"' : '';
 
         if (!empty($divClass) || !empty($divStyle)) {
             return '<div ' . $divClass . $divStyle . '>' . $prefix . $text . $suffix . '</div>';
         }
-
-        return $prefix . $text . $suffix;
+        */
+        return $text;
     }
 }
