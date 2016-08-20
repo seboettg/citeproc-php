@@ -1,8 +1,0 @@
-syntax: glob
-
-*~
-.DS_Store
-.composer.json.swp
-.idea
-
-vendor
