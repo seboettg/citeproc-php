@@ -1,24 +1,25 @@
 {
-    "name": "academicpuma/citeproc-php",
-    "description": "This is an effort to implement a full-featured standalone CSL processor in PHP. The code based on the implementation of Ron Jerome.",
-    "require-dev": {
-        "phpunit/phpunit":"3.7.*",
-        "phpunit/phpunit-skeleton-generator": "2.0.*"
-    },
-    "require": {
-        "academicpuma/styles":">=1.0",
-        "academicpuma/locales":">=1.0"
-    },
-    "autoload": {
-        "psr-4": {"AcademicPuma\\CiteProc\\": "src/"}
-    },
-    "license": "GPL v3",
+    "name": "seboettg/citeproc-php",
+    "description": "Full-featured CSL processor (https://citationstyles.org)",
+    "license": "MIT",
     "authors": [
         {
             "name": "Sebastian Böttger",
-            "email": "boettger@cs.uni-kassel.de"
+            "email": "seboettg@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {"": "src/"}
+    },
+    "require": {
+        "seboettg/collection": "^1.1",
+        "academicpuma/styles": "^1",
+        "academicpuma/locales": "^1"
+    },
+    "require-dev": {
+        "satooshi/php-coveralls": "^1"
+    },
+    "version": "2.0.0-dev",
     "extra": {
         "branch-alias": {
             "version2.0": "2.0.x-dev"
