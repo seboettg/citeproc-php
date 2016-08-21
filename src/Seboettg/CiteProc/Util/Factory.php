@@ -16,6 +16,7 @@ class Factory
 
     static $nodes = [
 
+        'layout'    => "\\Layout",
         'text'      => "\\Text",
         "macro"     => "\\Macro",
         'date'      => "\\Date",
