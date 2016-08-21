@@ -25,25 +25,56 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace Seboettg\CiteProc\Node\Choose;
-use Seboettg\CiteProc\Node\Rendering\RenderingInterface;
+namespace Seboettg\CiteProc\Rendering\Choose;
+use Seboettg\CiteProc\Rendering\RenderingInterface;
+use Seboettg\Collection\ArrayList;
 
 
 /**
- * Class ChooseElse
- * @package Seboettg\CiteProc\Node\Choose
+ * Class Choose
+ * @package Seboettg\CiteProc\Node
  *
  * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
  */
-class ChooseElse extends ChooseIf implements RenderingInterface
+class Choose implements RenderingInterface
 {
+
+    private $children;
+
+
+    public  function __construct(\SimpleXMLElement $node)
+    {
+        $this->children = new ArrayList();
+
+        foreach ($node->children() as $child) {
+            switch ($child->getName()) {
+                case 'if':
+                    $this->children->add("if", new ChooseIf($child));
+                    break;
+                case 'else-if':
+                    $this->children->add("elseif", new ChooseIf($child));
+                    break;
+                case 'else':
+                    $this->children->add("else", new ChooseElse($child));
+                    break;
+            }
+        }
+    }
+
     public function render($data)
     {
         $ret = "";
-        /** @var RenderingInterface $child */
-        foreach ($this->children as $child) {
-            $ret .= $child->render($data);
+        if ($this->children->get("if")->match($data)) {
+            $ret .= $this->children->get("if")->render($data);
+        } else if ($this->children->hasKey("elseif") && $this->children->get("elseif")->match($data)) {
+            $ret .= $this->children->get("elseif")->render($data);
+        } else {
+            if ($this->children->hasKey("else")) {
+                $ret .= $this->children->get("else")->render($data);
+            }
         }
+
         return $ret;
     }
 }
+
