@@ -26,8 +26,7 @@
  */
 
 namespace Seboettg\CiteProc\Style;
-use Seboettg\CiteProc\Node\Rendering;
-use Seboettg\CiteProc\Node\Sort;
+
 use Seboettg\CiteProc\Rendering\Layout;
 
 
@@ -68,11 +67,13 @@ class Bibliography
         foreach ($xml->children() as $child) {
             switch ($child->getName()) {
                 case 'layout':
-                    $this->layout   =   new Rendering\Layout($child);
+                    $this->layout   =   new Layout($child);
                     break;
+                /*
                 case 'sort':
                     $this->sort     =   new Sort\Sort($child);
                     break;
+                */
             }
         }
     }

@@ -37,7 +37,7 @@ namespace Seboettg\CiteProc\Constraint;
 class Variable implements ConstraintInterface
 {
 
-    public function validate()
+    public function validate($data)
     {
         return false;
     }

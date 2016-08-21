@@ -26,10 +26,7 @@
  */
 
 namespace Seboettg\CiteProc;
-use Seboettg\CiteProc\Node\Macro\Macro;
-use Seboettg\CiteProc\Node\Style;
-use Seboettg\CiteProc\Node\Style\Bibliography;
-use Seboettg\CiteProc\Node\Style\Info;
+use Seboettg\CiteProc\Style\Macro;
 use Seboettg\Collection\ArrayList;
 
 
@@ -111,8 +108,8 @@ class CiteProc
         $locale = new Locale\Locale($style->locale);
 
         $macros = $this->parseMacros($style);
-        //$bibliography = new Node\Style\Bibliography($style->bibliography);
-        //$citation = new Node\Style\Citation($style->citation);
+        $bibliography = new Style\Bibliography($style->bibliography);
+        $citation = new Style\Citation($style->citation);
         //$this->style = new Style($info, $locale, $macros, $bibliography, $citation);
     }
 
