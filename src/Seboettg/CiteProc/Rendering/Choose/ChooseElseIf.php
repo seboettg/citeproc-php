@@ -25,34 +25,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace Seboettg\CiteProc\Constraint;
+namespace Seboettg\CiteProc\Rendering\Choose;
 
 
 /**
- * Class Type
- * @package Seboettg\CiteProc\Node\Choose\Constraint
+ * Class ChooseElseIf
+ * @package Seboettg\CiteProc\Node\Choose
  *
  * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
  */
-class Type implements ConstraintInterface
+class ChooseElseIf extends ChooseElse
 {
 
-    private $typeValue;
-
-    public function __construct($value, $match)
-    {
-        $this->typeValue = $value;
-    }
-
-    /**
-     * @param \stdClass $value
-     * @return bool
-     */
-    public function validate($value)
-    {
-        if (isset($value->type)) {
-            return ($value->type == $this->typeValue);
-        }
-        return false;
-    }
 }

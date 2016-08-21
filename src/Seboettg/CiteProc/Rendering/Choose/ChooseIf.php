@@ -25,55 +25,67 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace Seboettg\CiteProc\Node\Choose;
+namespace Seboettg\CiteProc\Rendering\Choose;
+use Seboettg\CiteProc\Constraint\ConstraintInterface;
+use Seboettg\CiteProc\Constraint\Factory;
+use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\Collection\ArrayList;
 
 
 /**
- * Class Choose
- * @package Seboettg\CiteProc\Node
+ * Class ChooseIf
+ * @package Seboettg\CiteProc\Node\Choose
  *
  * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
  */
-class Choose
+class ChooseIf implements RenderingInterface
 {
 
-    private $children;
+    /**
+     * @var ConstraintInterface
+     */
+    private $constraint;
 
+    /**
+     * @var ArrayList
+     */
+    protected $children;
 
-    public  function __construct(\SimpleXMLElement $node)
+    private $match;
+
+    public function __construct(\SimpleXMLElement $node)
     {
         $this->children = new ArrayList();
 
-        foreach ($node->children() as $child) {
-            switch ($child->getName()) {
-                case 'if':
-                    $this->children->add("if", new ChooseIf($child));
-                    break;
-                case 'else-if':
-                    $this->children->add("elseif", new ChooseIf($child));
-                    break;
-                case 'else':
-                    $this->children->add("else", new ChooseElse($child));
-                    break;
+        $this->match = (string) $node['match'];
+
+        foreach ($node->attributes() as $name => $value) {
+            if ('match' !== $name) {
+                $this->constraint = Factory::createConstraint((string) $name, (string) $value, $this->match);
             }
+        }
+
+        foreach ($node->children() as $child) {
+            $this->children->append(Factory::create($child));
         }
     }
 
     public function render($data)
     {
         $ret = "";
-        if ($this->children->get("if")->match($data)) {
-            $ret .= $this->children->get("if")->render($data);
-        } else if ($this->children->hasKey("elseif") && $this->children->get("elseif")->match($data)) {
-            $ret .= $this->children->get("elseif")->render($data);
-        } else {
-            if ($this->children->hasKey("else")) {
-                $ret .= $this->children->get("else")->render($data);
-            }
+        /** @var RenderingInterface $child */
+        foreach ($this->children as $child) {
+            $ret .= $child->render($data);
         }
-
         return $ret;
     }
-}
 
+    public function match($data)
+    {
+        if (isset($this->constraint)) {
+            return $this->constraint->validate($data);
+        }
+
+        return false;
+    }
+}

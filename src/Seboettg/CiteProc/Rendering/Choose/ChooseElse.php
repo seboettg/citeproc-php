@@ -25,16 +25,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace Seboettg\CiteProc\Node\Choose;
+namespace Seboettg\CiteProc\Rendering\Choose;
+use Seboettg\CiteProc\Rendering\RenderingInterface;
 
 
 /**
- * Class ChooseElseIf
+ * Class ChooseElse
  * @package Seboettg\CiteProc\Node\Choose
  *
  * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
  */
-class ChooseElseIf
+class ChooseElse extends ChooseIf implements RenderingInterface
 {
-
+    public function render($data)
+    {
+        $ret = "";
+        /** @var RenderingInterface $child */
+        foreach ($this->children as $child) {
+            $ret .= $child->render($data);
+        }
+        return $ret;
+    }
 }

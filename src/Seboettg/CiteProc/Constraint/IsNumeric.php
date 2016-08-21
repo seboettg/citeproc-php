@@ -24,6 +24,10 @@ class IsNumeric implements ConstraintInterface
 
     public function validate($value)
     {
-        return $this->isNumeric == "true" ? is_numeric($value) : false;
+        if (isset($value->{$this->isNumeric})) {
+            return is_numeric($value->{$this->isNumeric});
+        }
+
+        return false;
     }
 }
