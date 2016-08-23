@@ -1,40 +1,72 @@
 <?php
-/*
- * This file is a part of HDS (HeBIS Discovery System). HDS is an 
- * extension of the open source library search engine VuFind, that 
- * allows users to search and browse beyond resources. More 
- * Information about VuFind you will find on http://www.vufind.org
- * 
- * Copyright (C) 2016 
- * HeBIS Verbundzentrale des HeBIS-Verbundes 
- * Goethe-Universität Frankfurt / Goethe University of Frankfurt
- * http://www.hebis.de
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
-
 namespace Seboettg\CiteProc\Locale;
-
+use Seboettg\CiteProc\Util\Factory;
+use Seboettg\Collection\ArrayList;
 
 /**
- * Class Locale
- * @package Seboettg\CiteProc\Locale
- *
- * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
  */
 class Locale
 {
+    use LocaleXmlParserTrait;
+
+    const VENDOR = "vendor/academicpuma/locale";
+
+    /**
+     * @var string
+     */
+    private $localeXml;
+
+    /**
+     * @var string
+     */
+    private $language;
+
+    public function __construct($lang = "en-US", $xmlString = null)
+    {
+        $this->language = $lang;
+
+        if (!empty($xmlString)) {
+            $this->localeXml = new \SimpleXMLElement($xmlString);
+        } else {
+            $this->localeXml = Factory::loadLocale($lang);
+        }
+
+        $this->initLocaleXmlParser();
+        $this->parseXml($this->localeXml);
+    }
+
+    public function addXml(\SimpleXMLElement $xml)
+    {
+        $this->parseXml($xml);
+        return $this;
+    }
+
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    public function filter($type, $name, $form = "") {
+
+        if (!isset($this->{$type})) {
+            throw new \InvalidArgumentException("There is no locale of type \"$type\".");
+        }
+
+        $localeList = $this->{$type};
+
+        //filter by name
+        $array = $localeList->get($name);
+
+        if (empty($array)) {
+            return "";
+        }
+
+        //filter by form
+        $array = array_filter($array, function($value) use($form) {
+            return $value->{'form'} === $form;
+        });
+
+        return array_pop($array);
+    }
 
 }
