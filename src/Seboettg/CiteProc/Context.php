@@ -26,6 +26,9 @@
  */
 
 namespace Seboettg\CiteProc;
+use Seboettg\CiteProc\Locale\Locale;
+use Seboettg\CiteProc\Style\Bibliography;
+use Seboettg\CiteProc\Style\Citation;
 use Seboettg\Collection\ArrayList;
 
 
@@ -42,10 +45,19 @@ class Context
      */
     private $macros;
 
+    /**
+     * @var Locale
+     */
     private $locale;
 
+    /**
+     * @var Bibliography
+     */
     private $bibliography;
 
+    /**
+     * @var Citation
+     */
     private $citation;
 
     public function __construct($locale = null)
@@ -62,23 +74,33 @@ class Context
         $this->macros->add($key, $macro);
     }
 
+    /**
+     * @param $key
+     * @return Macro
+     */
     public function getMacro($key)
     {
         return $this->macros->get($key);
     }
 
-    public function setLocale($locale)
+    /**
+     * @param Locale $locale
+     */
+    public function setLocale(Locale $locale)
     {
         $this->locale = $locale;
     }
 
-    public function &getLocale()
+    /**
+     * @return Locale
+     */
+    public function getLocale()
     {
         return $this->locale;
     }
 
     /**
-     * @return mixed
+     * @return Bibliography
      */
     public function getBibliography()
     {
@@ -86,15 +108,15 @@ class Context
     }
 
     /**
-     * @param mixed $bibliography
+     * @param Bibliography $bibliography
      */
-    public function setBibliography($bibliography)
+    public function setBibliography(Bibliography $bibliography)
     {
         $this->bibliography = $bibliography;
     }
 
     /**
-     * @return mixed
+     * @return Citation
      */
     public function getCitation()
     {
@@ -102,7 +124,7 @@ class Context
     }
 
     /**
-     * @param mixed $citation
+     * @param Citation $citation
      */
     public function setCitation($citation)
     {

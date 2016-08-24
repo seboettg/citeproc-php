@@ -19,6 +19,7 @@
     "require-dev": {
         "satooshi/php-coveralls": "^1"
     },
+<<<<<<< 3557320bfaf12971bb4ee8e2ee2b38e9c472d360
     "version": "2.0.0-dev",
     "extra": {
         "branch-alias": {
@@ -26,3 +27,7 @@
         }
     }
 }
+=======
+    "version": "2.0.0-dev"
+}
+>>>>>>> Locale and Label. Affected tickets: #15, #12

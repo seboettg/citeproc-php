@@ -54,6 +54,10 @@ class Locale
 
         $localeList = $this->{$type};
 
+        if (is_null($name)) {
+            $name = "";
+        }
+
         //filter by name
         $array = $localeList->get($name);
 
@@ -62,8 +66,9 @@ class Locale
         }
 
         //filter by form
+        /** @var Term $value */
         $array = array_filter($array, function($value) use($form) {
-            return $value->{'form'} === $form;
+            return $value->form === $form;
         });
 
         return array_pop($array);

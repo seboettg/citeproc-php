@@ -26,6 +26,8 @@
  */
 
 namespace Seboettg\CiteProc;
+use Seboettg\CiteProc\Style\Bibliography;
+use Seboettg\CiteProc\Style\Citation;
 use Seboettg\CiteProc\Style\Macro;
 use Seboettg\Collection\ArrayList;
 
@@ -78,50 +80,46 @@ class CiteProc
      * CiteProc constructor.
      * @param string $styleSheet xml formatted csl stylesheet
      */
-    public function __construct($styleSheet, $locale = 'en-US')
+    public function __construct($styleSheet, $lang = "en-US")
     {
         $this->styleSheet = $styleSheet;
-
-    }
-
-
-    /**
-     * Render the bibliography form the already injected data or from the given values.
-     *
-     * @param string $style
-     * @param string $input
-     * @param string $language
-     * @return string
-     */
-    public function bibliography($data = '', $language = '')
-    {
+        self::$context = new Context();
+        self::$context->setLocale(new Locale\Locale($lang)); //init locale
         $this->styleSheetXml = new \SimpleXMLElement($this->styleSheet);
         $this->parse($this->styleSheetXml);
     }
 
-
     private function parse(\SimpleXMLElement $style)
     {
-        $info = $locale = $macros = $bibliography = $citation = null;
 
-        //$info = new Style\Info($style->info);
-        $locale = new Locale\Locale($style->locale);
-
-        $macros = $this->parseMacros($style);
-        $bibliography = new Style\Bibliography($style->bibliography);
-        $citation = new Style\Citation($style->citation);
-        //$this->style = new Style($info, $locale, $macros, $bibliography, $citation);
-    }
-
-    private function parseMacros($nodes)
-    {
-        $macroList = new ArrayList();
-        foreach ($nodes as $node) {
-            if ($node->getName() === "macro") {
-                $attrName = (string) $node['name'];
-                $macroList[$attrName] = new Macro($node);
+        foreach ($style as $node) {
+            $name = $node->getName();
+            switch ($name) {
+                case 'info':
+                    break;
+                case 'locale':
+                    self::$context->getLocale()->addXml($node);
+                    break;
+                case 'macro':
+                    $macro = new Macro($node);
+                    self::$context->addMacro($macro->getName(), $macro);
+                    break;
+                case 'bibliography':
+                    $bibliography = new Bibliography($node);
+                    self::$context->setBibliography($bibliography);
+                    break;
+                case 'citation':
+                    $citation = new Citation($node);
+                    self::$context->setCitation($citation);
+                    break;
             }
         }
-        return $macroList;
     }
+
+
+    public function bibliography($data = '')
+    {
+        return self::$context->getBibliography()->render($data);
+    }
+
 }

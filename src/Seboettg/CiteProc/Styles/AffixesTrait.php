@@ -6,9 +6,9 @@ namespace Seboettg\CiteProc\Styles;
 trait AffixesTrait
 {
 
-    private $prefix;
+    private $prefix = "";
 
-    private $suffix;
+    private $suffix = "";
 
     protected function initAffixesAttributes(\SimpleXMLElement $node)
     {

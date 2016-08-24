@@ -23,10 +23,6 @@ trait FormattingTrait
      * @var string
      */
     private $display;
-    /**
-     * @var string
-     */
-    private $textCase;
 
     /**
      * @var bool
