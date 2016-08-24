@@ -47,7 +47,7 @@ trait DisplayTrait
         }
     }
 
-    public function wrapDisplayBox($text)
+    public function wrapDisplayBlock($text)
     {
         $divStyle = "";
         if ($this->display == "indent") {

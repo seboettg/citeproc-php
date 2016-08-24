@@ -98,7 +98,7 @@ class Number
                 $text = $data->{$this->variable};
                 break;
         }
-        return $this->wrapDisplayBox($this->addAffixes($this->format($this->applyTextCase($text))));
+        return $this->wrapDisplayBlock($this->addAffixes($this->format($this->applyTextCase($text))));
     }
 
     private function ordinal($num) {
