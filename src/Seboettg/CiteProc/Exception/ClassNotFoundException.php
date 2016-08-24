@@ -25,62 +25,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace Seboettg\CiteProc\Style;
-
-use Seboettg\CiteProc\Rendering\Layout;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
+namespace Seboettg\CiteProc\Exception;
 
 
 /**
- * Class Bibliography
- * @package Seboettg\CiteProc
+ * Class ClassNotFoundException
+ * @package Seboettg\CiteProc\Exception
  *
  * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
  */
-class Bibliography implements RenderingInterface
+class ClassNotFoundException extends CiteProcException
 {
 
-    /**
-     * @var Layout
-     */
-    private $layout;
-
-    /**
-     * @var Sort
-     */
-    private $sort;
-
-    /**
-     * @var bool
-     */
-    private $doNotSort;
-
-
-    /**
-     * Parses the Bibliography configuration.
-     *
-     * @throws \ErrorException If layout is missing
-     */
-    public function __construct($xml)
+    public function __construct($class, $code = 0, \Exception $previous = null)
     {
-        // init child elements
-        /** @var \SimpleXMLElement $child */
-        foreach ($xml->children() as $child) {
-            switch ($child->getName()) {
-                case 'layout':
-                    $this->layout   =   new Layout($child);
-                    break;
-                /*
-                case 'sort':
-                    $this->sort     =   new Sort\Sort($child);
-                    break;
-                */
-            }
-        }
-    }
-
-    public function render($data)
-    {
-        return $this->layout->render($data);
+        parent::__construct("Class \"$class\" could not be found.", $code, $previous);
     }
 }

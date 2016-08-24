@@ -42,4 +42,16 @@ class Factory
         return new $nodeClass($node);
     }
 
+
+    public static function loadLocale($lang) {
+        $directory = __DIR__."/../../../../vendor/academicpuma/locales";
+        $file = $directory . "/locales-" . ($lang) . ".xml";
+
+        if (file_exists($file) == false) {
+            throw new CiteProcException("Locale file \"locale-$file.xml\" does not exist!");
+        }
+
+        $content = file_get_contents($file);
+        return new \SimpleXMLElement($content);
+    }
 }

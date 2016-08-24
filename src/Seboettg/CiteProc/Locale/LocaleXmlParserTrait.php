@@ -46,15 +46,28 @@ trait LocaleXmlParserTrait
                     }
                     break;
                 case 'terms':
+                    $plural = ['single', 'multiple'];
                     foreach ($node->children() as $child) {
                         $term = new Term();
 
                         foreach ($child->attributes() as $key => $value) {
-                            $term->__set($key, (string) $value);
+                            $term->{$key} = (string) $value;
                         }
 
-                        foreach ($child->children() as $subChildren) {
-                            $term->__set($subChildren->getName(), (string) $subChildren);
+                        $subChildren = $child->children();
+                        $count = $subChildren->count();
+                        if ($count > 0) {
+                            foreach ($subChildren as $subChild) {
+                                $name = $subChild->getName();
+                                $value = (string) $subChild;
+                                if (in_array($subChild->getName(), $plural)) {
+                                    $term->{$name} = $value;
+                                }
+                            }
+                        } else {
+                            $value = (string) $child;
+                            $term->{'single'} = $value;
+                            $term->{'multiple'} = $value;
                         }
 
                         if (!$this->terms->hasKey($term->name)) {

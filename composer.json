@@ -1,6 +1,6 @@
 {
     "name": "seboettg/citeproc-php",
-    "description": "full-featured csl processor (http://citationstyles.org)",
+    "description": "Full-featured CSL processor (https://citationstyles.org)",
     "license": "MIT",
     "authors": [
         {
@@ -18,5 +18,6 @@
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1"
-    }
+    },
+    "version": "2.0.0-dev"
 }
