@@ -2,6 +2,7 @@
 
 namespace Seboettg\CiteProc\Util;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\Exception\ClassNotFoundException;
 
 
 /**
@@ -19,7 +20,6 @@ class Factory
         'layout'    => "\\Layout",
         'text'      => "\\Text",
         "macro"     => "\\Macro",
-        'date'      => "\\Date",
         "number"    => "\\Number",
         "names"     => "\\Names",
         "label"     => "\\Label",
@@ -28,15 +28,15 @@ class Factory
         "if"        => "\\Choose\\ChooseIf",
         "else-if"   => "\\Choose\\ChooseElseIf",
         "else"      => "\\Choose\\ChooseElse",
-
+        'date'      => "\\Date",
+        "date-part" => "\\Date\\DatePart",
     ];
 
     public static function create($node)
     {
         $nodeClass = self::CITE_PROC_NODE_NAMESPACE . self::$nodes[$node->getName()];
         if (!class_exists($nodeClass)) {
-            //TODO: throw ex
-            throw new CiteProcException("Class \"$nodeClass\" does not exist");
+            throw new ClassNotFoundException($nodeClass);
         }
 
         return new $nodeClass($node);
