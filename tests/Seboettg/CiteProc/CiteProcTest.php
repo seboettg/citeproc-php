@@ -679,7 +679,7 @@ EOF;
 
     public function testBibliography()
     {
-        $this->citeProc->bibliography($this->data);
+        //$this->citeProc->bibliography($this->data);
         $x = "foo";
     }
 }

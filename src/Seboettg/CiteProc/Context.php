@@ -29,6 +29,7 @@ namespace Seboettg\CiteProc;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
+use Seboettg\CiteProc\Style\Macro;
 use Seboettg\Collection\ArrayList;
 
 

@@ -9,7 +9,17 @@ namespace Seboettg\CiteProc\Rendering;
  *
  * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
  */
-class Names
+class Names implements RenderingInterface
 {
 
+
+    /**
+     * @param $data
+     * @return string
+     */
+    public function render($data)
+    {
+        // TODO: Implement render() method.
+        return "";
+    }
 }
