@@ -54,7 +54,7 @@ class Text implements RenderingInterface
                 $renderedText = CiteProc::getContext()->getMacro($this->toRenderTypeValue)->render($data);
                 break;
             case 'term':
-                //TODO: to implement
+                $renderedText = CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue)->single;
         }
 
         return $this->format($renderedText);

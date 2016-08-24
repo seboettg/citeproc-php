@@ -1,6 +1,11 @@
 <?php
 
 namespace Seboettg\CiteProc\Rendering;
+use Seboettg\CiteProc\Styles\AffixesTrait;
+use Seboettg\CiteProc\Styles\DelimiterTrait;
+use Seboettg\CiteProc\Styles\DisplayTrait;
+use Seboettg\CiteProc\Util\Factory;
+use Seboettg\Collection\ArrayList;
 
 
 /**
@@ -11,6 +16,22 @@ namespace Seboettg\CiteProc\Rendering;
  */
 class Group implements RenderingInterface
 {
+    use DelimiterTrait,
+        AffixesTrait,
+        DisplayTrait;
+
+    private $children;
+
+    public function __construct(\SimpleXMLElement $node)
+    {
+        $this->children = new ArrayList();
+        foreach ($node->children() as $child) {
+            $this->children->append(Factory::create($child));
+        }
+        $this->initDisplayAttributes($node);
+        $this->initAffixesAttributes($node);
+        $this->initDelimiterAttributes($node);
+    }
 
     /**
      * @param $data
@@ -18,6 +39,11 @@ class Group implements RenderingInterface
      */
     public function render($data)
     {
-        // TODO: Implement render() method.
+        $arr = [];
+        /** @var RenderingInterface $child */
+        foreach ($this->children as $child) {
+            $arr[] = $child->render($data);
+        }
+        return $this->wrapDisplayBlock($this->addAffixes(implode($this->delimiter, $arr)));
     }
 }
