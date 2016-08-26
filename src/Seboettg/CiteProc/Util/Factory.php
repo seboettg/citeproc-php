@@ -21,7 +21,6 @@ class Factory
         'text'      => "\\Text",
         "macro"     => "\\Macro",
         "number"    => "\\Number",
-        "names"     => "\\Names",
         "label"     => "\\Label",
         "group"     => "\\Group",
         "choose"    => "\\Choose\\Choose",
@@ -30,6 +29,8 @@ class Factory
         "else"      => "\\Choose\\ChooseElse",
         'date'      => "\\Date",
         "date-part" => "\\Date\\DatePart",
+        "names"     => "\\Names",
+        "name"      => "\\Name\\Name"
     ];
 
     public static function create($node)
