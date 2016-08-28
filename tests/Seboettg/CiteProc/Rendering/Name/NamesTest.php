@@ -57,13 +57,14 @@ class NamesTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testRenderSingleAuthorAndSingleEditor()
+    public function testRenderAuthorAndEditor()
     {
-        $data = "{\"author\": [{\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\", \"static-ordering\": false}],\"editor\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"His Anonymous Life\", \"type\": \"book\"}";
+        $data = "{\"author\": [{\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\"}],\"editor\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"His Anonymous Life\", \"type\": \"book\"}";
+
 
         $xml = "<group>
-                    <names variable=\"author\" delimiter=\";\" suffix=\" in: \">
-                        <name form=\"long\" name-as-sort-order=\"all\" sort-separator=\", \"/>
+                    <names variable=\"author\" delimiter=\"; \" suffix=\" in: \">
+                        <name form=\"long\" name-as-sort-order=\"all\" sort-separator=\", \" delimiter=\"; \"/>
                     </names>
                     <text variable=\"title\" text-case=\"title\" suffix=\", \"/>
                     <names variable=\"editor\" delimiter=\", \" prefix=\"(\" suffix=\")\">
@@ -72,9 +73,14 @@ class NamesTest extends \PHPUnit_Framework_TestCase
                     </names>
                 </group>";
 
-        $names = new Group(new \SimpleXMLElement($xml));
-        $ret = $names->render(json_decode($data));
+        $group = new Group(new \SimpleXMLElement($xml));
+        $ret = $group->render(json_decode($data));
         $this->assertEquals("Einstein, Albert in: His Anonymous Life, (John la Doe, Hrsg.)", $ret);
+
+        //two authors
+        $data2 = "{\"author\": [{\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\"}, {\"dropping-particle\": \"\", \"family\": \"Skłodowska Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\"}],\"editor\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Das Leben des Brian\", \"type\": \"book\"}";
+        $ret2 = $group->render(json_decode($data2));
+        $this->assertEquals("Einstein, Albert; Skłodowska Curie, Marie in: Das Leben Des Brian, (John la Doe, Hrsg.)", $ret2);
 
     }
 

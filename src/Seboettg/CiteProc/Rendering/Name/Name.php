@@ -3,6 +3,7 @@
 namespace Seboettg\CiteProc\Rendering\Name;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Styles\AffixesTrait;
+use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 
 
@@ -19,7 +20,8 @@ use Seboettg\CiteProc\Styles\FormattingTrait;
 class Name
 {
     use FormattingTrait,
-        AffixesTrait;
+        AffixesTrait,
+        DelimiterTrait;
 
     /**
      * Specifies the delimiter between the second to last and last name of the names in a name variable. Allowed values
@@ -29,13 +31,6 @@ class Name
      * @var string
      */
     private $and;
-
-    /**
-     * Specifies the text string used to separate names in a name variable. Default is ”, ” (e.g. “Doe, Smith”).
-     *
-     * @var string
-     */
-    private $delimiter;
 
     /**
      * Determines when the name delimiter or a space is used between a truncated name list and the “et-al”
@@ -148,9 +143,6 @@ class Name
                         $this->and = '&';
                     }
                     break;
-                case 'delimiter':
-                    $this->delimiter = (string)$attribute;
-                    break;
                 case 'delimiter-precedes-et-al':
                     $this->delimiterPrecedesEtAl = (string)$attribute;
                     break;
@@ -189,19 +181,15 @@ class Name
 
             }
         }
-        /* //TODO: necessary?
-        if (empty($this->delimiter)) {
-            $this->delimiter = $this->{'name-delimiter'};
-        }
-        */
 
         $this->initFormattingAttributes($node);
         $this->initAffixesAttributes($node);
+        $this->initDelimiterAttributes($node);
     }
 
     public function render($names)
     {
-        $authors = array();
+        $authors = [];
         $count = 0;
         $auth_count = 0;
         $et_al_triggered = false;
