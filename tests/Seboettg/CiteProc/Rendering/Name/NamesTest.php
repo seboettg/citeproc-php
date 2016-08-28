@@ -25,12 +25,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace Seboettg\CiteProc\Rendering;
+namespace Seboettg\CiteProc\Rendering\Names;
 
 
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Locale\Locale;
+use Seboettg\CiteProc\Rendering\Group;
 use Seboettg\CiteProc\Rendering\Name\Names;
 
 class NamesTest extends \PHPUnit_Framework_TestCase
