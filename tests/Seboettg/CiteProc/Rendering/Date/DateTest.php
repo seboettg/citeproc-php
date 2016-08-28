@@ -25,13 +25,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace Seboettg\CiteProc\Rendering;
+namespace Seboettg\CiteProc\Rendering\Date;
 
 
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Locale\Locale;
-use Seboettg\CiteProc\Rendering\Date\Date;
 
 class DateTest extends \PHPUnit_Framework_TestCase
 {

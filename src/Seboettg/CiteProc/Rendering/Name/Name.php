@@ -178,20 +178,22 @@ class Name
                 case 'initialize':
                     $this->initialize = (string)$attribute;
                     break;
-                case 'initializeWith':
+                case 'initialize-with':
                     $this->initializeWith = (string)$attribute;
                     break;
-                case 'nameAsSortOrder':
+                case 'name-as-sort-order':
                     $this->nameAsSortOrder = (string)$attribute;
                     break;
-                case 'sortSeparator':
+                case 'sort-separator':
                     $this->sortSeparator = (string)$attribute;
 
             }
         }
+        /* //TODO: necessary?
         if (empty($this->delimiter)) {
             $this->delimiter = $this->{'name-delimiter'};
         }
+        */
 
         $this->initFormattingAttributes($node);
         $this->initAffixesAttributes($node);
@@ -243,7 +245,7 @@ class Name
                 }
             }
             */
-            $ndp = (isset($name->{'non-dropping-particle'})) ? $name->{'non-dropping-particle'} . ' ' : '';
+            $ndp = (!empty($name->{'non-dropping-particle'})) ? $name->{'non-dropping-particle'} . ' ' : '';
             $suffix = (isset($name->{'suffix'})) ? ' ' . $name->{'suffix'} : '';
             if (isset($name->given)) {
                 $given = $this->format($name->given);
