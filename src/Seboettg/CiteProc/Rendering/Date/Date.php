@@ -1,8 +1,7 @@
 <?php
 
-namespace Seboettg\CiteProc\Rendering;
-use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Rendering\Date\DatePart;
+namespace Seboettg\CiteProc\Rendering\Date;
+
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;

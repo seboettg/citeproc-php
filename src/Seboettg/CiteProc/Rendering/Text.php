@@ -2,7 +2,10 @@
 
 namespace Seboettg\CiteProc\Rendering;
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Styles\AffixesTrait;
+use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
+use Seboettg\CiteProc\Styles\TextCaseTrait;
 
 
 /**
@@ -13,7 +16,10 @@ use Seboettg\CiteProc\Styles\FormattingTrait;
  */
 class Text implements RenderingInterface
 {
-    use FormattingTrait;
+    use FormattingTrait,
+        AffixesTrait,
+        TextCaseTrait,
+        DisplayTrait;
 
     /**
      * @var string
@@ -36,6 +42,9 @@ class Text implements RenderingInterface
             }
         }
         $this->initFormattingAttributes($node);
+        $this->initDisplayAttributes($node);
+        $this->initTextCaseAttributes($node);
+        $this->initAffixesAttributes($node);
     }
 
     public function render($data)
@@ -57,6 +66,8 @@ class Text implements RenderingInterface
                 $renderedText = CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue)->single;
         }
 
-        return $this->format($renderedText);
+        $text = $this->format($this->applyTextCase($renderedText));
+        return $this->addAffixes($text);
+
     }
 }

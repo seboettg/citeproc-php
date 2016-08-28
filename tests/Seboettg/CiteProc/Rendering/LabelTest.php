@@ -32,8 +32,8 @@ class LabelTest extends \PHPUnit_Framework_TestCase
         $label = new Label(new \SimpleXMLElement("<label variable=\"page\" plural=\"always\"/>"));
         $this->assertEquals("Seiten", $label->render($data));
 
-        $label = new Label(new \SimpleXMLElement("<label form=\"short\" prefix=\" (\" text-case=\"title\" suffix=\")\"/>"));
+//        $label = new Label(new \SimpleXMLElement("<label form=\"short\" prefix=\" (\" text-case=\"title\" suffix=\")\"/>"));
 
-        $this->assertEquals(" ()", $label->render($data));
+//        $this->assertEquals(" ()", $label->render($data));
     }
 }

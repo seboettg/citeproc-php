@@ -22,12 +22,38 @@ class Label implements RenderingInterface
 
     private $variable;
 
+    /**
+     * Selects the form of the term, with allowed values:
+     *
+     *   - “long” - (default), e.g. “page”/”pages” for the “page” term
+     *   - “short” - e.g. “p.”/”pp.” for the “page” term
+     *   - “symbol” - e.g. “§”/”§§” for the “section” term
+     *
+     * @var string
+     */
     private $form = "";
 
+    /**
+     * Sets pluralization of the term, with allowed values:
+     *
+     *   - “contextual” - (default), the term plurality matches that of the variable content. Content is considered
+     *     plural when it contains multiple numbers (e.g. “page 1”, “pages 1-3”, “volume 2”, “volumes 2 & 4”), or, in
+     *     the case of the “number-of-pages” and “number-of-volumes” variables, when the number is higher than 1
+     *     (“1 volume” and “3 volumes”).
+     *   - “always” - always use the plural form, e.g. “pages 1” and “pages 1-3”
+     *   - “never” - always use the singular form, e.g. “page 1” and “page 1-3”
+     *
+     * @var string
+     */
     private $plural = "contextual";
 
-    public function __construct($node)
+    /**
+     * Label constructor.
+     * @param \SimpleXMLElement $node
+     */
+    public function __construct(\SimpleXMLElement $node)
     {
+        /** @var \SimpleXMLElement $attribute */
         foreach ($node->attributes() as $attribute) {
             switch ($attribute->getName()) {
                 case "variable":
@@ -53,16 +79,79 @@ class Label implements RenderingInterface
      */
     public function render($data)
     {
-        $label = "";
-        $term = CiteProc::getContext()->getLocale()->filter("terms", $this->variable, $this->form);
+        $text = '';
+        $variables = explode(' ', $this->variable);
+        $form = isset($this->form) ? $this->form : 'long';
+        $plural = "";
+        switch ($this->plural) {
+            case 'never':
+                $plural = 'single';
+                break;
+            case 'always':
+                $plural = 'multiple';
+                break;
+            case 'contextual':
+            default:
+        }
+        foreach ($variables as $variable) {
 
-        if (!is_string($term)) {
-            $label = $term->{'single'};;
-
-            if ((is_array($data->{$this->variable}) && $this->plural !== "never") || $this->plural === "always") {
-                $label = $term->{'multiple'};
+            if (isset($data->{$variable})) {
+                if (!isset($this->plural) && empty($plural) && is_array($data->{$variable})) {
+                    $count = count($data->{$variable});
+                    if ($count == 1) {
+                        $plural = 'single';
+                    } elseif ($count > 1) {
+                        $plural = 'multiple';
+                    }
+                } else {
+                    if ($this->plural != "always") {
+                        $plural = $this->evaluateStringPluralism($data, $variable);
+                    }
+                }
+                if (!empty($data->{$variable}) && ($term = CiteProc::getContext()->getLocale()->filter('terms', $variable, $form))) {
+                    $text = $term->{$plural};
+                    break;
+                }
             }
         }
-        return $this->addAffixes($this->format($this->applyTextCase($label)));
+        if (empty($text)) {
+            return "";
+        }
+        if ($this->stripPeriods) {
+            $text = str_replace('.', '', $text);
+        }
+        $text = $this->format($this->applyTextCase($text));
+        return $this->addAffixes($text);
+    }
+
+
+    private function evaluateStringPluralism($data, $variable)
+    {
+        $str = $data->{$variable};
+        $plural = 'single';
+        if (!empty($str)) {
+//      $regex = '/(?:[0-9],\s*[0-9]|\s+and\s+|&|([0-9]+)\s*[\-\x2013]\s*([0-9]+))/';
+            switch ($variable) {
+                case 'page':
+                    $pageRegex = "/([a-zA-Z]*)([0-9]+)\s*(?:–|-)\s*([a-zA-Z]*)([0-9]+)/";
+                    $err = preg_match($pageRegex, $str, $m);
+                    if ($err !== false && count($m) == 0) {
+                        $plural = 'single';
+                    } elseif ($err !== false && count($m)) {
+                        $plural = 'multiple';
+                    }
+                    break;
+                default:
+            }
+        }
+        return $plural;
+    }
+
+    /**
+     * @param string $variable
+     */
+    public function setVariable($variable)
+    {
+        $this->variable = $variable;
     }
 }
