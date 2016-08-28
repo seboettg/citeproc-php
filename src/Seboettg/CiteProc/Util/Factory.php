@@ -17,20 +17,22 @@ class Factory
 
     static $nodes = [
 
-        'layout'    => "\\Layout",
-        'text'      => "\\Text",
-        "macro"     => "\\Macro",
-        "number"    => "\\Number",
-        "label"     => "\\Label",
-        "group"     => "\\Group",
-        "choose"    => "\\Choose\\Choose",
-        "if"        => "\\Choose\\ChooseIf",
-        "else-if"   => "\\Choose\\ChooseElseIf",
-        "else"      => "\\Choose\\ChooseElse",
-        'date'      => "\\Date",
-        "date-part" => "\\Date\\DatePart",
-        "names"     => "\\Names",
-        "name"      => "\\Name\\Name"
+        'layout'        => "\\Layout",
+        'text'          => "\\Text",
+        "macro"         => "\\Macro",
+        "number"        => "\\Number",
+        "label"         => "\\Label",
+        "group"         => "\\Group",
+        "choose"        => "\\Choose\\Choose",
+        "if"            => "\\Choose\\ChooseIf",
+        "else-if"       => "\\Choose\\ChooseElseIf",
+        "else"          => "\\Choose\\ChooseElse",
+        'date'          => "\\Date\\Date",
+        "date-part"     => "\\Date\\DatePart",
+        "names"         => "\\Name\\Names",
+        "name"          => "\\Name\\Name",
+        "substitute"    => "\\Name\\Substitute",
+        "et-al"         => "\\Name\\EtAl"
     ];
 
     public static function create($node)

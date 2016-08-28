@@ -31,6 +31,7 @@ namespace Seboettg\CiteProc\Rendering;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Locale\Locale;
+use Seboettg\CiteProc\Rendering\Date\Date;
 
 class DateTest extends \PHPUnit_Framework_TestCase
 {
