@@ -18,5 +18,10 @@
             "name": "Sebastian Böttger",
             "email": "boettger@cs.uni-kassel.de"
         }
-    ]
+    ],
+    "extra": {
+        "branch-alias": {
+            "version2.0": "2.0.x-dev"
+        }
+    }
 }
