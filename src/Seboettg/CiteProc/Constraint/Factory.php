@@ -22,6 +22,7 @@ class Factory extends \Seboettg\CiteProc\Util\Factory
      * @param string $value
      * @param string $match
      * @return mixed
+     * @throws ClassNotFoundException
      */
     public static function createConstraint($name, $value, $match)
     {

@@ -5,6 +5,7 @@ use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
+use Seboettg\CiteProc\Styles\QuotesTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
 
 
@@ -19,7 +20,8 @@ class Text implements RenderingInterface
     use FormattingTrait,
         AffixesTrait,
         TextCaseTrait,
-        DisplayTrait;
+        DisplayTrait,
+        QuotesTrait;
 
     /**
      * @var string
@@ -52,22 +54,20 @@ class Text implements RenderingInterface
         $renderedText = "";
         switch ($this->toRenderType) {
             case 'value':
-                $renderedText = $this->toRenderTypeValue;
+                $renderedText = $this->applyTextCase($this->toRenderTypeValue);
                 break;
             case 'variable':
                 if (isset($data->{$this->toRenderTypeValue})) {
-                    $renderedText = $data->{$this->toRenderTypeValue};
+                    $renderedText = $this->applyTextCase($data->{$this->toRenderTypeValue});
                 }
                 break;
             case 'macro':
                 $renderedText = CiteProc::getContext()->getMacro($this->toRenderTypeValue)->render($data);
                 break;
             case 'term':
-                $renderedText = CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue)->single;
+                $renderedText = $this->applyTextCase(CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue)->single);
         }
-
-        $text = $this->format($this->applyTextCase($renderedText));
-        return $this->addAffixes($text);
-
+        $text = $this->format($renderedText);
+        return $this->addAffixes($text, $this->useQuotes);
     }
 }
