@@ -1,11 +1,9 @@
 # citeproc-php #
-[![Latest Version](https://img.shields.io/packagist/v/academicpuma/citeproc-php.svg?style=flat-square)](https://packagist.org/packages/academicpuma/citeproc-php)
-[![License](https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square)](https://bitbucket.org/bibsonomy/citeproc-php/raw/default/license.txt)
-[![PHP](https://img.shields.io/badge/PHP-%3E=5.3-green.svg?style=flat-square)](http://docs.php.net/manual/en/migration53.new-features.php)
-
-**Table of contents**
-
-[TOC]
+[![Latest Stable Version](https://poser.pugx.org/academicpuma/citeproc-php/v/stable)](https://packagist.org/packages/academicpuma/citeproc-php) 
+[![Total Downloads](https://poser.pugx.org/academicpuma/citeproc-php/downloads)](https://packagist.org/packages/academicpuma/citeproc-php) 
+[![Latest Unstable Version](https://poser.pugx.org/academicpuma/citeproc-php/v/unstable)](https://packagist.org/packages/academicpuma/citeproc-php) 
+[![License](https://poser.pugx.org/academicpuma/citeproc-php/license)](https://packagist.org/packages/academicpuma/citeproc-php) 
+[![PHP](https://img.shields.io/badge/PHP-%3E=5.3-green.svg?style=flat)](http://docs.php.net/manual/en/migration53.new-features.php)
 
 **Description**
 
