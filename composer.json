@@ -19,5 +19,10 @@
     "require-dev": {
         "satooshi/php-coveralls": "^1"
     },
-    "version": "2.0.0-dev"
+    "version": "2.0.0-dev",
+    "extra": {
+        "branch-alias": {
+            "version2.0": "2.0.x-dev"
+        }
+    }
 }
