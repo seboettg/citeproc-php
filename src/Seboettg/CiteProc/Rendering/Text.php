@@ -20,8 +20,7 @@ class Text implements RenderingInterface
     use FormattingTrait,
         AffixesTrait,
         TextCaseTrait,
-        DisplayTrait,
-        QuotesTrait;
+        DisplayTrait;
 
     /**
      * @var string
@@ -68,6 +67,6 @@ class Text implements RenderingInterface
                 $renderedText = $this->applyTextCase(CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue)->single);
         }
         $text = $this->format($renderedText);
-        return $this->addAffixes($text, $this->useQuotes);
+        return $this->addAffixes($text, $this->quotes);
     }
 }
