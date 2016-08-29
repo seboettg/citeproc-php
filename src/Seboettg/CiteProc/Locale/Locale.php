@@ -62,7 +62,11 @@ class Locale
         $array = $localeList->get($name);
 
         if (empty($array)) {
-            return "";
+            $ret = new \stdClass();
+            $ret->name = null;
+            $ret->single = null;
+            $ret->multiple = null;
+            return $ret;
         }
 
         //filter by form
