@@ -12,7 +12,7 @@ namespace Seboettg\CiteProc\Constraint;
 class Disambiguate implements ConstraintInterface
 {
 
-    public function validate()
+    public function validate($value)
     {
         return false;
     }
