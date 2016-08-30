@@ -74,6 +74,16 @@ class Names implements RenderingInterface
     private $substitute;
 
     /**
+     * Et-al abbreviation, controlled via the et-al-... attributes (see Name), can be further customized with the
+     * optional cs:et-al element, which must follow the cs:name element (if present). The term attribute may be set to
+     * either “et-al” (the default) or to “and others” to use either term. The formatting attributes may also be used,
+     * for example to italicize the “et-al” term:
+     *
+     * @var EtAl
+     */
+    private $etAl;
+
+    /**
      * Names constructor.
      * @param \SimpleXMLElement $node
      */
