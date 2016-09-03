@@ -44,16 +44,8 @@ trait FormattingTrait
                 continue;
             }
         }
-        $this->initFormattingOptions();
     }
 
-    protected function initFormattingOptions()
-    {
-        $this->format = "";
-        foreach ($this->formattingOptions as $key => $value) {
-            $this->format .= $key . ": " . $value;
-        }
-    }
 
     protected function format($text)
     {
@@ -61,10 +53,18 @@ trait FormattingTrait
             return $text;
         }
 
-        if (!empty($this->format) || !empty($this->span_class)) {
-            $style = (!empty($this->format)) ? 'style="' . $this->format . '" ' : '';
-            $class = (!empty($this->span_class)) ? 'class="' . $this->span_class . '"' : '';
-            $text = '<span ' . $class . $style . '>' . $text . '</span>';
+        if (!empty($this->formattingOptions)) {
+            $format = "";
+            foreach ($this->formattingOptions as $option => $optionValue) {
+                if ($optionValue === "italic") {
+                    $text = "<i>$text</i>";
+                } else {
+                    $format .= "$option: $optionValue;";
+                }
+            }
+            if (!empty($format)) {
+                $text = '<span style="' . $format . '">'.$text.'</span>';
+            }
         }
         return $text;
     }
