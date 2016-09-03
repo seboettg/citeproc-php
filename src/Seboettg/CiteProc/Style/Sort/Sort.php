@@ -1,7 +1,9 @@
 <?php
 
 namespace Seboettg\CiteProc\Style\Sort;
+use Seboettg\CiteProc\Util\Number;
 use Seboettg\CiteProc\Util\Variables;
+use Seboettg\CiteProc\Util\Date;
 use Seboettg\Collection\ArrayList;
 
 
@@ -10,7 +12,7 @@ use Seboettg\Collection\ArrayList;
  * cs:citation and cs:bibliography may include a cs:sort child element before the cs:layout element to specify the
  * sorting order of respectively cites within citations, and bibliographic entries within the bibliography.
  *
- * he cs:sort element must contain one or more cs:key child elements. The sort key, set as an attribute on cs:key, must
+ * The cs:sort element must contain one or more cs:key child elements. The sort key, set as an attribute on cs:key, must
  * be a variable (see Appendix IV - Variables) or macro name. For each cs:key element, the sort direction can be set to
  * either “ascending” (default) or “descending” with the sort attribute.
  *
@@ -43,10 +45,13 @@ class Sort
      * sort, using the third sort key, is applied to items sharing the first and second sort key values. Sorting
      * continues until either the order of all items is fixed, or until the sort keys are exhausted. Items with an
      * empty sort key value are placed at the end of the sort, both for ascending and descending sorts.
+     *
+     * @param array $data reference
      */
-    public function sort($data)
+    public function sort(&$data)
     {
-        for ($i = $this->sortingKeys->count(); $i > 0; --$i) {
+        //begin with last sort key
+        for ($i = $this->sortingKeys->count()-1; $i >= 0; --$i) {
             /** @var Key $key */
             $key = $this->sortingKeys->get($i);
             $variable = $key->getVariable();
@@ -55,7 +60,7 @@ class Sort
             /* Name variables called via the variable attribute (e.g. <key variable="author"/>) are returned as a
              * name list string, with the cs:name attributes form set to “long”, and name-as-sort-order set to “all”.
              */
-            if (Variables::isNameVariable($variable)) {
+            if ($key->isNameVariable()) {
 
                 usort($data, function ($a, $b) use ($variable, $order) {
                     /**
@@ -76,23 +81,31 @@ class Sort
              * numbers: Number variables called via the variable attribute are returned as integers (form is “numeric”).
              * If the original variable value only consists of non-numeric text, the value is returned as a text string.
              */
-            if (Variables::isNumberVariable($variable)) {
+            if ($key->isNumberVariable()) {
                 usort($data,function ($a, $b) use ($variable, $order) {
                     $numA = $a->{$variable};
                     $numB = $b->{$variable};
-                    if (is_numeric($numA) && is_numeric($numB)) {
-                        $ret = $numA - $numB;
-                    } else {
-                        $ret = strcmp($numA, $numB);
-                    }
-                    if ("descending" === $order) {
-                        return $ret <= 0 ? -1 : 1;
-                    }
-                    return $ret <= 0 ? 1 : -1;
+                    $compareNumber = Number::getCompareNumber();
+                    return $compareNumber($numA, $numB, $order);
                 });
             }
 
-            if (Variables::isDateVariable($variable)) {
+            /* dates: Date variables called via the variable attribute are returned in the YYYYMMDD format, with zeros
+             * substituted for any missing date-parts (e.g. 20001200 for December 2000). As a result, less specific
+             * dates precede more specific dates in ascending sorts, e.g. “2000, May 2000, May 1st 2000”. Negative
+             * years are sorted inversely, e.g. “100BC, 50BC, 50AD, 100AD”. Seasons are ignored for sorting, as the
+             * chronological order of the seasons differs between the northern and southern hemispheres.
+             */
+            if ($key->isDateVariable()) {
+                usort($data,function ($a, $b) use ($variable, $order) {
+                    $numA = Date::serializeDate($a->{$variable});
+                    $numB = Date::serializeDate($b->{$variable});
+                    $compareNumber = Number::getCompareNumber();
+                    return $compareNumber($numA, $numB, $order);
+                });
+            }
+
+            if ($key->isMacro()) {
 
             }
         }
