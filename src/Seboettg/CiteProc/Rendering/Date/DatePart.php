@@ -2,6 +2,8 @@
 
 namespace Seboettg\CiteProc\Rendering\Date;
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Rendering\Layout;
+use Seboettg\CiteProc\Rendering\Number;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
@@ -24,12 +26,16 @@ class DatePart
 
     private $name;
 
+    private $form;
+
     public function __construct(\SimpleXMLElement $node)
     {
         foreach ($node->attributes() as $attribute) {
             if ("name" === $attribute->getName()) {
                 $this->name = (string) $attribute;
-                break;
+            }
+            if ("form" === $attribute->getName()) {
+                $this->form = (string) $attribute;
             }
         }
 
@@ -39,17 +45,24 @@ class DatePart
     }
 
 
-    public function render($date, $form)
+    /**
+     * @param array $date
+     * @param Date $parent
+     * @return string
+     */
+    public function render($date, $parent)
     {
-        $text = '';
+        $date = $date[0];
+        $text = "";
+        $form = !empty($this->form) ? $this->form : $parent->getForm();
         switch ($this->name) {
             case 'year':
                 $text = (count($date) > 0) ? $date[0] : '';
                 if ($text > 0 && $text < 1000) {
-                    $text = $text . CiteProc::getContext()->getLocale()->filter('terms', 'ad')->single;
+                    $text = $text . CiteProc::getContext()->getLocale()->filter("terms", "ad")->single;
                 } elseif ($text < 0) {
                     $text = $text * -1;
-                    $text = $text . CiteProc::getContext()->getLocale()->filter('terms', 'bc')->single;
+                    $text = $text . CiteProc::getContext()->getLocale()->filter("terms", "bc")->single;
                 }
                 break;
             case 'month':
@@ -76,8 +89,27 @@ class DatePart
                 break;
             case 'day':
                 $text = (isset($date[2])) ? $date[2] : '';
-                break;
+                switch ($form) {
+                    case 'numeric':
+                        break;
+                    case 'numeric-leading-zeros':
+                        $text = sprintf("%02d", $text);
+                        break;
+                    case 'ordinal':
+                        $limitDayOrdinals = CiteProc::getContext()->getLocale()->filter("options", "limit-day-ordinals-to-day-1");
+                        if (!$limitDayOrdinals || Layout::getNumberOfCitedItems() <= 1) {
+                            $text = Number::ordinal($text);
+                        }
+                }
         }
-        return $this->addAffixes($this->format($this->applyTextCase($text)));
+        return !empty($text) ? $this->addAffixes($this->format($this->applyTextCase($text))) : "";
+    }
+
+    /**
+     * @return string
+     */
+    public function getForm()
+    {
+        return $this->form;
     }
 }
