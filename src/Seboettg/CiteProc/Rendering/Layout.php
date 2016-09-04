@@ -2,6 +2,7 @@
 
 namespace Seboettg\CiteProc\Rendering;
 
+use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
@@ -18,6 +19,9 @@ use Seboettg\Collection\ArrayList;
  */
 class Layout implements RenderingInterface
 {
+
+    private static $numberOfCitedItems = 0;
+
     use AffixesTrait,
         FormattingTrait,
         DelimiterTrait;
@@ -29,6 +33,7 @@ class Layout implements RenderingInterface
 
     public function __construct($node)
     {
+        self::$numberOfCitedItems = 0;
         $this->children = new ArrayList();
         foreach ($node->children() as $child) {
             $this->children->append(Factory::create($child));
@@ -40,10 +45,16 @@ class Layout implements RenderingInterface
 
     public function render($data)
     {
+        $sorting = CiteProc::getContext()->getSorting();
+        if (!empty($sorting)) {
+            $sorting->sort($data);
+        }
+
         $ret = "";
         if (is_array($data)) {
             $arr = [];
             foreach ($data as $item) {
+                ++self::$numberOfCitedItems;
                 $arr[] = $this->renderSingle($item);
             }
             $ret = implode($this->delimiter, $arr);
@@ -65,4 +76,13 @@ class Layout implements RenderingInterface
 
         return $this->format($ret);
     }
+
+    /**
+     * @return int
+     */
+    public static function getNumberOfCitedItems()
+    {
+        return self::$numberOfCitedItems;
+    }
+
 }
