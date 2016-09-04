@@ -57,6 +57,10 @@ class Sort
             $variable = $key->getVariable();
             $order = $key->getSort();
 
+            if (!isset($data->{$variable}) || empty($data->{$variable})) {
+                continue;
+            }
+
             /* Name variables called via the variable attribute (e.g. <key variable="author"/>) are returned as a
              * name list string, with the cs:name attributes form set to “long”, and name-as-sort-order set to “all”.
              */
