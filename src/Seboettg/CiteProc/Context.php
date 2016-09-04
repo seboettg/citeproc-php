@@ -30,6 +30,7 @@ use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
 use Seboettg\CiteProc\Style\Macro;
+use Seboettg\CiteProc\Style\Sort\Sort;
 use Seboettg\Collection\ArrayList;
 
 
@@ -60,6 +61,11 @@ class Context
      * @var Citation
      */
     private $citation;
+
+    /**
+     * @var Sort
+     */
+    private $sorting;
 
     public function __construct($locale = null)
     {
@@ -130,6 +136,16 @@ class Context
     public function setCitation($citation)
     {
         $this->citation = $citation;
+    }
+
+    public function setSorting($sorting)
+    {
+        $this->sorting = $sorting;
+    }
+
+    public function getSorting()
+    {
+        return $this->sorting;
     }
 
 }

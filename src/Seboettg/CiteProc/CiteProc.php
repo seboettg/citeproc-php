@@ -122,4 +122,20 @@ class CiteProc
         return self::$context->getBibliography()->render($data);
     }
 
+    public function citation($data = '')
+    {
+        return self::$context->getCitation()->render($data);
+    }
+
+    public function render($data, $mode = "bibliography") {
+        switch ($mode) {
+            case 'bibliography':
+                return $this->bibliography($data);
+            case 'citation':
+                return $this->citation($data);
+            default:
+                throw new \InvalidArgumentException("\"$mode\" is not a valid mode.");
+        }
+    }
+
 }

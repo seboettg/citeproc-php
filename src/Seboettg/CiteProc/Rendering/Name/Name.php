@@ -174,11 +174,19 @@ class Name
     private $sortSeparator = ", ";
 
     /**
-     * Name constructor.
-     * @param $node
+     * @var Names
      */
-    public function __construct(\SimpleXMLElement $node)
+    private $parent;
+
+    /**
+     * Name constructor.
+     * @param \SimpleXMLElement $node
+     * @param Names $parent
+     */
+    public function __construct(\SimpleXMLElement $node, Names $parent)
     {
+        $this->parent = $parent;
+
         /** @var \SimpleXMLElement $attribute */
         foreach ($node->attributes() as $attribute) {
             switch ($attribute->getName()) {
@@ -257,8 +265,8 @@ class Name
                 }
             }
 
-            $nonDroppingParticle = $name->{'non-dropping-particle'};
-            $droppingParticle = $name->{'dropping-particle'};
+            $nonDroppingParticle = isset($name->{'non-dropping-particle'}) ? $name->{'non-dropping-particle'} : "";
+            $droppingParticle = isset($name->{'dropping-particle'}) ? $name->{'dropping-particle'} : "";
             $suffix = (isset($name->{'suffix'})) ? ' ' . $name->{'suffix'} : '';
             if (!empty($name->given)) {
                 $name->given = $this->format(trim($name->given));
@@ -308,11 +316,16 @@ class Name
             count($names) > $this->etAlUseFirst
         ) {
             if ($this->etAlUseFirst < $this->etAlMin) {
-                for ($i = $this->etAlUseFirst; $i < $count; $i++) {
+                for ($i = $this->etAlUseFirst; $i < $count-1; $i++) {
                     unset($authors[$i]);
                 }
             }
-            $etAl = CiteProc::getContext()->getLocale()->filter('terms', 'et-al')->single;
+            if ($this->parent->hasEtAl()) {
+                $etAl = $this->parent->getEtAl()->render($names);
+            } else {
+                $etAl = CiteProc::getContext()->getLocale()->filter('terms', 'et-al')->single;
+            }
+
 
             $etAlTriggered = true;
         }
@@ -322,7 +335,7 @@ class Name
                 $authors[$authCount - 1] = $this->and . ' ' . $authors[$authCount - 1]; //stick an "and" in front of the last author if "and" is defined
             }
         }
-        $text = implode($this->delimiter, $authors);
+        $text = implode($this->parent->getDelimiter(), $authors);
         if (!empty($authors) && $etAlTriggered) {
             switch ($this->delimiterPrecedesEtAl) {
                 case 'never':

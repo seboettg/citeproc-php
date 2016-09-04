@@ -85,13 +85,13 @@ class Number
         }
         switch ($this->form) {
             case 'ordinal':
-                $text = $this->ordinal($data->{$this->variable});
+                $text = self::ordinal($data->{$this->variable});
                 break;
             case 'long-ordinal':
-                $text = $this->longOrdinal($data->{$this->variable});
+                $text = self::longOrdinal($data->{$this->variable});
                 break;
             case 'roman':
-                $text = $this->roman($data->{$this->variable});
+                $text = self::roman($data->{$this->variable});
                 break;
             case 'numeric':
             default:
@@ -101,7 +101,7 @@ class Number
         return $this->wrapDisplayBlock($this->addAffixes($this->format($this->applyTextCase($text))));
     }
 
-    private function ordinal($num) {
+    public static function ordinal($num) {
         if (($num / 10) % 10 == 1) {
             $num .= CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-04')->single;
         } elseif ($num % 10 == 1) {
@@ -117,11 +117,11 @@ class Number
     }
 
 
-    private function longOrdinal($num) {
+    public static function longOrdinal($num) {
         $num = sprintf("%02d", $num);
         $ret = CiteProc::getContext()->getLocale()->filter('terms', 'long-ordinal-' . $num)->single;
         if (!$ret) {
-            return $this->ordinal($num);
+            return self::ordinal($num);
         }
         return $ret;
     }
@@ -130,7 +130,7 @@ class Number
      * @param $num
      * @return string
      */
-    private function roman($num) {
+    public static function roman($num) {
         $ret = "";
         if ($num < 6000) {
 

@@ -32,6 +32,8 @@ class Text implements RenderingInterface
      */
     private $toRenderTypeValue;
 
+    private $form = "";
+
     public function __construct(\SimpleXMLElement $node)
     {
         foreach ($node->attributes() as $attribute) {
@@ -39,7 +41,9 @@ class Text implements RenderingInterface
             if (in_array($name, ['value', 'variable', 'macro', 'term'])) {
                 $this->toRenderType = $name;
                 $this->toRenderTypeValue = (string) $attribute;
-                break;
+            }
+            if ($name === "form") {
+                $this->form = (string) $attribute;
             }
         }
         $this->initFormattingAttributes($node);
@@ -64,7 +68,7 @@ class Text implements RenderingInterface
                 $renderedText = CiteProc::getContext()->getMacro($this->toRenderTypeValue)->render($data);
                 break;
             case 'term':
-                $renderedText = $this->applyTextCase(CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue)->single);
+                $renderedText = $this->applyTextCase(CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue, $this->form)->single);
         }
         $text = $this->format($renderedText);
         return $this->addAffixes($text, $this->quotes);

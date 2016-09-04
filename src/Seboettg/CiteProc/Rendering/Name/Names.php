@@ -92,19 +92,19 @@ class Names implements RenderingInterface
 
         /** @var \SimpleXMLElement $child */
         foreach ($node->children() as $child) {
-            $object = Factory::create($child);
+
             switch ($child->getName()) {
                 case "name":
-                    $this->name = $object;
+                    $this->name = Factory::create($child, $this);
                     break;
                 case "label":
-                    $this->label = $object;
+                    $this->label = Factory::create($child);
                     break;
                 case "substitute":
-                    $this->substitute = $object;
+                    $this->substitute = Factory::create($child);
                     break;
                 case "et-al":
-                    $this->etAl = $object;
+                    $this->etAl = Factory::create($child);
             }
         }
 
@@ -188,5 +188,20 @@ class Names implements RenderingInterface
         }
         $str  .= implode($this->delimiter, $results);
         return $this->addAffixes($str);
+    }
+
+    public function hasEtAl()
+    {
+        return !empty($this->etAl);
+    }
+
+    public function getEtAl()
+    {
+        return $this->etAl;
+    }
+
+    public function getDelimiter()
+    {
+        return $this->delimiter;
     }
 }
