@@ -26,10 +26,10 @@
         }
     },
     "scripts": {
-        "pre-update-cmd": [
-            "php -r \"copy('config/local-example.php', 'config/local.php');\"",
-        ],
-        "pre-install-cmd": "MyVendor\\MyClass::postPackageInstall"
+        "pre-install-cmd": [
+            "git submodule update --init",
+            "./tests/fixtures/test-suite/processor.py"
+        ]
     }
 }
 
