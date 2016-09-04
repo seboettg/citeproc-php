@@ -24,5 +24,12 @@
         "branch-alias": {
             "version2.0": "2.0.x-dev"
         }
+    },
+    "scripts": {
+        "pre-update-cmd": [
+            "php -r \"copy('config/local-example.php', 'config/local.php');\"",
+        ],
+        "pre-install-cmd": "MyVendor\\MyClass::postPackageInstall"
     }
 }
+
