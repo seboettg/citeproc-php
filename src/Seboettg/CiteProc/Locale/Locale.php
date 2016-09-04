@@ -70,12 +70,14 @@ class Locale
         }
 
         //filter by form
-        /** @var Term $value */
-        $array = array_filter($array, function($value) use($form) {
-            return $value->form === $form;
-        });
+
+        if ($type !== "options") {
+            /** @var Term $value */
+            $array = array_filter($array, function($value) use($form) {
+                return $value->form === $form;
+            });
+        }
 
         return array_pop($array);
     }
-
 }
