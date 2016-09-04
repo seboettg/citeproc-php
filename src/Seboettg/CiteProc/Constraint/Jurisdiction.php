@@ -4,15 +4,15 @@ namespace Seboettg\CiteProc\Constraint;
 
 
 /**
- * Class Variable
- * @package Seboettg\CiteProc\Node\Choose\Constraint
+ * Class Jurisdiction
+ * @package Seboettg\CiteProc\Constraint
  *
  * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
  */
-class Variable implements ConstraintInterface
+class Jurisdiction implements ConstraintInterface
 {
 
-    public function validate($data)
+    public function validate($value)
     {
         return false;
     }
