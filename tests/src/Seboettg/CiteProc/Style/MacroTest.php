@@ -44,7 +44,7 @@ class MacroTest extends \PHPUnit_Framework_TestCase
 
         $actual = $citation->render($data);
 
-        $expected = '<span style="font-style: italic" >Ein herzzerreißendes Werk von umwerfender Genialität</span>; '.
+        $expected = '<i>Ein herzzerreißendes Werk von umwerfender Genialität</i>; '.
             'Ein nicht so wirklich herzzerreißendes Werk von umwerfender Genialität';
 
         $this->assertEquals($expected, $actual);

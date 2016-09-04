@@ -28,12 +28,16 @@
 namespace Seboettg\CiteProc\Rendering;
 
 
+use PHPUnit_Framework_ExpectationFailedException;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Locale\Locale;
+use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
 class GroupTest extends \PHPUnit_Framework_TestCase
 {
+    use TestSuiteTestCaseTrait;
+
     private $data = "{\"title\":\"Ein Buch\", \"URL\":\"http://foo.bar\"}";
 
     public function setUp()
@@ -63,5 +67,43 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $str = '<group display="indent" prefix="[" suffix="]" delimiter=" "><text term="retrieved"/><text term="from"/><text variable="URL"/></group>';
         $group = new Group(new \SimpleXMLElement($str));
         $this->assertEquals("<div style=\"text-indent: 0px; padding-left: 45px;\">[abgerufen von http://foo.bar]</div>", $group->render(json_decode($this->data)));
+    }
+
+    public function testRenderTestSuite()
+    {
+        $testFiles = loadFixtures("group_");
+        $i = 0;
+        $failures = [];
+        foreach ($testFiles as $testFile) {
+            if (in_array($testFile, self::$FILTER)) {
+                continue;
+            }
+            $testData = json_decode(file_get_contents(PHPUNIT_FIXTURES."/$testFile"));
+            $mode = $testData->mode;
+            $expected = $testData->result;
+            $citeProc = new CiteProc($testData->csl);
+            ++$i;
+            printf("%03d (%s): ", $i, $testFile);
+            try {
+                $actual = $citeProc->render($testData->input, $mode);
+                $this->assertEquals($expected, $actual, "Test case \"$testFile\" ($i) has failed.");
+                echo "succeeded.\n\n\n";
+            } catch (PHPUnit_Framework_ExpectationFailedException $e)  {
+                echo "failed\n";
+                $str = $e->getMessage() . "\n" . $e->getComparisonFailure()->getDiff() . "\n\n\n";
+                $failures[] = $str;
+                echo $str;
+            } catch (\RuntimeException $e) {
+                $failures[] = $e->getMessage();
+                echo "Runtime Exception in $testFile\n".__CLASS__."\n\n";
+            } finally {
+
+            }
+        }
+        if(!empty($failures))
+        {
+            //throw new PHPUnit_Framework_ExpectationFailedException(count($failures)." assertions failed:\n\t".implode("\n\t", $failures));
+        }
+
     }
 }

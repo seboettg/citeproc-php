@@ -29,9 +29,11 @@ namespace Seboettg\CiteProc\Node\Choose\Choose;
 
 
 use Seboettg\CiteProc\Rendering\Choose\Choose;
+use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
 class ChooseTest extends \PHPUnit_Framework_TestCase
 {
+    use TestSuiteTestCaseTrait;
 
     private $chooseXml = [
         '<choose><if type="book"><text variable="title" font-style="italic"/></if><else><text variable="title"/></else></choose>',
@@ -39,6 +41,7 @@ class ChooseTest extends \PHPUnit_Framework_TestCase
     ];
 
     private $dataThesis  = '{"title":"Ein herzzerreißendes Werk von umwerfender Genialität","type":"thesis"}';
+    private $dataWithoutType  = '{"title":"Ein herzzerreißendes Werk von umwerfender Genialität"}';
     private $dataBook    = '{"title":"Ein herzzerreißendes Werk von umwerfender Genialität","type":"book"}';
 
 
@@ -62,14 +65,17 @@ class ChooseTest extends \PHPUnit_Framework_TestCase
 
     public function _testIf()
     {
-        $ret = $this->choose->render(json_decode($this->dataBook));
-        $this->assertRegExp('/italic/', $ret);
-        $this->assertEquals("Ein herzzerreißendes Werk von umwerfender Genialität", strip_tags($ret));
+        $json = json_decode($this->dataBook);
+        $ret = $this->choose->render($json);
+        $this->assertRegExp('/^\<i\>(.+)\<\/i\>$/', $ret);
+        $this->assertEquals("<i>Ein herzzerreißendes Werk von umwerfender Genialität</i>", $ret);
     }
 
     public function _testElse()
     {
         $this->assertEquals("Ein herzzerreißendes Werk von umwerfender Genialität", $this->choose->render(json_decode($this->dataThesis)));
+        $this->assertEquals("Ein herzzerreißendes Werk von umwerfender Genialität", $this->choose->render(json_decode($this->dataWithoutType)));
+
     }
 
     public function testIsNumeric()
@@ -77,9 +83,17 @@ class ChooseTest extends \PHPUnit_Framework_TestCase
         $xml = new \SimpleXMLElement($this->chooseXml[1]);
         $choose = new Choose($xml);
         $ret1 = $choose->render(json_decode('{"title":"Ein herzzerreißendes Werk von umwerfender Genialität","volume":2}'));
-        $ret2 = $choose->render(json_decode('{"title":"Ein herzzerreißendes Werk von umwerfender Genialität","volume":"none"}'));
+        $ret2 = $choose->render(json_decode('{"title":"Ein herzzerreißendes Werk von umwerfender Genialität","volume":"non-numeric value"}'));
+        $ret3 = $choose->render(json_decode('{"title":"Ein herzzerreißendes Werk von umwerfender Genialität"}'));
+
         $this->assertEquals("Ein herzzerreißendes Werk von umwerfender Genialität; 2", $ret1);
         $this->assertEquals("Ein herzzerreißendes Werk von umwerfender Genialität", $ret2);
+        $this->assertEquals("Ein herzzerreißendes Werk von umwerfender Genialität", $ret3);
+    }
+
+    public function testRenderTestSuite()
+    {
+
     }
 
 }

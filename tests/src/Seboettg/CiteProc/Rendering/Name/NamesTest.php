@@ -1,41 +1,19 @@
 <?php
-/*
- * This file is a part of HDS (HeBIS Discovery System). HDS is an 
- * extension of the open source library search engine VuFind, that 
- * allows users to search and browse beyond resources. More 
- * Information about VuFind you will find on http://www.vufind.org
- * 
- * Copyright (C) 2016 
- * HeBIS Verbundzentrale des HeBIS-Verbundes 
- * Goethe-Universität Frankfurt / Goethe University of Frankfurt
- * http://www.hebis.de
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
 
 namespace Seboettg\CiteProc\Rendering\Names;
-
 
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\Rendering\Group;
 use Seboettg\CiteProc\Rendering\Name\Names;
+use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\TestSuiteTests;
 
-class NamesTest extends \PHPUnit_Framework_TestCase
+class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
 {
+
+    use TestSuiteTestCaseTrait;
 
     public function setUp()
     {
@@ -90,7 +68,6 @@ class NamesTest extends \PHPUnit_Framework_TestCase
     public function testRenderMultipleAuthors()
     {
         $xml = "<names variable=\"author\" name-as-sort-order=\"all\" delimiter=\", \" prefix=\"(\" suffix=\")\"><name form=\"short\" and=\"symbol\" delimiter=\", \"/><label form=\"short\" prefix=\", \" text-case=\"title\"/></names>";
-        echo "$xml\n";
         $names = new Names(new \SimpleXMLElement($xml));
 
         // two names
@@ -108,11 +85,30 @@ class NamesTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderMultipleAuthorsEtAl()
     {
-        $xml = "<names variable=\"author\" name-as-sort-order=\"all\" delimiter=\", \" prefix=\"(\" suffix=\")\"><name form=\"short\" and=\"symbol\" delimiter=\", \" et-al-min=\"4\" et-al-use-first=\"2\"/></names>";
+        $xml = "<names variable=\"author\" delimiter=\"; \" prefix=\"(\" suffix=\")\"><name delimiter=\", \" form=\"short\" name-as-sort-order=\"all\" sort-separator=\", \" and=\"symbol\" et-al-min=\"4\" et-al-use-first=\"2\"/></names>";
         $names = new Names(new \SimpleXMLElement($xml));
 
         // four names
         $data = "{\"author\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Röntgen\", \"given\": \"Wilhelm Conrad\", \"non-dropping-particle\": \"\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Her Anonymous Life\", \"type\": \"book\"}";
-        $this->assertEquals("(la Doe, Curie, u. a.)", $names->render(json_decode($data)));
+        $this->assertEquals("(la Doe; Curie; Röntgen, u. a.)", $names->render(json_decode($data)));
+    }
+
+    public function testRenderMultipleAuthorEtAlElement()
+    {
+
+        $xml = "<names variable=\"author\" delimiter=\"; \">
+                    <name form=\"long\" name-as-sort-order=\"all\" and=\"symbol\" delimiter=\", \" et-al-min=\"4\" et-al-use-first=\"2\"/>
+                    <et-al term=\"et-al\" font-style=\"italic\"/>
+                </names>";
+        $names = new Names(new \SimpleXMLElement($xml));
+
+        // four names
+        $data = "{\"author\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Röntgen\", \"given\": \"Wilhelm Conrad\", \"non-dropping-particle\": \"\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Her Anonymous Life\", \"type\": \"book\"}";
+        $this->assertEquals("la Doe, John de; Curie, Marie; Röntgen, Wilhelm Conrad, <i>u. a.</i>", $names->render(json_decode($data)));
+    }
+
+    public function testRenderTestSuite()
+    {
+        $this->_testRenderTestSuite("name_");
     }
 }

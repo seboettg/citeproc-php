@@ -28,12 +28,17 @@
 namespace Seboettg\CiteProc\Rendering\Date;
 
 
+use PHPUnit_Framework_ExpectationFailedException;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Locale\Locale;
+use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\TestSuiteTests;
 
-class DateTest extends \PHPUnit_Framework_TestCase
+class DateTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
 {
+
+    use TestSuiteTestCaseTrait;
 
     public function setUp()
     {
@@ -43,7 +48,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
         CiteProc::setContext($context);
     }
 
-    private $data = "{\"id\": \"ITEM-2\", \"issued\": {\"date-parts\": [\"1983\", \"1\", \"15\"]}, \"title\": \"Item 2\", \"type\": \"book\"}";
+    private $data = "{\"id\": \"ITEM-2\", \"issued\": {\"date-parts\": [[\"1983\", \"1\", \"15\"]]}, \"title\": \"Item 2\", \"type\": \"book\"}";
 
     public function testRenderDateParts()
     {
@@ -58,6 +63,12 @@ class DateTest extends \PHPUnit_Framework_TestCase
         $ret = $date->render(json_decode($this->data));
 
         $this->assertEquals(" 15.01.1983", $ret);
+
+    }
+
+    public function testRenderTestSuite()
+    {
+        $this->_testRenderTestSuite('date_');
 
     }
 }

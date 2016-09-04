@@ -48,7 +48,7 @@ class TextTest extends \PHPUnit_Framework_TestCase
         $text = new Text(new \SimpleXMLElement("<text macro=\"title\"/>"));
 
         $this->assertEquals(
-            "<span style=\"font-style: italic\" >Ein Buch</span>",
+            "<i>Ein Buch</i>",
             $text->render(json_decode("{\"title\":\"Ein Buch\", \"type\": \"book\"}"))
         );
 
