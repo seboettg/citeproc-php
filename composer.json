@@ -26,9 +26,9 @@
         }
     },
     "scripts": {
-        "pre-install-cmd": [
+        "post-install-cmd": [
             "git submodule update --init",
-            "./tests/fixtures/test-suite/processor.py"
+            "cd ./tests/fixtures/test-suite/; ./processor.py -g"
         ]
     }
 }
