@@ -11,7 +11,7 @@
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>tests/Seboettg/CiteProc</directory>
+            <directory>tests/src/Seboettg/CiteProc</directory>
         </testsuite>
     </testsuites>
 
