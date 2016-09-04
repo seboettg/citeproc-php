@@ -7,7 +7,6 @@ php:
 before_script:
  - wget http://getcomposer.org/composer.phar
  - php composer.phar install --dev --no-interaction
- - composer run-script post-install-cmd
 
 script:
  - mkdir -p build/logs
