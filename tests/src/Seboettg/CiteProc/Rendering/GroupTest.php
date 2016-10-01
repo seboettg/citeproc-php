@@ -1,29 +1,4 @@
 <?php
-/*
- * This file is a part of HDS (HeBIS Discovery System). HDS is an 
- * extension of the open source library search engine VuFind, that 
- * allows users to search and browse beyond resources. More 
- * Information about VuFind you will find on http://www.vufind.org
- * 
- * Copyright (C) 2016 
- * HeBIS Verbundzentrale des HeBIS-Verbundes 
- * Goethe-Universität Frankfurt / Goethe University of Frankfurt
- * http://www.hebis.de
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
 
 namespace Seboettg\CiteProc\Rendering;
 
@@ -71,39 +46,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderTestSuite()
     {
-        $testFiles = loadFixtures("group_");
-        $i = 0;
-        $failures = [];
-        foreach ($testFiles as $testFile) {
-            if (in_array($testFile, self::$FILTER)) {
-                continue;
-            }
-            $testData = json_decode(file_get_contents(PHPUNIT_FIXTURES."/$testFile"));
-            $mode = $testData->mode;
-            $expected = $testData->result;
-            $citeProc = new CiteProc($testData->csl);
-            ++$i;
-            printf("%03d (%s): ", $i, $testFile);
-            try {
-                $actual = $citeProc->render($testData->input, $mode);
-                $this->assertEquals($expected, $actual, "Test case \"$testFile\" ($i) has failed.");
-                echo "succeeded.\n\n\n";
-            } catch (PHPUnit_Framework_ExpectationFailedException $e)  {
-                echo "failed\n";
-                $str = $e->getMessage() . "\n" . $e->getComparisonFailure()->getDiff() . "\n\n\n";
-                $failures[] = $str;
-                echo $str;
-            } catch (\RuntimeException $e) {
-                $failures[] = $e->getMessage();
-                echo "Runtime Exception in $testFile\n".__CLASS__."\n\n";
-            } finally {
-
-            }
-        }
-        if(!empty($failures))
-        {
-            //throw new PHPUnit_Framework_ExpectationFailedException(count($failures)." assertions failed:\n\t".implode("\n\t", $failures));
-        }
-
+        $this->_testRenderTestSuite("group_");
     }
 }

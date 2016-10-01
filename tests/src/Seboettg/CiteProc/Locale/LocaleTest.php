@@ -20,7 +20,7 @@ class LocaleTest extends \PHPUnit_Framework_TestCase
 
     public function testFilterTerms()
     {
-        $a1 = $this->object->filter("terms", "no date", "");
+        $a1 = $this->object->filter("terms", "no date");
         $a2 = $this->object->filter("terms", "no date", "short");
         $this->assertEquals("ohne Datum", $a1->{'single'});
         $this->assertEquals("o. J.", $a2->{'single'});

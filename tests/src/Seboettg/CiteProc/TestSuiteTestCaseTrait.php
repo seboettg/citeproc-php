@@ -13,11 +13,12 @@ trait TestSuiteTestCaseTrait
     static $FILTER = [
         "date_LoneJapaneseMonth.json",
         "date_OtherAlone.json",
-        "date_InPress.json"
+        "date_InPress.json",
+        'group_SuppressTermInMacro.json'
     ];
 
 
-    function _testRenderTestSuite($filterTests)
+    public function _testRenderTestSuite($filterTests)
     {
         $testFiles = loadFixtures($filterTests);
         $i = 0;
@@ -38,7 +39,7 @@ trait TestSuiteTestCaseTrait
             $expected = $testData->result;
             $citeProc = new CiteProc($testData->csl);
             ++$i;
-            $echo = sprintf("%03d (%s): ", $i, $testFile);
+            $echo = sprintf("%03d (%s / %s): ", $i, $testFile, $mode);
             try {
                 $actual = $citeProc->render($testData->input, $mode);
                 $this->assertEquals($expected, $actual, "Test case \"$testFile\" ($i) has failed.");

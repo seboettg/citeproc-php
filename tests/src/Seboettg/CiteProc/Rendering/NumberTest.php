@@ -6,9 +6,11 @@ namespace Seboettg\CiteProc\Rendering;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
+use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
 class NumberTest extends \PHPUnit_Framework_TestCase
 {
+    use TestSuiteTestCaseTrait;
 
     public function setUp()
     {
@@ -51,5 +53,10 @@ class NumberTest extends \PHPUnit_Framework_TestCase
         $number = new Number(new \SimpleXMLElement('<number variable="edition" form="roman" text-case="uppercase" prefix="[" suffix="]"/>'));
         $data = json_decode("{\"title\": \"Ein Buch\", \"edition\": 16}");
         $this->assertEquals("[XVI]", $number->render($data));
+    }
+
+    public function testRenderTestSuite()
+    {
+        $this->_testRenderTestSuite("sort_CiteGroupDelimiter");
     }
 }

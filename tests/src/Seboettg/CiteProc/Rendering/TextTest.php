@@ -37,6 +37,20 @@ class TextTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testVariableShortTitle()
+    {
+        $text = new Text(new \SimpleXMLElement("<text variable=\"title\" form=\"short\"/>"));
+        $data = "{
+            \"container-title\": \"my container title\", 
+            \"id\": \"ITEM-1\", 
+            \"shortTitle\": \"something\", 
+            \"type\": \"manuscript\"
+        }";
+        $actual = $text->render(json_decode($data));
+        $this->assertEquals("something", $actual);
+
+    }
+
     public function testMacro()
     {
 
@@ -63,6 +77,8 @@ class TextTest extends \PHPUnit_Framework_TestCase
         $text = new Text(new \SimpleXMLElement("<text value=\"Ein Titel\"/>"));
         $this->assertEquals("Ein Titel", $text->render(null));
     }
+
+
 
     public function testTerm()
     {
