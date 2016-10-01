@@ -81,7 +81,7 @@ class Label implements RenderingInterface
     {
         $text = '';
         $variables = explode(' ', $this->variable);
-        $form = isset($this->form) ? $this->form : 'long';
+        $form = !empty($this->form) ? $this->form : 'long';
         $plural = "";
         switch ($this->plural) {
             case 'never':
@@ -96,7 +96,7 @@ class Label implements RenderingInterface
         foreach ($variables as $variable) {
 
             if (isset($data->{$variable})) {
-                if (!isset($this->plural) && empty($plural) && is_array($data->{$variable})) {
+                if ((!isset($this->plural) || empty($plural)) && is_array($data->{$variable})) {
                     $count = count($data->{$variable});
                     if ($count == 1) {
                         $plural = 'single';
@@ -108,8 +108,11 @@ class Label implements RenderingInterface
                         $plural = $this->evaluateStringPluralism($data, $variable);
                     }
                 }
-                if (!empty($data->{$variable}) && ($term = CiteProc::getContext()->getLocale()->filter('terms', $variable, $form))) {
-                    $text = $term->{$plural};
+                $term = CiteProc::getContext()->getLocale()->filter('terms', $variable, $form);
+                $var = $data->{$variable};
+                $pluralForm = $term->{$plural};
+                if (!empty($var) && !empty($pluralForm)) {
+                    $text = $pluralForm;
                     break;
                 }
             }
@@ -142,6 +145,9 @@ class Label implements RenderingInterface
                     }
                     break;
                 default:
+                    if (is_numeric($str)) {
+                        return $str > 1 ? 'multiple' : 'single';
+                    }
             }
         }
         return $plural;
