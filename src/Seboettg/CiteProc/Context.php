@@ -67,6 +67,11 @@ class Context
      */
     private $sorting;
 
+    /**
+     * @var string
+     */
+    private $mode;
+
     public function __construct($locale = null)
     {
         if (!empty($locale)) {
@@ -146,6 +151,32 @@ class Context
     public function getSorting()
     {
         return $this->sorting;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMode()
+    {
+        return $this->mode;
+    }
+
+    /**
+     * @param string $mode
+     */
+    public function setMode($mode)
+    {
+        $this->mode = $mode;
+    }
+
+    public function isModeCitation()
+    {
+        return $this->mode === "citation";
+    }
+
+    public function isModeBibliography()
+    {
+        return $this->mode === "bibliography";
     }
 
 }

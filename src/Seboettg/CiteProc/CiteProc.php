@@ -128,10 +128,13 @@ class CiteProc
     }
 
     public function render($data, $mode = "bibliography") {
+
         switch ($mode) {
             case 'bibliography':
+                self::$context->setMode($mode);
                 return $this->bibliography($data);
             case 'citation':
+                self::$context->setMode($mode);
                 return $this->citation($data);
             default:
                 throw new \InvalidArgumentException("\"$mode\" is not a valid mode.");

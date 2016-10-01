@@ -45,25 +45,30 @@ class Layout implements RenderingInterface
 
     public function render($data)
     {
+        $ret = "";
         $sorting = CiteProc::getContext()->getSorting();
         if (!empty($sorting)) {
             $sorting->sort($data);
         }
 
-        $ret = "";
+
         if (is_array($data)) {
             $arr = [];
             foreach ($data as $item) {
                 ++self::$numberOfCitedItems;
-                $arr[] = $this->renderSingle($item);
+                $arr[] = $this->wrapBibEntry($this->renderSingle($item));
             }
             $ret = implode($this->delimiter, $arr);
         } else {
-            $ret .= $this->renderSingle($data);
+            $ret .= $this->wrapBibEntry($this->renderSingle($data));
         }
 
-        return $this->addAffixes($ret);
+        $ret = $this->addAffixes($ret);
 
+        if (CiteProc::getContext()->isModeBibliography()) {
+            return "<div class=\"csl-bib-body\">".$ret."\n</div>";
+        }
+        return $ret;
     }
 
     private function renderSingle($data)
@@ -83,6 +88,14 @@ class Layout implements RenderingInterface
     public static function getNumberOfCitedItems()
     {
         return self::$numberOfCitedItems;
+    }
+
+    private function wrapBibEntry($value)
+    {
+        if (CiteProc::getContext()->isModeBibliography()) {
+            return "\n  <div class=\"csl-entry\">" . $value . "</div>";
+        }
+        return $value;
     }
 
 }
