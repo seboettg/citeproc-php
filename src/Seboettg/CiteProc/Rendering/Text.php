@@ -32,7 +32,7 @@ class Text implements RenderingInterface
      */
     private $toRenderTypeValue;
 
-    private $form = "";
+    private $form = "long";
 
     public function __construct(\SimpleXMLElement $node)
     {
@@ -60,6 +60,14 @@ class Text implements RenderingInterface
                 $renderedText = $this->applyTextCase($this->toRenderTypeValue);
                 break;
             case 'variable':
+                // check if there is an attribute with prefix short or long e.g. shortTitle or longAbstract
+                // test case group_ShortOutputOnly.json
+                if (in_array($this->form, ["short", "long"])) {
+                    $attrWithPrefix = $this->form . ucfirst($this->toRenderTypeValue);
+                    if (isset($data->{$attrWithPrefix}) && !empty($data->{$attrWithPrefix})) {
+                        $renderedText = $this->applyTextCase($data->{$attrWithPrefix});
+                    }
+                }
                 if (isset($data->{$this->toRenderTypeValue})) {
                     $renderedText = $this->applyTextCase($data->{$this->toRenderTypeValue});
                 }

@@ -14,7 +14,7 @@ class Term
 
     private $name = "";
 
-    private $form = "";
+    private $form = "long";
 
     private $single = "";
 

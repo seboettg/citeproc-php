@@ -89,7 +89,6 @@ trait LocaleXmlParserTrait
                             $term->{'single'} = $value;
                             $term->{'multiple'} = $value;
                         }
-
                         if (!$this->terms->hasKey($term->name)) {
                             $this->terms->add($term->name, []);
                         }

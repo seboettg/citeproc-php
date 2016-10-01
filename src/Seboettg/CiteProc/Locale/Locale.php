@@ -46,7 +46,7 @@ class Locale
         return $this->language;
     }
 
-    public function filter($type, $name, $form = "") {
+    public function filter($type, $name, $form = "long") {
 
         if (!isset($this->{$type})) {
             throw new \InvalidArgumentException("There is no locale of type \"$type\".");
@@ -73,8 +73,8 @@ class Locale
 
         if ($type !== "options") {
             /** @var Term $value */
-            $array = array_filter($array, function($value) use($form) {
-                return $value->form === $form;
+            $array = array_filter($array, function($term) use($form) {
+                return $term->form === $form;
             });
         }
 
