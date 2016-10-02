@@ -6,7 +6,7 @@ class NumberTest extends \PHPUnit_Framework_TestCase
 {
 
 
-    public function testRoman2dec()
+    public function testRoman2Dec()
     {
         $test = [
             "I"     => 1,
@@ -16,6 +16,7 @@ class NumberTest extends \PHPUnit_Framework_TestCase
             "XC"    => 90,
             "CI"    => 101,
             "D"     => 500,
+            "dviii" => 508,
             "CM"    => 900,
             "XM"    => 990,
             "M"     => 1000,

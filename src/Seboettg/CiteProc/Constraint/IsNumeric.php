@@ -1,6 +1,10 @@
 <?php
 
 namespace Seboettg\CiteProc\Constraint;
+use NumberFormatter;
+use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Context;
+use Seboettg\CiteProc\Util\Number;
 
 
 /**
@@ -25,9 +29,36 @@ class IsNumeric implements ConstraintInterface
     public function validate($value)
     {
         if (isset($value->{$this->isNumeric})) {
-            return is_numeric($value->{$this->isNumeric});
+            return $this->parseValue($value->{$this->isNumeric});
         }
 
+        return false;
+    }
+
+    /**
+     * Tests whether the given variables (Appendix IV - Variables) contain numeric content. Content is considered
+     * numeric if it solely consists of numbers. Numbers may have prefixes and suffixes (“D2”, “2b”, “L2d”), and may be
+     * separated by a comma, hyphen, or ampersand, with or without spaces (“2, 3”, “2-4”, “2 & 4”). For example, “2nd”
+     * tests “true” whereas “second” and “2nd edition” test “false”.
+     *
+     * @param $evalValue
+     * @return bool
+     */
+    private function parseValue($evalValue)
+    {
+        if (is_numeric($evalValue)) {
+            return true;
+        }
+        else if (preg_match(Number::PATTERN_ORDINAL, $evalValue)) {
+            $numberFormatter = new NumberFormatter(CiteProc::getContext()->getLocale()->getLanguage(), NumberFormatter::ORDINAL);
+            return $numberFormatter->parse($evalValue) !== false;
+        }
+        else if (preg_match(Number::PATTERN_ROMAN, $evalValue)) {
+            return Number::roman2Dec($evalValue) !== false;
+        }
+        else if (preg_match(Number::PATTERN_COMMA_AMPERSAND_RANGE, $evalValue)){
+            return true;
+        }
         return false;
     }
 }

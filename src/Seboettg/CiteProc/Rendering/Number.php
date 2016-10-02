@@ -27,6 +27,7 @@
 
 namespace Seboettg\CiteProc\Rendering;
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Util;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
@@ -50,13 +51,6 @@ class Number
     private $variable;
 
     private $form;
-
-    static $ROMAN_NUMERALS = [
-        ["", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"],
-        ["", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc"],
-        ["", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm"],
-        ["", "m", "mm", "mmm", "mmmm", "mmmmm"]
-    ];
 
     public function __construct(\SimpleXMLElement $node)
     {
@@ -91,7 +85,7 @@ class Number
                 $text = self::longOrdinal($data->{$this->variable});
                 break;
             case 'roman':
-                $text = self::roman($data->{$this->variable});
+                $text = Util\Number::dec2roman($data->{$this->variable});
                 break;
             case 'numeric':
             default:
@@ -126,21 +120,5 @@ class Number
         return $ret;
     }
 
-    /**
-     * @param $num
-     * @return string
-     */
-    public static function roman($num) {
-        $ret = "";
-        if ($num < 6000) {
 
-            $numStr = strrev($num);
-            $len = strlen($numStr);
-            for ($pos = 0; $pos < $len; $pos++) {
-                $n = $numStr[$pos];
-                $ret = self::$ROMAN_NUMERALS[$pos][$n] . $ret;
-            }
-        }
-        return $ret;
-    }
 }
