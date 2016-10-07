@@ -72,6 +72,11 @@ class Context
      */
     private $mode;
 
+    /**
+     * @var ArrayList
+     */
+    private $citationItems;
+
     public function __construct($locale = null)
     {
         if (!empty($locale)) {
@@ -79,6 +84,7 @@ class Context
         }
 
         $this->macros = new ArrayList();
+        $this->citationItems = new ArrayList();
     }
 
     public function addMacro($key, $macro)
@@ -179,4 +185,24 @@ class Context
         return $this->mode === "bibliography";
     }
 
+    /**
+     * @return ArrayList
+     */
+    public function getCitationItems()
+    {
+        return $this->citationItems;
+    }
+
+    /**
+     * @param ArrayList $citationItems
+     */
+    public function setCitationItems($citationItems)
+    {
+        $this->citationItems = $citationItems;
+    }
+
+    public function hasCitationItems()
+    {
+        return (count($this->citationItems) > 0);
+    }
 }

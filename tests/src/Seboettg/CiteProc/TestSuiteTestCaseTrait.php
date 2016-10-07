@@ -14,7 +14,11 @@ trait TestSuiteTestCaseTrait
         "date_LoneJapaneseMonth.json",
         "date_OtherAlone.json",
         "date_InPress.json",
-        'group_SuppressTermInMacro.json'
+        'group_SuppressTermInMacro.json',
+        'textcase_Lowercase.json',
+        'textcase_Uppercase.json',
+        'textcase_SkipNameParticlesInTitleCase.json'
+
     ];
 
 
@@ -36,6 +40,10 @@ trait TestSuiteTestCaseTrait
             if ($mode !== "bibliography" && $mode !== "citation") {
                 continue;
             }
+            if (isset($testData->citation_items) && $testData->citation_items !== false) {
+                CiteProc::getContext()->setCitationItems($testData->citation_items);
+            }
+
             $expected = $testData->result;
             $citeProc = new CiteProc($testData->csl);
             ++$i;
