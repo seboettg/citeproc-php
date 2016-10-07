@@ -1,29 +1,4 @@
 <?php
-/*
- * This file is a part of HDS (HeBIS Discovery System). HDS is an 
- * extension of the open source library search engine VuFind, that 
- * allows users to search and browse beyond resources. More 
- * Information about VuFind you will find on http://www.vufind.org
- * 
- * Copyright (C) 2016 
- * HeBIS Verbundzentrale des HeBIS-Verbundes 
- * Goethe-Universität Frankfurt / Goethe University of Frankfurt
- * http://www.hebis.de
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
 
 namespace Seboettg\CiteProc\Util;
 
@@ -89,41 +64,6 @@ class Number
         return $ret;
     }
 
-    /*
-    public static function roman2dec($roman)
-    {
-
-        $preDecimal = [1, 10, 100, 1000];
-
-        $roman = strtolower($roman);
-        //XVII
-        $ret = 0;
-        for ($i = strlen($roman); $i > 0;) {
-            $numberFound = false;
-            for ($j = 0; $j < $i && $j < strlen($roman);) {
-                $char = substr($roman, $j, ($i - $j));
-
-                for ($k = 0; $k < 4; ++$k) {
-                    if (($pos = array_search($char, self::ROMAN_NUMERALS[$k])) !== false) {
-                        $ret = ($preDecimal[$k] * $pos) + $ret;
-                        $i = $j;
-                        $j = 0;
-                        $numberFound = true;
-                        break;
-                    }
-                }
-                if (!$numberFound) {
-                    ++$j;
-                }
-            }
-            if (!$numberFound) {
-                --$i;
-            }
-        }
-        $x = "foo";
-        return $ret;
-    }
-    */
 
     public static function roman2Dec($romanNumber)
     {
@@ -142,7 +82,7 @@ class Number
             return 0;
         }
 
-
+        $values = [];
         // Convert the string to an array of roman values:
         for ($i = 0; $i < strlen($romanNumber); ++$i) {
             $char = strtoupper($romanNumber{$i});

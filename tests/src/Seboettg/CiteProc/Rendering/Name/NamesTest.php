@@ -61,7 +61,7 @@ class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         //two authors
         $data2 = "{\"author\": [{\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\"}, {\"dropping-particle\": \"\", \"family\": \"Skłodowska Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\"}],\"editor\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Das Leben des Brian\", \"type\": \"book\"}";
         $ret2 = $group->render(json_decode($data2));
-        $this->assertEquals("Einstein, Albert; Skłodowska Curie, Marie in: Das Leben Des Brian, (la Doe, J. de, Hrsg.)", $ret2);
+        $this->assertEquals("Einstein, Albert; Skłodowska Curie, Marie in: Das Leben des Brian, (la Doe, J. de, Hrsg.)", $ret2);
 
     }
 
