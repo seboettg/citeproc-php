@@ -54,10 +54,12 @@ class Text implements RenderingInterface
 
     public function render($data)
     {
+        $lang = (isset($data->language) && $data->language != 'en') ? $data->language : 'en';
+
         $renderedText = "";
         switch ($this->toRenderType) {
             case 'value':
-                $renderedText = $this->applyTextCase($this->toRenderTypeValue);
+                $renderedText = $this->applyTextCase($this->toRenderTypeValue, $lang);
                 break;
             case 'variable':
                 // check if there is an attribute with prefix short or long e.g. shortTitle or longAbstract
@@ -65,18 +67,18 @@ class Text implements RenderingInterface
                 if (in_array($this->form, ["short", "long"])) {
                     $attrWithPrefix = $this->form . ucfirst($this->toRenderTypeValue);
                     if (isset($data->{$attrWithPrefix}) && !empty($data->{$attrWithPrefix})) {
-                        $renderedText = $this->applyTextCase($data->{$attrWithPrefix});
+                        $renderedText = $this->applyTextCase($data->{$attrWithPrefix}, $lang);
                     }
                 }
                 if (isset($data->{$this->toRenderTypeValue})) {
-                    $renderedText = $this->applyTextCase($data->{$this->toRenderTypeValue});
+                    $renderedText = $this->applyTextCase($data->{$this->toRenderTypeValue}, $lang);
                 }
                 break;
             case 'macro':
                 $renderedText = CiteProc::getContext()->getMacro($this->toRenderTypeValue)->render($data);
                 break;
             case 'term':
-                $renderedText = $this->applyTextCase(CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue, $this->form)->single);
+                $renderedText = $this->applyTextCase(CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue, $this->form)->single, $lang);
         }
         $text = $this->format($renderedText);
         return $this->addAffixes($text, $this->quotes);

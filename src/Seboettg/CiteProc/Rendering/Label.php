@@ -79,6 +79,8 @@ class Label implements RenderingInterface
      */
     public function render($data)
     {
+        $lang = (isset($data->language) && $data->language != 'en') ? $data->language : 'en';
+
         $text = '';
         $variables = explode(' ', $this->variable);
         $form = !empty($this->form) ? $this->form : 'long';
@@ -123,7 +125,7 @@ class Label implements RenderingInterface
         if ($this->stripPeriods) {
             $text = str_replace('.', '', $text);
         }
-        $text = $this->format($this->applyTextCase($text));
+        $text = $this->format($this->applyTextCase($text, $lang));
         return $this->addAffixes($text);
     }
 

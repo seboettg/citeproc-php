@@ -51,24 +51,36 @@ class Layout implements RenderingInterface
             $sorting->sort($data);
         }
 
-
-        if (is_array($data)) {
-            $arr = [];
-            foreach ($data as $item) {
-                ++self::$numberOfCitedItems;
-                $arr[] = $this->wrapBibEntry($this->renderSingle($item));
-            }
-            $ret = implode($this->delimiter, $arr);
-        } else {
-            $ret .= $this->wrapBibEntry($this->renderSingle($data));
-        }
-
-        $ret = $this->addAffixes($ret);
-
         if (CiteProc::getContext()->isModeBibliography()) {
+            if (is_array($data)) {
+                $arr = [];
+                foreach ($data as $item) {
+                    ++self::$numberOfCitedItems;
+                    $arr[] = $this->wrapBibEntry($this->renderSingle($item));
+                }
+                $ret .= implode($this->delimiter, $arr);
+            } else {
+                $ret .= $this->wrapBibEntry($this->renderSingle($data));
+            }
+
             return "<div class=\"csl-bib-body\">".$ret."\n</div>";
+
+        } else if (CiteProc::getContext()->isModeCitation()) {
+            if (is_array($data)) {
+                $arr = [];
+                foreach ($data as $item) {
+                    if (CiteProc::getContext()->hasCitationItems()) {
+                        continue;
+                    }
+                    $arr[] = $this->renderSingle($item);
+                }
+                $ret .= implode($this->delimiter, $arr);
+            } else {
+                $ret .= $this->renderSingle($data);
+            }
         }
-        return $ret;
+
+        return $this->addAffixes($ret);
     }
 
     private function renderSingle($data)
@@ -92,10 +104,7 @@ class Layout implements RenderingInterface
 
     private function wrapBibEntry($value)
     {
-        if (CiteProc::getContext()->isModeBibliography()) {
-            return "\n  <div class=\"csl-entry\">" . $value . "</div>";
-        }
-        return $value;
+        return "\n  <div class=\"csl-entry\">" . $value . "</div>";
     }
 
 }

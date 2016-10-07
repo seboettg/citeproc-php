@@ -29,6 +29,9 @@ namespace Seboettg\CiteProc\Rendering;
 
 
 
+use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Context;
+
 class LayoutTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -44,6 +47,9 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
 
         $xml = new \SimpleXMLElement($xmlString);
 
+        $context = new Context();
+        $context->setMode('citation');
+        CiteProc::setContext($context);
         $layout = new Layout($xml);
 
         $ret = $layout->render($data);

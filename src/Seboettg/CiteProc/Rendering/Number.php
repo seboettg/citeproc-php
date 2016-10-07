@@ -73,6 +73,7 @@ class Number
 
     public function render($data)
     {
+        $lang = (isset($data->language) && $data->language != 'en') ? $data->language : 'en';
 
         if (empty($this->variable) || empty($data->{$this->variable})) {
             return "";
@@ -92,7 +93,7 @@ class Number
                 $text = $data->{$this->variable};
                 break;
         }
-        return $this->wrapDisplayBlock($this->addAffixes($this->format($this->applyTextCase($text))));
+        return $this->wrapDisplayBlock($this->addAffixes($this->format($this->applyTextCase($text, $lang))));
     }
 
     public static function ordinal($num) {

@@ -23,26 +23,9 @@ class MacroTest extends \PHPUnit_Framework_TestCase
 
         $styleNode = new \SimpleXMLElement($xml);
 
-        $macroNode = null;
-        $citationNode = null;
+        $citeProc = new CiteProc($xml);
 
-        foreach ($styleNode as $node) {
-            if ($node->getName() === "macro") {
-                $macroNode = $node;
-                continue;
-            }
-            if ($node->getName() === "citation") {
-                $citationNode = $node;
-            }
-        }
-
-        $macro = new Macro($macroNode);
-        $citation = new Citation($citationNode);
-        CiteProc::setContext(new Context());
-
-        CiteProc::getContext()->addMacro($macro->getName(), $macro);
-
-        $actual = $citation->render($data);
+        $actual = $citeProc->render($data, 'citation');
 
         $expected = '<i>Ein herzzerreißendes Werk von umwerfender Genialität</i>; '.
             'Ein nicht so wirklich herzzerreißendes Werk von umwerfender Genialität';
