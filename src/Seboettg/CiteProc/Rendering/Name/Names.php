@@ -74,6 +74,16 @@ class Names implements RenderingInterface
     private $substitute;
 
     /**
+     * Et-al abbreviation, controlled via the et-al-... attributes (see Name), can be further customized with the
+     * optional cs:et-al element, which must follow the cs:name element (if present). The term attribute may be set to
+     * either “et-al” (the default) or to “and others” to use either term. The formatting attributes may also be used,
+     * for example to italicize the “et-al” term:
+     *
+     * @var EtAl
+     */
+    private $etAl;
+
+    /**
      * Names constructor.
      * @param \SimpleXMLElement $node
      */
@@ -82,19 +92,19 @@ class Names implements RenderingInterface
 
         /** @var \SimpleXMLElement $child */
         foreach ($node->children() as $child) {
-            $object = Factory::create($child);
+
             switch ($child->getName()) {
                 case "name":
-                    $this->name = $object;
+                    $this->name = Factory::create($child, $this);
                     break;
                 case "label":
-                    $this->label = $object;
+                    $this->label = Factory::create($child);
                     break;
                 case "substitute":
-                    $this->substitute = $object;
+                    $this->substitute = Factory::create($child);
                     break;
                 case "et-al":
-                    $this->etAl = $object;
+                    $this->etAl = Factory::create($child);
             }
         }
 
@@ -178,5 +188,20 @@ class Names implements RenderingInterface
         }
         $str  .= implode($this->delimiter, $results);
         return $this->addAffixes($str);
+    }
+
+    public function hasEtAl()
+    {
+        return !empty($this->etAl);
+    }
+
+    public function getEtAl()
+    {
+        return $this->etAl;
+    }
+
+    public function getDelimiter()
+    {
+        return $this->delimiter;
     }
 }

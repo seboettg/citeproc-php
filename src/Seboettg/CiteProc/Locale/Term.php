@@ -14,19 +14,33 @@ class Term
 
     private $name = "";
 
-    private $form = "";
+    private $form = "long";
 
     private $single = "";
 
     private $multiple = "";
 
+    private $match = "";
+
+    private $genderForm = "";
+
+    private $gender = "";
 
     public function __set($name, $value)
     {
-        if (!isset($this->{$name})) {
-            throw new \InvalidArgumentException("Attribute \"$name\" does not exist in " . __CLASS__);
+        $nameParts = explode("-", $name);
+        $attr = "";
+        for ($i = count($nameParts)-1; $i >= 0; --$i) {
+            if ($i > 0) {
+                $attr = ucfirst($nameParts[$i]) . $attr;
+            } else {
+                $attr = $nameParts[$i].$attr;
+            }
         }
-        $this->{$name} = $value;
+        if (!isset($this->{$attr})) {
+            throw new \InvalidArgumentException("Attribute \"$attr\" ($name) does not exist in " . __CLASS__);
+        }
+        $this->{$attr} = $value;
     }
 
     public function __get($name)

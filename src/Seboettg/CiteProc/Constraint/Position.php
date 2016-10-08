@@ -1,35 +1,33 @@
 <?php
-/*
- * This file is a part of HDS (HeBIS Discovery System). HDS is an 
- * extension of the open source library search engine VuFind, that 
- * allows users to search and browse beyond resources. More 
- * Information about VuFind you will find on http://www.vufind.org
- * 
- * Copyright (C) 2016 
- * HeBIS Verbundzentrale des HeBIS-Verbundes 
- * Goethe-Universität Frankfurt / Goethe University of Frankfurt
- * http://www.hebis.de
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
 
 namespace Seboettg\CiteProc\Constraint;
 
 
 /**
  * Class Position
+ *
+ * Tests whether the cite position matches the given positions (terminology: citations consist of one or more cites to
+ * individual items). When called within the scope of cs:bibliography, position tests “false”. The positions that can
+ * be tested are:
+ *   - “first”: position of cites that are the first to reference an item
+ *   - “ibid”/”ibid-with-locator”/”subsequent”: cites referencing previously cited items have the “subsequent” position.
+ *     Such cites may also have the “ibid” or “ibid-with-locator” position when:
+ *     a) the current cite immediately follows on another cite, within the same citation, that references the same item, or
+ *     b) the current cite is the first cite in the citation, and the previous citation consists of a single cite
+ *        referencing the same item
+ *     If either requirement is met, the presence of locators determines which position is assigned:
+ *     -  Preceding cite does not have a locator: if the current cite has a locator, the position of the current cite is
+ *        “ibid-with-locator”. Otherwise the position is “ibid”.
+ *     -  Preceding cite does have a locator: if the current cite has the same locator, the position of the current cite
+ *        is “ibid”. If the locator differs the position is “ibid-with-locator”. If the current cite lacks a locator
+ *        its only position is “subsequent”.
+ *   - “near-note”: position of a cite following another cite referencing the same item. Both cites have to be located
+ *     in foot or endnotes, and the distance between both cites may not exceed the maximum distance (measured in number
+ *     of foot or endnotes) set with the near-note-distance option.
+ *
+ * Whenever position=”ibid-with-locator” tests true, position=”ibid” also tests true. And whenever position=”ibid” or
+ * position=”near-note” test true, position=”subsequent” also tests true.
+ *
  * @package Seboettg\CiteProc\Node\Choose\Constraint
  *
  * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
@@ -37,7 +35,7 @@ namespace Seboettg\CiteProc\Constraint;
 class Position implements ConstraintInterface
 {
 
-    public function validate()
+    public function validate($value)
     {
         return false;
     }

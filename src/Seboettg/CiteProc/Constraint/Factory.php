@@ -2,7 +2,6 @@
 
 
 namespace Seboettg\CiteProc\Constraint;
-use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Exception\ClassNotFoundException;
 
 
@@ -34,7 +33,7 @@ class Factory extends \Seboettg\CiteProc\Util\Factory
         $className = self::NAMESPACE_CONSTRAINTS.$className;
 
         if (!class_exists($className)) {
-            throw new ClassNotFoundException(__CLASS__);
+            throw new ClassNotFoundException($className);
         }
         return new $className($value, $match);
     }

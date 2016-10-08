@@ -77,61 +77,116 @@ class Name
     private $delimiterPrecedesLast;
 
     /**
-     * @var string
+     * Use of etAlMin (et-al-min attribute) and etAlUseFirst (et-al-use-first attribute) enables et-al abbreviation. If
+     * the number of names in a name variable matches or exceeds the number set on etAlMin, the rendered name list is
+     * truncated after reaching the number of names set on etAlUseFirst.
+     *
+     * @var int
      */
     private $etAlMin;
 
     /**
-     * @var string
+     * Use of etAlMin (et-al-min attribute) and etAlUseFirst (et-al-use-first attribute) enables et-al abbreviation. If
+     * the number of names in a name variable matches or exceeds the number set on etAlMin, the rendered name list is
+     * truncated after reaching the number of names set on etAlUseFirst.
+     *
+     * @var int
      */
     private $etAlUseFirst;
 
     /**
-     * @var string
+     * If used, the values of these attributes (et-al-subsequent-min and et-al-subsequent-use-first) replace those of
+     * respectively et-al-min and et-al-use-first for subsequent cites (cites referencing earlier cited items).
+     *
+     * @var int
      */
     private $etAlSubsequentMin;
 
     /**
-     * @var string
+     * If used, the values of these attributes (et-al-subsequent-min and et-al-subsequent-use-first) replace those of
+     * respectively et-al-min and et-al-use-first for subsequent cites (cites referencing earlier cited items).
+     *
+     * @var int
      */
     private $etAlSubsequentUseFirst;
 
     /**
-     * @var string
+     * When set to “true” (the default is “false”), name lists truncated by et-al abbreviation are followed by the name
+     * delimiter, the ellipsis character, and the last name of the original name list. This is only possible when the
+     * original name list has at least two more names than the truncated name list (for this the value of
+     * et-al-use-first/et-al-subsequent-min must be at least 2 less than the value of
+     * et-al-min/et-al-subsequent-use-first).
+     * A. Goffeau, B. G. Barrell, H. Bussey, R. W. Davis, B. Dujon, H. Feldmann, … S. G. Oliver
+     *
+     * @var bool
      */
-    private $etAlUseLast;
+    private $etAlUseLast = false;
 
     /**
+     * Specifies whether all the name-parts of personal names should be displayed (value “long”, the default), or only
+     * the family name and the non-dropping-particle (value “short”). A third value, “count”, returns the total number
+     * of names that would otherwise be rendered by the use of the cs:names element (taking into account the effects of
+     * et-al abbreviation and editor/translator collapsing), which allows for advanced sorting.
+     *
      * @var string
      */
     private $form;
 
     /**
-     * @var string
+     * When set to “false” (the default is “true”), given names are no longer initialized when “initialize-with” is set.
+     * However, the value of “initialize-with” is still added after initials present in the full name (e.g. with
+     * initialize set to “false”, and initialize-with set to ”.”, “James T Kirk” becomes “James T. Kirk”).
+     *
+     * @var bool
      */
-    private $initialize;
+    private $initialize = true;
 
     /**
+     * When set, given names are converted to initials. The attribute value is added after each initial (”.” results
+     * in “J.J. Doe”). For compound given names (e.g. “Jean-Luc”), hyphenation of the initials can be controlled with
+     * the global initialize-with-hyphen option
+     *
      * @var string
      */
-    private $initializeWith;
+    private $initializeWith = "";
 
     /**
+     * Specifies that names should be displayed with the given name following the family name (e.g. “John Doe” becomes
+     * “Doe, John”). The attribute has two possible values:
+     *   - “first” - attribute only has an effect on the first name of each name variable
+     *   - “all” - attribute has an effect on all names
+     * Note that even when name-as-sort-order changes the name-part order, the display order is not necessarily the same
+     * as the sorting order for names containing particles and suffixes (see Name-part order). Also, name-as-sort-order
+     * only affects names written in the latin or Cyrillic alphabets. Names written in other alphabets (e.g. Asian
+     * scripts) are always displayed with the family name preceding the given name.
+     *
      * @var string
      */
     private $nameAsSortOrder;
 
     /**
+     * Sets the delimiter for name-parts that have switched positions as a result of name-as-sort-order. The default
+     * value is ”, ” (“Doe, John”). As is the case for name-as-sort-order, this attribute only affects names written in
+     * the latin or Cyrillic alphabets.
+     *
      * @var string
      */
-    private $sortSeparator;
+    private $sortSeparator = ", ";
+
+    /**
+     * @var Names
+     */
+    private $parent;
 
     /**
      * Name constructor.
-     * @param $node
+     * @param \SimpleXMLElement $node
+     * @param Names $parent
      */
-    public function __construct(\SimpleXMLElement $node)
+    public function __construct(\SimpleXMLElement $node, Names $parent)
     {
+        $this->parent = $parent;
+
         /** @var \SimpleXMLElement $attribute */
         foreach ($node->attributes() as $attribute) {
             switch ($attribute->getName()) {
@@ -150,25 +205,25 @@ class Name
                     $this->delimiterPrecedesLast = (string)$attribute;
                     break;
                 case 'et-al-min':
-                    $this->etAlMin = (string)$attribute;
+                    $this->etAlMin = intval((string)$attribute);
                     break;
                 case 'et-al-use-first':
-                    $this->etAlUseFirst = (string)$attribute;
+                    $this->etAlUseFirst = intval((string)$attribute);
                     break;
                 case 'et-al-subsequent-min':
-                    $this->etAlSubsequentMin = (string)$attribute;
+                    $this->etAlSubsequentMin = intval((string)$attribute);
                     break;
                 case 'et-al-subsequent-use-first':
-                    $this->etAlSubsequentUseFirst = (string)$attribute;
+                    $this->etAlSubsequentUseFirst = intval((string)$attribute);
                     break;
                 case 'et-al-use-last':
-                    $this->etAlUseLast = (string)$attribute;
+                    $this->etAlUseLast = boolval((string)$attribute);
                     break;
                 case 'form':
                     $this->form = (string)$attribute;
                     break;
                 case 'initialize':
-                    $this->initialize = (string)$attribute;
+                    $this->initialize = boolval((string)$attribute);
                     break;
                 case 'initialize-with':
                     $this->initializeWith = (string)$attribute;
@@ -191,68 +246,61 @@ class Name
     {
         $authors = [];
         $count = 0;
-        $auth_count = 0;
-        $et_al_triggered = false;
+        $authCount = 0;
+        $etAlTriggered = false;
 
-        $initializeWith = $this->initializeWith;
+        $useInitials = $this->initialize && !empty($this->initializeWith);
 
         foreach ($names as $rank => $name) {
             $count++;
-            /*
-            //$given = (!empty($name->firstname)) ? $name->firstname : '';
-            if (!empty($name->given) && isset($initializeWith)) {
-                $name->given = preg_replace("/([$this->upper])[$this->lower]+/$this->patternModifiers", '\\1', $name->given);
-                $name->given = preg_replace("/(?<=[-$this->upper]) +(?=[-$this->upper])/$this->patternModifiers", "", $name->given);
-                if (isset($name->initials)) {
-                    $name->initials = $name->given . $name->initials;
-                }
-                $name->initials = $name->given;
-            }
-            if (isset($name->initials)) {
-                // within initials, remove any dots:
-                $name->initials = preg_replace("/([$this->upper])\.+/$this->patternModifiers", "\\1", $name->initials);
-                // within initials, remove any spaces *between* initials:
-                $name->initials = preg_replace("/(?<=[-$this->upper]) +(?=[-$this->upper])/$this->patternModifiers", "", $name->initials);
-                if ($this->citeProc->style->{'initialize-with-hyphen'} == 'false') {
-                    $name->initials = preg_replace("/-/", '', $name->initials);
-                }
-                // within initials, add a space after a hyphen, but only if ...
-                if (preg_match("/ $/", $initializeWith)) {// ... the delimiter that separates initials ends with a space
-                    // $name->initials = preg_replace("/-(?=[$this->upper])/$this->patternModifiers", " -", $name->initials);
-                }
-                // then, separate initials with the specified delimiter:
-                $name->initials = preg_replace("/([$this->upper])(?=[^$this->lower]+|$)/$this->patternModifiers", "\\1$initializeWith", $name->initials);
-                //      $shortenInitials = (isset($options['numberOfInitialsToKeep'])) ? $options['numberOfInitialsToKeep'] : false;
-                //      if ($shortenInitials) $given = drupal_substr($given, 0, $shortenInitials);
-                if (isset($initializeWith)) {
-                    $name->given = $name->initials;
-                } elseif (!empty($name->given)) {
-                    $name->given = $name->given . ' ' . $name->initials;
-                } elseif (empty($name->given)) {
-                    $name->given = $name->initials;
+
+            // use initials for given names
+            if ($useInitials) {
+                //TODO: initialize with hyphen
+                $given = $name->given;
+                $name->given = "";
+                $givenParts = explode(" ", $given);
+                foreach ($givenParts as $givenPart) {
+                    $name->given .= substr($givenPart, 0, 1) . $this->initializeWith;
                 }
             }
-            */
-            $ndp = (!empty($name->{'non-dropping-particle'})) ? $name->{'non-dropping-particle'} . ' ' : '';
+
+            $nonDroppingParticle = isset($name->{'non-dropping-particle'}) ? $name->{'non-dropping-particle'} : "";
+            $droppingParticle = isset($name->{'dropping-particle'}) ? $name->{'dropping-particle'} : "";
             $suffix = (isset($name->{'suffix'})) ? ' ' . $name->{'suffix'} : '';
-            if (isset($name->given)) {
-                $given = $this->format($name->given);
-            } else {
-                $given = '';
+            if (!empty($name->given)) {
+                $name->given = $this->format(trim($name->given));
             }
+
             if (isset($name->family)) {
                 $name->family = $this->format($name->family);
 
                 if ($this->form == 'short') {
-                    $text = $ndp . $name->family;
+                    $text = (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") . $name->family;
                 } else {
                     switch ($this->nameAsSortOrder) {
+                        /*
+                            use form "[non-dropping particel] family name,
+                            given name [dropping particle], [suffix]"
+                         */
                         case 'first' && $rank == 0:
                         case 'all':
-                            $text = $ndp . $name->family . $this->sortSeparator . $given;
+                            $text =
+                                (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") .
+                                (trim($name->family) . $this->sortSeparator . trim($name->given)) .
+                                (!empty($droppingParticle) ? " " . $droppingParticle : "") .
+                                (!empty($suffix)           ? $this->sortSeparator . $suffix : "");
                             break;
+                        /*
+                           use form "given name [dropping particles] [non-dropping particles] family name [suffix]"
+                           e.g. [Jean] [de] [La] [Fontaine] [III]
+                        */
                         default:
-                            $text = $given . ' ' . $ndp . $name->family . $suffix;
+                            $text = trim($name->given) .
+                                (!empty($droppingParticle)    ? " " . trim($droppingParticle)    : "") .
+                                (!empty($nonDroppingParticle) ? " " . trim($nonDroppingParticle) : "") .
+                                (" " . $name->family) .
+                                (!empty($suffix)              ? " " . trim($suffix) : "");
                     }
                 }
                 $authors[] = trim($this->format($text));
@@ -268,54 +316,59 @@ class Name
             count($names) > $this->etAlUseFirst
         ) {
             if ($this->etAlUseFirst < $this->etAlMin) {
-                for ($i = $this->etAlUseFirst; $i < $count; $i++) {
+                for ($i = $this->etAlUseFirst; $i < $count-1; $i++) {
                     unset($authors[$i]);
                 }
             }
-            $etal = $this->citeProc->getLocale()->locale('term', 'et-al');
+            if ($this->parent->hasEtAl()) {
+                $etAl = $this->parent->getEtAl()->render($names);
+            } else {
+                $etAl = CiteProc::getContext()->getLocale()->filter('terms', 'et-al')->single;
+            }
 
-            $et_al_triggered = true;
+
+            $etAlTriggered = true;
         }
-        if (!empty($authors) && !$et_al_triggered) {
-            $auth_count = count($authors);
-            if (isset($this->and) && $auth_count > 1) {
-                $authors[$auth_count - 1] = $this->and . ' ' . $authors[$auth_count - 1]; //stick an "and" in front of the last author if "and" is defined
+        if (!empty($authors) && !$etAlTriggered) {
+            $authCount = count($authors);
+            if (!empty($this->and) && $authCount > 1) {
+                $authors[$authCount - 1] = $this->and . ' ' . $authors[$authCount - 1]; //stick an "and" in front of the last author if "and" is defined
             }
         }
-        $text = implode($this->delimiter, $authors);
-        if (!empty($authors) && $et_al_triggered) {
+        $text = implode($this->parent->getDelimiter(), $authors);
+        if (!empty($authors) && $etAlTriggered) {
             switch ($this->delimiterPrecedesEtAl) {
                 case 'never':
-                    $text = $text . " $etal";
+                    $text = $text . " $etAl";
                     break;
                 case 'always':
-                    $text = $text . "$this->delimiter$etal";
+                    $text = $text . "$this->delimiter$etAl";
                     break;
                 default:
-                    $text = count($authors) == 1 ? $text . " $etal" : $text . "$this->delimiter$etal";
+                    $text = count($authors) == 1 ? $text . " $etAl" : $text . "$this->delimiter$etAl";
             }
         }
         if ($this->form == 'count') {
-            if (!$et_al_triggered) {
+            if (!$etAlTriggered) {
                 return (int)count($authors);
             } else {
                 return (int)(count($authors) - 1);
             }
         }
         // strip out the last delimiter if not required
-        if (isset($this->and) && $auth_count > 1) {
-            $last_delim = strrpos($text, $this->delimiter . $this->and);
+        if (isset($this->and) && $authCount > 1) {
+            $lastDelim = strrpos($text, $this->delimiter . $this->and);
             switch ($this->delimiterPrecedesLast) {
                 case 'always':
                     return $text;
                     break;
                 case 'never':
-                    return substr_replace($text, ' ', $last_delim, strlen($this->delimiter));
+                    return substr_replace($text, ' ', $lastDelim, strlen($this->delimiter));
                     break;
                 case 'contextual':
                 default:
-                    if ($auth_count < 3) {
-                        return substr_replace($text, ' ', $last_delim, strlen($this->delimiter));
+                    if ($authCount < 3) {
+                        return substr_replace($text, ' ', $lastDelim, strlen($this->delimiter));
                     }
             }
         }

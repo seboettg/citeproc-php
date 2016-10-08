@@ -23,12 +23,30 @@ trait LocaleXmlParserTrait
      */
     private $terms;
 
+    /**
+     * @var ArrayList
+     */
+    private $optionsXml;
+
+    /**
+     * @var ArrayList
+     */
+    private $dateXml;
+
+    /**
+     * @var ArrayList
+     */
+    private $termsXml;
 
     protected function initLocaleXmlParser()
     {
         $this->options = new ArrayList();
+        $this->optionsXml = new ArrayList();
         $this->date = new ArrayList();
+        $this->dateXml = new ArrayList();
         $this->terms = new ArrayList();
+        $this->termsXml = new ArrayList();
+
     }
 
     private function parseXml(\SimpleXMLElement $locale)
@@ -36,6 +54,7 @@ trait LocaleXmlParserTrait
         foreach ($locale as $node) {
             switch($node->getName()) {
                 case 'style-options':
+                    $this->optionsXml->add('options', $node);
                     foreach ($node->attributes() as $name => $value) {
 
                         if ((string) $value == 'true') {
@@ -46,6 +65,7 @@ trait LocaleXmlParserTrait
                     }
                     break;
                 case 'terms':
+                    $this->termsXml->add('terms', $node);
                     $plural = ['single', 'multiple'];
                     foreach ($node->children() as $child) {
                         $term = new Term();
@@ -69,7 +89,6 @@ trait LocaleXmlParserTrait
                             $term->{'single'} = $value;
                             $term->{'multiple'} = $value;
                         }
-
                         if (!$this->terms->hasKey($term->name)) {
                             $this->terms->add($term->name, []);
                         }
@@ -78,6 +97,7 @@ trait LocaleXmlParserTrait
                     }
                     break;
                 case 'date':
+                    $this->dateXml->add('date', $node);
                     foreach ($node->children() as $child) {
                         $date = new \stdClass();
                         $name = "";
@@ -96,5 +116,38 @@ trait LocaleXmlParserTrait
                     break;
             }
         }
+    }
+
+    /**
+     * @return \SimpleXMLElement
+     */
+    public function getLatestOptionsXml()
+    {
+        $arr = $this->optionsXml->toArray();
+        return array_pop($arr);
+    }
+
+
+    public function getDateXml()
+    {
+        return $this->dateXml->toArray();
+    }
+
+    /**
+     * @return \SimpleXMLElement
+     */
+    public function getLatestDateXml()
+    {
+        $arr = $this->dateXml->toArray();
+        return array_pop($arr['date']);
+    }
+
+    /**
+     * @return \SimpleXMLElement
+     */
+    public function getTermsXml()
+    {
+        $arr = $this->termsXml->toArray();
+        return array_pop($arr);
     }
 }

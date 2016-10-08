@@ -30,6 +30,7 @@ use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
 use Seboettg\CiteProc\Style\Macro;
+use Seboettg\CiteProc\Style\Sort\Sort;
 use Seboettg\Collection\ArrayList;
 
 
@@ -61,6 +62,21 @@ class Context
      */
     private $citation;
 
+    /**
+     * @var Sort
+     */
+    private $sorting;
+
+    /**
+     * @var string
+     */
+    private $mode;
+
+    /**
+     * @var ArrayList
+     */
+    private $citationItems;
+
     public function __construct($locale = null)
     {
         if (!empty($locale)) {
@@ -68,6 +84,7 @@ class Context
         }
 
         $this->macros = new ArrayList();
+        $this->citationItems = new ArrayList();
     }
 
     public function addMacro($key, $macro)
@@ -132,4 +149,60 @@ class Context
         $this->citation = $citation;
     }
 
+    public function setSorting($sorting)
+    {
+        $this->sorting = $sorting;
+    }
+
+    public function getSorting()
+    {
+        return $this->sorting;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMode()
+    {
+        return $this->mode;
+    }
+
+    /**
+     * @param string $mode
+     */
+    public function setMode($mode)
+    {
+        $this->mode = $mode;
+    }
+
+    public function isModeCitation()
+    {
+        return $this->mode === "citation";
+    }
+
+    public function isModeBibliography()
+    {
+        return $this->mode === "bibliography";
+    }
+
+    /**
+     * @return ArrayList
+     */
+    public function getCitationItems()
+    {
+        return $this->citationItems;
+    }
+
+    /**
+     * @param ArrayList $citationItems
+     */
+    public function setCitationItems($citationItems)
+    {
+        $this->citationItems = $citationItems;
+    }
+
+    public function hasCitationItems()
+    {
+        return (count($this->citationItems) > 0);
+    }
 }

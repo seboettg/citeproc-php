@@ -27,6 +27,7 @@
 
 namespace Seboettg\CiteProc\Rendering;
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Util;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
@@ -51,13 +52,6 @@ class Number
 
     private $form;
 
-    static $ROMAN_NUMERALS = [
-        ["", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"],
-        ["", "x", "xx", "xxx", "xl", "l", "lx", "lxx", "lxxx", "xc"],
-        ["", "c", "cc", "ccc", "cd", "d", "dc", "dcc", "dccc", "cm"],
-        ["", "m", "mm", "mmm", "mmmm", "mmmmm"]
-    ];
-
     public function __construct(\SimpleXMLElement $node)
     {
         //<number variable="edition" form="ordinal"/>
@@ -79,29 +73,30 @@ class Number
 
     public function render($data)
     {
+        $lang = (isset($data->language) && $data->language != 'en') ? $data->language : 'en';
 
         if (empty($this->variable) || empty($data->{$this->variable})) {
             return "";
         }
         switch ($this->form) {
             case 'ordinal':
-                $text = $this->ordinal($data->{$this->variable});
+                $text = self::ordinal($data->{$this->variable});
                 break;
             case 'long-ordinal':
-                $text = $this->longOrdinal($data->{$this->variable});
+                $text = self::longOrdinal($data->{$this->variable});
                 break;
             case 'roman':
-                $text = $this->roman($data->{$this->variable});
+                $text = Util\Number::dec2roman($data->{$this->variable});
                 break;
             case 'numeric':
             default:
                 $text = $data->{$this->variable};
                 break;
         }
-        return $this->wrapDisplayBlock($this->addAffixes($this->format($this->applyTextCase($text))));
+        return $this->wrapDisplayBlock($this->addAffixes($this->format($this->applyTextCase($text, $lang))));
     }
 
-    private function ordinal($num) {
+    public static function ordinal($num) {
         if (($num / 10) % 10 == 1) {
             $num .= CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-04')->single;
         } elseif ($num % 10 == 1) {
@@ -117,30 +112,14 @@ class Number
     }
 
 
-    private function longOrdinal($num) {
+    public static function longOrdinal($num) {
         $num = sprintf("%02d", $num);
         $ret = CiteProc::getContext()->getLocale()->filter('terms', 'long-ordinal-' . $num)->single;
         if (!$ret) {
-            return $this->ordinal($num);
+            return self::ordinal($num);
         }
         return $ret;
     }
 
-    /**
-     * @param $num
-     * @return string
-     */
-    private function roman($num) {
-        $ret = "";
-        if ($num < 6000) {
 
-            $numStr = strrev($num);
-            $len = strlen($numStr);
-            for ($pos = 0; $pos < $len; $pos++) {
-                $n = $numStr[$pos];
-                $ret = self::$ROMAN_NUMERALS[$pos][$n] . $ret;
-            }
-        }
-        return $ret;
-    }
 }

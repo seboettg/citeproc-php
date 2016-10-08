@@ -5,6 +5,8 @@ namespace Seboettg\CiteProc\Constraint;
 
 /**
  * Class isUncertainDate
+ * Tests whether the given date variables contain approximate dates.
+ *
  * @package Seboettg\CiteProc\Node\Choose\Constraint
  *
  * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>

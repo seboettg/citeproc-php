@@ -35,13 +35,15 @@ class Factory
         "et-al"         => "\\Name\\EtAl"
     ];
 
-    public static function create($node)
+    public static function create($node, $param = null)
     {
         $nodeClass = self::CITE_PROC_NODE_NAMESPACE . self::$nodes[$node->getName()];
         if (!class_exists($nodeClass)) {
             throw new ClassNotFoundException($nodeClass);
         }
-
+        if ($param != null) {
+            return new $nodeClass($node, $param);
+        }
         return new $nodeClass($node);
     }
 

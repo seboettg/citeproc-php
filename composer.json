@@ -24,5 +24,12 @@
         "branch-alias": {
             "version2.0": "2.0.x-dev"
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "git submodule update --init",
+            "cd ./tests/fixtures/test-suite/; ./processor.py -g"
+        ]
     }
 }
+

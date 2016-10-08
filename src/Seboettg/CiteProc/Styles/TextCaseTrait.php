@@ -1,6 +1,7 @@
 <?php
 
 namespace Seboettg\CiteProc\Styles;
+use Seboettg\CiteProc\Util\StringHelper;
 
 
 /**
@@ -29,27 +30,43 @@ trait TextCaseTrait
         }
     }
 
-    public function applyTextCase($text)
+    public function applyTextCase($text, $lang = "en")
     {
+
         switch ($this->textCase) {
             case 'uppercase':
-                $text = mb_strtoupper($text);
+                $text = $this->keepNoCase(mb_strtoupper($text), $text);
                 break;
             case 'lowercase':
-                $text = mb_strtolower($text);
+                $text = $this->keepNoCase(mb_strtolower($text), $text);
+                break;
+            case 'sentence':
+                $text = $this->keepNoCase(mb_substr($text, 0, 1) . mb_strtolower(mb_substr($text, 1)), $text);
                 break;
             case 'capitalize-all':
+                $text = $this->keepNoCase(StringHelper::capitalizeAll($text), $text);
+                break;
             case 'title':
-                $text = mb_convert_case($text, MB_CASE_TITLE);
+                if ($lang === "en") {
+                    $text = $this->keepNoCase(StringHelper::capitalizeForTitle($text), $text);
+                }
                 break;
             case 'capitalize-first':
-                $chr1 = mb_strtoupper(mb_substr($text, 0, 1));
-                $text = $chr1 . mb_substr($text, 1);
+                $text = $this->keepNoCase(StringHelper::mb_ucfirst($text), $text);
                 break;
             default:
 
         }
 
         return $text;
+    }
+
+
+    private function keepNoCase($render, $original)
+    {
+        if (preg_match('/<span class=\"nocase\">(\p{L}+)<\/span>/i', $original, $match)) {
+            return preg_replace('/(<span class=\"nocase\">\p{L}+<\/span>)/i', $match[1], $render);
+        }
+        return $render;
     }
 }
