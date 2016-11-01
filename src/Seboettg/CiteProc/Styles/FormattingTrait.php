@@ -58,8 +58,11 @@ trait FormattingTrait
             foreach ($this->formattingOptions as $option => $optionValue) {
                 if ($optionValue === "italic") {
                     $text = "<i>$text</i>";
+                }
+                else if ($optionValue === "bold") {
+                    $text = "<b>$text</b>";
                 } else {
-                    $format .= "$option: $optionValue;";
+                    $format .= "$option:$optionValue;";
                 }
             }
             if (!empty($format)) {

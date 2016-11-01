@@ -31,6 +31,13 @@ class Layout implements RenderingInterface
      */
     private $children;
 
+    /**
+     * When used within cs:citation, the delimiter attribute may be used to specify a delimiter for cites within a
+     * citation.
+     * @var string
+     */
+    private $delimiter = "";
+
     public function __construct($node)
     {
         self::$numberOfCitedItems = 0;

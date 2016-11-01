@@ -6,8 +6,6 @@ namespace Seboettg\CiteProc\Styles;
 trait DelimiterTrait
 {
 
-    private $delimiter = "";
-
     protected function initDelimiterAttributes(\SimpleXMLElement $node)
     {
         foreach ($node->attributes() as $attribute) {

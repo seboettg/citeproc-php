@@ -22,6 +22,12 @@ class Group implements RenderingInterface
 
     private $children;
 
+    /**
+     * cs:group may carry the delimiter attribute to separate its child elements
+     * @var
+     */
+    private $delimiter = "";
+
     public function __construct(\SimpleXMLElement $node)
     {
         $this->children = new ArrayList();

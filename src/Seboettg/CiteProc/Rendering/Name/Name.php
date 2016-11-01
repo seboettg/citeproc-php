@@ -5,6 +5,7 @@ use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
+use Seboettg\CiteProc\Util\Factory;
 use Seboettg\CiteProc\Util\StringHelper;
 
 
@@ -23,6 +24,11 @@ class Name
     use FormattingTrait,
         AffixesTrait,
         DelimiterTrait;
+
+    /**
+     * @var array
+     */
+    protected $nameParts;
 
     /**
      * Specifies the delimiter between the second to last and last name of the names in a name variable. Allowed values
@@ -131,7 +137,7 @@ class Name
      *
      * @var string
      */
-    private $form;
+    private $form = "long";
 
     /**
      * When set to “false” (the default is “true”), given names are no longer initialized when “initialize-with” is set.
@@ -163,7 +169,7 @@ class Name
      *
      * @var string
      */
-    private $nameAsSortOrder;
+    private $nameAsSortOrder = "";
 
     /**
      * Sets the delimiter for name-parts that have switched positions as a result of name-as-sort-order. The default
@@ -173,6 +179,13 @@ class Name
      * @var string
      */
     private $sortSeparator = ", ";
+
+    /**
+     * Specifies the text string used to separate names in a name variable. Default is ”, ” (e.g. “Doe, Smith”).
+     * @var
+     */
+    private $delimiter = ", ";
+
 
     /**
      * @var Names
@@ -186,7 +199,20 @@ class Name
      */
     public function __construct(\SimpleXMLElement $node, Names $parent)
     {
+        $this->nameParts = [];
         $this->parent = $parent;
+
+        /** @var \SimpleXMLElement $child */
+        foreach ($node->children() as $child) {
+
+            switch ($child->getName()) {
+                case "name-part":
+                    /** @var NamePart $namePart */
+                    $namePart = Factory::create($child, $this);
+                    $this->nameParts[$namePart->getName()] = $namePart;
+            }
+        }
+
 
         /** @var \SimpleXMLElement $attribute */
         foreach ($node->attributes() as $attribute) {
@@ -200,40 +226,40 @@ class Name
                     }
                     break;
                 case 'delimiter-precedes-et-al':
-                    $this->delimiterPrecedesEtAl = (string)$attribute;
+                    $this->delimiterPrecedesEtAl = (string) $attribute;
                     break;
                 case 'delimiter-precedes-last':
-                    $this->delimiterPrecedesLast = (string)$attribute;
+                    $this->delimiterPrecedesLast = (string) $attribute;
                     break;
                 case 'et-al-min':
-                    $this->etAlMin = intval((string)$attribute);
+                    $this->etAlMin = intval((string) $attribute);
                     break;
                 case 'et-al-use-first':
-                    $this->etAlUseFirst = intval((string)$attribute);
+                    $this->etAlUseFirst = intval((string) $attribute);
                     break;
                 case 'et-al-subsequent-min':
-                    $this->etAlSubsequentMin = intval((string)$attribute);
+                    $this->etAlSubsequentMin = intval((string) $attribute);
                     break;
                 case 'et-al-subsequent-use-first':
-                    $this->etAlSubsequentUseFirst = intval((string)$attribute);
+                    $this->etAlSubsequentUseFirst = intval((string) $attribute);
                     break;
                 case 'et-al-use-last':
-                    $this->etAlUseLast = boolval((string)$attribute);
+                    $this->etAlUseLast = boolval((string) $attribute);
                     break;
                 case 'form':
-                    $this->form = (string)$attribute;
+                    $this->form = (string) $attribute;
                     break;
                 case 'initialize':
-                    $this->initialize = boolval((string)$attribute);
+                    $this->initialize = boolval((string) $attribute);
                     break;
                 case 'initialize-with':
-                    $this->initializeWith = (string)$attribute;
+                    $this->initializeWith = (string) $attribute;
                     break;
                 case 'name-as-sort-order':
-                    $this->nameAsSortOrder = (string)$attribute;
+                    $this->nameAsSortOrder = (string) $attribute;
                     break;
                 case 'sort-separator':
-                    $this->sortSeparator = (string)$attribute;
+                    $this->sortSeparator = (string) $attribute;
 
             }
         }
@@ -243,101 +269,29 @@ class Name
         $this->initDelimiterAttributes($node);
     }
 
-    public function render($names)
+    public function render($data)
     {
-        $authors = [];
-        $count = 0;
-        $authCount = 0;
-        $etAlTriggered = false;
+        $resultNames = [];
+        $etAl = $this->prepareEtAl($data);
 
-        $useInitials = $this->initialize && !empty($this->initializeWith);
-
-        foreach ($names as $rank => $name) {
-            $count++;
-
-            // use initials for given names
-            if ($useInitials) {
-                //TODO: initialize with hyphen
-                $given = $name->given;
-                $name->given = "";
-                $givenParts = StringHelper::explodeBySpaceOrHyphen($given);
-                foreach ($givenParts as $givenPart) {
-                    $name->given .= substr($givenPart, 0, 1) . $this->initializeWith;
-                }
-            }
-
-            $nonDroppingParticle = isset($name->{'non-dropping-particle'}) ? $name->{'non-dropping-particle'} : "";
-            $droppingParticle = isset($name->{'dropping-particle'}) ? $name->{'dropping-particle'} : "";
-            $suffix = (isset($name->{'suffix'})) ? ' ' . $name->{'suffix'} : '';
-            if (!empty($name->given)) {
-                $name->given = $this->format(trim($name->given));
-            }
-
-            if (isset($name->family)) {
-                $name->family = $this->format($name->family);
-
-                if ($this->form == 'short') {
-                    $text = (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") . $name->family;
-                } else {
-                    switch ($this->nameAsSortOrder) {
-                        /*
-                            use form "[non-dropping particel] family name,
-                            given name [dropping particle], [suffix]"
-                         */
-                        case 'first' && $rank == 0:
-                        case 'all':
-                            $text =
-                                (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") .
-                                (trim($name->family) . $this->sortSeparator . trim($name->given)) .
-                                (!empty($droppingParticle) ? " " . $droppingParticle : "") .
-                                (!empty($suffix)           ? $this->sortSeparator . $suffix : "");
-                            break;
-                        /*
-                           use form "given name [dropping particles] [non-dropping particles] family name [suffix]"
-                           e.g. [Jean] [de] [La] [Fontaine] [III]
-                        */
-                        default:
-                            $text = trim($name->given) .
-                                (!empty($droppingParticle)    ? " " . trim($droppingParticle)    : "") .
-                                (!empty($nonDroppingParticle) ? " " . trim($nonDroppingParticle) : "") .
-                                (" " . $name->family) .
-                                (!empty($suffix)              ? " " . trim($suffix) : "");
-                    }
-                }
-                $authors[] = trim($this->format($text));
-            }
-            if (isset($this->etAlMin) && $count >= $this->etAlMin) {
-                break;
-            }
+        /**
+         * @var string $type
+         * @var array $names
+         */
+        foreach ($data as $rank => $names) {
+            $resultNames[] = $this->formatName($names, $rank);
         }
-        if (isset($this->etAlMin) &&
-            $count >= $this->etAlMin &&
-            isset($this->etAlUseFirst) &&
-            $count >= $this->etAlUseFirst &&
-            count($names) > $this->etAlUseFirst
-        ) {
-            if ($this->etAlUseFirst < $this->etAlMin) {
-                for ($i = $this->etAlUseFirst; $i < $count-1; $i++) {
-                    unset($authors[$i]);
-                }
-            }
-            if ($this->parent->hasEtAl()) {
-                $etAl = $this->parent->getEtAl()->render($names);
-            } else {
-                $etAl = CiteProc::getContext()->getLocale()->filter('terms', 'et-al')->single;
-            }
 
 
-            $etAlTriggered = true;
+        /* add "and" */
+        $count = count($resultNames);
+        if (!empty($this->and) && $count > 1) {
+            $resultNames[$count-1] = $this->and . ' ' . $resultNames[$count-1]; //stick an "and" in front of the last author if "and" is defined
         }
-        if (!empty($authors) && !$etAlTriggered) {
-            $authCount = count($authors);
-            if (!empty($this->and) && $authCount > 1) {
-                $authors[$authCount - 1] = $this->and . ' ' . $authors[$authCount - 1]; //stick an "and" in front of the last author if "and" is defined
-            }
-        }
-        $text = implode($this->parent->getDelimiter(), $authors);
-        if (!empty($authors) && $etAlTriggered) {
+
+        $text = implode($this->delimiter, $resultNames);
+
+        if (!empty($resultNames) && $etAl) {
             switch ($this->delimiterPrecedesEtAl) {
                 case 'never':
                     $text = $text . " $etAl";
@@ -346,64 +300,148 @@ class Name
                     $text = $text . "$this->delimiter$etAl";
                     break;
                 default:
-                    $text = count($authors) == 1 ? $text . " $etAl" : $text . "$this->delimiter$etAl";
+                    $text = count($resultNames) == 1 ? $text . " $etAl" : $text . "$this->delimiter$etAl";
             }
         }
         if ($this->form == 'count') {
-            if (!$etAlTriggered) {
-                return (int)count($authors);
+            if ($etAl === false) {
+                return (int)count($resultNames);
             } else {
-                return (int)(count($authors) - 1);
+                return (int)(count($resultNames) - 1);
             }
         }
         // strip out the last delimiter if not required
-        if (isset($this->and) && $authCount > 1) {
-            $lastDelim = strrpos($text, $this->delimiter . $this->and);
+        if (isset($this->and) && count($resultNames) > 1) {
+            $lastDelimiter = strrpos($text, $this->delimiter . $this->and);
             switch ($this->delimiterPrecedesLast) {
                 case 'always':
                     return $text;
                     break;
                 case 'never':
-                    return substr_replace($text, ' ', $lastDelim, strlen($this->delimiter));
+                    return substr_replace($text, ' ', $lastDelimiter, strlen($this->delimiter));
                     break;
                 case 'contextual':
                 default:
-                    if ($authCount < 3) {
-                        return substr_replace($text, ' ', $lastDelim, strlen($this->delimiter));
+                    if (count($resultNames) < 3) {
+                        return substr_replace($text, ' ', $lastDelimiter, strlen($this->delimiter));
                     }
             }
         }
         return $text;
     }
-    private function initAttributes($mode)
+
+    private function formatName($name, $rank)
     {
-        //   $and = $this->get_attributes('and');
-        if (isset($this->citeProc)) {
-            $styleAttrs = $this->citeProc->style->getHierAttributes();
-            $modeAttrs = $this->citeProc->{$mode}->getHierAttributes();
-            $this->attributes = array_merge($styleAttrs, $modeAttrs, $this->attributes);
-        }
-        if (isset($this->and)) {
-            if ($this->and == 'text') {
-                $this->and = $this->citeProc->getLocale()->locale('term', 'and');
-            } elseif ($this->and == 'symbol') {
-                $this->and = '&';
+        $useInitials = $this->initialize && !empty($this->initializeWith);
+        if ($useInitials) {
+            //TODO: initialize with hyphen
+            $given = $name->given;
+            $name->given = "";
+            $givenParts = StringHelper::explodeBySpaceOrHyphen($given);
+            foreach ($givenParts as $givenPart) {
+                $name->given .= substr($givenPart, 0, 1) . $this->initializeWith;
             }
         }
-        if (!isset($this->delimiter)) {
-            $this->delimiter = $this->{'name-delimiter'};
+
+        // format name-parts
+        if (count($this->nameParts) > 0) {
+            /** @var NamePart $namePart */
+            foreach ($this->nameParts as $namePart) {
+                $name->{$namePart->getName()} =   $namePart->render($name);
+            }
+            $name->suffix = '';
+            $name->{'non-dropping-particle'} = '';
+            $name->{'dropping-particle'} = '';
         }
-        if (!isset($this->alnum)) {
-            list($this->alnum, $this->alpha, $this->cntrl, $this->dash,
-                $this->digit, $this->graph, $this->lower, $this->print,
-                $this->punct, $this->space, $this->upper, $this->word,
-                $this->patternModifiers) = $this->get_regex_patterns();
-        }
-        $this->dpl = $this->{'delimiter-precedes-last'};
-        $this->sort_separator = isset($this->{'sort-separator'}) ? $this->{'sort-separator'} : ', ';
-        $this->delimiter = isset($this->{'name-delimiter'}) ? $this->{'name-delimiter'} : (isset($this->delimiter) ? $this->delimiter : ', ');
-        $this->form = isset($this->{'name-form'}) ? $this->{'name-form'} : (isset($this->form) ? $this->form : 'long');
-        $this->attr_init = $mode;
+
+        $return = $this->getNamesString($name, $rank);
+
+        return trim($return);
     }
+
+    /**
+     * @param $data
+     * @return bool|string
+     */
+    private function prepareEtAl($data)
+    {
+
+        $count = count($data);
+
+        $etAl = false;
+        /* prepare et al */
+
+        if (isset($this->etAlMin) &&
+            $count >= $this->etAlMin &&
+            isset($this->etAlUseFirst) &&
+            $count >= $this->etAlUseFirst &&
+            $count > $this->etAlUseFirst
+        ) {
+            if ($this->etAlUseFirst < $this->etAlMin) {
+                for ($i = $this->etAlUseFirst; $i < count($data) - 1; ++$i) {
+                    unset($data[$i]);
+                }
+            }
+            if ($this->parent->hasEtAl()) {
+                $etAl = $this->parent->getEtAl()->render(null);
+            } else {
+                $etAl = CiteProc::getContext()->getLocale()->filter('terms', 'et-al')->single;
+            }
+        }
+
+        return $etAl;
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    private function getNamesString($name, $rank)
+    {
+        $text = "";
+        $nonDroppingParticle = isset($name->{'non-dropping-particle'}) ? $name->{'non-dropping-particle'} : "";
+        $droppingParticle = isset($name->{'dropping-particle'}) ? $name->{'dropping-particle'} : "";
+        $suffix = (isset($name->{'suffix'})) ? ' ' . $name->{'suffix'} : '';
+        if (!empty($name->given)) {
+            $name->given = $this->format(trim($name->given));
+        }
+        if (isset($name->family)) {
+            $name->family = $this->format($name->family);
+            if ($this->form == 'short') {
+                $text = (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") . $name->family;
+            } else {
+                switch ($this->nameAsSortOrder) {
+                    /*
+                        use form "[non-dropping particel] family name,
+                        given name [dropping particle], [suffix]"
+                     */
+                    case 'all':
+                    case 'first':
+                        if ($this->nameAsSortOrder === "first" && $rank !== 0) {
+                            break;
+                        }
+                        $text =
+                            (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") .
+                            (trim($name->family) . $this->sortSeparator . trim($name->given)) .
+                            (!empty($droppingParticle) ? " " . $droppingParticle : "") .
+                            (!empty($suffix) ? $this->sortSeparator . $suffix : "");
+                        break;
+                    /*
+                       use form "given name [dropping particles] [non-dropping particles] family name [suffix]"
+                       e.g. [Jean] [de] [La] [Fontaine] [III]
+                    */
+                    default:
+                        $text = trim($name->given) .
+                            (!empty($droppingParticle) ? " " . trim($droppingParticle) : "") .
+                            (!empty($nonDroppingParticle) ? " " . trim($nonDroppingParticle) : "") .
+                            (" " . $name->family) .
+                            (!empty($suffix) ? " " . trim($suffix) : "");
+                }
+            }
+        }
+
+        return $text;
+    }
+
 
 }

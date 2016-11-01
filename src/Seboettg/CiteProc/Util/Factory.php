@@ -31,6 +31,7 @@ class Factory
         "date-part"     => "\\Date\\DatePart",
         "names"         => "\\Name\\Names",
         "name"          => "\\Name\\Name",
+        "name-part"     => "\\Name\\NamePart",
         "substitute"    => "\\Name\\Substitute",
         "et-al"         => "\\Name\\EtAl"
     ];

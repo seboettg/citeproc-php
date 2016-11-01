@@ -84,6 +84,14 @@ class Names implements RenderingInterface
     private $etAl;
 
     /**
+     * The delimiter attribute may be set on cs:names to separate the names of the different name variables (e.g. the
+     * semicolon in “Doe, Smith (editors); Johnson (translator)”).
+     *
+     * @var string
+     */
+    private $delimiter = ", ";
+
+    /**
      * Names constructor.
      * @param \SimpleXMLElement $node
      */
@@ -203,5 +211,10 @@ class Names implements RenderingInterface
     public function getDelimiter()
     {
         return $this->delimiter;
+    }
+
+    public function getVariables()
+    {
+        return $this->variables;
     }
 }
