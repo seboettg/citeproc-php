@@ -112,4 +112,15 @@ class StringHelper
         $encoding = mb_detect_encoding($firstChar, $encodings, true);
         return in_array($encoding, $encodings) ? $firstChar.$then : mb_strtoupper($firstChar, $encoding) . $then;
     }
+
+    public static function explodeBySpaceOrHyphen($string)
+    {
+        $res = [];
+        $exploded = explode("-", $string);
+        foreach ($exploded as $explode) {
+            $spaceExploded = explode(" ", $explode);
+            $res = array_merge($res, $spaceExploded);
+        }
+        return $res;
+    }
 }

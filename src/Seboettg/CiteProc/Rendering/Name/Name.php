@@ -5,6 +5,7 @@ use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
+use Seboettg\CiteProc\Util\StringHelper;
 
 
 /**
@@ -259,7 +260,7 @@ class Name
                 //TODO: initialize with hyphen
                 $given = $name->given;
                 $name->given = "";
-                $givenParts = explode(" ", $given);
+                $givenParts = StringHelper::explodeBySpaceOrHyphen($given);
                 foreach ($givenParts as $givenPart) {
                     $name->given .= substr($givenPart, 0, 1) . $this->initializeWith;
                 }
