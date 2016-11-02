@@ -9,7 +9,7 @@ use Seboettg\Collection\ArrayList;
 
 
 /**
- * Class Substitude
+ * Class Substitute
  * @package Seboettg\CiteProc\Rendering\Name
  *
  * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>

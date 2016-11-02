@@ -73,22 +73,22 @@ class NamePart
             “dropping-particle” name-parts. affixes surround the “given” name-part, enclosing any demoted name particles
             for inverted names.*/
             case 'given':
-                $given = $data->given;
+                $given = $this->format($this->applyTextCase($data->given));
                 if (isset($data->{'dropping-particle'})) {
-                    $given = " " . $data->{'dropping-particle'};
+                    $given = " " . $this->format($this->applyTextCase($data->{'dropping-particle'}));
                 }
-                $ret = $this->format($this->applyTextCase($given));
+                $ret = $given;
                 break;
 
             /* if name set to “family”, formatting and text-case attributes affect the “family” and
             “non-dropping-particle” name-parts. affixes surround the “family” name-part, enclosing any preceding name
             particles, as well as the “suffix” name-part for non-inverted names.*/
             case 'family':
-                $family = $data->family;
+                $family = $this->format($this->applyTextCase($data->family));
                 if (isset($data->{'non-dropping-particle'})) {
-                    $family = $data->{'non-dropping-particle'} . " " . $family;
+                    $family = $this->format($this->applyTextCase($data->{'non-dropping-particle'})) . " " . $family;
                 }
-                $ret = $this->format($this->applyTextCase($family));
+                $ret = $family;
                 break;
         }
 
