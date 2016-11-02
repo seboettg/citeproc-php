@@ -123,4 +123,11 @@ class StringHelper
         }
         return $res;
     }
+
+    public static function camelCase2Hyphen($string)
+    {
+        $hyphenated = preg_replace("/([A-Z])/", "-$1", $string);
+        $hyphenated = substr($hyphenated, 0, 1) === "-" ? substr($hyphenated, 1) : $hyphenated;
+        return mb_strtolower($hyphenated);
+    }
 }
