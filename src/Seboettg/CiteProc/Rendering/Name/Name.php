@@ -272,26 +272,50 @@ class Name
     public function render($data)
     {
         $resultNames = [];
-        $etAl = $this->prepareEtAl($data);
-
+        $etAl = false;
+        $count = 0;
         /**
          * @var string $type
          * @var array $names
          */
         foreach ($data as $rank => $names) {
+            ++$count;
             $resultNames[] = $this->formatName($names, $rank);
+        }
+
+        /* Use of et-al-min and et-al-user-first enables et-al abbreviation. If the number of names in a name variable
+        matches or exceeds the number set on et-al-min, the rendered name list is truncated after reaching the number of
+        names set on et-al-use-first.  */
+        if (isset($this->etAlMin) && isset($this->etAlUseFirst)) {
+            $cnt = count($resultNames);
+            if ($this->etAlMin >= count($cnt)) {
+                for ($i = $this->etAlUseFirst; $i < $cnt; ++$i) {
+                    unset($resultNames[$i]);
+                }
+            }
+            if ($this->parent->hasEtAl()) {
+                $etAl = $this->parent->getEtAl()->render($names);
+            } else {
+                $etAl = CiteProc::getContext()->getLocale()->filter('terms', 'et-al')->single;
+            }
         }
 
 
         /* add "and" */
         $count = count($resultNames);
-        if (!empty($this->and) && $count > 1) {
-            $resultNames[$count-1] = $this->and . ' ' . $resultNames[$count-1]; //stick an "and" in front of the last author if "and" is defined
+        if (!empty($this->and) && $count > 1 && !$etAl) {
+            $new = $this->and . ' ' . end($resultNames); //stick an "and" in front of the last author if "and" is defined
+            $resultNames[key($resultNames)] = $new;
         }
 
         $text = implode($this->delimiter, $resultNames);
 
         if (!empty($resultNames) && $etAl) {
+
+            /* By default, when a name list is truncated to a single name, the name and the “et-al” (or “and others”)
+            term are separated by a space (e.g. “Doe et al.”). When a name list is truncated to two or more names, the
+            name delimiter is used (e.g. “Doe, Smith, et al.”). This behavior can be changed with the
+            delimiter-precedes-et-al attribute. */
             switch ($this->delimiterPrecedesEtAl) {
                 case 'never':
                     $text = $text . " $etAl";
@@ -300,7 +324,12 @@ class Name
                     $text = $text . "$this->delimiter$etAl";
                     break;
                 default:
-                    $text = count($resultNames) == 1 ? $text . " $etAl" : $text . "$this->delimiter$etAl";
+                    if (count($resultNames) === 1) {
+                        $text .= " $etAl";
+                    } else {
+                        $text .=  $this->delimiter . $etAl;
+                    }
+
             }
         }
         if ($this->form == 'count') {
@@ -360,39 +389,6 @@ class Name
     }
 
     /**
-     * @param $data
-     * @return bool|string
-     */
-    private function prepareEtAl($data)
-    {
-
-        $count = count($data);
-
-        $etAl = false;
-        /* prepare et al */
-
-        if (isset($this->etAlMin) &&
-            $count >= $this->etAlMin &&
-            isset($this->etAlUseFirst) &&
-            $count >= $this->etAlUseFirst &&
-            $count > $this->etAlUseFirst
-        ) {
-            if ($this->etAlUseFirst < $this->etAlMin) {
-                for ($i = $this->etAlUseFirst; $i < count($data) - 1; ++$i) {
-                    unset($data[$i]);
-                }
-            }
-            if ($this->parent->hasEtAl()) {
-                $etAl = $this->parent->getEtAl()->render(null);
-            } else {
-                $etAl = CiteProc::getContext()->getLocale()->filter('terms', 'et-al')->single;
-            }
-        }
-
-        return $etAl;
-    }
-
-    /**
      * @param $name
      * @return string
      */
@@ -424,7 +420,7 @@ class Name
                             (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") .
                             (trim($name->family) . $this->sortSeparator . trim($name->given)) .
                             (!empty($droppingParticle) ? " " . $droppingParticle : "") .
-                            (!empty($suffix) ? $this->sortSeparator . $suffix : "");
+                            (!empty($suffix) ? $this->sortSeparator . trim($suffix) : "");
                         break;
                     /*
                        use form "given name [dropping particles] [non-dropping particles] family name [suffix]"
@@ -443,5 +439,26 @@ class Name
         return $text;
     }
 
+    public function getOptions()
+    {
+        $ignore = ["namePart", "parent", "substitute"];
+        $options = [];
+        $reflectedName = new \ReflectionClass($this);
+
+        foreach ($reflectedName->getProperties() as $property) {
+            $property->setAccessible(true);
+            if (in_array($property->getName(), $ignore)) {
+                continue;
+            } else if ($property->getName() == "and" && $property->getValue($this) === "&") {
+                $options["and"] = "symbol";
+            } else {
+                $propValue = $property->getValue($this);
+                if (isset($propValue) && !empty($propValue)) {
+                    $options[StringHelper::camelCase2Hyphen($property->getName())] = $propValue;
+                }
+            }
+        }
+        return $options;
+    }
 
 }
