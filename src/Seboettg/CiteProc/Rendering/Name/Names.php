@@ -147,10 +147,9 @@ class Names implements RenderingInterface
         $matches = [];
 
         /* when the selection consists of “editor” and “translator”, and when the contents of these two name variables
-         * is identical, then the contents of only one name variable is rendered. In addition, the “editortranslator”
-         * term is used if the cs:names element contains a cs:label element, replacing the default “editor” and
-         * “translator” terms (e.g. resulting in “Doe (editor & translator)”)
-         */
+        is identical, then the contents of only one name variable is rendered. In addition, the “editortranslator”
+        term is used if the cs:names element contains a cs:label element, replacing the default “editor” and
+        “translator” terms (e.g. resulting in “Doe (editor & translator)”) */
         if ($this->variables->hasValue("editor") && $this->variables->hasValue("translator")) {
             if (isset($data->editor) && isset($data->translator)) {
                 if (isset($name)) {
@@ -166,9 +165,11 @@ class Names implements RenderingInterface
                     $this->label->setVariable("editortranslator");
                     $str .= $this->label->render("");
                 }
-
-                $this->variables->remove("editor");
-                $this->variables->remove("translator");
+                $vars = $this->variables->toArray();
+                $vars = array_filter($vars, function($value) {
+                    return !($value === "editor" || $value === "translator");
+                });
+                $this->variables->setArray($vars);
             }
         }
 
@@ -191,6 +192,10 @@ class Names implements RenderingInterface
                         $name .= $this->label->render($data);
                     }
                     $results[] = $this->format($name);
+                } else {
+                    foreach ($data->{$var} as $name) {
+                        $results[] = $name->given . " " . $name->family;
+                    }
                 }
             }
         }

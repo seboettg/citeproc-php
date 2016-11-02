@@ -85,26 +85,26 @@ class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
 
     public function testRenderMultipleAuthorsEtAl()
     {
-        $xml = "<names variable=\"author\" delimiter=\"; \" prefix=\"(\" suffix=\")\"><name delimiter=\", \" form=\"short\" name-as-sort-order=\"all\" sort-separator=\", \" and=\"symbol\" et-al-min=\"4\" et-al-use-first=\"2\"/></names>";
+        $xml = "<names variable=\"author\" delimiter=\"; \" prefix=\"(\" suffix=\")\"><name delimiter=\"; \" form=\"short\" name-as-sort-order=\"all\" sort-separator=\", \" and=\"symbol\" et-al-min=\"4\" et-al-use-first=\"2\"/></names>";
         $names = new Names(new \SimpleXMLElement($xml));
 
         // four names
         $data = "{\"author\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Röntgen\", \"given\": \"Wilhelm Conrad\", \"non-dropping-particle\": \"\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Her Anonymous Life\", \"type\": \"book\"}";
-        $this->assertEquals("(la Doe; Curie; Röntgen, u. a.)", $names->render(json_decode($data)));
+        $this->assertEquals("(la Doe; Curie; Röntgen; u. a.)", $names->render(json_decode($data)));
     }
 
     public function testRenderMultipleAuthorEtAlElement()
     {
 
         $xml = "<names variable=\"author\" delimiter=\"; \">
-                    <name form=\"long\" name-as-sort-order=\"all\" and=\"symbol\" delimiter=\", \" et-al-min=\"4\" et-al-use-first=\"2\"/>
+                    <name form=\"long\" name-as-sort-order=\"all\" and=\"symbol\" delimiter=\"; \" et-al-min=\"4\" et-al-use-first=\"2\"/>
                     <et-al term=\"et-al\" font-style=\"italic\"/>
                 </names>";
         $names = new Names(new \SimpleXMLElement($xml));
 
         // four names
         $data = "{\"author\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Röntgen\", \"given\": \"Wilhelm Conrad\", \"non-dropping-particle\": \"\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Her Anonymous Life\", \"type\": \"book\"}";
-        $this->assertEquals("la Doe, John de; Curie, Marie; Röntgen, Wilhelm Conrad, <i>u. a.</i>", $names->render(json_decode($data)));
+        $this->assertEquals("la Doe, John de; Curie, Marie; Röntgen, Wilhelm Conrad; <i>u. a.</i>", $names->render(json_decode($data)));
     }
 
     public function testRenderTestSuite()
