@@ -23,4 +23,9 @@ coding_style:
         spaces:
             around_operators:
                 concatenation: true
-build: true
+build:
+    environment:
+        php:
+            version: 5.6.9
+            ini:
+                date.timezone: 'Europe/Berlin'
