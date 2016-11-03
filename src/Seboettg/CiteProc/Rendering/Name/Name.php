@@ -283,11 +283,11 @@ class Name
         $count = 0;
         /**
          * @var string $type
-         * @var array $names
+         * @var array $name
          */
-        foreach ($data as $rank => $names) {
+        foreach ($data as $rank => $name) {
             ++$count;
-            $resultNames[] = $this->formatName($names, $rank);
+            $resultNames[] = $this->formatName($name, $rank);
         }
 
         /* Use of et-al-min and et-al-user-first enables et-al abbreviation. If the number of names in a name variable
@@ -301,7 +301,7 @@ class Name
                 }
             }
             if ($this->parent->hasEtAl()) {
-                $etAl = $this->parent->getEtAl()->render($names);
+                $etAl = $this->parent->getEtAl()->render($name);
             } else {
                 $etAl = CiteProc::getContext()->getLocale()->filter('terms', 'et-al')->single;
             }
@@ -358,7 +358,7 @@ class Name
                     break;
                 case 'contextual':
                 default:
-                    if (count($resultNames) < 3) {
+                    if (count($resultNames) < 3 && $lastDelimiter !== false) {
                         return substr_replace($text, ' ', $lastDelimiter, strlen($this->delimiter));
                     }
             }

@@ -30,9 +30,9 @@ trait TestSuiteTestCaseTrait
     ];
 
 
-    public function _testRenderTestSuite($filterTests)
+    public function _testRenderTestSuite($filterTests, $ignore = null)
     {
-        $testFiles = loadFixtures($filterTests);
+        $testFiles = loadFixtures($filterTests, $ignore);
         $i = 0;
         $failures = [];
         $success = [];

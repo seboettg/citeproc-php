@@ -97,7 +97,7 @@ class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
 
         // four names
         $data = "{\"author\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Röntgen\", \"given\": \"Wilhelm Conrad\", \"non-dropping-particle\": \"\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Her Anonymous Life\", \"type\": \"book\"}";
-        $this->assertEquals("(la Doe; Curie; Röntgen; u. a.)", $names->render(json_decode($data)));
+        $this->assertEquals("(la Doe; Curie; u. a.)", $names->render(json_decode($data)));
     }
 
     public function testRenderMultipleAuthorEtAlElement()
@@ -111,7 +111,7 @@ class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
 
         // four names
         $data = "{\"author\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Röntgen\", \"given\": \"Wilhelm Conrad\", \"non-dropping-particle\": \"\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Her Anonymous Life\", \"type\": \"book\"}";
-        $this->assertEquals("la Doe, John de; Curie, Marie; Röntgen, Wilhelm Conrad; <i>u. a.</i>", $names->render(json_decode($data)));
+        $this->assertEquals("la Doe, John de; Curie, Marie; <i>u. a.</i>", $names->render(json_decode($data)));
     }
 
     public function testRenderTestSuite()

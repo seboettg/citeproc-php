@@ -45,7 +45,7 @@ class Locale
         if (!empty($xmlString)) {
             $this->localeXml = new \SimpleXMLElement($xmlString);
         } else {
-            $this->localeXml = StyleSheet::loadLocales($lang);
+            $this->localeXml = new \SimpleXMLElement(StyleSheet::loadLocales($lang));
         }
 
         $this->initLocaleXmlParser();

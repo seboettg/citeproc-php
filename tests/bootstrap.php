@@ -17,9 +17,10 @@ $loader->register();
 
 /**
  * @param string $filter
+ * @param array|null $ignore
  * @return array
  */
-function loadFixtures($filter)
+function loadFixtures($filter, $ignore = null)
 {
     $files = [];
     if ($handle = opendir(PHPUNIT_FIXTURES)) {
@@ -31,5 +32,17 @@ function loadFixtures($filter)
         }
         closedir($handle);
     }
+
+    if (!empty($ignore)) {
+        return array_filter($files, function($value) use ($ignore) {
+            foreach ($ignore as $filter) {
+                if (strpos($value, $filter) !== false) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    }
+
     return $files;
 }
