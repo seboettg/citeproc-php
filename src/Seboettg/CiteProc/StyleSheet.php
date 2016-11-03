@@ -44,6 +44,6 @@ class StyleSheet
     public static function loadLocales($langKey)
     {
         $localesPath = __DIR__.'/../../../locales/';
-        return file_get_contents($localesPath."locales-".$langKey.'xml');
+        return file_get_contents($localesPath."locales-".$langKey.'.xml');
     }
 }
