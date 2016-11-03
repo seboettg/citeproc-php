@@ -70,7 +70,7 @@ class Date
         foreach ($node->children() as $child) {
             if ($child->getName() === "date-part") {
                 $datePartName = (string) $child->attributes()["name"];
-                $this->dateParts->set($this->form."-".$datePartName, Util\Factory::create($child));
+                $this->dateParts->set($this->form . "-" . $datePartName, Util\Factory::create($child));
             }
         }
 
@@ -88,7 +88,7 @@ class Date
     {
         $ret = "";
         $var = null;
-        if(isset($data->{$this->variable})) {
+        if (isset($data->{$this->variable})) {
             $var = $data->{$this->variable};
         } else {
             return "";

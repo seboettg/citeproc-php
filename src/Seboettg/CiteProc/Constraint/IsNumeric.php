@@ -55,15 +55,12 @@ class IsNumeric implements ConstraintInterface
     {
         if (is_numeric($evalValue)) {
             return true;
-        }
-        else if (preg_match(Number::PATTERN_ORDINAL, $evalValue)) {
+        } else if (preg_match(Number::PATTERN_ORDINAL, $evalValue)) {
             $numberFormatter = new NumberFormatter(CiteProc::getContext()->getLocale()->getLanguage(), NumberFormatter::ORDINAL);
             return $numberFormatter->parse($evalValue) !== false;
-        }
-        else if (preg_match(Number::PATTERN_ROMAN, $evalValue)) {
+        } else if (preg_match(Number::PATTERN_ROMAN, $evalValue)) {
             return Number::roman2Dec($evalValue) !== false;
-        }
-        else if (preg_match(Number::PATTERN_COMMA_AMPERSAND_RANGE, $evalValue)){
+        } else if (preg_match(Number::PATTERN_COMMA_AMPERSAND_RANGE, $evalValue)){
             return true;
         }
         return false;

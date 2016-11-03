@@ -31,8 +31,8 @@ class StyleSheet
      */
     public static function loadStyleSheet($styleName)
     {
-        $stylesPath = __DIR__.'/../../../styles/';
-        return file_get_contents($stylesPath.$styleName.'.csl');
+        $stylesPath = __DIR__ . '/../../../styles/';
+        return file_get_contents($stylesPath . $styleName . '.csl');
     }
 
     /**
@@ -43,7 +43,7 @@ class StyleSheet
      */
     public static function loadLocales($langKey)
     {
-        $localesPath = __DIR__.'/../../../locales/';
-        return file_get_contents($localesPath."locales-".$langKey.'.xml');
+        $localesPath = __DIR__ . '/../../../locales/';
+        return file_get_contents($localesPath . "locales-" . $langKey . '.xml');
     }
 }

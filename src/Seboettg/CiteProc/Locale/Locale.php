@@ -63,6 +63,9 @@ class Locale
         return $this->language;
     }
 
+    /**
+     * @param string $type
+     */
     public function filter($type, $name, $form = "long") {
 
         if (!isset($this->{$type})) {

@@ -43,8 +43,8 @@ trait FormattingTrait
         foreach ($node->attributes() as $attribute) {
 
             /** @var string $name */
-            $name = (string)$attribute->getName();
-            $value = (string)$attribute;
+            $name = (string) $attribute->getName();
+            $value = (string) $attribute;
 
             if (in_array($name, self::$formattingAttributes)) {
                 $this->formattingOptions->add($name, $value);
@@ -65,15 +65,14 @@ trait FormattingTrait
             foreach ($this->formattingOptions as $option => $optionValue) {
                 if ($optionValue === "italic") {
                     $text = "<i>$text</i>";
-                }
-                else if ($optionValue === "bold") {
+                } else if ($optionValue === "bold") {
                     $text = "<b>$text</b>";
                 } else {
                     $format .= "$option:$optionValue;";
                 }
             }
             if (!empty($format)) {
-                $text = '<span style="' . $format . '">'.$text.'</span>';
+                $text = '<span style="' . $format . '">' . $text . '</span>';
             }
         }
         return $text;

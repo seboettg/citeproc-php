@@ -64,7 +64,7 @@ class Key implements SortKey
         foreach ($node->attributes() as $attribute) {
             $name = $attribute->getName();
             if ($name === "variable") {
-                $this->variable = (string)$attribute;
+                $this->variable = (string) $attribute;
             }
             if ($name === "sort") {
                 $this->sort = (string) $attribute;

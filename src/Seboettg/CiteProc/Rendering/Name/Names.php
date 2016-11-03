@@ -126,7 +126,7 @@ class Names implements RenderingInterface
         /** @var \SimpleXMLElement $attribute */
         foreach ($node->attributes() as $attribute) {
             if ("variable" === $attribute->getName()) {
-                $this->variables = new ArrayList(explode(" ", (string)$attribute));
+                $this->variables = new ArrayList(explode(" ", (string) $attribute));
                 break;
             }
         }
@@ -206,7 +206,7 @@ class Names implements RenderingInterface
                 }
             }
         }
-        $str  .= implode($this->delimiter, $results);
+        $str .= implode($this->delimiter, $results);
         return $this->addAffixes($str);
     }
 
