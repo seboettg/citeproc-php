@@ -15,7 +15,8 @@ checks:
         function_in_camel_caps: true
         classes_in_camel_caps: true
         avoid_perl_style_comments: true
-    javascript: false
+    javascript:
+        code_rating: false
 
 coding_style:
     php:
