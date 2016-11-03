@@ -1,4 +1,11 @@
 <?php
+/**
+ * citeproc-php
+ *
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2016 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
+ */
 
 namespace Seboettg\CiteProc\Util;
 use Seboettg\CiteProc\Rendering\Name\Names;
@@ -8,7 +15,7 @@ use Seboettg\CiteProc\Rendering\Name\Names;
  * Class Variables
  * @package Seboettg\CiteProc\Util
  *
- * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
+ * @author Sebastian Böttger <seboettg@gmail.com>
  */
 class Variables
 {

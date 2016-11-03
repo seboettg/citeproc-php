@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  ~ citeproc-php
+  ~
+  ~ @link        http://github.com/seboettg/citeproc-php for the source repository
+  ~ @copyright   Copyright (c) 2016 Sebastian Böttger.
+  ~ @license     https://opensource.org/licenses/MIT
+  -->
+
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
          backupGlobals="false"

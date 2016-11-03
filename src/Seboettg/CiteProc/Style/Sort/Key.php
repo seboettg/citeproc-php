@@ -1,4 +1,11 @@
 <?php
+/**
+ * citeproc-php
+ *
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2016 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
+ */
 
 namespace Seboettg\CiteProc\Style\Sort;
 use Seboettg\CiteProc\CiteProc;
@@ -7,6 +14,7 @@ use Seboettg\CiteProc\Util\Variables;
 
 /**
  * Class Key
+ *
  * The cs:sort element must contain one or more cs:key child elements. The sort key, set as an attribute on cs:key, must
  * be a variable (see Appendix IV - Variables) or macro name. For each cs:key element, the sort direction can be set to
  * either “ascending” (default) or “descending” with the sort attribute. The attributes names-min, names-use-first, and
@@ -16,7 +24,7 @@ use Seboettg\CiteProc\Util\Variables;
  *
  * @package Seboettg\CiteProc\Style\Sort
  *
- * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
+ * @author Sebastian Böttger <seboettg@gmail.com>
  */
 class Key implements SortKey
 {

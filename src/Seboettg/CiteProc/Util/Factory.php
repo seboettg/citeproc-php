@@ -1,4 +1,11 @@
 <?php
+/**
+ * citeproc-php
+ *
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2016 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
+ */
 
 namespace Seboettg\CiteProc\Util;
 use Seboettg\CiteProc\Exception\CiteProcException;
@@ -9,7 +16,7 @@ use Seboettg\CiteProc\Exception\ClassNotFoundException;
  * Class Factory
  * @package Seboettg\CiteProc\Util
  *
- * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
+ * @author Sebastian Böttger <seboettg@gmail.com>
  */
 class Factory
 {
@@ -46,18 +53,5 @@ class Factory
             return new $nodeClass($node, $param);
         }
         return new $nodeClass($node);
-    }
-
-
-    public static function loadLocale($lang) {
-        $directory = __DIR__."/../../../../vendor/academicpuma/locales";
-        $file = $directory . "/locales-" . ($lang) . ".xml";
-
-        if (file_exists($file) == false) {
-            throw new CiteProcException("Locale file \"locale-$file.xml\" does not exist!");
-        }
-
-        $content = file_get_contents($file);
-        return new \SimpleXMLElement($content);
     }
 }

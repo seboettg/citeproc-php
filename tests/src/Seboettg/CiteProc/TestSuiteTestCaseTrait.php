@@ -1,4 +1,11 @@
 <?php
+/**
+ * citeproc-php
+ *
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2016 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
+ */
 
 namespace Seboettg\CiteProc;
 
@@ -17,8 +24,9 @@ trait TestSuiteTestCaseTrait
         'group_SuppressTermInMacro.json',
         'textcase_Lowercase.json',
         'textcase_Uppercase.json',
-        'textcase_SkipNameParticlesInTitleCase.json'
-
+        'textcase_SkipNameParticlesInTitleCase.json',
+        'name_ArticularWithComma.json',
+        'name_ParticlesDemoteNonDroppingNever.json'
     ];
 
 

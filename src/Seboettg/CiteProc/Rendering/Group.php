@@ -1,4 +1,11 @@
 <?php
+/**
+ * citeproc-php
+ *
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2016 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
+ */
 
 namespace Seboettg\CiteProc\Rendering;
 use Seboettg\CiteProc\Styles\AffixesTrait;
@@ -12,7 +19,7 @@ use Seboettg\Collection\ArrayList;
  * Class Group
  * @package Seboettg\CiteProc\Rendering
  *
- * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
+ * @author Sebastian Böttger <seboettg@gmail.com>
  */
 class Group implements RenderingInterface
 {

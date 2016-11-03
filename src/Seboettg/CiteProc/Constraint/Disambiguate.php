@@ -1,4 +1,11 @@
 <?php
+/**
+ * citeproc-php
+ *
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2016 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
+ */
 
 namespace Seboettg\CiteProc\Constraint;
 
@@ -9,9 +16,9 @@ namespace Seboettg\CiteProc\Constraint;
  * identical citations. This attempt at disambiguation is only made when all other disambiguation methods have failed
  * to uniquely identify the target source.
  *
- * @package Seboettg\CiteProc\Node\Choose\Constraint
+ * @package Seboettg\CiteProc\Choose\Constraint
  *
- * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
+ * @author Sebastian Böttger <seboettg@gmail.com>
  */
 class Disambiguate implements ConstraintInterface
 {

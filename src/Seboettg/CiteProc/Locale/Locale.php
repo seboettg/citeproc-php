@@ -1,15 +1,32 @@
 <?php
+/**
+ * citeproc-php
+ *
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2016 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
+ */
+
 namespace Seboettg\CiteProc\Locale;
-use Seboettg\CiteProc\Util\Factory;
-use Seboettg\Collection\ArrayList;
+use Seboettg\CiteProc\StyleSheet;
 
 /**
+ * Class Locale
+ *
+ * While localization data can be included in styles, locale files conveniently provide sets of default localization
+ * data, consisting of terms, date formats and grammar options. These default localizations are drawn from the
+ * “locales-xx-XX.xml” located in locales folder (which is included as git submodule). These default locales may be
+ * redefined or supplemented with cs:locale elements, which should be placed in the style sheet directly after the
+ * cs:info element.
+ *
+ * TODO: implement Locale Fallback (http://docs.citationstyles.org/en/stable/specification.html#locale-fallback)
+ *
+ * @package Seboettg\CiteProc\Locale
+ * @author Sebastian Böttger <seboettg@gmail.com>
  */
 class Locale
 {
     use LocaleXmlParserTrait;
-
-    const VENDOR = "vendor/academicpuma/locale";
 
     /**
      * @var string
@@ -28,7 +45,7 @@ class Locale
         if (!empty($xmlString)) {
             $this->localeXml = new \SimpleXMLElement($xmlString);
         } else {
-            $this->localeXml = Factory::loadLocale($lang);
+            $this->localeXml = StyleSheet::loadLocales($lang);
         }
 
         $this->initLocaleXmlParser();

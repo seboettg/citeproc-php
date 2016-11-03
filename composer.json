@@ -12,9 +12,7 @@
         "psr-4": {"": "src/"}
     },
     "require": {
-        "seboettg/collection": "^1.1",
-        "academicpuma/styles": "^1",
-        "academicpuma/locales": "^1"
+        "seboettg/collection": "^1.1"
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1"

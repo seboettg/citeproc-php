@@ -1,4 +1,11 @@
 <?php
+/**
+ * citeproc-php
+ *
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2016 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
+ */
 
 namespace Seboettg\CiteProc\Style\Sort;
 use Seboettg\CiteProc\Util\Number;
@@ -9,6 +16,7 @@ use Seboettg\Collection\ArrayList;
 
 /**
  * Class Sort
+ *
  * cs:citation and cs:bibliography may include a cs:sort child element before the cs:layout element to specify the
  * sorting order of respectively cites within citations, and bibliographic entries within the bibliography.
  *
@@ -18,11 +26,15 @@ use Seboettg\Collection\ArrayList;
  *
  * @package Seboettg\CiteProc\Style
  *
- * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
+ * @author Sebastian Böttger <seboettg@gmail.com>
  */
 class Sort
 {
-
+    /**
+     * ordered list contains sorting keys
+     *
+     * @var ArrayList
+     */
     private $sortingKeys;
 
     /**
@@ -108,7 +120,7 @@ class Sort
                     return $compareNumber($numA, $numB, $order);
                 });
             }
-
+            //TODO: implement
             if ($key->isMacro()) {
 
             }

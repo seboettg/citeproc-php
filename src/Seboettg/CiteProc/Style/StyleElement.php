@@ -1,4 +1,11 @@
 <?php
+/**
+ * citeproc-php
+ *
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2016 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
+ */
 
 namespace Seboettg\CiteProc\Style;
 use Seboettg\CiteProc\CiteProc;
@@ -9,9 +16,14 @@ use Seboettg\CiteProc\Style\Sort\Sort;
 
 /**
  * Class StyleElement
+ *
+ * StyleElement is an abstract class which must be extended by Citation and Bibliography class. The constructor
+ * of StyleElement class parses the cs:layout element (necessary for cs:citation and cs:bibliography) and the optional
+ * cs:sort element.
+ *
  * @package Seboettg\CiteProc\Style
  *
- * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
+ * @author Sebastian Böttger <seboettg@gmail.com>
  */
 abstract class StyleElement implements RenderingInterface
 {
@@ -59,6 +71,10 @@ abstract class StyleElement implements RenderingInterface
         }
     }
 
+    /**
+     * @param \stdClass $data
+     * @return string
+     */
     public function render($data)
     {
         return $this->layout->render($data);
