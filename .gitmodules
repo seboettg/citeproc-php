@@ -1,3 +1,9 @@
 [submodule "tests/fixtures/test-suite"]
 	path = tests/fixtures/test-suite
 	url = https://github.com/citation-style-language/test-suite.git
+[submodule "styles"]
+	path = styles
+	url = https://github.com/citation-style-language/styles
+[submodule "locales"]
+	path = locales
+	url = https://github.com/citation-style-language/locales
