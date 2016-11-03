@@ -75,8 +75,6 @@ trait TestSuiteTestCaseTrait
             } catch (\Exception $e) {
                 //$failures[] = $e->getMessage();
                 $exceptions[] = "$echo\nException in $testFile\n".$e->getFile()."\n".$e->getMessage()."\n";
-            } finally {
-
             }
         }
         if (!empty($success)) {
