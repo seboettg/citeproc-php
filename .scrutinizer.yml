@@ -1,0 +1,25 @@
+filter:
+    excluded_paths: ['tests/*', 'vendor/*', 'styles/*', 'locales/*', 'doc/*', 'review/*']
+checks:
+    php:
+        uppercase_constants: true
+        use_self_instead_of_fqcn: true
+        return_doc_comments: true
+        properties_in_camelcaps: true
+        prefer_while_loop_over_for_loop: true
+        parameters_in_camelcaps: true
+        parameter_doc_comments: true
+        no_new_line_at_end_of_file: true
+        no_goto: true
+        newline_at_end_of_file: true
+        function_in_camel_caps: true
+        classes_in_camel_caps: true
+        avoid_perl_style_comments: true
+    javascript: false
+
+coding_style:
+    php:
+        spaces:
+            around_operators:
+                concatenation: true
+build: true
