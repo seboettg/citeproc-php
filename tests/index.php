@@ -24,7 +24,10 @@ function init() {
     
     
 }
-    
+
+/**
+ *
+ */
 function render() {
     global $publications;   
     
@@ -36,11 +39,10 @@ function render() {
 
         foreach($dataObject->rendereddata as $styleName => $renderedText) {
             $style = CiteProc::loadStyleSheet($styleName);
-            print_r($style);
-            $lang = substr($publications->{$dataId}->locales, 0, 2);
+            $lang = $publications->{$dataId}->locales;
             $citeProc = new CiteProc($style, $lang);
-
-            $actual = preg_replace('!(\s{2,})!', ' ', strip_tags($citeProc->render($dataObject->rawdata)));
+            $data = clone($dataObject->rawdata);
+            $actual = preg_replace('!(\s{2,})!', ' ', $citeProc->render($data));
 
             echo '<li><h4>'.$styleName.':</h4>'
                     . '<div id="'.$dataId.'-'.$styleName.'" data-pub-ident="'.$dataId.'" data-style="'.$styleName.'">'

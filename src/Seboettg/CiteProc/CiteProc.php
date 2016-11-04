@@ -107,19 +107,19 @@ class CiteProc
     }
 
     /**
-     * @param string $data
+     * @param \stdClass $data
      * @return string
      */
-    public function bibliography($data = '')
+    public function bibliography($data)
     {
         return self::$context->getBibliography()->render($data);
     }
 
     /**
-     * @param string $data
+     * @param \stdClass $data
      * @return string
      */
-    public function citation($data = '')
+    public function citation($data)
     {
         return self::$context->getCitation()->render($data);
     }

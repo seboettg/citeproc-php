@@ -71,10 +71,10 @@ trait TestSuiteTestCaseTrait
                 $exceptions[] = "$echo\nCiteProc Exception in $testFile\n".$e->getFile()."\n".$e->getMessage()."\n";
             } catch (\RuntimeException $e) {
                 //$failures[] = $e->getMessage();
-                $exceptions[] = "$echo\nRuntime Exception in $testFile\n".$e->getFile()."\n".$e->getMessage()."\n";
+                $exceptions[] = "$echo\nRuntime Exception in $testFile\n".$e->getFile()." on line ".$e->getLine()."\n".$e->getMessage()."\n";
             } catch (\Exception $e) {
                 //$failures[] = $e->getMessage();
-                $exceptions[] = "$echo\nException in $testFile\n".$e->getFile()."\n".$e->getMessage()."\n";
+                $exceptions[] = "$echo\nException in $testFile\n".$e->getFile()." on line ".$e->getLine()."\n".$e->getMessage()."\n";
             }
         }
         if (!empty($success)) {
@@ -91,5 +91,6 @@ trait TestSuiteTestCaseTrait
         }
 
         print "\n\nSummary: ".count($success)."/".count($failures)."/".count($exceptions);
+        print "\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n";
     }
 }
