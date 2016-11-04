@@ -19,11 +19,19 @@ namespace Seboettg\CiteProc\Constraint;
 class Type implements ConstraintInterface
 {
 
+    /**
+     * @var array
+     */
     private $typeValue;
 
+    /**
+     * Type constructor.
+     * @param string $value
+     * @param $match
+     */
     public function __construct($value, $match)
     {
-        $this->typeValue = $value;
+        $this->typeValue = explode(" ", $value);
     }
 
     /**
@@ -33,7 +41,7 @@ class Type implements ConstraintInterface
     public function validate($value)
     {
         if (isset($value->type)) {
-            return ($value->type == $this->typeValue);
+            return in_array($value->type, $this->typeValue);
         }
         return false;
     }

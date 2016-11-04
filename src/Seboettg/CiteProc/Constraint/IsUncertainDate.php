@@ -18,7 +18,7 @@ namespace Seboettg\CiteProc\Constraint;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class isUncertainDate implements ConstraintInterface
+class IsUncertainDate implements ConstraintInterface
 {
 
     private $varName;

@@ -13,7 +13,7 @@ use Seboettg\CiteProc\Exception\ClassNotFoundException;
 
 /**
  * Class Factory
- * @package Seboettg\CiteProc\Choose\Constraint
+ * @package Seboettg\CiteProc\Constraint
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
