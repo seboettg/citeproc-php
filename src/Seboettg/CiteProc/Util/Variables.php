@@ -156,7 +156,7 @@ class Variables
      */
     public static function nameHash(\stdClass $data, $variable)
     {
-        if (!self::isNumberVariable($variable)) {
+        if (!self::isNameVariable($variable)) {
             throw new \InvalidArgumentException("\"$variable\" is not a valid name variable.");
         }
 

@@ -35,7 +35,7 @@ class Key implements SortKey
     private $variable;
 
     /**
-     * sorting order
+     * the sort direction can be set to either “ascending” (default) or “descending” with the sort attribute
      * @var string
      */
     private $sort = "ascending";

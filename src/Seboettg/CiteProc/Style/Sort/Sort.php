@@ -8,7 +8,6 @@
  */
 
 namespace Seboettg\CiteProc\Style\Sort;
-use Seboettg\CiteProc\Util\Number;
 use Seboettg\CiteProc\Util\Variables;
 use Seboettg\CiteProc\Util\Date;
 use Seboettg\Collection\ArrayList;
@@ -52,6 +51,7 @@ class Sort
     }
 
     /**
+     * Function in order to sort a set of csl items by one or multiple sort keys.
      * Sort keys are evaluated in sequence. A primary sort is performed on all items using the first sort key.
      * A secondary sort, using the second sort key, is applied to items sharing the first sort key value. A tertiary
      * sort, using the third sort key, is applied to items sharing the first and second sort key values. Sorting
@@ -62,69 +62,66 @@ class Sort
      */
     public function sort(&$data)
     {
-        //begin with last sort key
-        for ($i = $this->sortingKeys->count()-1; $i >= 0; --$i) {
-            /** @var Key $key */
-            $key = $this->sortingKeys->get($i);
-            $variable = $key->getVariable();
-            $order = $key->getSort();
+        $data = $this->performSort(0, $data);
+    }
 
-            if (!isset($data->{$variable}) || empty($data->{$variable})) {
-                continue;
-            }
+    /**
+     * Recursive function in order to sort a set of csl items by one or multiple sort keys.
+     * All items will be distributed by the value (defined in respective sort key) in an associative array (grouped).
+     * Afterwards the array will be sorted by the array key. If a further sort key exist, each of these groups will be
+     * sorted by a recursive function call. Finally the array will be flatted.
+     *
+     * @param $keyNumber
+     * @param $dataToSort
+     * @return array
+     */
+    private function performSort($keyNumber, $dataToSort)
+    {
+        if (count($dataToSort) < 2) {
+            return $dataToSort;
+        }
 
-            /* Name variables called via the variable attribute (e.g. <key variable="author"/>) are returned as a
-             * name list string, with the cs:name attributes form set to “long”, and name-as-sort-order set to “all”.
-             */
+        /** @var Key $key */
+        $key = $this->sortingKeys->get($keyNumber);
+        $variable = $key->getVariable();
+        $groupedItems = [];
+
+        //grouping by value
+        foreach ($dataToSort as $dataItem) {
             if ($key->isNameVariable()) {
-
-                usort($data, function ($a, $b) use ($variable, $order) {
-                    /**
-                     * @param $a
-                     * @param $key
-                     * @return string
-                     */
-                    $strA = Variables::nameHash($a, $variable);
-                    $strB = Variables::nameHash($b, $variable);
-                    if ("descending" === $order) {
-                        return strcmp($strB, $strA);
-                    }
-                    return strcmp($strA, $strB);
-                });
+                $groupedItems[Variables::nameHash($dataItem, $variable)][] = $dataItem;
             }
-
-            /*
-             * numbers: Number variables called via the variable attribute are returned as integers (form is “numeric”).
-             * If the original variable value only consists of non-numeric text, the value is returned as a text string.
-             */
             if ($key->isNumberVariable()) {
-                usort($data,function ($a, $b) use ($variable, $order) {
-                    $numA = $a->{$variable};
-                    $numB = $b->{$variable};
-                    $compareNumber = Number::getCompareNumber();
-                    return $compareNumber($numA, $numB, $order);
-                });
+                $groupedItems[$dataItem->{$variable}][] = $dataItem;
             }
-
-            /* dates: Date variables called via the variable attribute are returned in the YYYYMMDD format, with zeros
-             * substituted for any missing date-parts (e.g. 20001200 for December 2000). As a result, less specific
-             * dates precede more specific dates in ascending sorts, e.g. “2000, May 2000, May 1st 2000”. Negative
-             * years are sorted inversely, e.g. “100BC, 50BC, 50AD, 100AD”. Seasons are ignored for sorting, as the
-             * chronological order of the seasons differs between the northern and southern hemispheres.
-             */
             if ($key->isDateVariable()) {
-                usort($data,function ($a, $b) use ($variable, $order) {
-                    $numA = Date::serializeDate($a->{$variable});
-                    $numB = Date::serializeDate($b->{$variable});
-                    $compareNumber = Number::getCompareNumber();
-                    return $compareNumber($numA, $numB, $order);
-                });
-            }
-            //TODO: implement
-            if ($key->isMacro()) {
-
+                $groupedItems[Date::serializeDate($dataItem->{$variable})][] = $dataItem;
             }
         }
+
+        // there are further keys ?
+        if ($this->sortingKeys->count() > ++$keyNumber) {
+            array_walk($groupedItems, function(&$group) use ($keyNumber){
+                $group = $this->performSort($keyNumber, $group); //recursive call for next sort key
+            });
+        }
+
+        //sorting by array keys
+        if ($key->getSort() === "ascending") {
+            ksort($groupedItems); //ascending
+        } else {
+            krsort($groupedItems); //reverse
+        }
+
+        //the flattened array is the result
+        $sortedDataGroups = array_values($groupedItems);
+        return $this->flatten($sortedDataGroups);
+    }
+
+    public function flatten(array $array) {
+        $returnArray = [];
+        array_walk_recursive($array, function($a) use (&$returnArray) { $returnArray[] = $a; });
+        return $returnArray;
     }
 
     /**
