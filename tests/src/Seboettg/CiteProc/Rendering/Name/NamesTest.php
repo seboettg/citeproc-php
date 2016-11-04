@@ -79,15 +79,15 @@ class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
 
         // two names
         $data = "{\"author\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Her Anonymous Life\", \"type\": \"book\"}";
-        $this->assertEquals("(la Doe & Curie)", $names->render(json_decode($data)));
+        $this->assertEquals("(la Doe &#38; Curie)", $names->render(json_decode($data)));
 
         // three names
         $data = "{\"author\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Her Anonymous Life\", \"type\": \"book\"}";
-        $this->assertEquals("(la Doe, Curie, & Einstein)", $names->render(json_decode($data)));
+        $this->assertEquals("(la Doe, Curie, &#38; Einstein)", $names->render(json_decode($data)));
 
         // four names
         $data = "{\"author\": [{\"dropping-particle\": \"de\", \"family\": \"Doe\", \"given\": \"John\", \"non-dropping-particle\": \"la\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Curie\", \"given\": \"Marie\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Einstein\", \"given\": \"Albert\", \"non-dropping-particle\": \"\", \"static-ordering\": false}, {\"dropping-particle\": \"\", \"family\": \"Röntgen\", \"given\": \"Wilhelm Conrad\", \"non-dropping-particle\": \"\", \"static-ordering\": false}], \"id\": \"ITEM-1\", \"title\": \"Her Anonymous Life\", \"type\": \"book\"}";
-        $this->assertEquals("(la Doe, Curie, Einstein, & Röntgen)", $names->render(json_decode($data)));
+        $this->assertEquals("(la Doe, Curie, Einstein, &#38; Röntgen)", $names->render(json_decode($data)));
     }
 
     public function testRenderMultipleAuthorsEtAl()

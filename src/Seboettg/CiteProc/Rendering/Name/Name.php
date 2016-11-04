@@ -229,7 +229,7 @@ class Name
                     if ("text" === $and) {
                         $this->and = CiteProc::getContext()->getLocale()->filter('terms', 'and')->single;
                     } elseif ('symbol' === $and) {
-                        $this->and = '&';
+                        $this->and = '&#38;';
                     }
                     break;
                 case 'delimiter-precedes-et-al':
@@ -368,14 +368,16 @@ class Name
 
     private function formatName($name, $rank)
     {
+        $nameObj = $this->cloneNamePOSC($name);
+
         $useInitials = $this->initialize && !empty($this->initializeWith);
-        if ($useInitials) {
+        if ($useInitials && isset($name->given)) {
             //TODO: initialize with hyphen
-            $given = $name->given;
-            $name->given = "";
-            $givenParts = StringHelper::explodeBySpaceOrHyphen($given);
+            //$nameObj->given = $name->given;
+            $nameObj->given = "";
+            $givenParts = StringHelper::explodeBySpaceOrHyphen($name->given);
             foreach ($givenParts as $givenPart) {
-                $name->given .= substr($givenPart, 0, 1) . $this->initializeWith;
+                $nameObj->given .= substr($givenPart, 0, 1) . $this->initializeWith;
             }
         }
 
@@ -383,14 +385,11 @@ class Name
         if (count($this->nameParts) > 0) {
             /** @var NamePart $namePart */
             foreach ($this->nameParts as $namePart) {
-                $name->{$namePart->getName()} =   $namePart->render($name);
+                $nameObj->{$namePart->getName()} =   $namePart->render($name);
             }
-            $name->suffix = '';
-            $name->{'non-dropping-particle'} = '';
-            $name->{'dropping-particle'} = '';
         }
 
-        $return = $this->getNamesString($name, $rank);
+        $return = $this->getNamesString($nameObj, $rank);
 
         return trim($return);
     }
@@ -402,48 +401,61 @@ class Name
     private function getNamesString($name, $rank)
     {
         $text = "";
-        $nonDroppingParticle = isset($name->{'non-dropping-particle'}) ? $name->{'non-dropping-particle'} : "";
-        $droppingParticle = isset($name->{'dropping-particle'}) ? $name->{'dropping-particle'} : "";
-        $suffix = (isset($name->{'suffix'})) ? ' ' . $name->{'suffix'} : '';
-        if (!empty($name->given)) {
-            $name->given = $this->format(trim($name->given));
+
+        if (!isset($name->family)) {
+            return $text;
         }
+
+        $given = !empty($name->given) ? $this->format(trim($name->given)) : "";
+        $nonDroppingParticle = isset($name->{'non-dropping-particle'}) ? $name->{'non-dropping-particle'} : " ";
+        $droppingParticle = isset($name->{'dropping-particle'}) ? $name->{'dropping-particle'} : " ";
+        $suffix = (isset($name->{'suffix'})) ? ' ' . $name->{'suffix'} : " ";
+
         if (isset($name->family)) {
-            $name->family = $this->format($name->family);
+            $family = $this->format($name->family);
             if ($this->form == 'short') {
-                $text = (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") . $name->family;
+                $text = (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") . $family;
             } else {
                 switch ($this->nameAsSortOrder) {
-                    /*
-                        use form "[non-dropping particel] family name,
-                        given name [dropping particle], [suffix]"
-                     */
+
                     case 'all':
                     case 'first':
                         if ($this->nameAsSortOrder === "first" && $rank !== 0) {
                             break;
                         }
-                        $text =
-                            (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") .
-                            (trim($name->family) . $this->sortSeparator . trim($name->given)) .
-                            (!empty($droppingParticle) ? " " . $droppingParticle : "") .
-                            (!empty($suffix) ? $this->sortSeparator . trim($suffix) : "");
+                        /*
+                        use form "[non-dropping particel] family name,
+                        given name [dropping particle], [suffix]"
+                        */
+                        $text = sprintf(
+                                    "%s %s, %s %s, %s",
+                                    $nonDroppingParticle,
+                                    $family,
+                                    $given,
+                                    $droppingParticle,
+                                    $suffix);
+                            //remove last comma when no suffix exist.
+                            $text = trim($text);
+                            $text = substr($text, -1) === "," ? substr($text, 0, strlen($text)-1) : $text;
                         break;
-                    /*
-                       use form "given name [dropping particles] [non-dropping particles] family name [suffix]"
-                       e.g. [Jean] [de] [La] [Fontaine] [III]
-                    */
                     default:
-                        $text = trim($name->given) .
-                            (!empty($droppingParticle) ? " " . trim($droppingParticle) : "") .
-                            (!empty($nonDroppingParticle) ? " " . trim($nonDroppingParticle) : "") .
-                            (" " . $name->family) .
-                            (!empty($suffix) ? " " . trim($suffix) : "");
+                        /*
+                        use form "given name [dropping particles] [non-dropping particles] family name [suffix]"
+                        e.g. [Jean] [de] [La] [Fontaine] [III]
+                        */
+                        $text = sprintf(
+                            "%s %s %s %s %s",
+                            $given,
+                            $droppingParticle,
+                            $nonDroppingParticle,
+                            $family,
+                            $suffix);
+
                 }
             }
         }
 
-        return $text;
+        return trim(preg_replace("/\s{2,}/", " ", $text));
     }
 
     public function getOptions()
@@ -456,7 +468,7 @@ class Name
             $property->setAccessible(true);
             if (in_array($property->getName(), $ignore)) {
                 continue;
-            } else if ($property->getName() == "and" && $property->getValue($this) === "&") {
+            } else if ($property->getName() == "and" && $property->getValue($this) === "&#38;") {
                 $options["and"] = "symbol";
             } else {
                 $propValue = $property->getValue($this);
@@ -466,6 +478,31 @@ class Name
             }
         }
         return $options;
+    }
+
+    /**
+     * @param $name
+     * @return \stdClass
+     */
+    private function cloneNamePOSC($name)
+    {
+        $nameObj = new \stdClass();
+        if (isset($name->family)) {
+            $nameObj->family = $name->family;
+        }
+        if (isset($name->given)) {
+            $nameObj->given = $name->given;
+        }
+        if (isset($name->{'non-dropping-particle'})) {
+            $nameObj->{'non-dropping-particle'} = $name->{'non-dropping-particle'};
+        }
+        if (isset($name->{'dropping-particle'})) {
+            $nameObj->{'dropping-particle'} = $name->{'dropping-particle'};
+        }
+        if (isset($name->{'suffix'})) {
+            $nameObj->{'suffix'} = $name->{'suffix'};
+        }
+        return $nameObj;
     }
 
 }

@@ -70,7 +70,7 @@ class NamePart
     public function render($data)
     {
         $ret = "";
-        if (!$data->{$this->name}) {
+        if (!isset($data->{$this->name})) {
             return "";
         }
 

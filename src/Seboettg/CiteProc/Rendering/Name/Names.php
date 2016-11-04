@@ -201,7 +201,7 @@ class Names implements RenderingInterface
                     $results[] = $this->format($name);
                 } else {
                     foreach ($data->{$var} as $name) {
-                        $results[] = $name->given . " " . $name->family;
+                        $results[] = $this->format($name->given . " " . $name->family);
                     }
                 }
             }
