@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2015 
+ * Copyright (C) 2015
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -236,13 +236,11 @@ class Name extends Format {
                 if ($this->form == 'short') {
                     $text = $ndp . $name->family;
                 } else {
-                    switch ($this->{'name-as-sort-order'}) {
-                        case 'first' && $rank == 0:
-                        case 'all':
-                            $text = $ndp . $name->family . $this->sort_separator . $given;
-                            break;
-                        default:
-                            $text = $given . ' ' . $ndp . $name->family . $suffix;
+                    if ($this->{'name-as-sort-order'} === 'all'
+                        || ($this->{'name-as-sort-order'} === 'first' && $rank == 0)) {
+                        $text = $ndp . $name->family . $this->sort_separator . $given;
+                    } else {
+                        $text = $given . ' ' . $ndp . $name->family . $suffix;
                     }
                 }
                 $authors[] = trim($this->format($text));
