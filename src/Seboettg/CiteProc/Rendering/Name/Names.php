@@ -210,14 +210,56 @@ class Names implements RenderingInterface
         return $this->addAffixes($str);
     }
 
+    /**
+     * @return bool
+     */
     public function hasEtAl()
     {
         return !empty($this->etAl);
     }
 
+    /**
+     * @return EtAl
+     */
     public function getEtAl()
     {
         return $this->etAl;
+    }
+
+    /**
+     * @param EtAl $etAl
+     * @return $this
+     */
+    public function setEtAl(EtAl $etAl)
+    {
+        $this->etAl = $etAl;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasName()
+    {
+        return !empty($this->name);
+    }
+
+    /**
+     * @return Name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param Name $name
+     * @return $this
+     */
+    public function setName(Name $name)
+    {
+        $this->name = $name;
+        return $this;
     }
 
     public function getDelimiter()
@@ -229,4 +271,5 @@ class Names implements RenderingInterface
     {
         return $this->variables;
     }
+
 }
