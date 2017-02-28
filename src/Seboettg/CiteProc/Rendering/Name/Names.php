@@ -116,7 +116,7 @@ class Names implements RenderingInterface
                     $this->label = Factory::create($child);
                     break;
                 case "substitute":
-                    $this->substitute = Factory::create($child);
+                    $this->substitute = new Substitute($child, $this);
                     break;
                 case "et-al":
                     $this->etAl = Factory::create($child);
@@ -145,10 +145,11 @@ class Names implements RenderingInterface
      * addition, the “editortranslator” term is used if the Names element contains a Label element, replacing the
      * default “editor” and “translator” terms (e.g. resulting in “Doe (editor & translator)”).
      *
-     * @param $data
+     * @param \stdClass $data
+     * @param int $citationNumber
      * @return string
      */
-    public function render($data)
+    public function render($data, $citationNumber = null)
     {
         $str = "";
         $matches = [];

@@ -47,15 +47,16 @@ class Group implements RenderingInterface
     }
 
     /**
-     * @param $data
+     * @param \stdClass $data
+     * @param int|null $citationNumber
      * @return string
      */
-    public function render($data)
+    public function render($data, $citationNumber = null)
     {
         $arr = [];
         /** @var RenderingInterface $child */
         foreach ($this->children as $child) {
-            $arr[] = $child->render($data);
+            $arr[] = $child->render($data, $citationNumber);
         }
         return $this->wrapDisplayBlock($this->addAffixes(implode($this->delimiter, $arr)));
     }

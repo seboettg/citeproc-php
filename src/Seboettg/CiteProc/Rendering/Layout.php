@@ -57,7 +57,7 @@ class Layout implements RenderingInterface
         $this->initFormattingAttributes($node);
     }
 
-    public function render($data)
+    public function render($data, $citationNumber = null)
     {
         $ret = "";
         $sorting = CiteProc::getContext()->getSorting();
@@ -68,9 +68,9 @@ class Layout implements RenderingInterface
         if (CiteProc::getContext()->isModeBibliography()) {
             if (is_array($data)) {
                 $arr = [];
-                foreach ($data as $item) {
+                foreach ($data as $citationNumber => $item) {
                     ++self::$numberOfCitedItems;
-                    $arr[] = $this->wrapBibEntry($this->renderSingle($item));
+                    $arr[] = $this->wrapBibEntry($this->renderSingle($item, $citationNumber));
                 }
                 $ret .= implode($this->delimiter, $arr);
             } else {
@@ -97,12 +97,12 @@ class Layout implements RenderingInterface
         return $this->addAffixes($ret);
     }
 
-    private function renderSingle($data)
+    private function renderSingle($data, $citationNumber = null)
     {
         $ret = "";
         /** @var RenderingInterface $child */
         foreach ($this->children as $child) {
-            $ret .= $child->render($data);
+            $ret .= $child->render($data, $citationNumber);
         }
 
         return $this->format($ret);

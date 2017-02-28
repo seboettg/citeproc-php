@@ -43,7 +43,7 @@ class EtAl implements RenderingInterface
         $this->initFormattingAttributes($node);
     }
 
-    public function render($data) {
+    public function render($data, $citationNumber = null) {
         return $this->format(CiteProc::getContext()->getLocale()->filter('terms', $this->term)->single);
     }
 }

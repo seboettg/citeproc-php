@@ -144,6 +144,6 @@ class SortTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
 
     public function testRenderTestSuite()
     {
-        $this->_testRenderTestSuite("sort_");
+        $this->_testRenderTestSuite("sort_DropNameLabelInSort");
     }
 }

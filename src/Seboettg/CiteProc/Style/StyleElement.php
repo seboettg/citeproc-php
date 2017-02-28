@@ -73,10 +73,11 @@ abstract class StyleElement implements RenderingInterface
 
     /**
      * @param \stdClass $data
+     * @param int|null $citationNumber
      * @return string
      */
-    public function render($data)
+    public function render($data, $citationNumber = null)
     {
-        return $this->layout->render($data);
+        return $this->layout->render($data, $citationNumber);
     }
 }

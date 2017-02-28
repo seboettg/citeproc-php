@@ -59,7 +59,12 @@ class Text implements RenderingInterface
         $this->initAffixesAttributes($node);
     }
 
-    public function render($data)
+    /**
+     * @param \stdClass $data
+     * @param int|null $citationNumber
+     * @return string
+     */
+    public function render($data, $citationNumber = null)
     {
         $lang = (isset($data->language) && $data->language != 'en') ? $data->language : 'en';
 
@@ -79,6 +84,10 @@ class Text implements RenderingInterface
                 }
                 if (isset($data->{$this->toRenderTypeValue})) {
                     $renderedText = $this->applyTextCase($data->{$this->toRenderTypeValue}, $lang);
+                }
+                // for test sort_BibliographyCitationNumberDescending.json
+                if ($this->toRenderTypeValue === "citation-number" && !is_null($citationNumber)) {
+                    $renderedText = strval($citationNumber + 1);
                 }
                 break;
             case 'macro':

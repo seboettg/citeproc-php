@@ -92,10 +92,11 @@ class Substitute implements RenderingInterface
     }
 
     /**
-     * @param $data
+     * @param \stdClass $data
+     * @param int|null $citationNumber
      * @return string
      */
-    public function render($data)
+    public function render($data, $citationNumber = null)
     {
         $str = "";
 
@@ -105,7 +106,7 @@ class Substitute implements RenderingInterface
             foreach ($this->children as $child) {
                 /* If cs:substitute contains multiple child elements, the first element to return a
                 non-empty result is used for substitution. */
-                $str = $child->render($data);
+                $str = $child->render($data, $citationNumber);
                 if (!empty($str)) {
                     return $str;
                 }

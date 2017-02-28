@@ -90,13 +90,17 @@ class Sort
         foreach ($dataToSort as $dataItem) {
             if ($key->isNameVariable()) {
                 $groupedItems[Variables::nameHash($dataItem, $variable)][] = $dataItem;
+                continue;
             }
             if ($key->isNumberVariable()) {
                 $groupedItems[$dataItem->{$variable}][] = $dataItem;
+                continue;
             }
             if ($key->isDateVariable()) {
                 $groupedItems[Date::serializeDate($dataItem->{$variable})][] = $dataItem;
+                continue;
             }
+            $groupedItems[] = $dataItem;
         }
 
         // there are further keys ?

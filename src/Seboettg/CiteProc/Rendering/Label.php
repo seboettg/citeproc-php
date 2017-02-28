@@ -81,10 +81,11 @@ class Label implements RenderingInterface
     }
 
     /**
-     * @param $data
+     * @param \stdClass $data
+     * @param int|null $citationNumber
      * @return string
      */
-    public function render($data)
+    public function render($data, $citationNumber = null)
     {
         $lang = (isset($data->language) && $data->language != 'en') ? $data->language : 'en';
 

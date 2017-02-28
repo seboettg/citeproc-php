@@ -21,7 +21,8 @@ interface RenderingInterface
 
     /**
      * @param \stdClass $data
+     * @param int|null $citationNumber
      * @return string
      */
-    public function render($data);
+    public function render($data, $citationNumber = null);
 }

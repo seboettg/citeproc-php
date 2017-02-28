@@ -407,9 +407,9 @@ class Name
         }
 
         $given = !empty($name->given) ? $this->format(trim($name->given)) : "";
-        $nonDroppingParticle = isset($name->{'non-dropping-particle'}) ? $name->{'non-dropping-particle'} : " ";
-        $droppingParticle = isset($name->{'dropping-particle'}) ? $name->{'dropping-particle'} : " ";
-        $suffix = (isset($name->{'suffix'})) ? ' ' . $name->{'suffix'} : " ";
+        $nonDroppingParticle = isset($name->{'non-dropping-particle'}) ? $name->{'non-dropping-particle'} : "";
+        $droppingParticle = isset($name->{'dropping-particle'}) ? $name->{'dropping-particle'} : "";
+        $suffix = (isset($name->{'suffix'})) ? $name->{'suffix'} : "";
 
         if (isset($name->family)) {
             $family = $this->format($name->family);
@@ -427,16 +427,15 @@ class Name
                         use form "[non-dropping particel] family name,
                         given name [dropping particle], [suffix]"
                         */
-                        $text = sprintf(
-                                    "%s %s, %s %s, %s",
-                                    $nonDroppingParticle,
-                                    $family,
-                                    $given,
-                                    $droppingParticle,
-                                    $suffix);
-                            //remove last comma when no suffix exist.
-                            $text = trim($text);
-                            $text = substr($text, -1) === "," ? substr($text, 0, strlen($text)-1) : $text;
+                        $text  = !empty($nonDroppingParticle) ? "$nonDroppingParticle " : "";
+                        $text .= $family;
+                        $text .= !empty($given) ? ", $given" : "";
+                        $text .= !empty($droppingParticle) ? " $droppingParticle" : "";
+                        $text .= !empty($suffix) ? ", $suffix" : "";
+
+                        //remove last comma when no suffix exist.
+                        $text = trim($text);
+                        $text = substr($text, -1) === "," ? substr($text, 0, strlen($text)-1) : $text;
                         break;
                     default:
                         /*
@@ -455,7 +454,15 @@ class Name
             }
         }
 
-        return trim(preg_replace("/\s{2,}/", " ", $text));
+        //contains nbsp prefixed by normal space or followed by normal space?
+        $text = htmlentities($text);
+        if (strpos($text, " &nbsp;") !== false || strpos($text, "&nbsp; ") !== false) {
+
+            $text = preg_replace("/[\s]+/", "", $text); //remove normal spaces
+            return preg_replace("/&nbsp;+/", " ", $text);
+        }
+        $text = preg_replace("/[\s]+/", " ", $text);
+        return trim($text);
     }
 
     public function getOptions()

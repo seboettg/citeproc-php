@@ -61,12 +61,17 @@ class Macro implements RenderingInterface
         }
     }
 
-    public function render($data)
+    /**
+     * @param \stdClass $data
+     * @param int|null $citationNumber
+     * @return string
+     */
+    public function render($data, $citationNumber = null)
     {
         $ret = "";
         /** @var RenderingInterface $child */
         foreach ($this->children as $child) {
-            $ret .= $child->render($data);
+            $ret .= $child->render($data, $citationNumber);
         }
         return $ret;
     }
