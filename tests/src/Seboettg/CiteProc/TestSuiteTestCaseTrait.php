@@ -83,7 +83,7 @@ trait TestSuiteTestCaseTrait
 
         if (!empty($failures)) {
             print "\n\n".count($failures)." assertions failed:\n\t".implode("\n\t", $failures);
-            //throw new PHPUnit_Framework_ExpectationFailedException(count($failures)." assertions failed:\n\t".implode("\n\t", $failures));
+            throw new PHPUnit_Framework_ExpectationFailedException(count($failures)." assertions failed:\n\t".implode("\n\t", $failures));
         }
 
         if (!empty($exceptions)) {

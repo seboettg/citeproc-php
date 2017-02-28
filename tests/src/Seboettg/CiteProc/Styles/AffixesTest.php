@@ -23,6 +23,6 @@ class AffixesTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderTestSuite()
     {
-        $this->_testRenderTestSuite('affix_');
+        $this->_testRenderTestSuite('affixes.json');
     }
 }
