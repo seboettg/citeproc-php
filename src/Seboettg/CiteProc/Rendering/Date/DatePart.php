@@ -162,6 +162,10 @@ class DatePart
      */
     protected function renderMonth(DateTime $date)
     {
+        if ($date->getMonth() < 1 || $date->getMonth() > 12) {
+            return "";
+        }
+
         $text = $date->getMonth();
 
         $form = !empty($this->form) ? $this->form : $this->parent->getForm();
@@ -190,6 +194,10 @@ class DatePart
      */
     protected function renderDay(DateTime $date)
     {
+        if ($date->getDay() < 1 || $date->getDay() > 31) {
+            return "";
+        }
+
         $text = $date->getDay();
         $form = !empty($this->form) ? $this->form : $this->parent->getForm();
         switch ($form) {

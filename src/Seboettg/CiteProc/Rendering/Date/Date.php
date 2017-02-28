@@ -194,7 +194,7 @@ class Date
         // render numeric
         else if (!empty($this->datePartsAttribute)) {
             $data = $this->createDateTime($var->{'date-parts'});
-            $ret = $this->renderNumeric($data);
+            $ret = $this->renderNumeric($data[0]);
         }
 
         return !empty($ret) ? $this->addAffixes($this->format($this->applyTextCase($ret))) : "";
