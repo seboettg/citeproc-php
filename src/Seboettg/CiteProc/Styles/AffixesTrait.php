@@ -69,4 +69,14 @@ trait AffixesTrait
 
         return $prefix . $text . $suffix;
     }
+
+    public function renderPrefix()
+    {
+        return $this->prefix;
+    }
+
+    public function renderSuffix()
+    {
+        return $this->suffix;
+    }
 }

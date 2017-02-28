@@ -1,0 +1,47 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+fourth-seventh
+FOURTH-SEVENTH
+Fourth-seventh
+Fourth-Seventh
+Fourth-seventh
+<<===== RESULT =====<<
+
+
+
+>>===== CSL =====>>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2016-07-01T00:00:00+01:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <group delimiter="&#x0A;">
+        <number variable="number" form="long-ordinal" text-case="lowercase" />
+        <number variable="number" form="long-ordinal" text-case="uppercase" />
+        <number variable="number" form="long-ordinal" text-case="capitalize-first" />
+        <number variable="number" form="long-ordinal" text-case="capitalize-all" />
+        <number variable="number" form="long-ordinal" text-case="sentence" />
+        <!--number variable="number" form="long-ordinal" text-case="title" /-->
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "number": "4 - 7", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

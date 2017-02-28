@@ -1,0 +1,101 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+3–10
+71–72
+100–104
+600–613
+1100–1123
+107–8
+505–17
+1002–6
+321–25
+415–532
+11564–68
+13792–803
+1496–1504
+2787–2816
+<<===== RESULT =====<<
+
+
+
+>>===== CSL =====>>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" page-range-format="chicago">
+  <info>
+    <id />
+    <title />
+    <updated>2016-07-01T00:00:00+01:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="&#x0A;">
+      <number variable="page" />
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "page": "3-10", 
+        "type": "book"
+    }, 
+    {
+        "page": "71-72", 
+        "type": "book"
+    }, 
+    {
+        "page": "100-104", 
+        "type": "book"
+    }, 
+    {
+        "page": "600–613", 
+        "type": "book"
+    }, 
+    {
+        "page": "1100–1123", 
+        "type": "book"
+    }, 
+    {
+        "page": "107–108", 
+        "type": "book"
+    }, 
+    {
+        "page": "505–517", 
+        "type": "book"
+    }, 
+    {
+        "page": "1002–1006", 
+        "type": "book"
+    }, 
+    {
+        "page": "321-325", 
+        "type": "book"
+    }, 
+    {
+        "page": "415-532", 
+        "type": "book"
+    }, 
+    {
+        "page": "11564-11568", 
+        "type": "book"
+    }, 
+    {
+        "page": "13792-13803", 
+        "type": "book"
+    }, 
+    {
+        "page": "1496-1504", 
+        "type": "book"
+    }, 
+    {
+        "page": "2787-2816", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

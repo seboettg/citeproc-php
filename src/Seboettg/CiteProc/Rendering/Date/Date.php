@@ -27,6 +27,16 @@ use Seboettg\Collection\ArrayList;
  */
 class Date
 {
+                                             // ymd
+    const DATE_RANGE_STATE_NONE         = 0; // 000
+    const DATE_RANGE_STATE_DAY          = 1; // 001
+    const DATE_RANGE_STATE_MONTH        = 2; // 010
+    const DATE_RANGE_STATE_MONTHDAY     = 3; // 011
+    const DATE_RANGE_STATE_YEAR         = 4; // 100
+    const DATE_RANGE_STATE_YEARDAY      = 5; // 101
+    const DATE_RANGE_STATE_YEARMONTH    = 6; // 110
+    const DATE_RANGE_STATE_YEARMONTHDAY = 7; // 111
+
     use AffixesTrait,
         DisplayTrait,
         FormattingTrait,
@@ -147,45 +157,239 @@ class Date
             if (!isset($var->{'date-parts'})) {
                 return "";
             }
-            /** @var DatePart $datePart */
-            foreach ($this->dateParts as $datePart) {
-                $ret .= $datePart->render($var->{'date-parts'}, $this);
+
+            if (count($data->{$this->variable}->{'date-parts'}) === 1) {
+                $data_ = $this->createDateTime($var->{'date-parts'});
+                /** @var DatePart $datePart */
+                foreach ($this->dateParts as $datePart) {
+                    $ret .= $datePart->render($data_[0], $this);
+                }
+            } else if (count($data->{$this->variable}->{'date-parts'}) === 2) { //date range
+                $data_ = $this->createDateTime($var->{'date-parts'});
+                $from = $data_[0];
+                $to = $data_[1];
+                $interval = $to->diff($from);
+                $delim = "";
+                $toRender = 0;
+                if ($interval->y > 0) {
+                    $toRender |= self::DATE_RANGE_STATE_YEAR;
+                    $delim = $this->dateParts->get($this->form . "-year")->getRangeDelimiter();
+                }
+                if ($interval->m > 0 && $from->getMonth() - $to->getMonth() !== 0) {
+                    $toRender |= self::DATE_RANGE_STATE_MONTH;
+                    $delim = $this->dateParts->get($this->form . "-month")->getRangeDelimiter();
+                }
+                if ($interval->d > 0 && $from->getDay() - $to->getDay() !== 0) {
+                    $toRender |= self::DATE_RANGE_STATE_DAY;
+                    $delim = $this->dateParts->get($this->form . "-day")->getRangeDelimiter();
+                }
+
+                $ret = $this->renderDateRange($toRender, $from, $to, $delim);
+            } else {
+                // throw
             }
         }
         // fallback:
         // When there are no dateParts children, but date-parts attribute in date
         // render numeric
         else if (!empty($this->datePartsAttribute)) {
-
-            $ret = $this->renderNumeric($var->{'date-parts'});
-
+            $data = $this->createDateTime($var->{'date-parts'});
+            $ret = $this->renderNumeric($data);
         }
 
         return !empty($ret) ? $this->addAffixes($this->format($this->applyTextCase($ret))) : "";
     }
 
-    private function renderNumeric($date)
+    private function renderNumeric(DateTime $date)
     {
-        $date = $date[0];
-        $str = "";
-        $dateParts = explode("-", $this->datePartsAttribute);
-
-        if (in_array("year", $dateParts)) {
-            $str .= $date[0];
-        }
-        if (in_array("month", $dateParts)) {
-            $str = $date[1] . "/$str";
-        }
-        if (in_array("day", $dateParts)) {
-            $str = $date[2] . "/$str";
-        }
-
-        return $str;
+        return $date->renderNumeric();
     }
 
     public function getForm()
     {
         return $this->form;
+    }
+
+    private function createDateTime($dates)
+    {
+        $data = [];
+        foreach ($dates as $date) {
+            if ($date[0] < 1000) {
+                $dateTime = new DateTime(0,0,0);
+                $dateTime->setDay(0)->setMonth(0)->setYear(0);
+                $data[] = $dateTime;
+            }
+            $dateTime = new DateTime($date[0], array_key_exists(1, $date) ? $date[1] : 1, array_key_exists(2, $date) ? $date[2] : 1);
+            if (!array_key_exists(1, $date)) {
+                $dateTime->setMonth(0);
+            }
+            if (!array_key_exists(2, $date)) {
+                $dateTime->setDay(0);
+            }
+            $data[] = $dateTime;
+        }
+
+        return $data;
+    }
+
+    private function renderDateRange($differentParts, DateTime $from, DateTime $to, $delim)
+    {
+        $ret = "";
+        switch ($differentParts) {
+            case Date::DATE_RANGE_STATE_YEAR:
+                foreach ($this->dateParts as $key => $datePart) {
+                    if (strpos($key, "year") !== false) {
+                        $ret .= $this->renderOneRangePart($datePart, $from, $to, $delim);
+                    }
+                    if (strpos($key, "month") !== false) {
+                        $day = !empty($d = $from->getMonth()) ? $d : "";
+                        $ret .= $day;
+                    }
+                    if (strpos($key, "day") !== false) {
+                        $day = !empty($d = $from->getDay()) ? $datePart->render($from, $this) : "";
+                        $ret .= $day;
+                    }
+                }
+                break;
+            case Date::DATE_RANGE_STATE_MONTH:
+                /**
+                 * @var string $key
+                 * @var DatePart $datePart
+                 */
+                foreach ($this->dateParts as $key => $datePart) {
+                    if (strpos($key, "year") !== false) {
+                        $ret .= $datePart->render($from, $this);
+                    }
+                    if (strpos($key, "month")) {
+                        $ret .= $this->renderOneRangePart($datePart, $from, $to, $delim);
+                    }
+                    if (strpos($key, "day") !== false) {
+                        $day = !empty($d = $from->getDay()) ? $datePart->render($from, $this) : "";
+                        $ret .= $day;
+                    }
+                }
+                break;
+            case Date::DATE_RANGE_STATE_DAY:
+                /**
+                 * @var string $key
+                 * @var DatePart $datePart
+                 */
+                foreach ($this->dateParts as $key => $datePart) {
+                    if (strpos($key, "year") !== false) {
+                        $ret .= $datePart->render($from, $this);
+                    }
+                    if (strpos($key, "month") !== false) {
+                        $ret .= $datePart->render($from, $this);
+                    }
+                    if (strpos($key, "day")) {
+                        $ret .= $this->renderOneRangePart($datePart, $from, $to, $delim);
+                    }
+                }
+                break;
+            case Date::DATE_RANGE_STATE_YEARMONTHDAY:
+                $i = 0;
+                foreach ($this->dateParts as $datePart) {
+                    if ($i === $this->dateParts->count() - 1) {
+                        $ret .= $datePart->renderPrefix();
+                        $ret .= $datePart->renderWithoutAffixes($from, $this);
+                    } else {
+                        $ret .= $datePart->render($from, $this);
+                    }
+                    ++$i;
+                }
+                $ret .= $delim;
+                $i = 0;
+                foreach ($this->dateParts as $datePart) {
+                    if ($i == 0) {
+                        $ret .= $datePart->renderWithoutAffixes($to, $this);
+                        $ret .= $datePart->renderSuffix();
+                    } else {
+                        $ret .= $datePart->render($to, $this);
+                    }
+                    ++$i;
+                }
+                break;
+            case Date::DATE_RANGE_STATE_YEARMONTH:
+                $dp = $this->dateParts->toArray();
+                $i = 0;
+                $dateParts_ = [];
+                array_walk($dp, function ($datePart, $key) use (&$i, &$dateParts_, $differentParts) {
+                    if (strpos($key, "year") !== false || strpos($key, "month") !== false) {
+                        $dateParts_["yearmonth"][] = $datePart;
+                    }
+                    if (strpos($key, "day") !== false) {
+                        $dateParts_["day"] = $datePart;
+                    }
+                });
+                break;
+            case Date::DATE_RANGE_STATE_YEARDAY:
+                $dp = $this->dateParts->toArray();
+                $i = 0;
+                $dateParts_ = [];
+                array_walk($dp, function ($datePart, $key) use (&$i, &$dateParts_, $differentParts) {
+                    if (strpos($key, "year") !== false || strpos($key, "day") !== false) {
+                        $dateParts_["yearday"][] = $datePart;
+                    }
+                    if (strpos($key, "month") !== false) {
+                        $dateParts_["month"] = $datePart;
+                    }
+                });
+                break;
+            case Date::DATE_RANGE_STATE_MONTHDAY:
+                $dp = $this->dateParts->toArray();
+                $i = 0;
+                $dateParts_ = [];
+                array_walk($dp, function ($datePart, $key) use (&$i, &$dateParts_, $differentParts) {
+                    $bit = sprintf("%03d", decbin($differentParts));
+                    if (strpos($key, "month") !== false || strpos($key, "day") !== false) {
+                        $dateParts_["monthday"][] = $datePart;
+                    }
+                    if (strpos($key, "year") !== false) {
+                        $dateParts_["year"] = $datePart;
+                    }
+                });
+                break;
+        }
+        switch ($differentParts) {
+            case Date::DATE_RANGE_STATE_YEARMONTH:
+            case Date::DATE_RANGE_STATE_YEARDAY:
+            case Date::DATE_RANGE_STATE_MONTHDAY:
+                /**
+                 * @var $key
+                 * @var DatePart $datePart */
+                foreach ($dateParts_ as $key => $datePart) {
+                    if (is_array($datePart)) {
+
+                        $f  = $datePart[0]->render($from, $this);
+                        $f .= $datePart[1]->renderPrefix();
+                        $f .= $datePart[1]->renderWithoutAffixes($from, $this);
+                        $t  = $datePart[0]->renderWithoutAffixes($to, $this);
+                        $t .= $datePart[0]->renderSuffix();
+                        $t .= $datePart[1]->render($to, $this);
+                        $ret .= $f . $delim . $t;
+                    } else {
+                        $ret .= $datePart->render($from, $this);
+                    }
+                }
+                break;
+        }
+        return $ret;
+    }
+
+    /**
+     * @param $datePart
+     * @param $from
+     * @param $to
+     * @param $delim
+     * @return string
+     */
+    protected function renderOneRangePart(DatePart $datePart, $from, $to, $delim)
+    {
+        $prefix = $datePart->renderPrefix();
+        $from = $datePart->renderWithoutAffixes($from, $this);
+        $to = $datePart->renderWithoutAffixes($to, $this);
+        $suffix = !empty($to) ? $datePart->renderSuffix() : "";
+        return $prefix.$from.$delim.$to.$suffix;
     }
 
 }

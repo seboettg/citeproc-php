@@ -1,0 +1,191 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+
+>>===== RESULT =====>>
+[10–23]{August}(2003) | [10–23](2003){August} | {August}[10–23](2003) | {August}(2003)[10–23] | (2003)[10–23]{August} | (2003){August}[10–23]
+[3]{August–23]{October}(2003) | [3]{August–23]{October}(2003) | {August}[3–October}[23](2003) | {August}[3–October}[23](2003) | (2003)[3]{August–23]{October} | (2003){August}[3–October}[23]
+[3]{August}(1987–23]{October}(2003) | [3](1987){August–23](2003){October} | {August}[3](1987–October}[23](2003) | {August}(1987)[3–October}(2003)[23] | (1987)[3]{August–2003)[23]{October} | (1987){August}[3–2003){October}[23]
+{August–October}(2003) | (2003){August–October} | {August–October}(2003) | {August–October}(2003) | (2003){August–October} | (2003){August–October}
+{August}(1987–October}(2003) | (1987){August–2003){October} | {August}(1987–October}(2003) | {August}(1987–October}(2003) | (1987){August–2003){October} | (1987){August–2003){October}
+(1987–2003) | (1987–2003) | (1987–2003) | (1987–2003) | (1987–2003) | (1987–2003)
+(1987– | (1987– | (1987– | (1987– | (1987– | (1987–
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="note">
+  <info>
+    <title/>
+    <id/>
+    <updated>2016-06-21T07:13:58+00:00</updated>
+  </info>
+  <citation et-al-use-last="true" et-al-min="3" et-al-use-first="2">
+    <layout delimiter="&#x0A;">
+      <group delimiter=" | ">
+        <date variable="issued">
+          <date-part name="day" prefix="[" suffix="]" />
+          <date-part name="month" form="long" prefix="{" suffix="}" />
+          <date-part name="year" prefix="(" suffix=")" />
+        </date>
+        <date variable="issued">
+          <date-part name="day" prefix="[" suffix="]" />
+          <date-part name="year" prefix="(" suffix=")" />
+          <date-part name="month" form="long" prefix="{" suffix="}" />
+        </date>
+        <date variable="issued">
+          <date-part name="month" form="long" prefix="{" suffix="}" />
+          <date-part name="day" prefix="[" suffix="]" />
+          <date-part name="year" prefix="(" suffix=")" />
+        </date>
+        <date variable="issued">
+          <date-part name="month" form="long" prefix="{" suffix="}" />
+          <date-part name="year" prefix="(" suffix=")" />
+          <date-part name="day" prefix="[" suffix="]" />
+        </date>
+        <date variable="issued">
+          <date-part name="year" prefix="(" suffix=")" />
+          <date-part name="day" prefix="[" suffix="]" />
+          <date-part name="month" form="long" prefix="{" suffix="}" />
+        </date>
+        <date variable="issued">
+          <date-part name="year" prefix="(" suffix=")" />
+          <date-part name="month" form="long" prefix="{" suffix="}" />
+          <date-part name="day" prefix="[" suffix="]" />
+        </date>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    2003, 
+                    8, 
+                    10
+                ], 
+                [
+                    2003, 
+                    8, 
+                    23
+                ]
+            ]
+        }, 
+        "title": "Ignore me", 
+        "type": "book"
+    }, 
+    {
+        "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    2003, 
+                    8, 
+                    3
+                ], 
+                [
+                    2003, 
+                    10, 
+                    23
+                ]
+            ]
+        }, 
+        "title": "Ignore me", 
+        "type": "book"
+    }, 
+    {
+        "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    1987, 
+                    8, 
+                    3
+                ], 
+                [
+                    2003, 
+                    10, 
+                    23
+                ]
+            ]
+        }, 
+        "title": "Ignore me", 
+        "type": "book"
+    }, 
+    {
+        "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    2003, 
+                    8
+                ], 
+                [
+                    2003, 
+                    10
+                ]
+            ]
+        }, 
+        "title": "Ignore me", 
+        "type": "book"
+    }, 
+    {
+        "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    1987, 
+                    8
+                ], 
+                [
+                    2003, 
+                    10
+                ]
+            ]
+        }, 
+        "title": "Ignore me", 
+        "type": "book"
+    }, 
+    {
+        "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    1987
+                ], 
+                [
+                    2003
+                ]
+            ]
+        }, 
+        "title": "Ignore me", 
+        "type": "book"
+    }, 
+    {
+        "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    1987
+                ], 
+                [
+                    0
+                ]
+            ]
+        }, 
+        "title": "Ignore me", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

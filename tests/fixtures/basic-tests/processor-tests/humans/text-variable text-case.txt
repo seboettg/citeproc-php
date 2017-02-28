@@ -1,0 +1,47 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+this is a random title.
+THIS IS A RANDOM TITLE.
+This is a Random TITLE.
+This Is A Random TITLE.
+This is a Random TITLE.
+<<===== RESULT =====<<
+
+
+
+>>===== CSL =====>>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2016-07-01T00:00:00+01:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <group delimiter="&#x0A;">
+        <text variable="title" text-case="lowercase" />
+        <text variable="title" text-case="uppercase" />
+        <text variable="title" text-case="capitalize-first" />
+        <text variable="title" text-case="capitalize-all" />
+        <text variable="title" text-case="sentence" />
+        <!--text variable="title" text-case="title" /-->
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "title": "this is a Random TITLE.", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

@@ -1,0 +1,80 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+
+>>===== RESULT =====>>
+Greg Mitchell
+David Johnson
+Ignore me
+xx
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0">
+  <info>
+    <title/>
+    <id/>
+    <updated>2016-06-21T07:13:58+00:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="&#x0A;">
+      <names variable="author">
+		<name et-al-min="8" />
+	    <substitute>
+		  <names variable="editor" />
+		  <text variable="title" />
+		  <text value="xx" />
+		</substitute>
+	  </names>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Mitchell", 
+                "given": "Greg"
+            }
+        ], 
+        "editor": [
+            {
+                "family": "Johnson", 
+                "given": "David"
+            }
+        ], 
+        "id": "ITEM-1", 
+        "title": "Ignore me", 
+        "type": "book"
+    }, 
+    {
+        "editor": [
+            {
+                "family": "Johnson", 
+                "given": "David"
+            }
+        ], 
+        "id": "ITEM-1", 
+        "title": "Ignore me", 
+        "type": "book"
+    }, 
+    {
+        "id": "ITEM-1", 
+        "title": "Ignore me", 
+        "type": "book"
+    }, 
+    {
+        "id": "ITEM-1", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

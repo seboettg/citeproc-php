@@ -50,7 +50,7 @@ class DateTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
 
     public function testRenderTestSuite()
     {
-        $this->_testRenderTestSuite('date_');
+        $this->_testRenderTestSuite('date');
 
     }
 }

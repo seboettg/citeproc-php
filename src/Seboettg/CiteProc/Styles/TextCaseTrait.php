@@ -37,6 +37,11 @@ trait TextCaseTrait
         }
     }
 
+    /**
+     * @param string $text
+     * @param string $lang
+     * @return string
+     */
     public function applyTextCase($text, $lang = "en")
     {
 

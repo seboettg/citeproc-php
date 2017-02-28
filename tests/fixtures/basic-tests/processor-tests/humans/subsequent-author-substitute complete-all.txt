@@ -1,0 +1,253 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">Doe. 1999.</div>
+  <div class="csl-entry">---. 2000.</div>
+  <div class="csl-entry">Doe, Johnson &#38; Williams. 2001.</div>
+  <div class="csl-entry">Doe &#38; Smith. 2002.</div>
+  <div class="csl-entry">Doe, Stevens &#38; Miller. 2003.</div>
+  <div class="csl-entry">---. 2004.</div>
+  <div class="csl-entry">Doe, Williams et al. 2005.</div>
+  <div class="csl-entry">---. 2006.</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" et-al-min="4" et-al-use-first="2" and="symbol" delimiter-precedes-et-al="never" delimiter-precedes-last="never" >
+  <info>
+    <title/>
+    <id/>
+    <updated>2016-06-21T07:13:58+00:00</updated>
+  </info>
+  <locale>
+    <terms>
+      <term name="et-al">et al</term>
+    </terms>
+  </locale>
+  <bibliography subsequent-author-substitute="---" subsequent-author-substitute-rule="complete-all">
+    <layout>
+      <group delimiter=" ">
+        <names variable="author" suffix=".">
+          <name form="short" />
+        </names>
+        <date variable="issued" form="numeric" date-parts="year" suffix="." />
+      </group>
+    </layout>
+  </bibliography>
+  <citation>
+    <layout>
+      <names variable="author" />
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John"
+            }
+        ], 
+        "id": "item-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    "1999"
+                ]
+            ]
+        }, 
+        "title": "Book A", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John"
+            }
+        ], 
+        "id": "item-2", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2000"
+                ]
+            ]
+        }, 
+        "title": "Book B", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John"
+            }, 
+            {
+                "family": "Johnson", 
+                "given": "Marc"
+            }, 
+            {
+                "family": "Williams", 
+                "given": "John"
+            }
+        ], 
+        "id": "item-3", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2001"
+                ]
+            ]
+        }, 
+        "title": "Book C", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John"
+            }, 
+            {
+                "family": "Smith", 
+                "given": "Harry"
+            }
+        ], 
+        "id": "item-4", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2002"
+                ]
+            ]
+        }, 
+        "title": "Book D", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John"
+            }, 
+            {
+                "family": "Stevens", 
+                "given": "Cat"
+            }, 
+            {
+                "family": "Miller", 
+                "given": "Steve"
+            }
+        ], 
+        "id": "item-5", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2003"
+                ]
+            ]
+        }, 
+        "title": "Book E", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John"
+            }, 
+            {
+                "family": "Stevens", 
+                "given": "Cat"
+            }, 
+            {
+                "family": "Miller", 
+                "given": "Steve"
+            }
+        ], 
+        "id": "item-6", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2004"
+                ]
+            ]
+        }, 
+        "title": "Book F", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John"
+            }, 
+            {
+                "family": "Williams", 
+                "given": "John"
+            }, 
+            {
+                "family": "Lennon", 
+                "given": "John"
+            }, 
+            {
+                "family": "McCartney", 
+                "given": "Paul"
+            }
+        ], 
+        "id": "item-7", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2005"
+                ]
+            ]
+        }, 
+        "title": "Book F", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John"
+            }, 
+            {
+                "family": "Williams", 
+                "given": "John"
+            }, 
+            {
+                "family": "Lennon", 
+                "given": "John"
+            }, 
+            {
+                "family": "McCartney", 
+                "given": "Paul"
+            }
+        ], 
+        "id": "item-8", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2006"
+                ]
+            ]
+        }, 
+        "title": "Book G", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

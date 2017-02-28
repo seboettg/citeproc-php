@@ -1,0 +1,46 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+1<sup>re</sup> édition
+<<===== RESULT =====<<
+
+
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style default-locale="fr-FR" class="note" version="1.0" xmlns="http://purl.org/net/xbiblio/csl">
+  <info>
+    <title/>
+    <id/>
+    <updated>2016-06-13T07:41:51+00:00</updated>
+  </info>
+  <citation et-al-use-first="2" et-al-min="3" et-al-use-last="true">
+    <layout>
+      <group delimiter=" ">
+        <number variable="edition" form="ordinal"/>
+        <label variable="edition"/>
+      </group>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout>
+      <text value="Test!"/>
+      <text value="qq"/>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "edition": "1", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

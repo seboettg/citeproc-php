@@ -1,0 +1,56 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+5–8
+5–13
+42–45
+321–328
+2787–2816
+<<===== RESULT =====<<
+
+
+
+>>===== CSL =====>>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" page-range-format="expanded">
+  <info>
+    <id />
+    <title />
+    <updated>2016-07-01T00:00:00+01:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="&#x0A;">
+      <number variable="page" />
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "page": "5-8", 
+        "type": "book"
+    }, 
+    {
+        "page": "5-13", 
+        "type": "book"
+    }, 
+    {
+        "page": "42-45", 
+        "type": "book"
+    }, 
+    {
+        "page": "321-328", 
+        "type": "book"
+    }, 
+    {
+        "page": "2787–2816", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<
