@@ -19,7 +19,7 @@ use Seboettg\CiteProc\Rendering\RenderingInterface;
  */
 class ChooseElse extends ChooseIf implements RenderingInterface
 {
-    public function render($data)
+    public function render($data, $citationNumber = null)
     {
         $ret = "";
         /** @var RenderingInterface $child */

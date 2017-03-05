@@ -8,11 +8,13 @@
  */
 
 namespace Seboettg\CiteProc;
+use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
 use Seboettg\CiteProc\Style\Macro;
 use Seboettg\CiteProc\Style\Sort\Sort;
+use Seboettg\CiteProc\Style\Root;
 use Seboettg\Collection\ArrayList;
 
 
@@ -55,9 +57,24 @@ class Context
     private $mode;
 
     /**
-     * @var ArrayList
+     * @var DataList
      */
     private $citationItems;
+
+    /**
+     * @var ArrayList
+     */
+    private $results;
+
+    /**
+     * @var Root
+     */
+    private $root;
+
+    /**
+     * @var CiteProc
+     */
+    private $citeProc;
 
     public function __construct($locale = null)
     {
@@ -66,7 +83,8 @@ class Context
         }
 
         $this->macros = new ArrayList();
-        $this->citationItems = new ArrayList();
+        $this->citationItems = new DataList();
+        $this->results = new ArrayList();
     }
 
     public function addMacro($key, $macro)
@@ -142,6 +160,7 @@ class Context
     }
 
     /**
+     * return the render mode (citation|bibliography)
      * @return string
      */
     public function getMode()
@@ -157,18 +176,26 @@ class Context
         $this->mode = $mode;
     }
 
+    /**
+     * returns true if the render mode is set to citation
+     * @return bool
+     */
     public function isModeCitation()
     {
         return $this->mode === "citation";
     }
 
+    /**
+     * returns true if the render mode is set to bibliography
+     * @return bool
+     */
     public function isModeBibliography()
     {
         return $this->mode === "bibliography";
     }
 
     /**
-     * @return ArrayList
+     * @return DataList
      */
     public function getCitationItems()
     {
@@ -176,15 +203,48 @@ class Context
     }
 
     /**
-     * @param ArrayList $citationItems
+     * @param DataList $citationItems
      */
-    public function setCitationItems($citationItems)
+    public function setCitationItems(&$citationItems)
     {
         $this->citationItems = $citationItems;
     }
 
     public function hasCitationItems()
     {
-        return (count($this->citationItems) > 0);
+        return ($this->citationItems->count() > 0);
     }
+
+    /**
+     * @return ArrayList
+     */
+    public function getMacros()
+    {
+        return $this->macros;
+    }
+
+    /**
+     * @return ArrayList
+     */
+    public function getResults()
+    {
+        return $this->results;
+    }
+
+    /**
+     * @return Root
+     */
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    /**
+     * @param Root $root
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+    }
+
 }

@@ -114,8 +114,23 @@ class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         $this->assertEquals("la Doe, John de; Curie, Marie; <i>u. a.</i>", $names->render(json_decode($data)));
     }
 
+    public function testRenderSubstitute()
+    {
+        $this->_testRenderTestSuite("names_substitute");
+    }
+
+
+    public function testEditorTranslator()
+    {
+        $this->_testRenderTestSuite("name_EditorTranslator");
+    }
+
+    public function testEtAl()
+    {
+        $this->_testRenderTestSuite("name_EtAl");
+    }
+
     public function testRenderTestSuite()
     {
-        $this->_testRenderTestSuite("name_");
     }
 }

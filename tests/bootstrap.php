@@ -6,10 +6,10 @@
  * @copyright   Copyright (c) 2016 Sebastian Böttger.
  * @license     https://opensource.org/licenses/MIT
  */
-
+date_default_timezone_set('Europe/Berlin');
 require_once realpath(__DIR__ . '/../vendor/autoload.php');
 
-define('PHPUNIT_FIXTURES', realpath(__DIR__ . '/fixtures/test-suite/processor-tests/machines'));
+define('PHPUNIT_FIXTURES', realpath(__DIR__ . '/fixtures/basic-tests/processor-tests/machines'));
 
 $loader = new Composer\Autoload\ClassLoader();
 $loader->add('Seboettg', realpath(__DIR__ . '/src'));

@@ -27,6 +27,9 @@ use Seboettg\CiteProc\Util\Factory;
  */
 class Citation extends StyleElement
 {
+
+    private $node;
+
     /**
      * Citation constructor.
      * @param \SimpleXMLElement $node
@@ -34,5 +37,18 @@ class Citation extends StyleElement
     public function __construct(\SimpleXMLElement $node)
     {
         parent::__construct($node);
+        $this->node = $node;
     }
+
+    /**
+     * @param array|DataList $data
+     * @param int|null $citationNumber
+     * @return string
+     */
+    public function render($data, $citationNumber = null)
+    {
+        $this->initInheritableNameAttributes($this->node);
+        return $this->layout->render($data, $citationNumber);
+    }
+
 }

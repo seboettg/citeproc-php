@@ -30,6 +30,6 @@ class CiteProcTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
 
     public function testRenderTestSuite()
     {
-        $this->_testRenderTestSuite(".json", ['bugreports_', 'number_FailingDelimiters', 'number_LeadingZeros.json']);
+        $this->_testRenderTestSuite("a", ['bugreports_', 'number_FailingDelimiters', 'number_LeadingZeros.json']);
     }
 }

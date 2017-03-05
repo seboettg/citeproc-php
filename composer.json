@@ -12,7 +12,8 @@
         "psr-4": {"": "src/"}
     },
     "require": {
-        "seboettg/collection": "^1.1"
+        "seboettg/collection": "^1.1",
+        "myclabs/php-enum": "^1.5"
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1"
@@ -30,4 +31,3 @@
         ]
     }
 }
-

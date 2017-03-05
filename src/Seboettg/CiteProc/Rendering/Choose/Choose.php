@@ -43,7 +43,7 @@ class Choose implements RenderingInterface
         }
     }
 
-    public function render($data)
+    public function render($data, $citationNumber = null)
     {
         $arr = [];
         if ($this->children->get("if")->match($data)) {

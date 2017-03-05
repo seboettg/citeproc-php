@@ -56,7 +56,10 @@ class Group implements RenderingInterface
         $arr = [];
         /** @var RenderingInterface $child */
         foreach ($this->children as $child) {
-            $arr[] = $child->render($data, $citationNumber);
+            $res = $child->render($data, $citationNumber);
+            if (!empty($res)) {
+                $arr[] = $res;
+            }
         }
         return $this->wrapDisplayBlock($this->addAffixes(implode($this->delimiter, $arr)));
     }

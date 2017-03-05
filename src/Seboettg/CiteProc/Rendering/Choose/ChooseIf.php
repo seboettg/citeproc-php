@@ -52,7 +52,7 @@ class ChooseIf implements RenderingInterface
         }
     }
 
-    public function render($data)
+    public function render($data, $citationNumber = null)
     {
         $ret = "";
         /** @var RenderingInterface $child */

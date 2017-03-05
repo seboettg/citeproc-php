@@ -10,6 +10,7 @@
 namespace Seboettg\CiteProc\Rendering;
 
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
@@ -57,6 +58,11 @@ class Layout implements RenderingInterface
         $this->initFormattingAttributes($node);
     }
 
+    /**
+     * @param array|DataList $data
+     * @param int|null $citationNumber
+     * @return string
+     */
     public function render($data, $citationNumber = null)
     {
         $ret = "";
@@ -66,31 +72,26 @@ class Layout implements RenderingInterface
         }
 
         if (CiteProc::getContext()->isModeBibliography()) {
-            if (is_array($data)) {
-                $arr = [];
+            if ($data instanceof DataList) {
                 foreach ($data as $citationNumber => $item) {
                     ++self::$numberOfCitedItems;
-                    $arr[] = $this->wrapBibEntry($this->renderSingle($item, $citationNumber));
+                    CiteProc::getContext()->getResults()->append($this->wrapBibEntry($this->renderSingle($item, $citationNumber)));
                 }
-                $ret .= implode($this->delimiter, $arr);
+                $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
             } else {
-                $ret .= $this->wrapBibEntry($this->renderSingle($data));
+                $ret .= $this->wrapBibEntry($this->renderSingle($data, $citationNumber));
             }
 
             return "<div class=\"csl-bib-body\">".$ret."\n</div>";
 
         } else if (CiteProc::getContext()->isModeCitation()) {
-            if (is_array($data)) {
-                $arr = [];
-                foreach ($data as $item) {
-                    if (CiteProc::getContext()->hasCitationItems()) {
-                        continue;
-                    }
-                    $arr[] = $this->renderSingle($item);
+            if (is_array($data) || $data instanceof DataList) {
+                foreach ($data as $citationNumber => $item) {
+                    CiteProc::getContext()->getResults()->append($this->renderSingle($item, $citationNumber));
                 }
-                $ret .= implode($this->delimiter, $arr);
+                $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
             } else {
-                $ret .= $this->renderSingle($data);
+                $ret .= $this->renderSingle($data, $citationNumber);
             }
         }
 

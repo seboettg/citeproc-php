@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -8,6 +8,8 @@
  */
 
 namespace Seboettg\CiteProc\Rendering;
+
+use Seboettg\CiteProc\Data\DataList;
 
 /**
  * Interface RenderingInterface
@@ -20,7 +22,7 @@ interface RenderingInterface
 {
 
     /**
-     * @param \stdClass $data
+     * @param array|DataList $data
      * @param int|null $citationNumber
      * @return string
      */

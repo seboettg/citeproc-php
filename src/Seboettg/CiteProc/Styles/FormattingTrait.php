@@ -67,6 +67,8 @@ trait FormattingTrait
                     $text = "<i>$text</i>";
                 } else if ($optionValue === "bold") {
                     $text = "<b>$text</b>";
+                } else if ($optionValue === "normal") {
+                    return $text;
                 } else {
                     $format .= "$option:$optionValue;";
                 }

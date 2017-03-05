@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Style;
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Rendering\Layout;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\CiteProc\Style\Sort\Sort;
@@ -28,15 +29,16 @@ use Seboettg\CiteProc\Style\Sort\Sort;
 abstract class StyleElement implements RenderingInterface
 {
 
+    use InheritableNameAttributesTrait;
     /**
      * @var Layout
      */
-    private $layout;
+    protected $layout;
 
     /**
      * @var bool
      */
-    private $doNotSort;
+    protected $doNotSort;
 
 
     /**
@@ -69,15 +71,5 @@ abstract class StyleElement implements RenderingInterface
                     CiteProc::getContext()->setSorting($sorting);
             }
         }
-    }
-
-    /**
-     * @param \stdClass $data
-     * @param int|null $citationNumber
-     * @return string
-     */
-    public function render($data, $citationNumber = null)
-    {
-        return $this->layout->render($data, $citationNumber);
     }
 }

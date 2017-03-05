@@ -30,27 +30,69 @@ class DateTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         CiteProc::setContext($context);
     }
 
-    private $data = "{\"id\": \"ITEM-2\", \"issued\": {\"date-parts\": [[\"1983\", \"1\", \"15\"]]}, \"title\": \"Item 2\", \"type\": \"book\"}";
-
-    public function testRenderDateParts()
+    public function testDateString()
     {
-        $xml = "
-              <date variable=\"issued\" form=\"numeric-leading-zeros\">
-                <date-part prefix=\" \" suffix=\".\" name=\"day\"/>
-                <date-part suffix=\".\" name=\"month\"/>
-                <date-part name=\"year\"/>
-              </date>";
+        $this->_testRenderTestSuite("date_String");
+    }
 
-        $date = new Date(new \SimpleXMLElement($xml));
-        $ret = $date->render(json_decode($this->data));
+    public function testNoDate()
+    {
+        $this->_testRenderTestSuite("date_NoDate");
+    }
 
-        $this->assertEquals(" 15.01.1983", $ret);
+    public function testLocalizedNumericYear()
+    {
+        $this->_testRenderTestSuite("date_LocalizedNumericYear");
+    }
 
+    public function testLocalizedNumericDefaultWithAffixes()
+    {
+        $this->_testRenderTestSuite("date_LocalizedNumericDefaultWithAffixes");
+    }
+
+    public function testLocalizedNumericDefaultWithMissingDay()
+    {
+        $this->_testRenderTestSuite("date_LocalizedNumericDefaultWithMissingDay");
+    }
+
+    public function testLocalizedNumericDefault()
+    {
+        $this->_testRenderTestSuite("date_LocalizedNumericDefault");
+    }
+
+    public function testLocalizedDateFormatsFr()
+    {
+        $this->_testRenderTestSuite("date_LocalizedDateFormats-");
+    }
+
+    public function testLoneJapaneseMonth()
+    {
+        $this->_testRenderTestSuite("date_LoneJapaneseMonth");
+    }
+
+
+    public function testLongMonth()
+    {
+        $this->_testRenderTestSuite("date_LongMonth");
+    }
+
+    public function testDateRanges()
+    {
+        $this->_testRenderTestSuite("date_ranges");
+    }
+
+    public function testRawParseSimpleDate()
+    {
+        $this->_testRenderTestSuite("date_RawParseSimpleDate");
+    }
+
+    public function testRawSeasonRange()
+    {
+        $this->_testRenderTestSuite("date_RawSeasonRange");
     }
 
     public function testRenderTestSuite()
     {
-        $this->_testRenderTestSuite('date');
 
     }
 }

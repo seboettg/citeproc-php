@@ -8,9 +8,13 @@
  */
 
 namespace Seboettg\CiteProc;
+use Seboettg\CiteProc\Data\DataList;
+use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
 use Seboettg\CiteProc\Style\Macro;
+use Seboettg\CiteProc\Style\Root;
+
 
 /**
  * Class CiteProc
@@ -70,7 +74,7 @@ class CiteProc
     public function __construct($styleSheet, $lang = "en-US")
     {
         $this->styleSheet = $styleSheet;
-        self::$context = new Context();
+        self::$context = new Context($this);
         self::$context->setLocale(new Locale\Locale($lang)); //init locale
         $this->styleSheetXml = new \SimpleXMLElement($this->styleSheet);
         $this->parse($this->styleSheetXml);
@@ -81,6 +85,10 @@ class CiteProc
      */
     private function parse(\SimpleXMLElement $style)
     {
+        $root = new Root();
+        $root->initInheritableNameAttributes($style);
+        self::$context->setRoot($root);
+
         /** @var \SimpleXMLElement $node */
         foreach ($style as $node) {
             $name = $node->getName();
@@ -107,24 +115,40 @@ class CiteProc
     }
 
     /**
-     * @param \stdClass $data
+     * @param array|DataList $data
      * @return string
      */
-    public function bibliography($data)
+    protected function bibliography($data)
     {
+
         return self::$context->getBibliography()->render($data);
     }
 
     /**
-     * @param \stdClass $data
+     * @param array|DataList $data
      * @return string
      */
-    public function citation($data)
+    protected function citation($data)
     {
         return self::$context->getCitation()->render($data);
     }
 
+    /**
+     * @param array|DataList $data
+     * @param string $mode (citation|bibliography)
+     * @return string
+     * @throws CiteProcException
+     */
     public function render($data, $mode = "bibliography") {
+
+        if (is_array($data)) {
+            $data = new DataList($data);
+        } else if (!($data instanceof DataList)) {
+            throw new CiteProcException('No valid format for variable data. Either DataList or array expected');
+        }
+
+        // set CitationItems to Context
+        self::getContext()->setCitationItems($data);
 
         switch ($mode) {
             case 'bibliography':

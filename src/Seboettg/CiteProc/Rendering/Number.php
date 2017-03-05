@@ -22,8 +22,14 @@ use Seboettg\CiteProc\Styles\TextCaseTrait;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Number
+class Number implements RenderingInterface
 {
+
+    const RANGE_DELIMITER_HYPHEN = "-";
+
+    const RANGE_DELIMITER_AMPERSAND = "&";
+
+    const RANGE_DELIMITER_COMMA = ",";
 
     use FormattingTrait,
         AffixesTrait,
@@ -53,7 +59,12 @@ class Number
         $this->initTextCaseAttributes($node);
     }
 
-    public function render($data)
+    /**
+     * @param \stdClass $data
+     * @param int|null $citationNumber
+     * @return string
+     */
+    public function render($data, $citationNumber = null)
     {
         $lang = (isset($data->language) && $data->language != 'en') ? $data->language : 'en';
 
@@ -62,17 +73,49 @@ class Number
         }
         switch ($this->form) {
             case 'ordinal':
-                $text = self::ordinal($data->{$this->variable});
+                $var = $data->{$this->variable};
+                if (preg_match("/\s*(\d+)\s*[\-\-\&,]\s*(\d+)\s*/", $var, $matches)) {
+                    $num1 = self::ordinal($matches[1]);
+                    $num2 = self::ordinal($matches[3]);
+                    $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
+                } else {
+                    $text = self::ordinal($var);
+                }
                 break;
             case 'long-ordinal':
-                $text = self::longOrdinal($data->{$this->variable});
+                $var = $data->{$this->variable};
+                if (preg_match("/\s*(\d+)\s*[\-\-\&,]\s*(\d+)\s*/", $var, $matches)) {
+                    $num1 = self::longOrdinal($matches[1]);
+                    $num2 = self::longOrdinal($matches[3]);
+                    $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
+                } else {
+                    $text = self::longOrdinal($var);
+                }
                 break;
             case 'roman':
-                $text = Util\Number::dec2roman($data->{$this->variable});
+                $var = $data->{$this->variable};
+                if (preg_match("/\s*(\d+)\s*[\-\-\&,]\s*(\d+)\s*/", $var, $matches)) {
+                    $num1 = Util\Number::dec2roman($matches[1]);
+                    $num2 = Util\Number::dec2roman($matches[3]);
+                    $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
+                } else {
+                    $text =  Util\Number::dec2roman($var);
+                }
                 break;
             case 'numeric':
             default:
-                $text = $data->{$this->variable};
+                /*
+                 During the extraction, numbers separated by a hyphen are stripped of intervening spaces (“2 - 4”
+                 becomes “2-4”). Numbers separated by a comma receive one space after the comma (“2,3” and “2 , 3”
+                 become “2, 3”), while numbers separated by an ampersand receive one space before and one after the
+                 ampersand (“2&3” becomes “2 & 3”).
+                 */
+                $var = $data->{$this->variable};
+                if (preg_match("/\s*(\d+)\s*[\-\-\&,]\s*(\d+)\s*/", $var, $matches)) {
+                    $text = $this->buildNumberRangeString($matches[1], $matches[3], $matches[2]);
+                } else {
+                    $text =  Util\Number::dec2roman($var);
+                }
                 break;
         }
         return $this->wrapDisplayBlock($this->addAffixes($this->format($this->applyTextCase($text, $lang))));
@@ -102,6 +145,25 @@ class Number
         }
         return $ret;
     }
+
+    /**
+     * @param string|int $num1
+     * @param string|int $num2
+     * @param string $delim
+     * @return string
+     */
+    public function buildNumberRangeString($num1, $num2, $delim) {
+
+        if (self::RANGE_DELIMITER_AMPERSAND === $delim) {
+            $numRange = "$num1 " . self::RANGE_DELIMITER_AMPERSAND . " $num2";
+        } else if (self::RANGE_DELIMITER_COMMA === $delim) {
+            $numRange = $num1 . htmlentities(self::RANGE_DELIMITER_COMMA) . " $num2";
+        } else  {
+            $numRange = $num1 . self::RANGE_DELIMITER_HYPHEN . $num2;
+        }
+        return $numRange;
+    }
+
 
 
 }

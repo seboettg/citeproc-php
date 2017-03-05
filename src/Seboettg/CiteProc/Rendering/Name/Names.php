@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Rendering\Name;
 
+use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Rendering\Label;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\CiteProc\Styles\AffixesTrait;
@@ -152,7 +153,6 @@ class Names implements RenderingInterface
     public function render($data, $citationNumber = null)
     {
         $str = "";
-        $matches = [];
 
         /* when the selection consists of “editor” and “translator”, and when the contents of these two name variables
         is identical, then the contents of only one name variable is rendered. In addition, the “editortranslator”
@@ -160,7 +160,7 @@ class Names implements RenderingInterface
         “translator” terms (e.g. resulting in “Doe (editor & translator)”) */
         if ($this->variables->hasValue("editor") && $this->variables->hasValue("translator")) {
             if (isset($data->editor) && isset($data->translator)) {
-                if (isset($name)) {
+                if (isset($this->name)) {
                     $str .= $this->name->render($data->editor);
                 } else {
                     $arr = [];
@@ -181,20 +181,13 @@ class Names implements RenderingInterface
             }
         }
 
-        foreach ($this->variables as $variable) {
-            if (isset($data->{$variable}) && (!empty($data->{$variable}))) {
-                $matches[] = $variable;
-            }
-        }
-
-
-
         $results = [];
-        foreach ($matches as $var) {
+
+        foreach ($this->variables as $var) {
 
             if (!empty($data->{$var})) {
                 if (!empty($this->name)) {
-                    $name = $this->name->render($data->{$var});
+                    $name = $this->name->render($data->{$var}, $citationNumber);
                     if (!empty($this->label)) {
                         $this->label->setVariable($var);
                         $name .= $this->label->render($data);
@@ -204,6 +197,10 @@ class Names implements RenderingInterface
                     foreach ($data->{$var} as $name) {
                         $results[] = $this->format($name->given . " " . $name->family);
                     }
+                }
+            } else {
+                if (!empty($this->substitute)) {
+                    $results[] = $this->substitute->render($data);
                 }
             }
         }

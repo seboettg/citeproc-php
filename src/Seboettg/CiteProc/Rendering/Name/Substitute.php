@@ -100,18 +100,16 @@ class Substitute implements RenderingInterface
     {
         $str = "";
 
-        /* adds substitution in case the name variables specified in the parent cs:names element are empty. */
-        if ($this->parent->getVariables()->count() === 0) {
-            /** @var RenderingInterface $child */
-            foreach ($this->children as $child) {
-                /* If cs:substitute contains multiple child elements, the first element to return a
-                non-empty result is used for substitution. */
-                $str = $child->render($data, $citationNumber);
-                if (!empty($str)) {
-                    return $str;
-                }
+        /** @var RenderingInterface $child */
+        foreach ($this->children as $child) {
+            /* If cs:substitute contains multiple child elements, the first element to return a
+            non-empty result is used for substitution. */
+            $str = $child->render($data, $citationNumber);
+            if (!empty($str)) {
+                return $str;
             }
-            return $str;
         }
+        return $str;
+
     }
 }

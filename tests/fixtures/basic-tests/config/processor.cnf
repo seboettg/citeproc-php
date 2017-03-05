@@ -1,0 +1,6 @@
+[jing]
+command: java -jar
+path: ../jing/bin/jing.jar
+
+[csl]
+v1.0: ../citeproc-js/csl/1.0/csl.rnc
