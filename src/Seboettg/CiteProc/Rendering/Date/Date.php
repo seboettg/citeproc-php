@@ -27,7 +27,13 @@ use Seboettg\Collection\ArrayList;
  */
 class Date
 {
-                                             // ymd
+
+    use AffixesTrait,
+        DisplayTrait,
+        FormattingTrait,
+        TextCaseTrait;
+
+    // ymd
     const DATE_RANGE_STATE_NONE         = 0; // 000
     const DATE_RANGE_STATE_DAY          = 1; // 001
     const DATE_RANGE_STATE_MONTH        = 2; // 010
@@ -37,10 +43,10 @@ class Date
     const DATE_RANGE_STATE_YEARMONTH    = 6; // 110
     const DATE_RANGE_STATE_YEARMONTHDAY = 7; // 111
 
-    use AffixesTrait,
-        DisplayTrait,
-        FormattingTrait,
-        TextCaseTrait;
+    private static $localizedDateFormats = [
+        'numeric',
+        'text'
+    ];
 
     /**
      * @var ArrayList
@@ -57,6 +63,9 @@ class Date
      */
     private $variable = "";
 
+    /**
+     * @var string
+     */
     private $datePartsAttribute = "";
 
     public function __construct(\SimpleXMLElement $node)
@@ -107,50 +116,59 @@ class Date
         if (!isset($data->{$this->variable}->{'date-parts'}) || empty($data->{$this->variable}->{'date-parts'})) {
             if (isset($data->{$this->variable}->raw) && !empty($data->{$this->variable}->raw)) {
                 try {
+                    // try to parse date parts from "raw" attribute
                     $var->{'date-parts'} = Util\Date::parseDateParts($data->{$this->variable});
                 } catch (CiteProcException $e) {
-                    return "";
+                    return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->raw)));
                 }
             } else {
                 return "";
             }
         }
 
-        // date parts from locales
-        $dateFromLocale = CiteProc::getContext()->getLocale()->getDateXml();
+        $form = $this->form;
+        $dateParts = explode("-", $this->datePartsAttribute);
 
-        // no custom date parts within the date element (this)?
-        if ($this->dateParts->count() <= 0 && !empty($dateFromLocale["date"])) {
-            //if exist, add date parts from locales
+        /* Localized date formats are selected with the optional form attribute, which must set to either “numeric”
+        (for fully numeric formats, e.g. “12-15-2005”), or “text” (for formats with a non-numeric month, e.g.
+        “December 15, 2005”). Localized date formats can be customized in two ways. First, the date-parts attribute may
+        be used to show fewer date parts. The possible values are:
+            - “year-month-day” - (default), renders the year, month and day
+            - “year-month” - renders the year and month
+            - “year” - renders the year */
 
-            $datePartsXml = $dateFromLocale["date"];
+        if ($this->dateParts->count() < 1 && in_array($form, self::$localizedDateFormats)) {
+            if ($this->hasDatePartsFromLocales($form)) {
+                $datePartsFromLocales = $this->getDatePartsFromLocales($form);
+                array_filter($datePartsFromLocales, function (\SimpleXMLElement $item) use ($dateParts) {
+                    return in_array($item["name"], $dateParts);
+                });
 
-            //filter dateParts by form
-            $form = $this->form;
-            $dateForm = array_filter($datePartsXml, function($element) use ($form){
-                /** @var \SimpleXMLElement $element */
-                $dateForm = (string) $element->attributes()["form"];
-                return  $dateForm === $form;
-            });
-
-            //has dateForm from locale children (date-part elements)?
-            $localeDate = array_pop($dateForm);
-            if ($localeDate instanceof \SimpleXMLElement && $localeDate->count() > 0) {
-                //add only date parts defined in date-parts attribute of (this) date element
-                $dateParts = explode("-", $this->datePartsAttribute);
-
-                /** @var \SimpleXMLElement $child */
-                foreach ($localeDate->children() as $child) {
-                    if ($child->getName() === "date-part") {
-                        $datePartName = (string) $child->attributes()["name"];
-                        if (in_array($datePartName, $dateParts)) {
-                            $this->dateParts->set("$form-$datePartName", Util\Factory::create($child));
-                        }
-                    }
+                foreach ($datePartsFromLocales as $datePartNode) {
+                    $datePart = $datePartNode["name"];
+                    $this->dateParts->set("$form-$datePart", Util\Factory::create($datePartNode));
+                }
+            } else { //otherwise create default date parts
+                foreach ($dateParts as $datePart) {
+                    $this->dateParts->add("$form-$datePart", new DatePart(new \SimpleXMLElement('<date-part name="' . $datePart . '" form="' . $form . '" />')));
                 }
             }
         }
 
+
+        // No date-parts in date-part attribute defined, take into account that the defined date-part children will be used.
+        if (empty($this->datePartsAttribute) && $this->dateParts->count() > 1) {
+            /** @var DatePart $part */
+            foreach ($this->dateParts as $part) {
+                $dateParts[] = $part->getName();
+            }
+        }
+
+        /* cs:date may have one or more cs:date-part child elements (see Date-part). The attributes set on
+        these elements override those specified for the localized date formats (e.g. to get abbreviated months for all
+        locales, the form attribute on the month-cs:date-part element can be set to “short”). These cs:date-part
+        elements do not affect which, or in what order, date parts are rendered. Affixes, which are very
+        locale-specific, are not allowed on these cs:date-part elements. */
 
         if ($this->dateParts->count() > 0) {
             // ignore empty date-parts
@@ -161,8 +179,11 @@ class Date
             if (count($data->{$this->variable}->{'date-parts'}) === 1) {
                 $data_ = $this->createDateTime($var->{'date-parts'});
                 /** @var DatePart $datePart */
-                foreach ($this->dateParts as $datePart) {
-                    $ret .= $datePart->render($data_[0], $this);
+                foreach ($this->dateParts as $key => $datePart) {
+                    list($f, $p) = explode("-", $key);
+                    if (in_array($p, $dateParts)) {
+                        $ret .= $datePart->render($data_[0], $this);
+                    }
                 }
             } else if (count($data->{$this->variable}->{'date-parts'}) === 2) { //date range
                 $data_ = $this->createDateTime($var->{'date-parts'});
@@ -232,6 +253,13 @@ class Date
         return $data;
     }
 
+    /**
+     * @param $differentParts
+     * @param DateTime $from
+     * @param DateTime $to
+     * @param $delim
+     * @return string
+     */
     private function renderDateRange($differentParts, DateTime $from, DateTime $to, $delim)
     {
         $ret = "";
@@ -340,7 +368,7 @@ class Date
                 $i = 0;
                 $dateParts_ = [];
                 array_walk($dp, function ($datePart, $key) use (&$i, &$dateParts_, $differentParts) {
-                    $bit = sprintf("%03d", decbin($differentParts));
+                    //$bit = sprintf("%03d", decbin($differentParts));
                     if (strpos($key, "month") !== false || strpos($key, "day") !== false) {
                         $dateParts_["monthday"][] = $datePart;
                     }
@@ -390,6 +418,46 @@ class Date
         $to = $datePart->renderWithoutAffixes($to, $this);
         $suffix = !empty($to) ? $datePart->renderSuffix() : "";
         return $prefix.$from.$delim.$to.$suffix;
+    }
+
+    /**
+     * @return bool
+     */
+    private function hasDatePartsFromLocales($format)
+    {
+        $dateXml = CiteProc::getContext()->getLocale()->getDateXml();
+        return !empty($dateXml[$format]);
+    }
+
+    /**
+     * @return array
+     */
+    private function getDatePartsFromLocales($format)
+    {
+        $ret = [];
+        // date parts from locales
+        $dateFromLocale_ = CiteProc::getContext()->getLocale()->getDateXml();
+        $dateFromLocale = $dateFromLocale_[$format];
+
+        // no custom date parts within the date element (this)?
+        if (!empty($dateFromLocale)) {
+
+            $dateForm = array_filter(is_array($dateFromLocale) ? $dateFromLocale : [$dateFromLocale], function ($element) use ($format) {
+                /** @var \SimpleXMLElement $element */
+                $dateForm = (string)$element->attributes()["form"];
+                return $dateForm === $format;
+            });
+
+            //has dateForm from locale children (date-part elements)?
+            $localeDate = array_pop($dateForm);
+
+            if ($localeDate instanceof \SimpleXMLElement && $localeDate->count() > 0) {
+                foreach ($localeDate as $child) {
+                    $ret[] = $child;
+                }
+            }
+        }
+        return $ret;
     }
 
 }

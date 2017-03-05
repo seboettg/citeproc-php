@@ -58,6 +58,7 @@ trait LocaleXmlParserTrait
 
     private function parseXml(\SimpleXMLElement $locale)
     {
+        /** @var \SimpleXMLElement $node */
         foreach ($locale as $node) {
             switch($node->getName()) {
                 case 'style-options':
@@ -74,6 +75,8 @@ trait LocaleXmlParserTrait
                 case 'terms':
                     $this->termsXml->add('terms', $node);
                     $plural = ['single', 'multiple'];
+
+                    /** @var \SimpleXMLElement $child */
                     foreach ($node->children() as $child) {
                         $term = new Term();
 
@@ -84,6 +87,7 @@ trait LocaleXmlParserTrait
                         $subChildren = $child->children();
                         $count = $subChildren->count();
                         if ($count > 0) {
+                            /** @var \SimpleXMLElement $subChild */
                             foreach ($subChildren as $subChild) {
                                 $name = $subChild->getName();
                                 $value = (string) $subChild;
@@ -104,7 +108,8 @@ trait LocaleXmlParserTrait
                     }
                     break;
                 case 'date':
-                    $this->dateXml->add('date', $node);
+                    $form = (string)$node["form"];
+                    $this->dateXml->add($form, $node);
                     foreach ($node->children() as $child) {
                         $date = new \stdClass();
                         $name = "";
@@ -114,10 +119,10 @@ trait LocaleXmlParserTrait
                             }
                             $date->{$key} = (string) $value;
                         }
-                        if (!$this->terms->hasKey($name)) {
+                        if ($child->getName() !== "name-part" && !$this->terms->hasKey($name)) {
                             $this->terms->add($name, []);
                         }
-                        $this->date->add($name, $date);
+                        $this->date->add($form, $date);
                     }
 
                     break;
