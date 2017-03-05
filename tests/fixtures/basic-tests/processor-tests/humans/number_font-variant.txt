@@ -6,7 +6,7 @@ citation
 
 >>===== RESULT =====>>
 4-7
-<span style="font-variant:small-caps;">4-7</span>
+<span style="font-variant: small-caps;">4-7</span>
 <<===== RESULT =====<<
 
 

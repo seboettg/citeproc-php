@@ -7,7 +7,7 @@ citation
 >>===== RESULT =====>>
 4-7
 <b>4-7</b>
-<span style="font-weight: lighter;">4-7</span>
+<span style="font-weight: light;">4-7</span>
 <<===== RESULT =====<<
 
 

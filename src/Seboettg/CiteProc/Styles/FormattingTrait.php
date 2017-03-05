@@ -68,9 +68,17 @@ trait FormattingTrait
                 } else if ($optionValue === "bold") {
                     $text = "<b>$text</b>";
                 } else if ($optionValue === "normal") {
-                    return $text;
+                    //$text = $text;
+                } else if ($option === "vertical-align") {
+                    if ($optionValue === "sub") {
+                        $text = "<sub>$text</sub>";
+                    } else if ($optionValue === "sup") {
+                        $text = "<sup>$text</sup>";
+                    }
+                } else if ($option === "text-decoration" && $optionValue === "none") {
+
                 } else {
-                    $format .= "$option:$optionValue;";
+                    $format .= "$option: $optionValue;";
                 }
             }
             if (!empty($format)) {

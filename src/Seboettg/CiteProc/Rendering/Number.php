@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -111,7 +111,7 @@ class Number implements RenderingInterface
                  ampersand (“2&3” becomes “2 & 3”).
                  */
                 $var = $data->{$this->variable};
-                if (preg_match("/\s*(\d+)\s*[\-\-\&,]\s*(\d+)\s*/", $var, $matches)) {
+                if (preg_match("/\s*(\d+)\s*([\-\-\&,])\s*(\d+)\s*/", $var, $matches)) {
                     $text = $this->buildNumberRangeString($matches[1], $matches[3], $matches[2]);
                 } else {
                     $text =  Util\Number::dec2roman($var);
@@ -155,7 +155,7 @@ class Number implements RenderingInterface
     public function buildNumberRangeString($num1, $num2, $delim) {
 
         if (self::RANGE_DELIMITER_AMPERSAND === $delim) {
-            $numRange = "$num1 " . self::RANGE_DELIMITER_AMPERSAND . " $num2";
+            $numRange = "$num1 " . htmlentities(self::RANGE_DELIMITER_AMPERSAND) . " $num2";
         } else if (self::RANGE_DELIMITER_COMMA === $delim) {
             $numRange = $num1 . htmlentities(self::RANGE_DELIMITER_COMMA) . " $num2";
         } else  {
