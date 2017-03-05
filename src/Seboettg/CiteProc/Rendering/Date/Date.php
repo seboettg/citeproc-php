@@ -119,7 +119,9 @@ class Date
                     // try to parse date parts from "raw" attribute
                     $var->{'date-parts'} = Util\Date::parseDateParts($data->{$this->variable});
                 } catch (CiteProcException $e) {
-                    return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->raw)));
+                    if (!preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $data->{$this->variable}->raw)) {
+                        return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->raw)));
+                    }
                 }
             } else {
                 return "";
@@ -171,12 +173,14 @@ class Date
         locale-specific, are not allowed on these cs:date-part elements. */
 
         if ($this->dateParts->count() > 0) {
-            // ignore empty date-parts
-            if (!isset($var->{'date-parts'})) {
+
+            if (!preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw) && $this->dateParts->count() > 0) {
+                //$var->{"date-parts"} = [];
+            } else if (!isset($var->{'date-parts'})) { // ignore empty date-parts
                 return "";
             }
 
-            if (count($data->{$this->variable}->{'date-parts'}) === 1) {
+            if (count($var->{'date-parts'}) === 1) {
                 $data_ = $this->createDateTime($var->{'date-parts'});
                 /** @var DatePart $datePart */
                 foreach ($this->dateParts as $key => $datePart) {
@@ -185,7 +189,7 @@ class Date
                         $ret .= $datePart->render($data_[0], $this);
                     }
                 }
-            } else if (count($data->{$this->variable}->{'date-parts'}) === 2) { //date range
+            } else if (count($var->{'date-parts'}) === 2) { //date range
                 $data_ = $this->createDateTime($var->{'date-parts'});
                 $from = $data_[0];
                 $to = $data_[1];
@@ -206,8 +210,10 @@ class Date
                 }
 
                 $ret = $this->renderDateRange($toRender, $from, $to, $delim);
-            } else {
-                // throw
+            }
+
+            if (isset($var->raw) && preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw, $matches)){
+                return $matches[1].$matches[2].$matches[3];
             }
         }
         // fallback:

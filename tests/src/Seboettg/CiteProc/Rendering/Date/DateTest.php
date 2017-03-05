@@ -60,7 +60,7 @@ class DateTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         $this->_testRenderTestSuite("date_LocalizedNumericDefault");
     }
 
-    public function testLocalizedDateFormatsFr()
+    public function testLocalizedDateFormats()
     {
         $this->_testRenderTestSuite("date_LocalizedDateFormats-");
     }
