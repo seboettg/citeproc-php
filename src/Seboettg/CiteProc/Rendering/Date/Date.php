@@ -174,7 +174,7 @@ class Date
 
         if ($this->dateParts->count() > 0) {
 
-            if (!preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw) && $this->dateParts->count() > 0) {
+            if (isset($var->raw) && !preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw) && $this->dateParts->count() > 0) {
                 //$var->{"date-parts"} = [];
             } else if (!isset($var->{'date-parts'})) { // ignore empty date-parts
                 return "";
