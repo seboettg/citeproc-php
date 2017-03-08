@@ -95,13 +95,20 @@ class StringHelper
         return in_array($encoding, $encodings) ? $firstChar.$then : mb_strtoupper($firstChar, $encoding) . $then;
     }
 
-    public static function explodeBySpaceOrHyphen($string)
+    public static function initializeBySpaceOrHyphen($string, $initializeSign)
     {
-        $res = [];
+        $res = "";
         $exploded = explode("-", $string);
+        $i = 0;
         foreach ($exploded as $explode) {
             $spaceExploded = explode(" ", $explode);
-            $res = array_merge($res, $spaceExploded);
+            foreach ($spaceExploded as $givenPart) {
+                $res .= substr($givenPart, 0, 1) . $initializeSign;
+            }
+            if ($i < count($exploded) - 1) {
+                $res = rtrim($res) . "-";
+            }
+            ++$i;
         }
         return $res;
     }

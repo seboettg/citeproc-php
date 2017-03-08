@@ -205,17 +205,11 @@ trait InheritableNameAttributesTrait
             $attribute = $node[$nameAttribute];
             switch ($nameAttribute) {
                 case 'and':
-                    $and = "";
                     if (!empty($attribute)) {
-                        $and = (string)$attribute;
+                        $this->and = (string)$attribute;
 
                     } else if (!empty($parentStyleElement)) { //inherit from parent style
-                        $and = $parentStyleElement->getAnd();
-                    }
-                    if ("text" === $and) {
-                        $this->and = CiteProc::getContext()->getLocale()->filter('terms', 'and')->single;
-                    } elseif ('symbol' === $and) {
-                        $this->and = '&#38;';
+                        $this->and = $parentStyleElement->getAnd();
                     }
                     break;
                 case 'delimiter-precedes-et-al':

@@ -112,16 +112,20 @@ class Name
 
     public function render($data, $citationNumber = null)
     {
-        $lastName = null;
-
         if (!$this->attributesInitialized) {
             $this->initInheritableNameAttributes($this->node);
         }
+        if ("text" === $this->and) {
+            $this->and = CiteProc::getContext()->getLocale()->filter('terms', 'and')->single;
+        } elseif ('symbol' === $this->and) {
+            $this->and = '&#38;';
+        }
+
+        $lastName = null;
         $resultNames = [];
-
         $count = 0;
-
         $hasPreceding = CiteProc::getContext()->getCitationItems()->hasKey($citationNumber-1);
+
         if ($hasPreceding) {
             /** @var \stdClass $preceding */
             $preceding = CiteProc::getContext()->getCitationItems()->get($citationNumber-1);
@@ -176,10 +180,41 @@ class Name
         if (!empty($this->and) && $count > 1 && empty($this->etAl)) {
             $new = $this->and . ' ' . end($resultNames); // add and-prefix of the last name if "and" is defined
             $resultNames[count($resultNames) - 1] = $new; //set prefixed last name at the last position of $resultNames array
-
         }
 
-        $text = implode($this->delimiter, $resultNames);
+        if (!empty($this->and)) {
+            switch ($this->delimiterPrecedesLast) {
+                case 'after-inverted-name':
+                    //TODO: implement
+                    break;
+                case 'always':
+                    $text = implode($this->delimiter, $resultNames);
+                    break;
+                case 'never':
+                    if (count($resultNames) === 1) {
+                        $text = $resultNames[0];
+                    } else if (count($resultNames) === 2) {
+                        $text = implode(" ", $resultNames);
+                    } else { // >2
+                        $lastName = array_pop($resultNames);
+                        $text = implode($this->delimiter, $resultNames) . " " . $lastName;
+                    }
+                    break;
+                case 'contextual':
+                default:
+                    if (count($resultNames) === 1) {
+                        $text = $resultNames[0];
+                    } else if (count($resultNames) === 2) {
+                        $text = implode(" ", $resultNames);
+                    } else {
+                        $text = implode($this->delimiter, $resultNames);
+                    }
+            }
+        } else {
+            $text = implode($this->delimiter, $resultNames);
+        }
+
+
 
         //append et al abbreviation
         if (count($data) > 1 && !empty($resultNames) && !empty($this->etAl)) {
@@ -203,13 +238,7 @@ class Name
 
         $useInitials = $this->initialize && !empty($this->initializeWith);
         if ($useInitials && isset($name->given)) {
-            //TODO: initialize with hyphen
-            //$nameObj->given = $name->given;
-            $nameObj->given = "";
-            $givenParts = StringHelper::explodeBySpaceOrHyphen($name->given);
-            foreach ($givenParts as $givenPart) {
-                $nameObj->given .= substr($givenPart, 0, 1) . $this->initializeWith;
-            }
+            $nameObj->given = StringHelper::initializeBySpaceOrHyphen($name->given, $this->initializeWith);
         }
 
         // format name-parts
@@ -345,7 +374,6 @@ class Name
 
     /**
      * @param $text
-     * @param $etAl
      * @param $resultNames
      * @return string
      */
