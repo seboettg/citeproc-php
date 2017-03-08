@@ -69,6 +69,11 @@ class Name
     private $node;
 
     /**
+     * @var string
+     */
+    private $etAl;
+
+    /**
      * Name constructor.
      * @param \SimpleXMLElement $node
      * @param Names $parent
@@ -105,13 +110,15 @@ class Name
         $this->initDelimiterAttributes($node);
     }
 
-    public function render($data, $citationNumber)
+    public function render($data, $citationNumber = null)
     {
+        $lastName = null;
+
         if (!$this->attributesInitialized) {
             $this->initInheritableNameAttributes($this->node);
         }
         $resultNames = [];
-        $etAl = false;
+
         $count = 0;
 
         $hasPreceding = CiteProc::getContext()->getCitationItems()->hasKey($citationNumber-1);
@@ -132,7 +139,7 @@ class Name
         foreach ($data as $rank => $name) {
             ++$count;
 
-            if ($hasPreceding && $useSubseqSubstitution) {
+            if (!empty($preceding) && $useSubseqSubstitution) {
                 if ($subsequentSubstitutionRule == SubsequentAuthorSubstituteRule::PARTIAL_EACH && $rank > 0) {
                     if ($preceding->author[$rank]->family === $name->family) {
                         $resultNames[] = $subsequentSubstitution;
@@ -152,88 +159,41 @@ class Name
             }
         }
 
-        /* Use of et-al-min and et-al-user-first enables et-al abbreviation. If the number of names in a name variable
-        matches or exceeds the number set on et-al-min, the rendered name list is truncated after reaching the number of
-        names set on et-al-use-first.  */
-        if (isset($this->etAlMin) && isset($this->etAlUseFirst)) {
-            $cnt = count($resultNames);
-            if ($this->etAlMin >= count($cnt)) {
-                for ($i = $this->etAlUseFirst; $i < $cnt; ++$i) {
-                    unset($resultNames[$i]);
-                }
-            }
-            if ($this->parent->hasEtAl()) {
-                $etAl = $this->parent->getEtAl()->render($name);
-            } else {
-                $etAl = CiteProc::getContext()->getLocale()->filter('terms', 'et-al')->single;
-            }
-        }
+        $resultNames = $this->prepareAbbreviation($resultNames);
 
+        if ($this->etAlUseLast) {
+            /* When set to “true” (the default is “false”), name lists truncated by et-al abbreviation are followed by
+            the name delimiter, the ellipsis character, and the last name of the original name list. This is only
+            possible when the original name list has at least two more names than the truncated name list (for this
+            the value of et-al-use-first/et-al-subsequent-min must be at least 2 less than the value of
+            et-al-min/et-al-subsequent-use-first). */
+            $this->and = "…"; // set "and"
+            $this->etAl = null; //reset $etAl;
+        }
 
         /* add "and" */
         $count = count($resultNames);
-        if (!empty($this->and) && $count > 1 && !$etAl) {
-            if ($this->etAlUseLast) {
-                /* When set to “true” (the default is “false”), name lists truncated by et-al abbreviation are followed by
-                the name delimiter, the ellipsis character, and the last name of the original name list. This is only
-                possible when the original name list has at least two more names than the truncated name list (for this
-                the value of et-al-use-first/et-al-subsequent-min must be at least 2 less than the value of
-                et-al-min/et-al-subsequent-use-first). */
-                $new = "… " . end($resultNames); // and prefix of the last author if "and" is defined
-            } else {
-                $new = $this->and . ' ' . end($resultNames); // and prefix of the last author if "and" is defined
-            }
-            $resultNames[key($resultNames)] = $new;
+        if (!empty($this->and) && $count > 1 && empty($this->etAl)) {
+            $new = $this->and . ' ' . end($resultNames); // add and-prefix of the last name if "and" is defined
+            $resultNames[count($resultNames) - 1] = $new; //set prefixed last name at the last position of $resultNames array
+
         }
 
         $text = implode($this->delimiter, $resultNames);
 
-        if (!empty($resultNames) && $etAl) {
-
-            /* By default, when a name list is truncated to a single name, the name and the “et-al” (or “and others”)
-            term are separated by a space (e.g. “Doe et al.”). When a name list is truncated to two or more names, the
-            name delimiter is used (e.g. “Doe, Smith, et al.”). This behavior can be changed with the
-            delimiter-precedes-et-al attribute. */
-            switch ($this->delimiterPrecedesEtAl) {
-                case 'never':
-                    $text = $text . " $etAl";
-                    break;
-                case 'always':
-                    $text = $text . "$this->delimiter$etAl";
-                    break;
-                default:
-                    if (count($resultNames) === 1) {
-                        $text .= " $etAl";
-                    } else {
-                        $text .=  $this->delimiter . $etAl;
-                    }
-
-            }
+        //append et al abbreviation
+        if (count($data) > 1 && !empty($resultNames) && !empty($this->etAl)) {
+            $text = $this->appendEtAl($text, $resultNames);
         }
+
+        /* A third value, “count”, returns the total number of names that would otherwise be rendered by the use of the
+        cs:names element (taking into account the effects of et-al abbreviation and editor/translator collapsing),
+        which allows for advanced sorting. */
+
         if ($this->form == 'count') {
-            if ($etAl === false) {
-                return (int)count($resultNames);
-            } else {
-                return (int)(count($resultNames) - 1);
-            }
+            return (int)count($resultNames);
         }
-        // strip out the last delimiter if not required
-        if (isset($this->and) && count($resultNames) > 1) {
-            $lastDelimiter = strrpos($text, $this->delimiter . $this->and);
-            switch ($this->delimiterPrecedesLast) {
-                case 'always':
-                    return $text;
-                    break;
-                case 'never':
-                    return substr_replace($text, ' ', $lastDelimiter, strlen($this->delimiter));
-                    break;
-                case 'contextual':
-                default:
-                    if (count($resultNames) < 3 && $lastDelimiter !== false) {
-                        return substr_replace($text, ' ', $lastDelimiter, strlen($this->delimiter));
-                    }
-            }
-        }
+
         return $text;
     }
 
@@ -381,6 +341,83 @@ class Name
             $nameObj->{'suffix'} = $name->{'suffix'};
         }
         return $nameObj;
+    }
+
+    /**
+     * @param $text
+     * @param $etAl
+     * @param $resultNames
+     * @return string
+     */
+    protected function appendEtAl($text, $resultNames)
+    {
+        /* By default, when a name list is truncated to a single name, the name and the “et-al” (or “and others”)
+        term are separated by a space (e.g. “Doe et al.”). When a name list is truncated to two or more names, the
+        name delimiter is used (e.g. “Doe, Smith, et al.”). This behavior can be changed with the
+        delimiter-precedes-et-al attribute. */
+
+        switch ($this->delimiterPrecedesEtAl) {
+            case 'never':
+                $text = $text . " " . $this->etAl;
+                break;
+            case 'always':
+                $text = $text . $this->delimiter . $this->etAl;
+                break;
+            case 'contextual':
+            default:
+                if (count($resultNames) === 1) {
+                    $text .= " " . $this->etAl;
+                } else {
+                    $text .= $this->delimiter . $this->etAl;
+                }
+        }
+
+        return $text;
+    }
+
+    /**
+     * @param $resultNames
+     * @return array
+     */
+    protected function prepareAbbreviation($resultNames)
+    {
+        /* Use of et-al-min and et-al-user-first enables et-al abbreviation. If the number of names in a name variable
+        matches or exceeds the number set on et-al-min, the rendered name list is truncated after reaching the number of
+        names set on et-al-use-first.  */
+        if (isset($this->etAlMin) && isset($this->etAlUseFirst)) {
+            $cnt = count($resultNames);
+            if ($this->etAlMin >= count($cnt)) {
+                if ($this->etAlUseLast && $this->etAlMin - $this->etAlUseFirst >= 2) {
+                    /* et-al-use-last: When set to “true” (the default is “false”), name lists truncated by et-al
+                    abbreviation are followed by the name delimiter, the ellipsis character, and the last name of the
+                    original name list. This is only possible when the original name list has at least two more names
+                    than the truncated name list (for this the value of et-al-use-first/et-al-subsequent-min must be at
+                    least 2 less than the value of et-al-min/et-al-subsequent-use-first).*/
+
+                    $lastName = array_pop($resultNames); //remove last Element and remember in $lastName
+
+                }
+                for ($i = $this->etAlUseFirst; $i < count($resultNames); ++$i) {
+                    unset($resultNames[$i]);
+                }
+
+                $resultNames = array_values($resultNames);
+
+                if (!empty($lastName)) { // append $lastName if exist
+                    $resultNames[] = $lastName;
+                }
+
+                if ($this->parent->hasEtAl()) {
+                    $this->etAl = $this->parent->getEtAl()->render(null);
+                    return $resultNames;
+                } else {
+                    $this->etAl = CiteProc::getContext()->getLocale()->filter('terms', 'et-al')->single;
+                    return $resultNames;
+                }
+            }
+            return $resultNames;
+        }
+        return $resultNames;
     }
 
 
