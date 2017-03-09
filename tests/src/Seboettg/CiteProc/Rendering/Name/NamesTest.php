@@ -56,37 +56,6 @@ class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         $this->_testRenderTestSuite("name_Delimiter");
     }
 
-    public function testNameAttrAnd()
-    {
-        //$this->_testRenderTestSuite("nameattr_And");
-        $this->_testRenderTestSuite("nameattr_And");
-    }
-
-    public function testNameAttrDelimiterPrecedesEtAl()
-    {
-        $this->_testRenderTestSuite("nameattr_DelimiterPrecedesEtAl");
-    }
-
-    public function testNameAttrDelimiterPrecedesLast()
-    {
-        $this->_testRenderTestSuite("nameattr_DelimiterPrecedesLast");
-    }
-
-    public function testNameAttrEtAlMin()
-    {
-        $this->_testRenderTestSuite("nameattr_EtAlMin");
-    }
-
-    public function testNameAttrEtAlUseFirst()
-    {
-        $this->_testRenderTestSuite("nameattr_EtAlUseFirst");
-    }
-
-    public function testNameAttrInitializeWith()
-    {
-        $this->_testRenderTestSuite("nameattr_InitializeWith");
-    }
-
     public function testRenderTestSuite()
     {
     }

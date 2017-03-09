@@ -43,7 +43,11 @@ trait InheritableNameAttributesTrait
         'initialize',
         'initialize-with',
         'name-as-sort-order',
-        'sort-separator'
+        'sort-separator',
+        'name-form',
+        'form',
+        'name-delimiter',
+        'delimiter'
     ];
 
     /**
@@ -190,6 +194,19 @@ trait InheritableNameAttributesTrait
      */
     private $sortSeparator = ", ";
 
+    /**
+     * Specifies whether all the name-parts of personal names should be displayed (value “long”, the default), or only
+     * the family name and the non-dropping-particle (value “short”). A third value, “count”, returns the total number
+     * of names that would otherwise be rendered by the use of the cs:names element (taking into account the effects of
+     * et-al abbreviation and editor/translator collapsing), which allows for advanced sorting.
+     *
+     * @var string
+     */
+    private $form;
+
+    private $nameForm = "long";
+
+    private $nameDelimiter = ", ";
 
     public function initInheritableNameAttributes(\SimpleXMLElement $node)
     {
@@ -291,6 +308,41 @@ trait InheritableNameAttributesTrait
                         $this->sortSeparator = $parentStyleElement->getSortSeparator();
                     }
                     break;
+                case 'name-form':
+                    if ($this instanceof Root || $this instanceof StyleElement) {
+                        if (!empty($attribute)) {
+                            $this->nameForm = (string)$attribute;
+                        } else if (!empty($parentStyleElement)) {
+                            $this->nameForm = $parentStyleElement->getNameForm();
+                        }
+                        break;
+                    }
+                case 'form':
+                    if ($this instanceof Name) {
+                        if (!empty($attribute)) {
+                            $this->form = (string)$attribute;
+                        } else if (!empty($parentStyleElement)) {
+                            $this->form = $parentStyleElement->getNameForm();
+                        }
+                    }
+                    break;
+                case 'name-delimiter':
+                    if ($this instanceof Root || $this instanceof StyleElement) {
+                        if (!empty($attribute)) {
+                            $this->nameDelimiter = (string)$attribute;
+                        } else if (!empty($parentStyleElement)) {
+                            $this->nameDelimiter = $parentStyleElement->getNameDelimiter();
+                        }
+                    }
+                    break;
+                case 'delimiter':
+                    if ($this instanceof Name) {
+                        if (!empty($attribute)) {
+                            $this->delimiter = (string)$attribute;
+                        } else if (!empty($parentStyleElement)) {
+                            $this->delimiter = $parentStyleElement->getNameDelimiter();
+                        }
+                    }
             }
         }
         $this->attributesInitialized = true;
@@ -487,5 +539,55 @@ trait InheritableNameAttributesTrait
     {
         $this->sortSeparator = $sortSeparator;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
+
+    /**
+     * @param mixed $form
+     */
+    public function setForm($form)
+    {
+        $this->form = $form;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameForm()
+    {
+        return $this->nameForm;
+    }
+
+    /**
+     * @param string $nameForm
+     */
+    public function setNameForm($nameForm)
+    {
+        $this->nameForm = $nameForm;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameDelimiter()
+    {
+        return $this->nameDelimiter;
+    }
+
+    /**
+     * @param string $nameDelimiter
+     */
+    public function setNameDelimiter($nameDelimiter)
+    {
+        $this->nameDelimiter = $nameDelimiter;
+    }
+
+
 
 }

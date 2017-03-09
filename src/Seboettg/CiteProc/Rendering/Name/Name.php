@@ -41,17 +41,6 @@ class Name
     protected $nameParts;
 
     /**
-     * Specifies whether all the name-parts of personal names should be displayed (value “long”, the default), or only
-     * the family name and the non-dropping-particle (value “short”). A third value, “count”, returns the total number
-     * of names that would otherwise be rendered by the use of the cs:names element (taking into account the effects of
-     * et-al abbreviation and editor/translator collapsing), which allows for advanced sorting.
-     *
-     * @var string
-     */
-    private $form = "long";
-
-
-    /**
      * Specifies the text string used to separate names in a name variable. Default is ”, ” (e.g. “Doe, Smith”).
      * @var
      */

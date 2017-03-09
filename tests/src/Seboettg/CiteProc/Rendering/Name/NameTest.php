@@ -10,26 +10,51 @@
 namespace Seboettg\CiteProc\Rendering\Name;
 
 
+use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+
 class NameTest extends \PHPUnit_Framework_TestCase
 {
 
+    use TestSuiteTestCaseTrait;
 
-    public function testGetOptions()
+    public function testNameAttrAnd()
     {
-        $xml = "<name delimiter=\"; \" form=\"short\" name-as-sort-order=\"all\" sort-separator=\", \" and=\"symbol\" et-al-min=\"4\" et-al-use-first=\"2\"/>";
+        //$this->_testRenderTestSuite("nameattr_And");
+        $this->_testRenderTestSuite("nameattr_And");
+    }
 
-        $name = new Name(new \SimpleXMLElement($xml), new Names(new \SimpleXMLElement("<names />")));
+    public function testNameAttrDelimiterPrecedesEtAl()
+    {
+        $this->_testRenderTestSuite("nameattr_DelimiterPrecedesEtAl");
+    }
 
-        $options = $name->getOptions();
+    public function testNameAttrDelimiterPrecedesLast()
+    {
+        $this->_testRenderTestSuite("nameattr_DelimiterPrecedesLast");
+    }
 
-        $this->assertEquals("; ", $options['delimiter']);
-        $this->assertEquals("short", $options['form']);
-        $this->assertEquals("all", $options['name-as-sort-order']);
-        $this->assertEquals(", ", $options['sort-separator']);
-        $this->assertEquals("symbol", $options['and']);
-        $this->assertEquals("4", $options['et-al-min']);
-        $this->assertEquals("2", $options['et-al-use-first']);
-        $this->assertArrayNotHasKey("parent", $options);
-        $this->assertArrayNotHasKey("namePart", $options);
+    public function testNameAttrEtAlMin()
+    {
+        $this->_testRenderTestSuite("nameattr_EtAlMin");
+    }
+
+    public function testNameAttrEtAlUseFirst()
+    {
+        $this->_testRenderTestSuite("nameattr_EtAlUseFirst");
+    }
+
+    public function testNameAttrNameDelimiter()
+    {
+        $this->_testRenderTestSuite("nameattr_NameDelimiter");
+    }
+
+    public function testNameAttrNameForm()
+    {
+        $this->_testRenderTestSuite("nameattr_NameForm");
+    }
+
+    public function testNameAttrInitializeWith()
+    {
+        $this->_testRenderTestSuite("nameattr_InitializeWith");
     }
 }
