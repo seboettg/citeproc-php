@@ -244,7 +244,8 @@ class Name
     }
 
     /**
-     * @param $name
+     * @param string $name
+     * @param int $rank
      * @return string
      */
     private function getNamesString($name, $rank)
@@ -278,13 +279,13 @@ class Name
                         */
                         $text  = !empty($nonDroppingParticle) ? "$nonDroppingParticle " : "";
                         $text .= $family;
-                        $text .= !empty($given) ? ", $given" : "";
+                        $text .= !empty($given) ? $this->sortSeparator . $given : "";
                         $text .= !empty($droppingParticle) ? " $droppingParticle" : "";
-                        $text .= !empty($suffix) ? ", $suffix" : "";
+                        $text .= !empty($suffix) ? $this->sortSeparator . $suffix : "";
 
                         //remove last comma when no suffix exist.
                         $text = trim($text);
-                        $text = substr($text, -1) === "," ? substr($text, 0, strlen($text)-1) : $text;
+                        $text = substr($text, -1) === $this->sortSeparator ? substr($text, 0, strlen($text) - 1) : $text;
                         break;
                     default:
                         /*

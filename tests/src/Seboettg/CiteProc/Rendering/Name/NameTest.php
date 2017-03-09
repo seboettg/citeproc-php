@@ -19,7 +19,6 @@ class NameTest extends \PHPUnit_Framework_TestCase
 
     public function testNameAttrAnd()
     {
-        //$this->_testRenderTestSuite("nameattr_And");
         $this->_testRenderTestSuite("nameattr_And");
     }
 
@@ -51,6 +50,16 @@ class NameTest extends \PHPUnit_Framework_TestCase
     public function testNameAttrNameForm()
     {
         $this->_testRenderTestSuite("nameattr_NameForm");
+    }
+
+    public function testNameAttrNameAsSortOrder()
+    {
+        $this->_testRenderTestSuite("nameattr_NameAsSortOrder");
+    }
+
+    public function testNameAttrSortSeparator()
+    {
+        $this->_testRenderTestSuite("nameattr_SortSeparator");
     }
 
     public function testNameAttrInitializeWith()
