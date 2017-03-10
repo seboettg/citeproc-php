@@ -3,21 +3,10 @@ citation
 <<===== MODE =====<<
 
 
+
 >>===== RESULT =====>>
-John Doe et al.
+John Doe (editor)
 <<===== RESULT =====<<
-
-
->>===== CITATION-ITEMS =====>>
-[
-    [
-        {
-            "id": "ITEM-1", 
-            "position": 1
-        }
-    ]
-]
-<<===== CITATION-ITEMS =====<<
 
 
 >>===== CSL =====>>
@@ -30,11 +19,11 @@ John Doe et al.
     <title />
     <updated>2009-08-10T04:49:00+09:00</updated>
   </info>
-  <citation
-      et-al-subsequent-min="2">
+  <citation>
     <layout>
-      <names variable="author">
-        <name et-al-subsequent-use-first="1"/>
+      <names variable="editor">
+        <name />
+		<label prefix=" (" suffix=")"/>
       </names>
     </layout>
   </citation>
@@ -45,14 +34,10 @@ John Doe et al.
 >>===== INPUT =====>>
 [
     {
-        "author": [
+        "editor": [
             {
                 "family": "Doe", 
                 "given": "John"
-            }, 
-            {
-                "family": "Roe", 
-                "given": "Jane"
             }
         ], 
         "id": "ITEM-1", 

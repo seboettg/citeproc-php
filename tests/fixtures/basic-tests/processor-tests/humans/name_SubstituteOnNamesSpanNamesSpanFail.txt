@@ -3,23 +3,10 @@ citation
 <<===== MODE =====<<
 
 
+
 >>===== RESULT =====>>
-John Doe, Jane Roe, et al.
+(John Doe)
 <<===== RESULT =====<<
-
-
->>===== CITATION-ITEMS =====>>
-[
-    [
-        {
-            "id": "ITEM-1", 
-            "position": 1
-        }
-    ]
-]
-<<===== CITATION-ITEMS =====<<
-
-
 
 
 >>===== CSL =====>>
@@ -32,21 +19,21 @@ John Doe, Jane Roe, et al.
     <title />
     <updated>2009-08-10T04:49:00+09:00</updated>
   </info>
-  <citation
-      et-al-subsequent-use-first="2">
+  <citation>
     <layout>
-      <names variable="author">
-        <name et-al-subsequent-min="3" delimiter=", "/>
+      <names variable="translator">
+        <name />
+        <substitute>
+          <names prefix="(" suffix=")" variable="author">
+            <name />
+          </names>
+          <names variable="editor">
+            <name />
+          </names>
+        </substitute>
       </names>
     </layout>
   </citation>
-  <bibliography>
-    <layout>
-      <names variable="author">
-        <name et-al-subsequent-min="3" delimiter=", "/>
-      </names>
-    </layout>
-  </bibliography>
 </style>
 <<===== CSL =====<<
 
@@ -58,17 +45,24 @@ John Doe, Jane Roe, et al.
             {
                 "family": "Doe", 
                 "given": "John"
-            }, 
+            }
+        ], 
+        "edition": "5", 
+        "editor": [
             {
                 "family": "Roe", 
                 "given": "Jane"
-            }, 
-            {
-                "family": "Snoakes", 
-                "given": "Richard"
             }
         ], 
-        "id": "ITEM-1", 
+        "id": "item-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2000"
+                ]
+            ]
+        }, 
+        "title": "His Anonymous Life", 
         "type": "book"
     }
 ]

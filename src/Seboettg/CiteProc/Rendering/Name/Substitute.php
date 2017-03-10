@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Rendering\Name;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\Rendering\Label;
 use Seboettg\CiteProc\Rendering\Layout;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\CiteProc\Util\Factory;
@@ -67,23 +68,31 @@ class Substitute implements RenderingInterface
         foreach ($node->children() as $child) {
 
             /** @var \SimpleXMLElement $child */
-            if ($child->getName() === "Names") {
+            if ($child->getName() === "names") {
 
                 /** @var Names $names */
                 $names = Factory::create($child);
 
                 /* A shorthand version of cs:names without child elements, which inherits the attributes values set on
                 the cs:name and cs:et-al child elements of the original cs:names element, may also be used. */
-                if (!$names->hasChilds()) {
+                if (!$names->hasEtAl()) {
+                    // inherit et-al
                     if ($this->parent->hasEtAl()) {
                         $names->setEtAl($this->parent->getEtAl());
                     }
+                }
+                if (!$names->hasName()) {
+                    // inherit name
                     if ($this->parent->hasName()) {
                         $names->setName($this->parent->getName());
                     }
                 }
-                $this->children->append($names);
+                // inherit label
+                if (!$names->hasLabel() && $this->parent->hasLabel()) {
+                    $names->setLabel($this->parent->getLabel());
+                }
 
+                $this->children->append($names);
             } else {
                 $object = Factory::create($child);
                 $this->children->append($object);
@@ -98,18 +107,18 @@ class Substitute implements RenderingInterface
      */
     public function render($data, $citationNumber = null)
     {
-        $str = "";
+        $ret = [];
 
         /** @var RenderingInterface $child */
         foreach ($this->children as $child) {
             /* If cs:substitute contains multiple child elements, the first element to return a
             non-empty result is used for substitution. */
-            $str = $child->render($data, $citationNumber);
-            if (!empty($str)) {
-                return $str;
+            $res = $child->render($data, $citationNumber);
+            if (!empty($res)) {
+                $ret[] = $res;
             }
         }
-        return $str;
+        return implode("", $ret);
 
     }
 }

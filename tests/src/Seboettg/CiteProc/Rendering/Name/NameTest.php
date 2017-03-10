@@ -66,4 +66,32 @@ class NameTest extends \PHPUnit_Framework_TestCase
     {
         $this->_testRenderTestSuite("nameattr_InitializeWith");
     }
+
+    public function testNameAttrEtAlSubsequentMin()
+    {
+        $this->_testRenderTestSuite("nameattr_EtAlSubsequentMin");
+    }
+
+    public function testNameAttrEtAlSubsequentUseFirst()
+    {
+        $this->_testRenderTestSuite("nameattr_EtAlSubsequentUseFirst");
+    }
+
+    public function testNameAttrEtAlSubsequentComplete()
+    {
+        //TODO: implement
+        //$this->_testRenderTestSuite("nameattr_subsequent-author-substitute_complete");
+    }
+
+    public function testNameAttrEtAlSubsequentNone()
+    {
+        //TODO: implement
+        //$this->_testRenderTestSuite("nameattr_subsequent-author-substitute_none");
+    }
+
+    public function testNameAttrEtAlSubsequentPartial()
+    {
+        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute-partial");
+    }
+
 }

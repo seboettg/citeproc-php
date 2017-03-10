@@ -127,7 +127,7 @@ class Names implements RenderingInterface
         /** @var \SimpleXMLElement $attribute */
         foreach ($node->attributes() as $attribute) {
             if ("variable" === $attribute->getName()) {
-                $this->variables = new ArrayList(explode(" ", (string) $attribute));
+                $this->variables = new ArrayList(explode(" ", (string)$attribute));
                 break;
             }
         }
@@ -174,7 +174,7 @@ class Names implements RenderingInterface
                     $str .= $this->label->render("");
                 }
                 $vars = $this->variables->toArray();
-                $vars = array_filter($vars, function($value) {
+                $vars = array_filter($vars, function ($value) {
                     return !($value === "editor" || $value === "translator");
                 });
                 $this->variables->setArray($vars);
@@ -205,7 +205,7 @@ class Names implements RenderingInterface
             }
         }
         $str .= implode($this->delimiter, $results);
-        return $this->addAffixes($str);
+        return !empty($str) ? $this->addAffixes($str) : "";
     }
 
     /**
@@ -270,4 +270,24 @@ class Names implements RenderingInterface
         return $this->variables;
     }
 
+    public function hasLabel()
+    {
+        return !empty($this->label);
+    }
+
+    /**
+     * @return Label
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @param Label $label
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    }
 }

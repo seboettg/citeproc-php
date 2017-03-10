@@ -46,7 +46,6 @@ class Name
      */
     private $delimiter = ", ";
 
-
     /**
      * @var Names
      */
@@ -244,7 +243,7 @@ class Name
     }
 
     /**
-     * @param string $name
+     * @param \stdClass $name
      * @param int $rank
      * @return string
      */
@@ -311,7 +310,7 @@ class Name
             $text = preg_replace("/[\s]+/", "", $text); //remove normal spaces
             return preg_replace("/&nbsp;+/", " ", $text);
         }
-        $text = preg_replace("/[\s]+/", " ", $text);
+        $text = html_entity_decode(preg_replace("/[\s]+/", " ", $text));
         return trim($text);
     }
 

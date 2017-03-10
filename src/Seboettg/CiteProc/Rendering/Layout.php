@@ -13,6 +13,7 @@ use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\CiteProc\Styles\AffixesTrait;
+use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Util\Factory;
@@ -32,7 +33,8 @@ class Layout implements RenderingInterface
 
     use AffixesTrait,
         FormattingTrait,
-        DelimiterTrait;
+        DelimiterTrait,
+        ConsecutivePunctuationCharacterTrait;
 
     /**
      * @var ArrayList
@@ -100,13 +102,21 @@ class Layout implements RenderingInterface
 
     private function renderSingle($data, $citationNumber = null)
     {
-        $ret = "";
+        $ret = [];
         /** @var RenderingInterface $child */
         foreach ($this->children as $child) {
-            $ret .= $child->render($data, $citationNumber);
+            $rendered = $child->render($data, $citationNumber);
+            $this->getChildsAffixesAndDelimiter($child);
+            if (!empty($rendered)) {
+                $ret[] = $rendered;
+            }
         }
 
-        return $this->format($ret);
+        if (!empty($ret)) {
+            $res = $this->format(implode($this->delimiter, $ret));
+            return $this->removeConsecutiveChars($res);
+        }
+        return "";
     }
 
     /**

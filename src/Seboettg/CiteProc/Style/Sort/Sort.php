@@ -8,6 +8,8 @@
  */
 
 namespace Seboettg\CiteProc\Style\Sort;
+
+use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Util\Variables;
 use Seboettg\CiteProc\Util\Date;
 use Seboettg\Collection\ArrayList;
@@ -58,11 +60,12 @@ class Sort
      * continues until either the order of all items is fixed, or until the sort keys are exhausted. Items with an
      * empty sort key value are placed at the end of the sort, both for ascending and descending sorts.
      *
-     * @param array $data reference
+     * @param DataList $data reference
      */
     public function sort(&$data)
     {
-        $data = $this->performSort(0, $data);
+        $dataToSort = $data->toArray();
+        $data->replace($this->performSort(0, $dataToSort));
     }
 
     /**
@@ -72,7 +75,7 @@ class Sort
      * sorted by a recursive function call. Finally the array will be flatted.
      *
      * @param $keyNumber
-     * @param $dataToSort
+     * @param array $dataToSort
      * @return array
      */
     private function performSort($keyNumber, $dataToSort)
@@ -91,16 +94,16 @@ class Sort
             if ($key->isNameVariable()) {
                 $groupedItems[Variables::nameHash($dataItem, $variable)][] = $dataItem;
                 continue;
-            }
-            if ($key->isNumberVariable()) {
+            } else if ($key->isNumberVariable()) {
                 $groupedItems[$dataItem->{$variable}][] = $dataItem;
                 continue;
-            }
-            if ($key->isDateVariable()) {
+            } else if ($key->isDateVariable()) {
                 $groupedItems[Date::serializeDate($dataItem->{$variable})][] = $dataItem;
                 continue;
+            } else {
+                $groupedItems[] = $dataItem;
             }
-            $groupedItems[] = $dataItem;
+
         }
 
         // there are further keys ?

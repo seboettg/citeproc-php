@@ -10,6 +10,7 @@
 namespace Seboettg\CiteProc\Style;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
+use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\Collection\ArrayList;
 
@@ -31,6 +32,7 @@ use Seboettg\Collection\ArrayList;
  */
 class Macro implements RenderingInterface
 {
+    use ConsecutivePunctuationCharacterTrait;
 
     /**
      * @var ArrayList
@@ -68,12 +70,20 @@ class Macro implements RenderingInterface
      */
     public function render($data, $citationNumber = null)
     {
-        $ret = "";
+        $ret = [];
         /** @var RenderingInterface $child */
         foreach ($this->children as $child) {
-            $ret .= $child->render($data, $citationNumber);
+            $res = $child->render($data, $citationNumber);
+            $this->getChildsAffixesAndDelimiter($child);
+            if (!empty($res)) {
+                $ret[] = $res;
+            }
         }
-        return $ret;
+        $res = implode("", $ret);
+        if (!empty($res)) {
+            $res = $this->removeConsecutiveChars($res);
+        }
+        return $res;
     }
 
     public function getName()

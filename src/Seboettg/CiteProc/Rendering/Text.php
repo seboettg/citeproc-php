@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,7 +9,9 @@
 
 namespace Seboettg\CiteProc\Rendering;
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Styles\AffixesTrait;
+use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\QuotesTrait;
@@ -27,7 +29,8 @@ class Text implements RenderingInterface
     use FormattingTrait,
         AffixesTrait,
         TextCaseTrait,
-        DisplayTrait;
+        DisplayTrait,
+        ConsecutivePunctuationCharacterTrait;
 
     /**
      * @var string
@@ -82,7 +85,7 @@ class Text implements RenderingInterface
                         $renderedText = $this->applyTextCase($data->{$attrWithPrefix}, $lang);
                     }
                 }
-                if (isset($data->{$this->toRenderTypeValue})) {
+                if (!empty($data->{$this->toRenderTypeValue})) {
                     $renderedText = $this->applyTextCase($data->{$this->toRenderTypeValue}, $lang);
                 }
                 // for test sort_BibliographyCitationNumberDescending.json
@@ -91,12 +94,30 @@ class Text implements RenderingInterface
                 }
                 break;
             case 'macro':
-                $renderedText = CiteProc::getContext()->getMacro($this->toRenderTypeValue)->render($data);
+                $macro = CiteProc::getContext()->getMacro($this->toRenderTypeValue);
+                if (is_null($macro)) {
+                    try {
+                        throw new CiteProcException("Macro \"" . $this->toRenderTypeValue . "\" does not exist.");
+                    } catch (CiteProcException $e) {
+                        $renderedText = "";
+                    }
+                } else {
+                    $renderedText = $macro->render($data);
+                }
                 break;
             case 'term':
-                $renderedText = $this->applyTextCase(CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue, $this->form)->single, $lang);
+                $term = CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue, $this->form)->single;
+                $renderedText = !empty($term) ? $this->applyTextCase($term, $lang) : "";
         }
-        $text = $this->format($renderedText);
-        return $this->addAffixes($text, $this->quotes);
+        if (!empty($renderedText)) {
+            //$renderedText = $this->applyTextCase($renderedText);
+            $text = $this->format($renderedText);
+            $res = $this->addAffixes($text, $this->quotes);
+            if (!empty($res)) {
+                $res = $this->removeConsecutiveChars($res);
+            }
+            return $res;
+        }
+        return "";
     }
 }

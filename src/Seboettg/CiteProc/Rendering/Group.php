@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Rendering;
 use Seboettg\CiteProc\Styles\AffixesTrait;
+use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Util\Factory;
@@ -25,7 +26,8 @@ class Group implements RenderingInterface
 {
     use DelimiterTrait,
         AffixesTrait,
-        DisplayTrait;
+        DisplayTrait,
+        ConsecutivePunctuationCharacterTrait;
 
     private $children;
 
@@ -57,10 +59,16 @@ class Group implements RenderingInterface
         /** @var RenderingInterface $child */
         foreach ($this->children as $child) {
             $res = $child->render($data, $citationNumber);
+            $this->getChildsAffixesAndDelimiter($child);
             if (!empty($res)) {
                 $arr[] = $res;
             }
         }
-        return $this->wrapDisplayBlock($this->addAffixes(implode($this->delimiter, $arr)));
+        if (!empty($arr)) {
+            $res = $this->wrapDisplayBlock($this->addAffixes(implode($this->delimiter, $arr)));
+            $res = $this->removeConsecutiveChars($res);
+            return $res;
+        }
+        return "";
     }
 }

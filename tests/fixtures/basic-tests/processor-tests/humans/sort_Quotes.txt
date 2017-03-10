@@ -1,0 +1,98 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">Simple title, here A</div>
+  <div class="csl-entry">“Simple title here B”</div>
+  <div class="csl-entry">Simple “title” here C</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }, 
+                {
+                    "id": "ITEM-2"
+                }, 
+                {
+                    "id": "ITEM-3"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <macro name="title">
+    <choose>
+      <if type="article-journal">
+        <text variable="title" quotes="true"/>
+      </if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
+  <citation>
+    <layout delimiter="; ">
+      <text macro="title"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <sort>
+      <key macro="title"/>
+    </sort>
+    <layout delimiter="; ">
+      <text macro="title"/>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "type": "book",
+        "title": "Simple 'title' here C"
+    }, 
+    {
+        "id": "ITEM-2", 
+        "type": "book",
+        "title": "Simple title, here A"
+    }, 
+    {
+        "id": "ITEM-3", 
+        "type": "article-journal",
+        "title": "Simple title here B"
+    }
+]
+<<===== INPUT =====<<

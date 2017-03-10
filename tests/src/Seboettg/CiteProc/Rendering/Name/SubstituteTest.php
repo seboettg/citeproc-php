@@ -16,8 +16,25 @@ class SubstituteTest extends \PHPUnit_Framework_TestCase
 {
     use TestSuiteTestCaseTrait;
 
-    public function testRenderTestSuite()
+    public function testNameSubstituteInheritLabel()
     {
-        $this->_testRenderTestSuite("subsequent-");
+        $this->_testRenderTestSuite("name_SubstituteInheritLabel");
     }
+
+    public function testNameSubstituteMacro()
+    {
+        $this->_testRenderTestSuite("name_SubstituteMacro");
+    }
+
+    public function testNameSubstituteName()
+    {
+        $this->_testRenderTestSuite("name_SubstituteName");
+    }
+
+    public function testNameSubstituteOnElementFail()
+    {
+        //TODO: implement
+        //$this->_testRenderTestSuite("name_SubstituteOn");
+    }
+
 }
