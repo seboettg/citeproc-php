@@ -114,7 +114,7 @@ class Number implements RenderingInterface
                 if (preg_match("/\s*(\d+)\s*([\-\-\&,])\s*(\d+)\s*/", $var, $matches)) {
                     $text = $this->buildNumberRangeString($matches[1], $matches[3], $matches[2]);
                 } else {
-                    $text =  Util\Number::dec2roman($var);
+                    $text = $var;
                 }
                 break;
         }
@@ -163,7 +163,4 @@ class Number implements RenderingInterface
         }
         return $numRange;
     }
-
-
-
 }
