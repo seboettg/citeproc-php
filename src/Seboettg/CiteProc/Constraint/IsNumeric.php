@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -25,12 +25,9 @@ class IsNumeric implements ConstraintInterface
 
     private $isNumeric;
 
-    private $match;
-
-    public function __construct($value, $match)
+    public function __construct($value)
     {
         $this->isNumeric = $value;
-        $this->match = $match;
     }
 
     public function validate($value)

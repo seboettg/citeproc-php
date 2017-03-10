@@ -24,9 +24,9 @@ class ChooseIf implements RenderingInterface
 {
 
     /**
-     * @var ConstraintInterface
+     * @var ArrayList<ConstraintInterface>
      */
-    private $constraint;
+    private $constraints;
 
     /**
      * @var ArrayList
@@ -37,13 +37,17 @@ class ChooseIf implements RenderingInterface
 
     public function __construct(\SimpleXMLElement $node)
     {
+        $this->constraints = new ArrayList();
         $this->children = new ArrayList();
-
         $this->match = (string) $node['match'];
+
+        if (empty($this->match)) {
+            $this->match = "all";
+        }
 
         foreach ($node->attributes() as $name => $value) {
             if ('match' !== $name) {
-                $this->constraint = Factory::createConstraint((string) $name, (string) $value, $this->match);
+                $this->constraints->append(Factory::createConstraint((string)$name, (string)$value));
             }
         }
 
@@ -68,6 +72,24 @@ class ChooseIf implements RenderingInterface
             return $this->constraint->validate($data);
         }
 
+        $result = $this->match === "none" ? false : true;
+
+        /** @var ConstraintInterface $constraint */
+        foreach ($this->constraints as $constraint) {
+            if ($this->match === "any") {
+                if ($constraint->validate($data)) {
+                    return true;
+                }
+            } else {
+                $result &= $constraint->validate($data);
+            }
+        }
+
+        if ($this->match === "all") {
+            return $result;
+        } else if ($this->match === "none") {
+            return !$result;
+        }
         return false;
     }
 }

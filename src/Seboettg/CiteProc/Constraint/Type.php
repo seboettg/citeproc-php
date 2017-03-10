@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -25,13 +25,19 @@ class Type implements ConstraintInterface
     private $typeValue;
 
     /**
+     * @var string
+     */
+    private $match;
+
+    /**
      * Type constructor.
      * @param string $value
      * @param $match
      */
-    public function __construct($value, $match)
+    public function __construct($value, $match = "any")
     {
         $this->typeValue = explode(" ", $value);
+        $this->match = $match;
     }
 
     /**
@@ -40,9 +46,6 @@ class Type implements ConstraintInterface
      */
     public function validate($value)
     {
-        if (isset($value->type)) {
-            return in_array($value->type, $this->typeValue);
-        }
-        return false;
+        return in_array($value->type, $this->typeValue);
     }
 }

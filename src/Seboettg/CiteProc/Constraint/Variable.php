@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -19,8 +19,15 @@ namespace Seboettg\CiteProc\Constraint;
 class Variable implements ConstraintInterface
 {
 
+    private $name;
+
+    public function __construct($name, $match = null)
+    {
+        $this->name = $name;
+    }
+
     public function validate($data)
     {
-        return false;
+        return !empty($data->{$this->name});
     }
 }

@@ -21,41 +21,60 @@ use Seboettg\Collection\ArrayList;
 class Choose implements RenderingInterface
 {
 
+    /**
+     * @var ArrayList
+     */
     private $children;
 
 
     public  function __construct(\SimpleXMLElement $node)
     {
         $this->children = new ArrayList();
-
+        $elseIf = [];
         foreach ($node->children() as $child) {
             switch ($child->getName()) {
                 case 'if':
                     $this->children->add("if", new ChooseIf($child));
                     break;
                 case 'else-if':
-                    $this->children->add("elseif", new ChooseIf($child));
+                    $elseIf[] = new ChooseIf($child);
                     break;
                 case 'else':
                     $this->children->add("else", new ChooseElse($child));
                     break;
             }
         }
+        if (!empty($elseIf)) {
+            $this->children->add("elseif", $elseIf);
+        }
     }
 
     public function render($data, $citationNumber = null)
     {
         $arr = [];
-        if ($this->children->get("if")->match($data)) {
+
+        // IF
+        if ($prevCondition = $this->children->get("if")->match($data)) {
             $arr[] = $this->children->get("if")->render($data);
-        } else if ($this->children->hasKey("elseif") && is_object($this->children->get("elseif")) && $this->children->get("elseif")->match($data)) {
-            $arr[] = $this->children->get("elseif")->render($data);
-        } else {
-            if ($this->children->hasKey("else")) {
-                $arr[] = $this->children->get("else")->render($data);
+
+        } else if (!$prevCondition && $this->children->hasKey("elseif")) { // ELSEIF
+            /** @var ChooseElseIf $child */
+            foreach ($this->children->get("elseif") as $child) {
+                $condition = $child->match($data);
+                if ($condition && !$prevCondition) {
+                    $arr[] = $child->render($data);
+                    $prevCondition = true;
+                    break; //break loop as soon as condition matches
+                }
+                $prevCondition = $condition;
             }
         }
 
+        //ELSE
+        if (!$prevCondition && $this->children->hasKey("else")) {
+            $arr[] = $this->children->get("else")->render($data);
+
+        }
         return implode("", $arr);
     }
 }
