@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -159,7 +159,7 @@ class Date
 
 
         // No date-parts in date-part attribute defined, take into account that the defined date-part children will be used.
-        if (empty($this->datePartsAttribute) && $this->dateParts->count() > 1) {
+        if (empty($this->datePartsAttribute) && $this->dateParts->count() > 0) {
             /** @var DatePart $part */
             foreach ($this->dateParts as $part) {
                 $dateParts[] = $part->getName();
@@ -180,8 +180,8 @@ class Date
                 return "";
             }
 
-            if (count($var->{'date-parts'}) === 1) {
-                $data_ = $this->createDateTime($var->{'date-parts'});
+            if (count($data->{$this->variable}->{'date-parts'}) === 1) {
+                $data_ = $this->createDateTime($data->{$this->variable}->{'date-parts'});
                 /** @var DatePart $datePart */
                 foreach ($this->dateParts as $key => $datePart) {
                     list($f, $p) = explode("-", $key);
