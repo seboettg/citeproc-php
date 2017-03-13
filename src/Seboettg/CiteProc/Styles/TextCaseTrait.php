@@ -53,7 +53,12 @@ trait TextCaseTrait
                 $text = $this->keepNoCase(mb_strtolower($text), $text);
                 break;
             case 'sentence':
-                $text = $this->keepNoCase(mb_substr($text, 0, 1) . mb_strtolower(mb_substr($text, 1)), $text);
+                if (StringHelper::checkUpperCaseString($text)) {
+                    $text = mb_strtolower($text);
+                    return StringHelper::mb_ucfirst($text);
+                } else {
+                    return StringHelper::mb_ucfirst($text);
+                }
                 break;
             case 'capitalize-all':
                 $text = $this->keepNoCase(StringHelper::capitalizeAll($text), $text);

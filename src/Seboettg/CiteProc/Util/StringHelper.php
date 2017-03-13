@@ -138,4 +138,15 @@ class StringHelper
         $hyphenated = substr($hyphenated, 0, 1) === "-" ? substr($hyphenated, 1) : $hyphenated;
         return mb_strtolower($hyphenated);
     }
+
+    public static function checkLowerCaseString($string)
+    {
+        return ($string === mb_strtolower($string));
+    }
+
+    public static function checkUpperCaseString($string)
+    {
+        return ($string === mb_strtoupper($string));
+    }
+
 }

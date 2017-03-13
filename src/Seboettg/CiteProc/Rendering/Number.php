@@ -84,9 +84,14 @@ class Number implements RenderingInterface
                 break;
             case 'long-ordinal':
                 $var = $data->{$this->variable};
-                if (preg_match("/\s*(\d+)\s*[\-\-\&,]\s*(\d+)\s*/", $var, $matches)) {
-                    $num1 = self::longOrdinal($matches[1]);
-                    $num2 = self::longOrdinal($matches[3]);
+                if (preg_match("/\s*(\d+)\s*([\-\-\&,])\s*(\d+)\s*/", $var, $matches)) {
+                    if ($this->textCase === "capitalize-first" || $this->textCase === "sentence") {
+                        $num1 = self::longOrdinal($matches[1]);
+                        $num2 = self::longOrdinal($matches[3]);
+                    } else {
+                        $num1 = $this->applyTextCase(self::longOrdinal($matches[1]));
+                        $num2 = $this->applyTextCase(self::longOrdinal($matches[3]));
+                    }
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
                 } else {
                     $text = self::longOrdinal($var);

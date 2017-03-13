@@ -60,7 +60,7 @@ trait TestSuiteTestCaseTrait
                 $actual = $citeProc->render($testData->input, $mode);
                 $this->assertEquals($expected, $actual, "Test case \"$testFile\" ($i) has failed.");
                 //echo "succeeded.\n\n\n";
-                $success[] = $echo;
+                $success[] = $echo . "\n$actual";
             } catch (PHPUnit_Framework_ExpectationFailedException $e) {
                 echo "failed\n";
                 $str = $e->getMessage() . "\n" . $e->getComparisonFailure()->getDiff() . "\n\n\n";

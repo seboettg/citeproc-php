@@ -25,4 +25,20 @@ class StringHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("upper-camel-case", StringHelper::camelCase2Hyphen("UpperCamelCase"));
         $this->assertEquals("up-per-cam-el-ca-se", StringHelper::camelCase2Hyphen("Up-perCam-elCa-se"));
     }
+
+    public function testCheckUpperCase()
+    {
+        $this->assertTrue(StringHelper::checkUpperCaseString("HALLO WELT"));
+        $this->assertFalse(StringHelper::checkUpperCaseString("hallo welt"));
+        $this->assertTrue(StringHelper::checkUpperCaseString("ÄTHIOPIEN"));
+        $this->assertFalse(StringHelper::checkUpperCaseString("äTHIOPIEN"));
+    }
+
+    public function testCheckLowerCase()
+    {
+        $this->assertFalse(StringHelper::checkLowerCaseString("HALLO WELT"));
+        $this->assertTrue(StringHelper::checkLowerCaseString("hallo welt"));
+        $this->assertFalse(StringHelper::checkLowerCaseString("Äthiopien"));
+        $this->assertTrue(StringHelper::checkLowerCaseString("äthiopien"));
+    }
 }
