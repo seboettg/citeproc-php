@@ -159,7 +159,7 @@ class Names implements RenderingInterface
         term is used if the cs:names element contains a cs:label element, replacing the default “editor” and
         “translator” terms (e.g. resulting in “Doe (editor & translator)”) */
         if ($this->variables->hasValue("editor") && $this->variables->hasValue("translator")) {
-            if (isset($data->editor) && isset($data->translator)) {
+            if (isset($data->editor) && isset($data->translator) && $this->sameNames($data->editor, $data->translator)) {
                 if (isset($this->name)) {
                     $str .= $this->name->render($data->editor);
                 } else {
@@ -171,7 +171,7 @@ class Names implements RenderingInterface
                 }
                 if (isset($this->label)) {
                     $this->label->setVariable("editortranslator");
-                    $str .= $this->label->render("");
+                    $str .= $this->label->render($data);
                 }
                 $vars = $this->variables->toArray();
                 $vars = array_filter($vars, function ($value) {
@@ -190,7 +190,11 @@ class Names implements RenderingInterface
                     $name = $this->name->render($data->{$var}, $citationNumber);
                     if (!empty($this->label)) {
                         $this->label->setVariable($var);
-                        $name .= $this->label->render($data);
+                        if (in_array($this->label->getForm(), ["verb", "verb-short"])) {
+                            $name = $this->label->render($data) . $name;
+                        } else {
+                            $name .= $this->label->render($data);
+                        }
                     }
                     $results[] = $this->format($name);
                 } else {
@@ -289,5 +293,27 @@ class Names implements RenderingInterface
     public function setLabel($label)
     {
         $this->label = $label;
+    }
+
+    /**
+     * @param array $editor
+     * @param array $translator
+     * @return bool
+     */
+    private function sameNames($editor, $translator)
+    {
+        $same = count($editor) === count($translator);
+
+        if (!$same) {
+            return false;
+        }
+
+        array_walk($editor, function ($name, $key) use ($translator, &$same) {
+            $family1 = $name->family;
+            $family2 = $translator[$key]->family;
+            $same = $same && ($family1 === $family2);
+        });
+
+        return (bool)$same;
     }
 }

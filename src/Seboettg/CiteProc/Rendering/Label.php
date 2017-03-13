@@ -103,30 +103,32 @@ class Label implements RenderingInterface
             case 'contextual':
             default:
         }
-        foreach ($variables as $variable) {
 
-            if (isset($data->{$variable})) {
-                if ((!isset($this->plural) || empty($plural)) && is_array($data->{$variable})) {
-                    $count = count($data->{$variable});
-                    if ($count == 1) {
-                        $plural = 'single';
-                    } elseif ($count > 1) {
-                        $plural = 'multiple';
-                    }
-                } else {
-                    if ($this->plural != "always") {
-                        $plural = $this->evaluateStringPluralism($data, $variable);
-                    }
-                }
-                $term = CiteProc::getContext()->getLocale()->filter('terms', $variable, $form);
-                $var = $data->{$variable};
+        if ($this->variable === "editortranslator") {
+            if (isset($data->editor) && isset($data->translator)) {
+                $plural = $this->getPlural($data, $plural, "editortranslator");
+                $term = CiteProc::getContext()->getLocale()->filter('terms', "editortranslator", $form);
                 $pluralForm = $term->{$plural};
-                if (!empty($var) && !empty($pluralForm)) {
+                if (!empty($pluralForm)) {
                     $text = $pluralForm;
-                    break;
+                }
+            }
+        } else {
+            foreach ($variables as $variable) {
+
+                if (isset($data->{$variable})) {
+                    $plural = $this->getPlural($data, $plural, $variable);
+                    $term = CiteProc::getContext()->getLocale()->filter('terms', $variable, $form);
+                    $var = $data->{$variable};
+                    $pluralForm = $term->{$plural};
+                    if (!empty($var) && !empty($pluralForm)) {
+                        $text = $pluralForm;
+                        break;
+                    }
                 }
             }
         }
+
         if (empty($text)) {
             return "";
         }
@@ -170,4 +172,55 @@ class Label implements RenderingInterface
     {
         $this->variable = $variable;
     }
+
+    /**
+     * @param $data
+     * @param $plural
+     * @param $variable
+     * @return string
+     */
+    protected function getPlural($data, $plural, $variable)
+    {
+
+        if ($variable === "editortranslator") {
+            $var = $data->editor;
+        } else {
+            $var = $data->{$variable};
+        }
+        if (((!isset($this->plural) || empty($plural))) && !empty($var)) {
+            $count = count($var);
+            if ($count == 1) {
+                $plural = 'single';
+                return $plural;
+            } elseif ($count > 1) {
+                $plural = 'multiple';
+                return $plural;
+            }
+            return $plural;
+        } else {
+            if ($this->plural != "always") {
+                $plural = $this->evaluateStringPluralism($data, $variable);
+                return $plural;
+            }
+            return $plural;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
+
+    /**
+     * @param string $form
+     */
+    public function setForm($form)
+    {
+        $this->form = $form;
+    }
+
+
 }

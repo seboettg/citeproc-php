@@ -403,7 +403,7 @@ class Name
         names set on et-al-use-first.  */
         if (isset($this->etAlMin) && isset($this->etAlUseFirst)) {
             $cnt = count($resultNames);
-            if ($this->etAlMin >= count($cnt)) {
+            if ($this->etAlMin >= $cnt) {
                 if ($this->etAlUseLast && $this->etAlMin - $this->etAlUseFirst >= 2) {
                     /* et-al-use-last: When set to “true” (the default is “false”), name lists truncated by et-al
                     abbreviation are followed by the name delimiter, the ellipsis character, and the last name of the
@@ -414,7 +414,7 @@ class Name
                     $lastName = array_pop($resultNames); //remove last Element and remember in $lastName
 
                 }
-                for ($i = $this->etAlUseFirst; $i < count($resultNames); ++$i) {
+                for ($i = $this->etAlUseFirst; $i < $cnt; ++$i) {
                     unset($resultNames[$i]);
                 }
 

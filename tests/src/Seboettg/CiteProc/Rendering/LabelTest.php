@@ -22,8 +22,7 @@ class LabelTest extends \PHPUnit_Framework_TestCase
 
     public function testLabelEditorTranslator()
     {
-        //TODO: implement
-        //$this->_testRenderTestSuite("label_EditorTranslator");
+        $this->_testRenderTestSuite("name_CollapseRoleLabels");
     }
 
     public function testLabelEmptyLabelVanish()
