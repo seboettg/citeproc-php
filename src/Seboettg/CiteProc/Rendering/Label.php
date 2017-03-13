@@ -102,6 +102,7 @@ class Label implements RenderingInterface
                 break;
             case 'contextual':
             default:
+                //$this->detectPlural($data);
         }
 
         if ($this->variable === "editortranslator") {
@@ -135,6 +136,9 @@ class Label implements RenderingInterface
         if ($this->stripPeriods) {
             $text = str_replace('.', '', $text);
         }
+
+        $text = preg_replace("/\s\&\s/", " &#38; ", $text); //replace ampersands by html entity
+
         $text = $this->format($this->applyTextCase($text, $lang));
         return $this->addAffixes($text);
     }
@@ -188,15 +192,20 @@ class Label implements RenderingInterface
             $var = $data->{$variable};
         }
         if (((!isset($this->plural) || empty($plural))) && !empty($var)) {
-            $count = count($var);
-            if ($count == 1) {
-                $plural = 'single';
+            if (is_array($var)) {
+                $count = count($var);
+                if ($count == 1) {
+                    $plural = 'single';
+                    return $plural;
+                } elseif ($count > 1) {
+                    $plural = 'multiple';
+                    return $plural;
+                }
                 return $plural;
-            } elseif ($count > 1) {
-                $plural = 'multiple';
-                return $plural;
+            } else {
+                return $this->evaluateStringPluralism($data, $variable);
             }
-            return $plural;
+
         } else {
             if ($this->plural != "always") {
                 $plural = $this->evaluateStringPluralism($data, $variable);
