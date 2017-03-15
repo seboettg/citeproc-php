@@ -129,7 +129,7 @@ class Names implements RenderingInterface, HasParent
         /** @var \SimpleXMLElement $attribute */
         foreach ($node->attributes() as $attribute) {
             if ("variable" === $attribute->getName()) {
-                $this->variables = new ArrayList(explode(" ", (string)$attribute));
+                $this->variables = new ArrayList(explode(" ", (string) $attribute));
                 break;
             }
         }
@@ -176,7 +176,7 @@ class Names implements RenderingInterface, HasParent
                     $str .= $this->label->render($data);
                 }
                 $vars = $this->variables->toArray();
-                $vars = array_filter($vars, function ($value) {
+                $vars = array_filter($vars, function($value) {
                     return !($value === "editor" || $value === "translator");
                 });
                 $this->variables->setArray($vars);
@@ -310,13 +310,13 @@ class Names implements RenderingInterface, HasParent
             return false;
         }
 
-        array_walk($editor, function ($name, $key) use ($translator, &$same) {
+        array_walk($editor, function($name, $key) use ($translator, &$same) {
             $family1 = $name->family;
             $family2 = $translator[$key]->family;
             $same = $same && ($family1 === $family2);
         });
 
-        return (bool)$same;
+        return (bool) $same;
     }
 
     /**

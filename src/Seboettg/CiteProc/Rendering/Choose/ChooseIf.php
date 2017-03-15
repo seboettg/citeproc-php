@@ -41,6 +41,9 @@ class ChooseIf implements RenderingInterface, HasParent
      */
     protected $parent;
 
+    /**
+     * @param Choose $parent
+     */
     public function __construct(\SimpleXMLElement $node, $parent)
     {
         $this->parent = $parent;
