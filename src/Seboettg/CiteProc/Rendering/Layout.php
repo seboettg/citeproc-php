@@ -51,6 +51,9 @@ class Layout implements RenderingInterface
 
     private $parent;
 
+    /**
+     * @param \Seboettg\CiteProc\Style\StyleElement $parent
+     */
     public function __construct($node, $parent)
     {
         $this->parent = $parent;
@@ -131,6 +134,9 @@ class Layout implements RenderingInterface
         return self::$numberOfCitedItems;
     }
 
+    /**
+     * @param string $value
+     */
     private function wrapBibEntry($value)
     {
         return "\n  <div class=\"csl-entry\">" . $value . "</div>";

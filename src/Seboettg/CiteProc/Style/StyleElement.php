@@ -61,7 +61,7 @@ abstract class StyleElement implements RenderingInterface
                  * formatting attributes.
                  */
                 case 'layout':
-                    $this->layout   =   new Layout($child, $this);
+                    $this->layout = new Layout($child, $this);
                     break;
 
                 /* cs:citation and cs:bibliography may include a cs:sort child element before the cs:layout element to

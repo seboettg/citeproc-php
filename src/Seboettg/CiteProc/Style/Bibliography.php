@@ -50,6 +50,7 @@ class Bibliography extends StyleElement
     /**
      * Bibliography constructor.
      * @param \SimpleXMLElement $node
+     * @param Root $parent
      */
     public function __construct(\SimpleXMLElement $node, $parent)
     {
