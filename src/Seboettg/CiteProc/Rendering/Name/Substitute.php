@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -71,7 +71,7 @@ class Substitute implements RenderingInterface
             if ($child->getName() === "names") {
 
                 /** @var Names $names */
-                $names = Factory::create($child);
+                $names = Factory::create($child, $this);
 
                 /* A shorthand version of cs:names without child elements, which inherits the attributes values set on
                 the cs:name and cs:et-al child elements of the original cs:names element, may also be used. */
@@ -94,7 +94,7 @@ class Substitute implements RenderingInterface
 
                 $this->children->append($names);
             } else {
-                $object = Factory::create($child);
+                $object = Factory::create($child, $this);
                 $this->children->append($object);
             }
         }

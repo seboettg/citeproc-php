@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -48,12 +48,16 @@ class Layout implements RenderingInterface
      */
     private $delimiter = "";
 
-    public function __construct($node)
+
+    private $parent;
+
+    public function __construct($node, $parent)
     {
+        $this->parent = $parent;
         self::$numberOfCitedItems = 0;
         $this->children = new ArrayList();
         foreach ($node->children() as $child) {
-            $this->children->append(Factory::create($child));
+            $this->children->append(Factory::create($child, $this));
         }
         $this->initDelimiterAttributes($node);
         $this->initAffixesAttributes($node);

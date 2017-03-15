@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -27,7 +27,7 @@ class ChooseTest extends \PHPUnit_Framework_TestCase
     public function testIsNumeric()
     {
         $xml = new \SimpleXMLElement($this->chooseXml[1]);
-        $choose = new Choose($xml);
+        $choose = new Choose($xml, null);
         $ret1 = $choose->render(json_decode('{"title":"Ein herzzerreißendes Werk von umwerfender Genialität","volume":2}'));
         $ret2 = $choose->render(json_decode('{"title":"Ein herzzerreißendes Werk von umwerfender Genialität","volume":"non-numeric value"}'));
         $ret3 = $choose->render(json_decode('{"title":"Ein herzzerreißendes Werk von umwerfender Genialität"}'));

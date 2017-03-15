@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -51,9 +51,9 @@ class Bibliography extends StyleElement
      * Bibliography constructor.
      * @param \SimpleXMLElement $node
      */
-    public function __construct(\SimpleXMLElement $node)
+    public function __construct(\SimpleXMLElement $node, $parent)
     {
-        parent::__construct($node);
+        parent::__construct($node, $parent);
         $this->node = $node;
 
         //<bibliography subsequent-author-substitute="---" subsequent-author-substitute-rule="complete-all">

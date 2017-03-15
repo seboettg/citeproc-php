@@ -160,7 +160,7 @@ class Variables
             throw new \InvalidArgumentException("\"$variable\" is not a valid name variable.");
         }
 
-        $names = new Names(new \SimpleXMLElement("<names variable=\"$variable\" delimiter=\"-\"><name form=\"long\" sort-separator=\",\" name-as-sort-order=\"all\"/></names>"));
+        $names = new Names(new \SimpleXMLElement("<names variable=\"$variable\" delimiter=\"-\"><name form=\"long\" sort-separator=\",\" name-as-sort-order=\"all\"/></names>"), null);
         return $names->render($data);
     }
 }

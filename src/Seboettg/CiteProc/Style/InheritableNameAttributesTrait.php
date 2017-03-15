@@ -10,6 +10,7 @@
 namespace Seboettg\CiteProc\Style;
 
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Name\Name;
 
 /**
@@ -208,12 +209,31 @@ trait InheritableNameAttributesTrait
 
     private $nameDelimiter = ", ";
 
+    public function isDescendantOfMacro()
+    {
+        $parent = $this->parent;
+
+        while ($parent != null && $parent instanceof HasParent) {
+            if ($parent instanceof \Seboettg\CiteProc\Style\Macro) {
+                return true;
+            }
+            $parent = $parent->getParent();
+        }
+        return false;
+    }
+
+
     public function initInheritableNameAttributes(\SimpleXMLElement $node)
     {
         $context = CiteProc::getContext();
         $parentStyleElement = null;
         if ($this instanceof  Name) {
-            $parentStyleElement = ($context->isModeBibliography() ? $context->getBibliography() : $context->getCitation());
+            if ($this->isDescendantOfMacro()) {
+                $parentStyleElement = $context->getRoot();
+            } else {
+                $parentStyleElement = ($context->isModeBibliography() ? $context->getBibliography() : $context->getCitation());
+            }
+
         } else if ($this instanceof StyleElement){
             $parentStyleElement = $context->getRoot();
         }
@@ -587,7 +607,4 @@ trait InheritableNameAttributesTrait
     {
         $this->nameDelimiter = $nameDelimiter;
     }
-
-
-
 }

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -10,6 +10,7 @@
 namespace Seboettg\CiteProc\Rendering\Choose;
 use Seboettg\CiteProc\Constraint\ConstraintInterface;
 use Seboettg\CiteProc\Constraint\Factory;
+use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\Collection\ArrayList;
 
@@ -20,7 +21,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class ChooseIf implements RenderingInterface
+class ChooseIf implements RenderingInterface, HasParent
 {
 
     /**
@@ -35,8 +36,14 @@ class ChooseIf implements RenderingInterface
 
     private $match;
 
-    public function __construct(\SimpleXMLElement $node)
+    /**
+     * @var
+     */
+    protected $parent;
+
+    public function __construct(\SimpleXMLElement $node, $parent)
     {
+        $this->parent = $parent;
         $this->constraints = new ArrayList();
         $this->children = new ArrayList();
         $this->match = (string) $node['match'];
@@ -52,7 +59,7 @@ class ChooseIf implements RenderingInterface
         }
 
         foreach ($node->children() as $child) {
-            $this->children->append(Factory::create($child));
+            $this->children->append(Factory::create($child, $this));
         }
     }
 
@@ -92,4 +99,14 @@ class ChooseIf implements RenderingInterface
         }
         return false;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+
 }

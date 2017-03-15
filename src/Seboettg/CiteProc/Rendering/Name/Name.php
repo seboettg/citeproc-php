@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Rendering\Name;
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Style\InheritableNameAttributesTrait;
 use Seboettg\CiteProc\Style\SubsequentAuthorSubstituteRule;
 use Seboettg\CiteProc\Styles\AffixesTrait;
@@ -28,7 +29,7 @@ use Seboettg\CiteProc\Util\StringHelper;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Name
+class Name implements HasParent
 {
     use InheritableNameAttributesTrait,
         FormattingTrait,
@@ -205,7 +206,12 @@ class Name
 
 
         //append et al abbreviation
-        if (count($data) > 1 && !empty($resultNames) && !empty($this->etAl)) {
+        if (count($data) > 1 &&
+            !empty($resultNames) &&
+            !empty($this->etAl) &&
+            !empty($this->etAlMin) &&
+            !empty($this->etAlUseFirst)) {
+
             $text = $this->appendEtAl($text, $resultNames);
         }
 
@@ -438,4 +444,8 @@ class Name
     }
 
 
+    public function getParent()
+    {
+        return $this->parent;
+    }
 }

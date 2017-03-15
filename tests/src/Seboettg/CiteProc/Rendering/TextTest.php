@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -63,7 +63,7 @@ class TextTest extends \PHPUnit_Framework_TestCase
 
         $macroXml = "<macro name=\"title\"><choose><if type=\"book\"><text variable=\"title\" font-style=\"italic\"/></if><else><text variable=\"title\"/></else></choose></macro>";
         $context = new Context();
-        $macro = new Macro(new \SimpleXMLElement($macroXml));
+        $macro = new Macro(new \SimpleXMLElement($macroXml), null);
         $context->addMacro($macro->getName(), $macro);
         CiteProc::setContext($context);
         $text = new Text(new \SimpleXMLElement("<text macro=\"title\"/>"));

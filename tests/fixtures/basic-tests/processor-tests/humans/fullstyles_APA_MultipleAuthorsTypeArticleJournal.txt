@@ -1,0 +1,464 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE=====<<
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">Hotho, A., Benz, D., Eisterlehner, F., Jäschke, R., Krause, B., Schmitz, C., &#38; Stumme, G. (2010, February). Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler. (U. Hengartner &#38; A. Meier, Eds.)<i>HMD - Praxis der Wirtschaftsinformatik</i>, <i>271</i>, 47--58. dpunkt.verlag. Retrieved from http://hmd.dpunkt.de/271/05.php</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only">
+  <info>
+    <title>American Psychological Association 5th edition</title>
+    <title-short>APA</title-short>
+    <id>http://www.zotero.org/styles/apa-5th-edition</id>
+    <link href="http://www.zotero.org/styles/apa-5th-edition" rel="self"/>
+    <link href="http://rdc.libguides.com/content.php?pid=63487" rel="documentation"/>
+    <author>
+      <name>Simon Kornblith</name>
+      <email>simon@simonster.com</email>
+    </author>
+    <contributor>
+      <name>Bruce D'Arcus</name>
+    </contributor>
+    <contributor>
+      <name>Curtis M. Humphrey</name>
+    </contributor>
+    <contributor>
+      <name>Richard Karnesky</name>
+      <email>karnesky+zotero@gmail.com</email>
+      <uri>http://arc.nucapt.northwestern.edu/Richard_Karnesky</uri>
+    </contributor>
+    <contributor>
+      <name>Sebastian Karcher</name>
+    </contributor>
+    <category citation-format="author-date"/>
+    <category field="psychology"/>
+    <category field="generic-base"/>
+    <updated>2017-03-09T15:19:30+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <macro name="container-contributors">
+    <choose>
+      <if type="chapter paper-conference" match="any">
+        <text term="in" text-case="capitalize-first" suffix=" "/>
+        <names variable="editor" delimiter=", " suffix=", ">
+          <name and="symbol" initialize-with=". " delimiter=", "/>
+          <label form="short" prefix=" (" text-case="capitalize-first" suffix=")"/>
+          <substitute>
+            <names variable="translator"/>
+          </substitute>
+        </names>
+      </if>
+    </choose>
+  </macro>
+  <macro name="secondary-contributors">
+    <choose>
+      <if type="chapter paper-conference" match="none">
+        <names variable="translator" delimiter=", " prefix=" (" suffix=")">
+          <name and="symbol" initialize-with=". " delimiter=", "/>
+          <label form="short" prefix=", " text-case="capitalize-first"/>
+          <substitute>
+            <names variable="editor"/>
+          </substitute>
+        </names>
+      </if>
+    </choose>
+  </macro>
+  <macro name="author">
+    <names variable="author">
+      <name name-as-sort-order="all" and="symbol" sort-separator=", " initialize-with=". " delimiter=", " delimiter-precedes-last="always"/>
+      <label form="short" prefix=" (" suffix=")" text-case="capitalize-first"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text macro="title"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" and="symbol" delimiter=", " initialize-with=". "/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <choose>
+          <if type="bill book graphic legal_case legislation motion_picture report song" match="any">
+            <text variable="title" form="short" font-style="italic"/>
+          </if>
+          <else>
+            <text variable="title" form="short" quotes="true"/>
+          </else>
+        </choose>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="access">
+    <choose>
+      <if type="thesis">
+        <choose>
+          <if variable="archive" match="any">
+            <group>
+              <text term="retrieved" text-case="capitalize-first" suffix=" "/>
+              <text term="from" suffix=" "/>
+              <text variable="archive" suffix="."/>
+              <text variable="archive_location" prefix=" (" suffix=")"/>
+            </group>
+          </if>
+          <else>
+            <group>
+              <text term="retrieved" text-case="capitalize-first" suffix=" "/>
+              <date variable="accessed" suffix=", ">
+                <date-part name="month" suffix=" "/>
+                <date-part name="day" suffix=", "/>
+                <date-part name="year"/>
+              </date>
+              <text term="from" suffix=" "/>
+              <text variable="URL"/>
+            </group>
+          </else>
+        </choose>
+      </if>
+      <else>
+        <choose>
+          <if variable="URL">
+            <choose>
+              <if variable="archive">
+                <group>
+                  <text term="retrieved" text-case="capitalize-first" suffix=" "/>
+                  <text term="from" suffix=" "/>
+                  <text variable="archive" suffix="."/>
+                </group>
+              </if>
+              <else>
+                <group>
+                  <text term="retrieved" text-case="capitalize-first" suffix=" "/>
+                  <date variable="accessed" suffix=", ">
+                    <date-part name="month" suffix=" "/>
+                    <date-part name="day" suffix=", "/>
+                    <date-part name="year"/>
+                  </date>
+                  <group>
+                    <text term="from" suffix=" "/>
+                    <text variable="URL"/>
+                  </group>
+                </group>
+              </else>
+            </choose>
+          </if>
+        </choose>
+      </else>
+    </choose>
+  </macro>
+  <macro name="title">
+    <choose>
+      <if type="report thesis" match="any">
+        <text variable="title" font-style="italic"/>
+        <group prefix=" (" suffix=")">
+          <text variable="genre"/>
+          <text variable="number" prefix=" No. "/>
+        </group>
+      </if>
+      <else-if type="bill book graphic legal_case legislation manuscript motion_picture report song speech" match="any">
+        <text variable="title" font-style="italic"/>
+      </else-if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="publisher">
+    <choose>
+      <if type="report" match="any">
+        <group delimiter=": ">
+          <text variable="publisher-place"/>
+          <text variable="publisher"/>
+        </group>
+      </if>
+      <else-if type="thesis" match="any">
+        <group delimiter=", ">
+          <text variable="publisher"/>
+          <text variable="publisher-place"/>
+        </group>
+      </else-if>
+      <else>
+        <choose>
+          <if variable="event" match="none">
+            <text variable="genre" suffix=", "/>
+          </if>
+        </choose>
+        <group delimiter=": ">
+          <text variable="publisher-place"/>
+          <text variable="publisher"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+  <macro name="event">
+    <choose>
+      <if variable="event">
+        <choose>
+          <if variable="genre" match="none">
+            <text term="presented at" text-case="capitalize-first" suffix=" "/>
+            <text variable="event"/>
+          </if>
+          <else>
+            <group delimiter=" ">
+              <text variable="genre" text-case="capitalize-first"/>
+              <text term="presented at"/>
+              <text variable="event"/>
+            </group>
+          </else>
+        </choose>
+      </if>
+    </choose>
+  </macro>
+  <macro name="issued">
+    <choose>
+      <if variable="issued">
+        <group prefix=" (" suffix=").">
+          <date variable="issued">
+            <date-part name="year"/>
+          </date>
+          <choose>
+            <if type="article-journal bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="none">
+              <date variable="issued">
+                <date-part prefix=", " name="month"/>
+                <date-part prefix=" " name="day"/>
+              </date>
+            </if>
+          </choose>
+        </group>
+      </if>
+      <else>
+        <text prefix=" (" term="no date" suffix=")." form="short"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="issued-year">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="edition">
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal"/>
+          <text term="edition" form="short"/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition" suffix="."/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="locators">
+    <choose>
+      <if type="article-journal article-magazine article-newspaper" match="any">
+        <group prefix=", " delimiter=", ">
+          <group>
+            <text variable="volume" font-style="italic"/>
+            <text variable="issue" prefix="(" suffix=")"/>
+          </group>
+          <text variable="page"/>
+        </group>
+      </if>
+      <else-if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
+        <group prefix=" (" suffix=")" delimiter=", ">
+          <text macro="edition"/>
+          <group>
+            <text term="volume" form="short" plural="true" text-case="capitalize-first" suffix=" "/>
+            <number variable="number-of-volumes" form="numeric" prefix="1-"/>
+          </group>
+          <group>
+            <text term="volume" form="short" text-case="capitalize-first" suffix=" "/>
+            <number variable="volume" form="numeric"/>
+          </group>
+          <group>
+            <label variable="page" form="short" suffix=" "/>
+            <text variable="page"/>
+          </group>
+        </group>
+      </else-if>
+    </choose>
+  </macro>
+  <macro name="citation-locator">
+    <group>
+      <label variable="locator" form="short"/>
+      <text variable="locator" prefix=" "/>
+    </group>
+  </macro>
+  <citation et-al-min="6" et-al-use-first="1" et-al-subsequent-min="3" et-al-subsequent-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" givenname-disambiguation-rule="primary-name" collapse="year">
+    <sort>
+      <key macro="author"/>
+      <key macro="issued-year"/>
+    </sort>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <text macro="author-short"/>
+        <text macro="issued-year"/>
+        <text macro="citation-locator"/>
+      </group>
+    </layout>
+  </citation>
+  <bibliography hanging-indent="true" et-al-min="8" et-al-use-first="7" entry-spacing="0" line-spacing="2">
+    <sort>
+      <key macro="author"/>
+      <key macro="issued-year" sort="ascending"/>
+    </sort>
+    <layout>
+      <group suffix=".">
+        <text macro="author" suffix="."/>
+        <text macro="issued" suffix=" "/>
+        <group delimiter=". ">
+          <text macro="title"/>
+          <group>
+            <text macro="container-contributors"/>
+            <text macro="secondary-contributors"/>
+            <group delimiter=", ">
+              <text variable="container-title" font-style="italic"/>
+              <text variable="collection-title"/>
+            </group>
+          </group>
+        </group>
+        <text macro="locators"/>
+        <group delimiter=", " prefix=". ">
+          <text macro="event"/>
+          <text macro="publisher"/>
+        </group>
+      </group>
+      <text macro="access" prefix=". "/>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL===== <<
+
+>>===== INPUT =====>>
+[
+    {
+        "DOI": "", 
+        "ISBN": "", 
+        "ISSN": "1436-3011", 
+        "URL": "http://hmd.dpunkt.de/271/05.php", 
+        "abstract": "Kooperative Verschlagwortungs- bzw. Social-Bookmarking-Systeme wie Delicious, Mister Wong oder auch unser eigenes System BibSonomy erfreuen sich immer größerer Beliebtheit und bilden einen zentralen Bestandteil des heutigen Web 2.0. In solchen Systemen erstellen Nutzer leichtgewichtige Begriffssysteme, sogenannte Folksonomies, die die Nutzerdaten strukturieren. Die einfache Bedienbarkeit, die Allgegenwärtigkeit, die ständige Verfügbarkeit, aber auch die Möglichkeit, Gleichgesinnte spontan in solchen Systemen zu entdecken oder sie schlicht als Informationsquelle zu nutzen, sind Gründe für ihren gegenwärtigen Erfolg. Der Artikel führt den Begriff Social Bookmarking ein und diskutiert zentrale Elemente wie Browsing und Suche am Beispiel von BibSonomy anhand typischer Arbeitsabläufe eines Wissenschaftlers. Wir beschreiben die Architektur von BibSonomy sowie Wege der Integration und Vernetzung von BibSonomy mit Content-Management-Systemen und Webauftritten. Der Artikel schließt mit Querbezügen zu aktuellen Forschungsfragen im Bereich Social Bookmarking.", 
+        "annote": "", 
+        "author": [
+            {
+                "family": "Hotho", 
+                "given": "Andreas"
+            }, 
+            {
+                "family": "Benz", 
+                "given": "Dominik"
+            }, 
+            {
+                "family": "Eisterlehner", 
+                "given": "Folke"
+            }, 
+            {
+                "family": "Jäschke", 
+                "given": "Robert"
+            }, 
+            {
+                "family": "Krause", 
+                "given": "Beate"
+            }, 
+            {
+                "family": "Schmitz", 
+                "given": "Christoph"
+            }, 
+            {
+                "family": "Stumme", 
+                "given": "Gerd"
+            }
+        ], 
+        "citation-label": "hotho2010publikationsmanagement", 
+        "collection-editor": [
+            {
+                "family": "Hengartner", 
+                "given": "Urs"
+            }, 
+            {
+                "family": "Meier", 
+                "given": "Andreas"
+            }
+        ], 
+        "collection-title": "", 
+        "container-author": [
+            {
+                "family": "Hengartner", 
+                "given": "Urs"
+            }, 
+            {
+                "family": "Meier", 
+                "given": "Andreas"
+            }
+        ], 
+        "container-title": "HMD - Praxis der Wirtschaftsinformatik", 
+        "documents": [], 
+        "edition": "", 
+        "editor": [
+            {
+                "family": "Hengartner", 
+                "given": "Urs"
+            }, 
+            {
+                "family": "Meier", 
+                "given": "Andreas"
+            }
+        ], 
+        "event-date": {
+            "date-parts": [
+                [
+                    "2010", 
+                    "feb"
+                ]
+            ], 
+            "literal": "2010"
+        }, 
+        "event-place": "", 
+        "id": "422096948d4de38a725b428be3222d60jaeschke", 
+        "interhash": "c19880489182c86e1573a2ac983c7cff", 
+        "intrahash": "422096948d4de38a725b428be3222d60", 
+        "issue": "", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2010", 
+                    "feb"
+                ]
+            ], 
+            "literal": "2010"
+        }, 
+        "keyword": "2010 bibsonomy bookmarking myown social", 
+        "misc": {
+            "issn": "1436-3011"
+        }, 
+        "note": "", 
+        "number": "", 
+        "number-of-pages": "11", 
+        "page": "47--58", 
+        "page-first": "47", 
+        "publisher": "dpunkt.verlag", 
+        "publisher-place": "", 
+        "status": "", 
+        "title": "Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler", 
+        "type": "article-journal", 
+        "username": "jaeschke", 
+        "version": "", 
+        "volume": "271"
+    }
+]
+<<===== INPUT=====<<

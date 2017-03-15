@@ -99,15 +99,15 @@ class CiteProc
                     self::$context->getLocale()->addXml($node);
                     break;
                 case 'macro':
-                    $macro = new Macro($node);
+                    $macro = new Macro($node, $root);
                     self::$context->addMacro($macro->getName(), $macro);
                     break;
                 case 'bibliography':
-                    $bibliography = new Bibliography($node);
+                    $bibliography = new Bibliography($node, $root);
                     self::$context->setBibliography($bibliography);
                     break;
                 case 'citation':
-                    $citation = new Citation($node);
+                    $citation = new Citation($node, $root);
                     self::$context->setCitation($citation);
                     break;
             }

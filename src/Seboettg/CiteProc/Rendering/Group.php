@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -22,7 +22,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Group implements RenderingInterface
+class Group implements RenderingInterface, HasParent
 {
     use DelimiterTrait,
         AffixesTrait,
@@ -37,11 +37,14 @@ class Group implements RenderingInterface
      */
     private $delimiter = "";
 
-    public function __construct(\SimpleXMLElement $node)
+    private $parent;
+
+    public function __construct(\SimpleXMLElement $node, $parent)
     {
+        $this->parent = $parent;
         $this->children = new ArrayList();
         foreach ($node->children() as $child) {
-            $this->children->append(Factory::create($child));
+            $this->children->append(Factory::create($child, $this));
         }
         $this->initDisplayAttributes($node);
         $this->initAffixesAttributes($node);
@@ -49,7 +52,7 @@ class Group implements RenderingInterface
     }
 
     /**
-     * @param \stdClass $data
+     * @param $data
      * @param int|null $citationNumber
      * @return string
      */
@@ -71,4 +74,14 @@ class Group implements RenderingInterface
         }
         return "";
     }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+
 }

@@ -40,14 +40,17 @@ abstract class StyleElement implements RenderingInterface
      */
     protected $doNotSort;
 
+    protected $parent;
 
     /**
      * Parses the configuration.
      *
-     * @throws \ErrorException If layout is missing
+     * @param \SimpleXMLElement $node
+     * @param Root $parent
      */
-    protected function __construct(\SimpleXMLElement $node)
+    protected function __construct(\SimpleXMLElement $node, $parent)
     {
+        $this->parent = $parent;
         // init child elements
         /** @var \SimpleXMLElement $child */
         foreach ($node->children() as $child) {
@@ -58,7 +61,7 @@ abstract class StyleElement implements RenderingInterface
                  * formatting attributes.
                  */
                 case 'layout':
-                    $this->layout   =   new Layout($child);
+                    $this->layout   =   new Layout($child, $this);
                     break;
 
                 /* cs:citation and cs:bibliography may include a cs:sort child element before the cs:layout element to
@@ -71,5 +74,13 @@ abstract class StyleElement implements RenderingInterface
                     CiteProc::getContext()->setSorting($sorting);
             }
         }
+    }
+
+    /**
+     * @return Root
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

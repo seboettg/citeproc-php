@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -34,9 +34,9 @@ class Citation extends StyleElement
      * Citation constructor.
      * @param \SimpleXMLElement $node
      */
-    public function __construct(\SimpleXMLElement $node)
+    public function __construct(\SimpleXMLElement $node, $parent)
     {
-        parent::__construct($node);
+        parent::__construct($node, $parent);
         $this->node = $node;
     }
 

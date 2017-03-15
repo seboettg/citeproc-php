@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Style;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Util\Factory;
@@ -30,7 +31,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Macro implements RenderingInterface
+class Macro implements RenderingInterface, HasParent
 {
     use ConsecutivePunctuationCharacterTrait;
 
@@ -45,12 +46,18 @@ class Macro implements RenderingInterface
     private $name;
 
     /**
+     * @var Root
+     */
+    private $parent;
+    /**
      * Macro constructor.
      * @param \SimpleXMLElement $node
+     * @param Root $parent
      * @throws CiteProcException
      */
-    public function __construct(\SimpleXMLElement $node)
+    public function __construct(\SimpleXMLElement $node, $parent)
     {
+        $this->parent = $parent;
         $attr = $node->attributes();
         if (!isset($attr['name'])) {
             throw new CiteProcException("Attribute \"name\" needed.");
@@ -59,7 +66,7 @@ class Macro implements RenderingInterface
 
         $this->children = new ArrayList();
         foreach ($node->children() as $child) {
-            $this->children->append(Factory::create($child));
+            $this->children->append(Factory::create($child, $this));
         }
     }
 
@@ -89,5 +96,10 @@ class Macro implements RenderingInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,7 +9,7 @@
 
 namespace Seboettg\CiteProc\Rendering\Name;
 
-use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Label;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\CiteProc\Styles\AffixesTrait;
@@ -25,7 +25,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Names implements RenderingInterface
+class Names implements RenderingInterface, HasParent
 {
     use DelimiterTrait;
     use AffixesTrait;
@@ -99,13 +99,15 @@ class Names implements RenderingInterface
      */
     private $delimiter = ", ";
 
+    private $parent;
+
     /**
      * Names constructor.
      * @param \SimpleXMLElement $node
      */
-    public function __construct(\SimpleXMLElement $node)
+    public function __construct(\SimpleXMLElement $node, $parent)
     {
-
+        $this->parent = $parent;
         /** @var \SimpleXMLElement $child */
         foreach ($node->children() as $child) {
 
@@ -316,4 +318,14 @@ class Names implements RenderingInterface
 
         return (bool)$same;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+
 }

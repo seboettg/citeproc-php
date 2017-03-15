@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Choose;
+use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\Collection\ArrayList;
 
@@ -18,7 +19,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Choose implements RenderingInterface
+class Choose implements RenderingInterface, HasParent
 {
 
     /**
@@ -26,21 +27,23 @@ class Choose implements RenderingInterface
      */
     private $children;
 
+    private $parent;
 
-    public  function __construct(\SimpleXMLElement $node)
+    public  function __construct(\SimpleXMLElement $node, $parent)
     {
+        $this->parent = $parent;
         $this->children = new ArrayList();
         $elseIf = [];
         foreach ($node->children() as $child) {
             switch ($child->getName()) {
                 case 'if':
-                    $this->children->add("if", new ChooseIf($child));
+                    $this->children->add("if", new ChooseIf($child, $this));
                     break;
                 case 'else-if':
-                    $elseIf[] = new ChooseIf($child);
+                    $elseIf[] = new ChooseElseIf($child, $this);
                     break;
                 case 'else':
-                    $this->children->add("else", new ChooseElse($child));
+                    $this->children->add("else", new ChooseElse($child, $this));
                     break;
             }
         }
@@ -76,6 +79,14 @@ class Choose implements RenderingInterface
 
         }
         return implode("", $arr);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
 
