@@ -104,7 +104,7 @@ class Number implements RenderingInterface
                     $num2 = Util\Number::dec2roman($matches[3]);
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
                 } else {
-                    $text =  Util\Number::dec2roman($var);
+                    $text = Util\Number::dec2roman($var);
                 }
                 break;
             case 'numeric':
@@ -141,7 +141,7 @@ class Number implements RenderingInterface
         if (empty($ordinalSuffix)) {
             $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal')->single;
         }
-        return $num.$ordinalSuffix;
+        return $num . $ordinalSuffix;
     }
 
 
@@ -166,7 +166,7 @@ class Number implements RenderingInterface
             $numRange = "$num1 " . htmlentities(self::RANGE_DELIMITER_AMPERSAND) . " $num2";
         } else if (self::RANGE_DELIMITER_COMMA === $delim) {
             $numRange = $num1 . htmlentities(self::RANGE_DELIMITER_COMMA) . " $num2";
-        } else  {
+        } else {
             $numRange = $num1 . self::RANGE_DELIMITER_HYPHEN . $num2;
         }
         return $numRange;
