@@ -74,7 +74,7 @@ class Number implements RenderingInterface
         switch ($this->form) {
             case 'ordinal':
                 $var = $data->{$this->variable};
-                if (preg_match("/\s*(\d+)\s*[\-\-\&,]\s*(\d+)\s*/", $var, $matches)) {
+                if (preg_match("/\s*(\d+)\s*([\-\-\&,])\s*(\d+)\s*/", $var, $matches)) {
                     $num1 = self::ordinal($matches[1]);
                     $num2 = self::ordinal($matches[3]);
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
@@ -99,7 +99,7 @@ class Number implements RenderingInterface
                 break;
             case 'roman':
                 $var = $data->{$this->variable};
-                if (preg_match("/\s*(\d+)\s*[\-\-\&,]\s*(\d+)\s*/", $var, $matches)) {
+                if (preg_match("/\s*(\d+)\s*([\-\-\&,])\s*(\d+)\s*/", $var, $matches)) {
                     $num1 = Util\Number::dec2roman($matches[1]);
                     $num2 = Util\Number::dec2roman($matches[3]);
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
@@ -128,17 +128,20 @@ class Number implements RenderingInterface
 
     public static function ordinal($num) {
         if (($num / 10) % 10 == 1) {
-            $num .= CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-04')->single;
+            $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal')->single;
         } elseif ($num % 10 == 1) {
-            $num .= CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-01')->single;
+            $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-01')->single;
         } elseif ($num % 10 == 2) {
-            $num .= CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-02')->single;
+            $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-02')->single;
         } elseif ($num % 10 == 3) {
-            $num .= CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-03')->single;
+            $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-03')->single;
         } else {
-            $num .= CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-04')->single;
+            $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-04')->single;
         }
-        return $num;
+        if (empty($ordinalSuffix)) {
+            $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal')->single;
+        }
+        return $num.$ordinalSuffix;
     }
 
 
