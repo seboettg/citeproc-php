@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -74,10 +74,7 @@ class CiteProc
     public function __construct($styleSheet, $lang = "en-US")
     {
         $this->styleSheet = $styleSheet;
-        self::$context = new Context($this);
-        self::$context->setLocale(new Locale\Locale($lang)); //init locale
-        $this->styleSheetXml = new \SimpleXMLElement($this->styleSheet);
-        $this->parse($this->styleSheetXml);
+        $this->lang = $lang;
     }
 
     /**
@@ -141,6 +138,14 @@ class CiteProc
      */
     public function render($data, $mode = "bibliography") {
 
+        if (!in_array($mode, ['citation', 'bibliography'])) {
+            throw new \InvalidArgumentException("\"$mode\" is not a valid mode.");
+        }
+
+        $this->init(); //initialize
+
+        $res = "";
+
         if (is_array($data)) {
             $data = new DataList($data);
         } else if (!($data instanceof DataList)) {
@@ -153,12 +158,22 @@ class CiteProc
         switch ($mode) {
             case 'bibliography':
                 self::$context->setMode($mode);
-                return $this->bibliography($data);
+                $res = $this->bibliography($data);
+                break;
             case 'citation':
                 self::$context->setMode($mode);
-                return $this->citation($data);
-            default:
-                throw new \InvalidArgumentException("\"$mode\" is not a valid mode.");
+                $res = $this->citation($data);
         }
+        self::setContext(null);
+
+        return $res;
+    }
+
+    private function init()
+    {
+        self::$context = new Context($this);
+        self::$context->setLocale(new Locale\Locale($this->lang)); //init locale
+        $this->styleSheetXml = new \SimpleXMLElement($this->styleSheet);
+        $this->parse($this->styleSheetXml);
     }
 }
