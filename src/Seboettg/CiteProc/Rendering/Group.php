@@ -76,7 +76,7 @@ class Group implements RenderingInterface, HasParent
             $elementCount++;
             if (($child instanceof Text) &&
                 ($child->getSource() == 'term' ||
-                    $child->getSource() == 'value' )) {
+                    $child->getSource() == 'value')) {
                 $terms++;
             }
             if (($child instanceof Label)) {
@@ -102,7 +102,7 @@ class Group implements RenderingInterface, HasParent
                     }
                 }
                 //give the text parts a name
-                if($child instanceof Text) {
+                if ($child instanceof Text) {
                     $textParts[$child->getVariable()] = $text;
                 } else {
                     $textParts[$elementCount] = $text;

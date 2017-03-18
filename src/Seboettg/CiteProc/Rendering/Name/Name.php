@@ -99,6 +99,9 @@ class Name implements HasParent
         $this->initDelimiterAttributes($node);
     }
 
+    /**
+     * @param integer $citationNumber
+     */
     public function render($data, $citationNumber = null)
     {
         if (!$this->attributesInitialized) {
@@ -114,11 +117,11 @@ class Name implements HasParent
 
         $resultNames = [];
 
-        $hasPreceding = CiteProc::getContext()->getCitationItems()->hasKey($citationNumber-1);
+        $hasPreceding = CiteProc::getContext()->getCitationItems()->hasKey($citationNumber - 1);
         $subsequentSubstitution = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
         $subsequentSubstitutionRule = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstituteRule();
         $useSubseqSubstitution = !empty($subsequentSubstitution) && !empty($subsequentSubstitutionRule);
-        $preceding = CiteProc::getContext()->getCitationItems()->get($citationNumber-1);
+        $preceding = CiteProc::getContext()->getCitationItems()->get($citationNumber - 1);
 
 
         if ($hasPreceding && $useSubseqSubstitution) {
@@ -217,7 +220,7 @@ class Name implements HasParent
         which allows for advanced sorting. */
 
         if ($this->form == 'count') {
-            return (int)count($resultNames);
+            return (int) count($resultNames);
         }
 
         return $text;
@@ -236,7 +239,7 @@ class Name implements HasParent
         if (count($this->nameParts) > 0) {
             /** @var NamePart $namePart */
             foreach ($this->nameParts as $namePart) {
-                $nameObj->{$namePart->getName()} =   $namePart->render($name);
+                $nameObj->{$namePart->getName()} = $namePart->render($name);
             }
         }
 
@@ -450,7 +453,7 @@ class Name implements HasParent
 
     /**
      * @param $data
-     * @param $preceding
+     * @param \stdClass $preceding
      * @return array
      */
     protected function renderSubsequentSubstitution($data, $preceding)
@@ -499,7 +502,7 @@ class Name implements HasParent
                 subsequent-author-substitute substitutes for each rendered name. */
                 case SubsequentAuthorSubstituteRule::COMPLETE_EACH:
                     if ($this->identicalAuthors($preceding, $data)) {
-                        $resultNames[] =  $subsequentSubstitution;
+                        $resultNames[] = $subsequentSubstitution;
                     } else {
                         $resultNames[] = $this->formatName($name, $rank);
                     }
