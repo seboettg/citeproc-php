@@ -111,45 +111,30 @@ class Name implements HasParent
         }
 
         $lastName = null;
+
         $resultNames = [];
-        $count = 0;
+
         $hasPreceding = CiteProc::getContext()->getCitationItems()->hasKey($citationNumber-1);
-
-        if ($hasPreceding) {
-            /** @var \stdClass $preceding */
-            $preceding = CiteProc::getContext()->getCitationItems()->get($citationNumber-1);
-        }
-
         $subsequentSubstitution = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
         $subsequentSubstitutionRule = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstituteRule();
-
         $useSubseqSubstitution = !empty($subsequentSubstitution) && !empty($subsequentSubstitutionRule);
+        $preceding = CiteProc::getContext()->getCitationItems()->get($citationNumber-1);
 
-        /**
-         * @var string $type
-         * @var array $name
-         */
-        foreach ($data as $rank => $name) {
-            ++$count;
 
-            if (!empty($preceding) && $useSubseqSubstitution) {
-                if ($subsequentSubstitutionRule == SubsequentAuthorSubstituteRule::PARTIAL_EACH && $rank > 0) {
-                    if ($preceding->author[$rank]->family === $name->family) {
-                        $resultNames[] = $subsequentSubstitution;
-                    } else {
-                        $resultNames[] = $this->formatName($name, $rank);
-                    }
-                } else if ($subsequentSubstitutionRule == SubsequentAuthorSubstituteRule::PARTIAL_FIRST && $rank === 0) {
-                    if ($preceding->author[0]->family === $name->family) {
-                        $resultNames[] = $subsequentSubstitution;
-                    } else {
-                        $resultNames[] = $this->formatName($name, $rank);
-                    }
+        if ($hasPreceding && $useSubseqSubstitution) {
+            /** @var \stdClass $preceding */
+            $identicalAuthors = $this->identicalAuthors($preceding, $data);
+            if ($subsequentSubstitutionRule == SubsequentAuthorSubstituteRule::COMPLETE_ALL) {
+                if ($identicalAuthors) {
+                    return $subsequentSubstitution;
+                } else {
+                    $resultNames = $this->getFormattedNames($data, $resultNames);
                 }
+            } else {
+                $resultNames = $this->renderSubsequentSubstitution($data, $preceding);
             }
-            else {
-                $resultNames[] = $this->formatName($name, $rank);
-            }
+        } else {
+            $resultNames = $this->getFormattedNames($data, $resultNames);
         }
 
         $resultNames = $this->prepareAbbreviation($resultNames);
@@ -171,7 +156,7 @@ class Name implements HasParent
             $resultNames[count($resultNames) - 1] = $new; //set prefixed last name at the last position of $resultNames array
         }
 
-        if (!empty($this->and)) {
+        if (!empty($this->and) && empty($this->etAl)) {
             switch ($this->delimiterPrecedesLast) {
                 case 'after-inverted-name':
                     //TODO: implement
@@ -180,14 +165,26 @@ class Name implements HasParent
                     $text = implode($this->delimiter, $resultNames);
                     break;
                 case 'never':
-                    if (count($resultNames) === 1) {
-                        $text = $resultNames[0];
-                    } else if (count($resultNames) === 2) {
-                        $text = implode(" ", $resultNames);
-                    } else { // >2
-                        $lastName = array_pop($resultNames);
-                        $text = implode($this->delimiter, $resultNames) . " " . $lastName;
-                    }
+                    if (!$this->etAlUseLast) {
+                        if (count($resultNames) === 1) {
+                            $text = $resultNames[0];
+                        } else if (count($resultNames) === 2) {
+                            $text = implode(" ", $resultNames);
+                        } else { // >2
+                            $lastName = array_pop($resultNames);
+                            $text = implode($this->delimiter, $resultNames) . " " . $lastName;
+                        }
+                    } /*else {
+                        if (count($resultNames) === 1) {
+                            $text = $resultNames[0];
+                        } else if (count($resultNames) === 2) {
+                            $text = implode(" ", $resultNames);
+                        } else { // >2
+                            $lastName = array_pop($resultNames);
+                            $text = implode($this->delimiter, $resultNames) . ", " . $lastName;
+                        }
+                    }*/
+
                     break;
                 case 'contextual':
                 default:
@@ -404,12 +401,14 @@ class Name implements HasParent
      */
     protected function prepareAbbreviation($resultNames)
     {
+        $cnt = count($resultNames);
         /* Use of et-al-min and et-al-user-first enables et-al abbreviation. If the number of names in a name variable
         matches or exceeds the number set on et-al-min, the rendered name list is truncated after reaching the number of
         names set on et-al-use-first.  */
+
         if (isset($this->etAlMin) && isset($this->etAlUseFirst)) {
-            $cnt = count($resultNames);
-            if ($this->etAlMin >= $cnt) {
+
+            if ($this->etAlMin <= $cnt) {
                 if ($this->etAlUseLast && $this->etAlMin - $this->etAlUseFirst >= 2) {
                     /* et-al-use-last: When set to “true” (the default is “false”), name lists truncated by et-al
                     abbreviation are followed by the name delimiter, the ellipsis character, and the last name of the
@@ -447,5 +446,103 @@ class Name implements HasParent
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * @param $data
+     * @param $preceding
+     * @return array
+     */
+    protected function renderSubsequentSubstitution($data, $preceding)
+    {
+        $resultNames = [];
+        $subsequentSubstitution = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
+        $subsequentSubstitutionRule = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstituteRule();
+
+        /**
+         * @var string $type
+         * @var array $name
+         */
+        foreach ($data as $rank => $name) {
+
+            switch ($subsequentSubstitutionRule) {
+
+                /* “partial-each” - when one or more rendered names in the name variable match those in the preceding
+                bibliographic entry, the value of subsequent-author-substitute substitutes for each matching name.
+                Matching starts with the first name, and continues up to the first mismatch. */
+                case SubsequentAuthorSubstituteRule::PARTIAL_EACH:
+
+                    if ($this->precedingHasAuthor($preceding, $name)) {
+                        $resultNames[] = $subsequentSubstitution;
+                    } else {
+                        $resultNames[] = $this->formatName($name, $rank);
+                    }
+                    break;
+
+
+                /* “partial-first” - as “partial-each”, but substitution is limited to the first name of the name
+                variable. */
+                case SubsequentAuthorSubstituteRule::PARTIAL_FIRST:
+
+                    if ($rank === 0) {
+                        if ($preceding->author[0]->family === $name->family) {
+                            $resultNames[] = $subsequentSubstitution;
+                        } else {
+                            $resultNames[] = $this->formatName($name, $rank);
+                        }
+                    } else {
+                        $resultNames[] = $this->formatName($name, $rank);
+                    }
+                    break;
+
+                /* “complete-each” - requires a complete match like “complete-all”, but now the value of
+                subsequent-author-substitute substitutes for each rendered name. */
+                case SubsequentAuthorSubstituteRule::COMPLETE_EACH:
+                    if ($this->identicalAuthors($preceding, $data)) {
+                        $resultNames[] =  $subsequentSubstitution;
+                    } else {
+                        $resultNames[] = $this->formatName($name, $rank);
+                    }
+                    break;
+            }
+        }
+        return $resultNames;
+    }
+
+    public function precedingHasAuthor($preceding, $name)
+    {
+        foreach ($preceding->author as $author) {
+            if ($author->family === $name->family && $author->given === $name->given) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function identicalAuthors($precedingItem, $currentAuthor)
+    {
+        if (count($precedingItem->author) !== count($currentAuthor)) {
+            return false;
+        }
+        foreach ($currentAuthor as $current) {
+            if ($this->precedingHasAuthor($precedingItem, $current)) {
+                continue;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param $data
+     * @param $resultNames
+     * @return array
+     */
+    protected function getFormattedNames($data, $resultNames)
+    {
+        foreach ($data as $rank => $name) {
+            $resultNames[] = $this->formatName($name, $rank);
+        }
+        return $resultNames;
     }
 }

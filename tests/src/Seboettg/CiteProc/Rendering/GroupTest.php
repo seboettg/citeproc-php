@@ -50,9 +50,33 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("<div style=\"text-indent: 0px; padding-left: 45px;\">[abgerufen von http://foo.bar]</div>", $group->render(json_decode($this->data)));
     }
 
-    public function testRenderTestSuite()
+
+    public function testGroupComplexNesting()
+    {
+        $this->_testRenderTestSuite("group_ComplexNesting");
+    }
+
+    public function testGroupShortOutputOnly()
+    {
+        $this->_testRenderTestSuite("group_ShortOutputOnly");
+    }
+
+    public function testSuppressTermWhenNoOutputFromPartialDate()
     {
         //TODO: implement
-        //$this->_testRenderTestSuite("group_");
+        //$this->_testRenderTestSuite("group_SuppressTermWhenNoOutputFromPartialDate");
     }
+
+    public function testGroupSuppressValueWithEmptySubgroup()
+    {
+        //TODO: implement
+        //$this->_testRenderTestSuite("group_SuppressValueWithEmptySubgroup");
+    }
+
+    public function testGroupSuppressWithEmptyNestedDateNode()
+    {
+        //TODO: implement
+        //$this->_testRenderTestSuite("group_SuppressWithEmptyNestedDateNode");
+    }
+
 }

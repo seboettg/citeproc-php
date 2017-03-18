@@ -298,21 +298,21 @@ class Names implements RenderingInterface, HasParent
     }
 
     /**
-     * @param array $editor
-     * @param array $translator
+     * @param array $persons1
+     * @param array $persons2
      * @return bool
      */
-    private function sameNames($editor, $translator)
+    private function sameNames($persons1, $persons2)
     {
-        $same = count($editor) === count($translator);
+        $same = count($persons1) === count($persons2);
 
         if (!$same) {
             return false;
         }
 
-        array_walk($editor, function($name, $key) use ($translator, &$same) {
+        array_walk($persons1, function ($name, $key) use ($persons2, &$same) {
             $family1 = $name->family;
-            $family2 = $translator[$key]->family;
+            $family2 = $persons2[$key]->family;
             $same = $same && ($family1 === $family2);
         });
 

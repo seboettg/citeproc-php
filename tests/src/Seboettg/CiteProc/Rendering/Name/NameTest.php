@@ -77,21 +77,28 @@ class NameTest extends \PHPUnit_Framework_TestCase
         $this->_testRenderTestSuite("nameattr_EtAlSubsequentUseFirst");
     }
 
-    public function testNameAttrEtAlSubsequentComplete()
+    public function testNameAttrEtAlSubsequentCompleteAll()
     {
-        //TODO: implement
-        //$this->_testRenderTestSuite("nameattr_subsequent-author-substitute_complete");
+        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_complete-all");
+    }
+
+    public function testNameAttrEtAlSubsequentCompleteEach()
+    {
+        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_complete-each");
     }
 
     public function testNameAttrEtAlSubsequentNone()
     {
-        //TODO: implement
-        //$this->_testRenderTestSuite("nameattr_subsequent-author-substitute_none");
+        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_none");
     }
 
-    public function testNameAttrEtAlSubsequentPartial()
+    public function testNameAttrEtAlSubsequentPartialEach()
     {
-        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute-partial");
+        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_partial-each");
     }
 
+    public function testNameAttrEtAlSubsequentPartialFirst()
+    {
+        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_partial-first");
+    }
 }

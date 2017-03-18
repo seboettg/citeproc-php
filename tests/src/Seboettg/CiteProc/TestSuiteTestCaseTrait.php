@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -18,15 +18,6 @@ trait TestSuiteTestCaseTrait
 
     /** @var array $FILTER */
     static $FILTER = [
-        "date_LoneJapaneseMonth.json",
-        "date_OtherAlone.json",
-        "date_InPress.json",
-        'group_SuppressTermInMacro.json',
-        'textcase_Lowercase.json',
-        'textcase_Uppercase.json',
-        'textcase_SkipNameParticlesInTitleCase.json',
-        'name_ArticularWithComma.json',
-        'name_ParticlesDemoteNonDroppingNever.json'
     ];
 
 
@@ -65,6 +56,7 @@ trait TestSuiteTestCaseTrait
                 echo "failed\n";
                 $str = $e->getMessage() . "\n" . $e->getComparisonFailure()->getDiff() . "\n\n\n";
                 $failures[] = "$echo\n$str";
+                echo $actual;
                 echo $str;
             } catch (CiteProcException $e) {
                 //$failures[] =

@@ -5,7 +5,7 @@ citation
 
 
 >>===== RESULT =====>>
-[start](22-45)[end]
+[start](pages : 22-45)[end]
 <<===== RESULT =====<<
 
 
@@ -19,11 +19,6 @@ citation
     <title />
     <updated>2009-08-10T04:49:00+09:00</updated>
   </info>
-  <locale>
-    <terms>
-      <term name="page"></term>
-    </terms>
-  </locale>
   <citation>
     <layout>
       <text value="[start]"/>

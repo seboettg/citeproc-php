@@ -17,18 +17,10 @@ use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 use Seboettg\CiteProc\TestSuiteTests;
 
-class DateTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
+class DateTest extends \PHPUnit_Framework_TestCase
 {
 
     use TestSuiteTestCaseTrait;
-
-    public function setUp()
-    {
-        parent::setUp();
-        $context = new Context();
-        $context->setLocale(new Locale("en-GB"));
-        CiteProc::setContext($context);
-    }
 
     public function testDateString()
     {
@@ -65,12 +57,6 @@ class DateTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         $this->_testRenderTestSuite("date_LocalizedDateFormats-");
     }
 
-    public function testLoneJapaneseMonth()
-    {
-        $this->_testRenderTestSuite("date_LoneJapaneseMonth");
-    }
-
-
     public function testLongMonth()
     {
         $this->_testRenderTestSuite("date_LongMonth");
@@ -86,13 +72,5 @@ class DateTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         $this->_testRenderTestSuite("date_RawParseSimpleDate");
     }
 
-    public function testRawSeasonRange()
-    {
-        $this->_testRenderTestSuite("date_RawSeasonRange");
-    }
 
-    public function testRenderTestSuite()
-    {
-
-    }
 }

@@ -116,9 +116,9 @@ class Substitute implements RenderingInterface
             $res = $child->render($data, $citationNumber);
             if (!empty($res)) {
                 $ret[] = $res;
+                break;
             }
         }
         return implode("", $ret);
-
     }
 }

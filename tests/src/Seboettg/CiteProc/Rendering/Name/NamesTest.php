@@ -17,7 +17,7 @@ use Seboettg\CiteProc\Rendering\Name\Names;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 use Seboettg\CiteProc\TestSuiteTests;
 
-class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
+class NamesTest extends \PHPUnit_Framework_TestCase
 {
 
     use TestSuiteTestCaseTrait;
@@ -29,8 +29,7 @@ class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
 
     public function testRenderSubstitute()
     {
-        //TODO: implement
-        //$this->_testRenderTestSuite("names_substitute");
+        $this->_testRenderTestSuite("names_substitute");
     }
 
 
@@ -39,13 +38,15 @@ class NamesTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         $this->_testRenderTestSuite("name_EditorTranslatorBoth");
     }
 
-    public function testEtAl()
+    public function testEtAlUseLast()
     {
-        //TODO: implement
-        //$this->_testRenderTestSuite("name_EtAl");
+        $this->_testRenderTestSuite("name_EtAlUseLast");
     }
 
-    public function testRenderTestSuite()
+    public function testEtAlWithCombined()
     {
+        //TODO: implement
+        //$this->_testRenderTestSuite("name_EtAlWithCombined");
     }
+
 }

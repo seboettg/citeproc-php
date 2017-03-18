@@ -120,4 +120,19 @@ class Text implements RenderingInterface
         }
         return "";
     }
+
+    public function rendersVariable()
+    {
+        return $this->toRenderType === "variable" || $this->toRenderType === "macro";
+    }
+
+    public function getSource()
+    {
+        return $this->toRenderTypeValue;
+    }
+
+    public function getVariable()
+    {
+        return $this->toRenderTypeValue;
+    }
 }

@@ -466,4 +466,11 @@ class Date
         return $ret;
     }
 
+    /**
+     * @return string
+     */
+    public function getVariable()
+    {
+        return $this->variable;
+    }
 }
