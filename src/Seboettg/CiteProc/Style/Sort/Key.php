@@ -93,6 +93,14 @@ class Key implements SortKey
     }
 
     /**
+     * @return string
+     */
+    public function getMacro()
+    {
+        return $this->macro;
+    }
+
+    /**
      * @return bool
      */
     public function isNameVariable()

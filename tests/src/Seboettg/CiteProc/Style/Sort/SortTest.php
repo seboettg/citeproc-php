@@ -142,9 +142,37 @@ class SortTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         $this->assertEquals($expected, $result);
     }
 
+    public function testSortCaseInsensitiveBibliography()
+    {
+        $this->_testRenderTestSuite("sort_CaseInsensitiveBibliography");
+    }
+
+    public function testSortBibliographyCitationNumberDescending()
+    {
+        $this->_testRenderTestSuite("sort_BibliographyCitationNumberDescending.json");
+    }
+
+    public function testSortBibliographyCitationNumberDescendingViaMacro()
+    {
+        $this->_testRenderTestSuite("sort_BibliographyCitationNumberDescendingViaMacro");
+    }
+
+    public function testSortCaseInsensitiveCitation()
+    {
+        $this->_testRenderTestSuite("sort_CaseInsensitiveCitation");
+    }
+
+    public function testSortCiteGroupDelimiter()
+    {
+        //$this->_testRenderTestSuite("sort_CiteGroupDelimiter");
+    }
+
+    public function testSortConditionalMacroDates() {
+        //$this->_testRenderTestSuite("sort_ConditionalMacroDates");
+    }
     public function testRenderTestSuite()
     {
-        //TODO: implement
+        //TODO: implement remaining sort tests
         //$this->_testRenderTestSuite("sort_");
     }
 }

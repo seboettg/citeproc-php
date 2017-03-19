@@ -5,36 +5,8 @@ citation
 
 
 >>===== RESULT =====>>
->>[0] Banda 1999; Aalto 2000, Aalto 2001
+Banda 1999; Aalto 2000, Aalto 2001
 <<===== RESULT =====<<
-
-
->>===== CITATIONS =====>>
-[
-    [
-        {
-            "citationID": "CITATION-1", 
-            "citationItems": [
-                {
-                    "id": "ITEM-1"
-                }, 
-                {
-                    "id": "ITEM-3"
-                }, 
-                {
-                    "id": "ITEM-2"
-                }
-            ], 
-            "properties": {
-                "noteIndex": 1
-            }
-        }, 
-        [], 
-        []
-    ]
-]
-<<===== CITATIONS =====<<
-
 
 >>===== CSL =====>>
 <style 
@@ -75,30 +47,48 @@ citation
                 "given": "Alan"
             }
         ], 
-        "issued": {"date-parts":[[2001]]},
         "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    2001
+                ]
+            ]
+        }, 
         "type": "book"
     }, 
     {
         "author": [
             {
                 "family": "Aalto", 
-                "given": "Alan" 
+                "given": "Alan"
             }
         ], 
-        "issued": {"date-parts":[[2000]]},
         "id": "ITEM-2", 
+        "issued": {
+            "date-parts": [
+                [
+                    2000
+                ]
+            ]
+        }, 
         "type": "book"
-    },
+    }, 
     {
         "author": [
             {
                 "family": "Banda", 
-                "given": "Gino" 
+                "given": "Gino"
             }
         ], 
-        "issued": {"date-parts":[[1999]]},
         "id": "ITEM-3", 
+        "issued": {
+            "date-parts": [
+                [
+                    1999
+                ]
+            ]
+        }, 
         "type": "book"
     }
 ]

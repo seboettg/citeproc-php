@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Style\Sort;
 
+use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Util\Variables;
 use Seboettg\CiteProc\Util\Date;
@@ -90,7 +91,7 @@ class Sort
         $groupedItems = [];
 
         //grouping by value
-        foreach ($dataToSort as $dataItem) {
+        foreach ($dataToSort as $citationNumber => $dataItem) {
             if ($key->isNameVariable()) {
                 $groupedItems[Variables::nameHash($dataItem, $variable)][] = $dataItem;
                 continue;
@@ -100,8 +101,14 @@ class Sort
             } else if ($key->isDateVariable()) {
                 $groupedItems[Date::serializeDate($dataItem->{$variable})][] = $dataItem;
                 continue;
-            } else {
-                $groupedItems[] = $dataItem;
+            } else if ($key->isMacro()){
+                $macroResult = CiteProc::getContext()->getMacro($key->getMacro())->render($dataItem, $citationNumber);
+                $groupedItems[mb_strtolower($macroResult)] = $dataItem;
+                continue;
+            }  else if ($variable === "citation-number"){
+                $groupedItems[$citationNumber + 1] = $dataItem;
+            } else { //this imply sort key citation-number
+                $groupedItems[mb_strtolower($dataItem->{$variable})] = $dataItem;
             }
 
         }

@@ -77,6 +77,10 @@ class Text implements RenderingInterface
                 $renderedText = $this->applyTextCase($this->toRenderTypeValue, $lang);
                 break;
             case 'variable':
+                if ($this->toRenderTypeValue === "citation-number") {
+                    $renderedText = $citationNumber + 1;
+                    break;
+                }
                 // check if there is an attribute with prefix short or long e.g. shortTitle or longAbstract
                 // test case group_ShortOutputOnly.json
                 if (in_array($this->form, ["short", "long"])) {
