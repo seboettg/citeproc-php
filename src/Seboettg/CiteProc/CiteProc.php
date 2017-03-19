@@ -136,7 +136,8 @@ class CiteProc
      * @return string
      * @throws CiteProcException
      */
-    public function render($data, $mode = "bibliography") {
+    public function render($data, $mode = "bibliography")
+    {
 
         if (!in_array($mode, ['citation', 'bibliography'])) {
             throw new \InvalidArgumentException("\"$mode\" is not a valid mode.");
