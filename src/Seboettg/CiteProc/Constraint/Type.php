@@ -44,7 +44,7 @@ class Type implements ConstraintInterface
      * @param \stdClass $value
      * @return bool
      */
-    public function validate($value)
+    public function validate($value, $citationNumber = null)
     {
         return in_array($value->type, $this->typeValue);
     }

@@ -149,4 +149,9 @@ class StringHelper
         return ($string === mb_strtoupper($string));
     }
 
+    public static function clear($string)
+    {
+        return preg_replace("/\'/", "’", $string);
+    }
+
 }

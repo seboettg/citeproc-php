@@ -43,7 +43,7 @@ class Number
             if (is_numeric($numA) && is_numeric($numB)) {
                 $ret = $numA - $numB;
             } else {
-                $ret = strcmp($numA, $numB);
+                $ret = strcasecmp($numA, $numB);
             }
             if ("descending" === $order) {
                 return $ret > 0 ? -1 : 1;

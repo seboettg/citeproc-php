@@ -19,7 +19,7 @@ namespace Seboettg\CiteProc\Constraint;
 class Jurisdiction implements ConstraintInterface
 {
 
-    public function validate($value)
+    public function validate($value, $citationNumber = null)
     {
         return false;
     }

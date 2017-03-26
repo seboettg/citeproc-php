@@ -30,9 +30,15 @@ class DataList extends ArrayList
      */
     private $subsequentAuthorSubstituteRule;
 
-    public function __construct(array $data = [])
+    /**
+     * @var Citation
+     */
+    private $citation;
+
+    public function __construct(array $data = [], $citation = null)
     {
         parent::__construct($data);
+        $this->citation = $citation;
     }
 
     /**

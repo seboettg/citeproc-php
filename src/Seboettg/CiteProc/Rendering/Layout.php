@@ -139,7 +139,7 @@ class Layout implements RenderingInterface
      */
     private function wrapBibEntry($value)
     {
-        return "\n  <div class=\"csl-entry\">" . $value . "</div>";
+        return "\n  <div class=\"csl-entry\">" . $this->addAffixes($value) . "</div>";
     }
 
 }

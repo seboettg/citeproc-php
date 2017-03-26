@@ -260,20 +260,20 @@ bibliography
 		</choose>
 	</macro>
 	<macro name="issued-sort-key">
-					<choose>
-						<if type="bill book graphic legal_case motion_picture report song article-journal chapter paper-conference" match="none">
-							<date variable="issued">
-							  <date-part name="year"/>
-								<date-part prefix=", " name="month"/>
-								<date-part prefix=" " name="day"/>
-							</date>
-						</if>
-                        <else>
-					<date variable="issued">
-						<date-part name="year"/>
-					</date>
-                        </else>
-					</choose>
+        <choose>
+            <if type="bill book graphic legal_case motion_picture report song article-journal chapter paper-conference" match="none">
+                <date variable="issued">
+                  <date-part name="year"/>
+                    <date-part prefix=", " name="month"/>
+                    <date-part prefix=" " name="day"/>
+                </date>
+            </if>
+            <else>
+                <date variable="issued">
+                    <date-part name="year"/>
+                </date>
+            </else>
+        </choose>
 	</macro>
 	<macro name="issued-year">
 		<choose>

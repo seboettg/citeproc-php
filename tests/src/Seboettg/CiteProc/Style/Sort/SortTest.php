@@ -142,6 +142,7 @@ class SortTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         $this->assertEquals($expected, $result);
     }
 
+
     public function testSortCaseInsensitiveBibliography()
     {
         $this->_testRenderTestSuite("sort_CaseInsensitiveBibliography");
@@ -162,14 +163,77 @@ class SortTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         $this->_testRenderTestSuite("sort_CaseInsensitiveCitation");
     }
 
+    public function testSortCitation()
+    {
+        $this->_testRenderTestSuite("sort_Citation.json");
+    }
+
     public function testSortCiteGroupDelimiter()
     {
         //$this->_testRenderTestSuite("sort_CiteGroupDelimiter");
     }
 
-    public function testSortConditionalMacroDates() {
+    public function testSortConditionalMacroDates()
+    {
         //$this->_testRenderTestSuite("sort_ConditionalMacroDates");
     }
+
+
+    public function testSortDateMacroSortWithSecondFieldAlign()
+    {
+        //$this->_testRenderTestSuite("sort_DateMacroSortWithSecondFieldAlign");
+    }
+
+    public function testSortDateVariable()
+    {
+        $this->_testRenderTestSuite("sort_DateVariable.json");
+    }
+
+    public function testSortDateVariableMixedElements()
+    {
+        $this->_testRenderTestSuite("sort_DateVariableMixedElements");
+    }
+
+    public function testSortDateVariableRange()
+    {
+        $this->_testRenderTestSuite("sort_DateVariableRange.json");
+    }
+
+    public function testSortDateVariableRangeMixed()
+    {
+        $this->_testRenderTestSuite("sort_DateVariableRangeMixed");
+    }
+
+    public function testSortEtAlUseLast()
+    {
+        $this->_testRenderTestSuite("sort_EtAlUseLast");
+    }
+
+
+    public function testSortStripMarkup()
+    {
+        $this->_testRenderTestSuite("sort_StripMarkup");
+    }
+
+    public function testSortSubstituteTitle()
+    {
+        $this->_testRenderTestSuite("sort_SubstituteTitle");
+    }
+
+    public function testSortVariousNameMacros1()
+    {
+        $this->_testRenderTestSuite("sort_VariousNameMacros1");
+    }
+
+    public function testSortVariousNameMacros2()
+    {
+        $this->_testRenderTestSuite("sort_VariousNameMacros2");
+    }
+    public function testSortVariousNameMacros3()
+    {
+            $this->_testRenderTestSuite("sort_VariousNameMacros3");
+    }
+
     public function testRenderTestSuite()
     {
         //TODO: implement remaining sort tests

@@ -17,7 +17,10 @@ bibliography
 <style 
       xmlns="http://purl.org/net/xbiblio/csl"
       class="note"
-      version="1.0">
+      version="1.0"
+		 et-al-use-last="true"
+		 et-al-min="4"
+		 et-al-use-first="2">
   <info>
     <id />
     <title />
@@ -33,10 +36,7 @@ bibliography
         <text value="Ignore me"/>
     </layout>
   </citation>
-  <bibliography
-		 et-al-use-last="true" 
-		 et-al-min="4" 
-		 et-al-use-first="2">
+  <bibliography>
     <sort>
       <key macro="author-name"/>
     </sort>

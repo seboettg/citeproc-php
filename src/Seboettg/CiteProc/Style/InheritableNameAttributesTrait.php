@@ -170,7 +170,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    private $initializeWith = "";
+    private $initializeWith = false;
 
     /**
      * Specifies that names should be displayed with the given name following the family name (e.g. “John Doe” becomes

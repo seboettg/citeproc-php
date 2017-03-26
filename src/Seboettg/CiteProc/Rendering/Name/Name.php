@@ -230,7 +230,7 @@ class Name implements HasParent
     {
         $nameObj = $this->cloneNamePOSC($name);
 
-        $useInitials = $this->initialize && !empty($this->initializeWith);
+        $useInitials = $this->initialize && !is_null($this->initializeWith) && $this->initializeWith !== false;
         if ($useInitials && isset($name->given)) {
             $nameObj->given = StringHelper::initializeBySpaceOrHyphen($name->given, $this->initializeWith);
         }

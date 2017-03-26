@@ -30,16 +30,11 @@ class Date
      * inversely, e.g. “100BC, 50BC, 50AD, 100AD”. Seasons are ignored for sorting, as the chronological order of the
      * seasons differs between the northern and southern hemispheres.
      *
-     * @param $date
+     * @param array $dateParts
      * @return string
      */
-    public static function serializeDate($date)
+    public static function serializeDate($dateParts)
     {
-        if (!isset($date->{'date-parts'})) {
-            $dateParts = self::parseDateParts($date);
-        } else {
-            $dateParts = $date->{'date-parts'}[0];
-        }
         $year  = isset($dateParts[0]) ? $dateParts[0] : "0000";
         $month = isset($dateParts[1]) ? $dateParts[1] : "00";
         $day =   isset($dateParts[2]) ? $dateParts[2] : "00";
@@ -60,5 +55,29 @@ class Date
         }
 
         return $arr;
+    }
+
+    /**
+     * creates sort key for variables containing date and date ranges
+     * @param $variable
+     * @param $dataItem
+     * @return string
+     */
+    public static function getSortKeyDate($variable, $dataItem)
+    {
+        if (count($dataItem->{$variable}->{'date-parts'}) > 1) {
+            $datePartsFrom = $dataItem->{$variable}->{'date-parts'}[0];
+            $datePartsTo   = $dataItem->{$variable}->{'date-parts'}[1];
+            $sortKey = self::serializeDate($datePartsFrom) . "-" . Date::serializeDate($datePartsTo);
+        } else {
+            //Date range
+            if (!isset($dataItem->{$variable}->{'date-parts'})) {
+                $dateParts = self::parseDateParts($dataItem->{$variable});
+            } else {
+                $dateParts = $dataItem->{$variable}->{'date-parts'}[0];
+            }
+            $sortKey = self::serializeDate($dateParts);
+        }
+        return $sortKey;
     }
 }

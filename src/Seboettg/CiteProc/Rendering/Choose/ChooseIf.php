@@ -71,12 +71,12 @@ class ChooseIf implements RenderingInterface, HasParent
         $ret = "";
         /** @var RenderingInterface $child */
         foreach ($this->children as $child) {
-            $ret .= $child->render($data);
+            $ret .= $child->render($data, $citationNumber);
         }
         return $ret;
     }
 
-    public function match($data)
+    public function match($data, $citationNumber = null)
     {
         if (isset($this->constraint)) {
             return $this->constraint->validate($data);
@@ -87,16 +87,16 @@ class ChooseIf implements RenderingInterface, HasParent
         /** @var ConstraintInterface $constraint */
         foreach ($this->constraints as $constraint) {
             if ($this->match === "any") {
-                if ($constraint->validate($data)) {
+                if ($constraint->validate($data, $citationNumber)) {
                     return true;
                 }
             } else {
-                $result &= $constraint->validate($data);
+                $result &= $constraint->validate($data, $citationNumber);
             }
         }
 
         if ($this->match === "all") {
-            return $result;
+            return (bool) $result;
         } else if ($this->match === "none") {
             return !$result;
         }

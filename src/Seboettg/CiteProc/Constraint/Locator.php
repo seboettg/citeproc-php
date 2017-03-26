@@ -23,7 +23,7 @@ namespace Seboettg\CiteProc\Constraint;
 class Locator implements ConstraintInterface
 {
 
-    public function validate($value)
+    public function validate($value, $citationNumber = null)
     {
         return false;
     }

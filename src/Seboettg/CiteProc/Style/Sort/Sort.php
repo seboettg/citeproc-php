@@ -93,31 +93,27 @@ class Sort
         //grouping by value
         foreach ($dataToSort as $citationNumber => $dataItem) {
             if ($key->isNameVariable()) {
-                $groupedItems[Variables::nameHash($dataItem, $variable)][] = $dataItem;
-                continue;
+                $sortKey = Variables::nameHash($dataItem, $variable);
             } else if ($key->isNumberVariable()) {
-                $groupedItems[$dataItem->{$variable}][] = $dataItem;
-                continue;
+                $sortKey = $dataItem->{$variable};
             } else if ($key->isDateVariable()) {
-                $groupedItems[Date::serializeDate($dataItem->{$variable})][] = $dataItem;
-                continue;
+                $sortKey = Date::getSortKeyDate($variable, $dataItem);
             } else if ($key->isMacro()){
-                $macroResult = CiteProc::getContext()->getMacro($key->getMacro())->render($dataItem, $citationNumber);
-                $groupedItems[mb_strtolower($macroResult)] = $dataItem;
-                continue;
+                $sortKey = mb_strtolower(strip_tags(CiteProc::getContext()->getMacro($key->getMacro())->render($dataItem, $citationNumber)));
             }  else if ($variable === "citation-number"){
-                $groupedItems[$citationNumber + 1] = $dataItem;
-            } else { //this imply sort key citation-number
-                $groupedItems[mb_strtolower($dataItem->{$variable})] = $dataItem;
+                $sortKey = $citationNumber + 1;
+            } else {
+                $sortKey = mb_strtolower(strip_tags($dataItem->{$variable}));
             }
-
+            $groupedItems[$sortKey][] = $dataItem;
         }
 
-        // there are further keys ?
         if ($this->sortingKeys->count() > ++$keyNumber) {
-            array_walk($groupedItems, function(&$group) use ($keyNumber){
-                $group = $this->performSort($keyNumber, $group); //recursive call for next sort key
-            });
+            foreach ($groupedItems as $group => &$array) {
+                if (count($array) > 1) {
+                    $array = $this->performSort($keyNumber, $array);
+                }
+            }
         }
 
         //sorting by array keys
@@ -132,7 +128,7 @@ class Sort
         return $this->flatten($sortedDataGroups);
     }
 
-    public function flatten(array $array) {
+    public function flatten($array) {
         $returnArray = [];
         array_walk_recursive($array, function($a) use (&$returnArray) { $returnArray[] = $a; });
         return $returnArray;

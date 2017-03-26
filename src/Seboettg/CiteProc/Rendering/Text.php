@@ -16,6 +16,7 @@ use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\QuotesTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
+use Seboettg\CiteProc\Util\StringHelper;
 
 
 /**
@@ -90,7 +91,7 @@ class Text implements RenderingInterface
                     }
                 }
                 if (!empty($data->{$this->toRenderTypeValue})) {
-                    $renderedText = $this->applyTextCase($data->{$this->toRenderTypeValue}, $lang);
+                    $renderedText = $this->applyTextCase(StringHelper::clear($data->{$this->toRenderTypeValue}), $lang);
                 }
                 // for test sort_BibliographyCitationNumberDescending.json
                 if ($this->toRenderTypeValue === "citation-number" && !is_null($citationNumber)) {

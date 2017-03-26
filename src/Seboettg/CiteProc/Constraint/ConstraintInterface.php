@@ -18,5 +18,5 @@ namespace Seboettg\CiteProc\Constraint;
  */
 interface ConstraintInterface
 {
-    public function validate($value);
+    public function validate($value, $citationNumber = null);
 }

@@ -31,7 +31,7 @@ class IsUncertainDate implements ConstraintInterface
         $this->match = $match;
     }
 
-    public function validate($value)
+    public function validate($value, $citationNumber = null)
     {
         $value = $value->{$this->varName};
 
