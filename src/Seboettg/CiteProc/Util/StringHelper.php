@@ -64,7 +64,7 @@ class StringHelper
     {
         $wordArray = explode(" ", $text);
 
-        array_walk($wordArray, function (&$word) {
+        array_walk($wordArray, function(&$word) {
             $word = ucfirst($word);
         });
 
@@ -74,16 +74,16 @@ class StringHelper
     public static function capitalizeForTitle($titleString)
     {
         if (preg_match('/(.+[^\<\>][\.:\/;\?\!]\s?)([a-z])(.+)/', $titleString, $match)) {
-            $titleString = $match[1].StringHelper::mb_ucfirst($match[2]).$match[3];
+            $titleString = $match[1] . StringHelper::mb_ucfirst($match[2]) . $match[3];
         }
 
         $wordArray = explode(" ", $titleString);
 
-        array_walk($wordArray, function (&$word) {
+        array_walk($wordArray, function(&$word) {
 
             $words = explode("-", $word);
             if (count($words) > 1) {
-                array_walk($words, function (&$w) {
+                array_walk($words, function(&$w) {
                     $w = StringHelper::keepLowerCase($w) ? $w : StringHelper::mb_ucfirst($w);
                 });
                 $word = implode("-", $words);
@@ -96,7 +96,7 @@ class StringHelper
 
     public static function keepLowerCase($word)
     {
-        $lowerCase =  in_array($word, self::PREPOSITIONS) ||
+        $lowerCase = in_array($word, self::PREPOSITIONS) ||
             in_array($word, self::ARTICLES) ||
             in_array($word, self::CONJUNCTIONS) ||
             in_array($word, self::ADJECTIVES);

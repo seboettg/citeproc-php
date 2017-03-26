@@ -17,8 +17,8 @@ trait DelimiterTrait
     {
         foreach ($node->attributes() as $attribute) {
             /** @var string $name */
-            $name = (string)$attribute->getName();
-            $value = (string)$attribute;
+            $name = (string) $attribute->getName();
+            $value = (string) $attribute;
 
             switch ($name) {
                 case 'delimiter':

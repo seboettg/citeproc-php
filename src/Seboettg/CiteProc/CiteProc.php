@@ -112,7 +112,7 @@ class CiteProc
     }
 
     /**
-     * @param array|DataList $data
+     * @param DataList $data
      * @return string
      */
     protected function bibliography($data)
@@ -122,7 +122,7 @@ class CiteProc
     }
 
     /**
-     * @param array|DataList $data
+     * @param DataList $data
      * @return string
      */
     protected function citation($data)

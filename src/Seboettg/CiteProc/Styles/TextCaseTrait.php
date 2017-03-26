@@ -79,6 +79,10 @@ trait TextCaseTrait
     }
 
 
+    /**
+     * @param string $render
+     * @param string $original
+     */
     private function keepNoCase($render, $original)
     {
         if (preg_match('/<span class=\"nocase\">(\p{L}+)<\/span>/i', $original, $match)) {

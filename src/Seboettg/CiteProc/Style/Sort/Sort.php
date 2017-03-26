@@ -98,9 +98,9 @@ class Sort
                 $sortKey = $dataItem->{$variable};
             } else if ($key->isDateVariable()) {
                 $sortKey = Date::getSortKeyDate($variable, $dataItem);
-            } else if ($key->isMacro()){
+            } else if ($key->isMacro()) {
                 $sortKey = mb_strtolower(strip_tags(CiteProc::getContext()->getMacro($key->getMacro())->render($dataItem, $citationNumber)));
-            }  else if ($variable === "citation-number"){
+            } else if ($variable === "citation-number") {
                 $sortKey = $citationNumber + 1;
             } else {
                 $sortKey = mb_strtolower(strip_tags($dataItem->{$variable}));

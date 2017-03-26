@@ -57,7 +57,7 @@ class ChooseIf implements RenderingInterface, HasParent
 
         foreach ($node->attributes() as $name => $value) {
             if ('match' !== $name) {
-                $this->constraints->append(Factory::createConstraint((string)$name, (string)$value));
+                $this->constraints->append(Factory::createConstraint((string) $name, (string) $value));
             }
         }
 
@@ -104,7 +104,7 @@ class ChooseIf implements RenderingInterface, HasParent
     }
 
     /**
-     * @return mixed
+     * @return Choose
      */
     public function getParent()
     {
