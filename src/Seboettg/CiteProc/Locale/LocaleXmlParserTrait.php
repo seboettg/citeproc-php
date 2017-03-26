@@ -60,7 +60,7 @@ trait LocaleXmlParserTrait
     {
         /** @var \SimpleXMLElement $node */
         foreach ($locale as $node) {
-            switch($node->getName()) {
+            switch ($node->getName()) {
                 case 'style-options':
                     $this->optionsXml->add('options', $node);
                     foreach ($node->attributes() as $name => $value) {
@@ -108,7 +108,7 @@ trait LocaleXmlParserTrait
                     }
                     break;
                 case 'date':
-                    $form = (string)$node["form"];
+                    $form = (string) $node["form"];
                     $this->dateXml->add($form, $node);
                     foreach ($node->children() as $child) {
                         $date = new \stdClass();

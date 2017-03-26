@@ -125,9 +125,9 @@ class DateTime extends \DateTime
      */
     public function renderNumeric()
     {
-        $ret  =  $this->year;
-        $ret .=  $this->month > 0 && $this->month < 13 ? "-" . sprintf("%02s", $this->month) : "";
-        $ret .=  $this->day > 0 && $this->day < 32 ? "-" . sprintf("%02s", $this->day) : "";
+        $ret  = $this->year;
+        $ret .= $this->month > 0 && $this->month < 13 ? "-" . sprintf("%02s", $this->month) : "";
+        $ret .= $this->day > 0 && $this->day < 32 ? "-" . sprintf("%02s", $this->day) : "";
         return $ret;
     }
 }

@@ -39,7 +39,7 @@ class Number
      */
     public static function getCompareNumber()
     {
-        return function ($numA, $numB, $order) {
+        return function($numA, $numB, $order) {
             if (is_numeric($numA) && is_numeric($numB)) {
                 $ret = $numA - $numB;
             } else {
@@ -85,7 +85,7 @@ class Number
             "I" => 1
         ];
 
-        if(is_numeric($romanNumber)) {
+        if (is_numeric($romanNumber)) {
             return 0;
         }
 
@@ -99,7 +99,7 @@ class Number
         }
 
         $sum = 0;
-        while($current = current($values)) {
+        while ($current = current($values)) {
             $next = next($values);
             $next > $current ? $sum += $next - $current + 0 * next($values) : $sum += $current;
         }

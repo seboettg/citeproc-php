@@ -522,6 +522,9 @@ class Name implements HasParent
         return false;
     }
 
+    /**
+     * @param \stdClass $precedingItem
+     */
     private function identicalAuthors($precedingItem, $currentAuthor)
     {
         if (count($precedingItem->author) !== count($currentAuthor)) {

@@ -57,7 +57,7 @@ class IsNumeric implements ConstraintInterface
             return $numberFormatter->parse($evalValue) !== false;
         } else if (preg_match(Number::PATTERN_ROMAN, $evalValue)) {
             return Number::roman2Dec($evalValue) !== false;
-        } else if (preg_match(Number::PATTERN_COMMA_AMPERSAND_RANGE, $evalValue)){
+        } else if (preg_match(Number::PATTERN_COMMA_AMPERSAND_RANGE, $evalValue)) {
             return true;
         }
         return false;

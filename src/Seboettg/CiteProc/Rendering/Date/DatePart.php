@@ -58,13 +58,13 @@ class DatePart
     {
         foreach ($node->attributes() as $attribute) {
             if ("name" === $attribute->getName()) {
-                $this->name = (string)$attribute;
+                $this->name = (string) $attribute;
             }
             if ("form" === $attribute->getName()) {
-                $this->form = (string)$attribute;
+                $this->form = (string) $attribute;
             }
             if ("range-delimiter" === $attribute->getName()) {
-                $this->rangeDelimiter = (string)$attribute;
+                $this->rangeDelimiter = (string) $attribute;
             }
         }
 

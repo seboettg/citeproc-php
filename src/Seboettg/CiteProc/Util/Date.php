@@ -37,7 +37,7 @@ class Date
     {
         $year  = isset($dateParts[0]) ? $dateParts[0] : "0000";
         $month = isset($dateParts[1]) ? $dateParts[1] : "00";
-        $day =   isset($dateParts[2]) ? $dateParts[2] : "00";
+        $day = isset($dateParts[2]) ? $dateParts[2] : "00";
 
         return sprintf("%04d%02d%02d", $year, $month, $day);
     }
@@ -51,7 +51,7 @@ class Date
             $dateTime = new \DateTime($date->{'raw'});
             $arr = [[$dateTime->format("Y"), $dateTime->format("m"), $dateTime->format("d")]];
         } catch (\Exception $e) {
-            throw new CiteProcException("Could not parse date \"".$date->{'raw'}."\".", 0, $e);
+            throw new CiteProcException("Could not parse date \"" . $date->{'raw'} . "\".", 0, $e);
         }
 
         return $arr;

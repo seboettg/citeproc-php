@@ -142,7 +142,7 @@ class Date
         if ($this->dateParts->count() < 1 && in_array($form, self::$localizedDateFormats)) {
             if ($this->hasDatePartsFromLocales($form)) {
                 $datePartsFromLocales = $this->getDatePartsFromLocales($form);
-                array_filter($datePartsFromLocales, function (\SimpleXMLElement $item) use ($dateParts) {
+                array_filter($datePartsFromLocales, function(\SimpleXMLElement $item) use ($dateParts) {
                     return in_array($item["name"], $dateParts);
                 });
 
@@ -212,8 +212,8 @@ class Date
                 $ret = $this->renderDateRange($toRender, $from, $to, $delim);
             }
 
-            if (isset($var->raw) && preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw, $matches)){
-                return $matches[1].$matches[2].$matches[3];
+            if (isset($var->raw) && preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw, $matches)) {
+                return $matches[1] . $matches[2] . $matches[3];
             }
         }
         // fallback:
@@ -242,7 +242,7 @@ class Date
         $data = [];
         foreach ($dates as $date) {
             if ($date[0] < 1000) {
-                $dateTime = new DateTime(0,0,0);
+                $dateTime = new DateTime(0, 0, 0);
                 $dateTime->setDay(0)->setMonth(0)->setYear(0);
                 $data[] = $dateTime;
             }
@@ -347,7 +347,7 @@ class Date
                 $dp = $this->dateParts->toArray();
                 $i = 0;
                 $dateParts_ = [];
-                array_walk($dp, function ($datePart, $key) use (&$i, &$dateParts_, $differentParts) {
+                array_walk($dp, function($datePart, $key) use (&$i, &$dateParts_, $differentParts) {
                     if (strpos($key, "year") !== false || strpos($key, "month") !== false) {
                         $dateParts_["yearmonth"][] = $datePart;
                     }
@@ -360,7 +360,7 @@ class Date
                 $dp = $this->dateParts->toArray();
                 $i = 0;
                 $dateParts_ = [];
-                array_walk($dp, function ($datePart, $key) use (&$i, &$dateParts_, $differentParts) {
+                array_walk($dp, function($datePart, $key) use (&$i, &$dateParts_, $differentParts) {
                     if (strpos($key, "year") !== false || strpos($key, "day") !== false) {
                         $dateParts_["yearday"][] = $datePart;
                     }
@@ -373,7 +373,7 @@ class Date
                 $dp = $this->dateParts->toArray();
                 $i = 0;
                 $dateParts_ = [];
-                array_walk($dp, function ($datePart, $key) use (&$i, &$dateParts_, $differentParts) {
+                array_walk($dp, function($datePart, $key) use (&$i, &$dateParts_, $differentParts) {
                     //$bit = sprintf("%03d", decbin($differentParts));
                     if (strpos($key, "month") !== false || strpos($key, "day") !== false) {
                         $dateParts_["monthday"][] = $datePart;
@@ -412,8 +412,8 @@ class Date
 
     /**
      * @param $datePart
-     * @param $from
-     * @param $to
+     * @param DateTime $from
+     * @param DateTime $to
      * @param $delim
      * @return string
      */
@@ -423,10 +423,11 @@ class Date
         $from = $datePart->renderWithoutAffixes($from, $this);
         $to = $datePart->renderWithoutAffixes($to, $this);
         $suffix = !empty($to) ? $datePart->renderSuffix() : "";
-        return $prefix.$from.$delim.$to.$suffix;
+        return $prefix . $from . $delim . $to . $suffix;
     }
 
     /**
+     * @param string $format
      * @return bool
      */
     private function hasDatePartsFromLocales($format)
@@ -436,6 +437,7 @@ class Date
     }
 
     /**
+     * @param string $format
      * @return array
      */
     private function getDatePartsFromLocales($format)
@@ -448,9 +450,9 @@ class Date
         // no custom date parts within the date element (this)?
         if (!empty($dateFromLocale)) {
 
-            $dateForm = array_filter(is_array($dateFromLocale) ? $dateFromLocale : [$dateFromLocale], function ($element) use ($format) {
+            $dateForm = array_filter(is_array($dateFromLocale) ? $dateFromLocale : [$dateFromLocale], function($element) use ($format) {
                 /** @var \SimpleXMLElement $element */
-                $dateForm = (string)$element->attributes()["form"];
+                $dateForm = (string) $element->attributes()["form"];
                 return $dateForm === $format;
             });
 
