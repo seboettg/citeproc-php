@@ -99,7 +99,7 @@ class NamePart
                 break;
         }
 
-        return $this->addAffixes($ret);
+        return $ret;
     }
 
     public function getName()

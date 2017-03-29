@@ -101,4 +101,9 @@ class NameTest extends \PHPUnit_Framework_TestCase
     {
         $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_partial-first");
     }
+
+    public function testFormatSmallCaps()
+    {
+        $this->_testRenderTestSuite("name_FormatSmallCaps");
+    }
 }

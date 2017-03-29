@@ -43,6 +43,10 @@ class CiteProcTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
         $this->_testRenderTestSuite("fullstyles_APA_MultipleAuthors");
     }
 
+    public function testFullStyleDINBibliography()
+    {
+        $this->_testRenderTestSuite("fullstyles_DINBibliography");
+    }
 
     public function testRenderTestSuite()
     {

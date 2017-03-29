@@ -113,49 +113,17 @@ class Date
             return "";
         }
 
-        if (!isset($data->{$this->variable}->{'date-parts'}) || empty($data->{$this->variable}->{'date-parts'})) {
-            if (isset($data->{$this->variable}->raw) && !empty($data->{$this->variable}->raw)) {
-                try {
-                    // try to parse date parts from "raw" attribute
-                    $var->{'date-parts'} = Util\Date::parseDateParts($data->{$this->variable});
-                } catch (CiteProcException $e) {
-                    if (!preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $data->{$this->variable}->raw)) {
-                        return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->raw)));
-                    }
-                }
-            } else {
-                return "";
+        try {
+            $this->prepareDatePartsInVariable($data, $var);
+        } catch (CiteProcException $e) {
+            if (!preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $data->{$this->variable}->raw)) {
+                return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->raw)));
             }
         }
 
         $form = $this->form;
         $dateParts = explode("-", $this->datePartsAttribute);
-
-        /* Localized date formats are selected with the optional form attribute, which must set to either “numeric”
-        (for fully numeric formats, e.g. “12-15-2005”), or “text” (for formats with a non-numeric month, e.g.
-        “December 15, 2005”). Localized date formats can be customized in two ways. First, the date-parts attribute may
-        be used to show fewer date parts. The possible values are:
-            - “year-month-day” - (default), renders the year, month and day
-            - “year-month” - renders the year and month
-            - “year” - renders the year */
-
-        if ($this->dateParts->count() < 1 && in_array($form, self::$localizedDateFormats)) {
-            if ($this->hasDatePartsFromLocales($form)) {
-                $datePartsFromLocales = $this->getDatePartsFromLocales($form);
-                array_filter($datePartsFromLocales, function(\SimpleXMLElement $item) use ($dateParts) {
-                    return in_array($item["name"], $dateParts);
-                });
-
-                foreach ($datePartsFromLocales as $datePartNode) {
-                    $datePart = $datePartNode["name"];
-                    $this->dateParts->set("$form-$datePart", Util\Factory::create($datePartNode));
-                }
-            } else { //otherwise create default date parts
-                foreach ($dateParts as $datePart) {
-                    $this->dateParts->add("$form-$datePart", new DatePart(new \SimpleXMLElement('<date-part name="' . $datePart . '" form="' . $form . '" />')));
-                }
-            }
-        }
+        $this->prepareDatePartsChildren($dateParts, $form);
 
 
         // No date-parts in date-part attribute defined, take into account that the defined date-part children will be used.
@@ -174,9 +142,10 @@ class Date
 
         if ($this->dateParts->count() > 0) {
 
-            if (isset($var->raw) && !preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw) && $this->dateParts->count() > 0) {
+            /* if (isset($var->raw) && !preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw) && $this->dateParts->count() > 0) {
                 //$var->{"date-parts"} = [];
-            } else if (!isset($var->{'date-parts'})) { // ignore empty date-parts
+            } else*/
+            if (!isset($var->{'date-parts'})) { // ignore empty date-parts
                 return "";
             }
 
@@ -474,5 +443,58 @@ class Date
     public function getVariable()
     {
         return $this->variable;
+    }
+
+    /**
+     * @param $data
+     * @param $var
+     * @throws CiteProcException
+     */
+    private function prepareDatePartsInVariable($data, $var)
+    {
+        if (!isset($data->{$this->variable}->{'date-parts'}) || empty($data->{$this->variable}->{'date-parts'})) {
+            if (isset($data->{$this->variable}->raw) && !empty($data->{$this->variable}->raw)) {
+                //try {
+                // try to parse date parts from "raw" attribute
+                $var->{'date-parts'} = Util\Date::parseDateParts($data->{$this->variable});
+                //} catch (CiteProcException $e) {
+                //    if (!preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $data->{$this->variable}->raw)) {
+                //        return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->raw)));
+                //    }
+                //}
+            } else {
+                throw new CiteProcException("No valid date format");
+                //return "";
+            }
+        }
+    }
+
+    private function prepareDatePartsChildren($dateParts, $form)
+    {
+        /* Localized date formats are selected with the optional form attribute, which must set to either “numeric”
+        (for fully numeric formats, e.g. “12-15-2005”), or “text” (for formats with a non-numeric month, e.g.
+        “December 15, 2005”). Localized date formats can be customized in two ways. First, the date-parts attribute may
+        be used to show fewer date parts. The possible values are:
+            - “year-month-day” - (default), renders the year, month and day
+            - “year-month” - renders the year and month
+            - “year” - renders the year */
+
+        if ($this->dateParts->count() < 1 && in_array($form, self::$localizedDateFormats)) {
+            if ($this->hasDatePartsFromLocales($form)) {
+                $datePartsFromLocales = $this->getDatePartsFromLocales($form);
+                array_filter($datePartsFromLocales, function(\SimpleXMLElement $item) use ($dateParts) {
+                    return in_array($item["name"], $dateParts);
+                });
+
+                foreach ($datePartsFromLocales as $datePartNode) {
+                    $datePart = $datePartNode["name"];
+                    $this->dateParts->set("$form-$datePart", Util\Factory::create($datePartNode));
+                }
+            } else { //otherwise create default date parts
+                foreach ($dateParts as $datePart) {
+                    $this->dateParts->add("$form-$datePart", new DatePart(new \SimpleXMLElement('<date-part name="' . $datePart . '" form="' . $form . '" />')));
+                }
+            }
+        }
     }
 }

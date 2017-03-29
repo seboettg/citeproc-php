@@ -100,10 +100,13 @@ class Name implements HasParent
     }
 
     /**
-     * @param integer $citationNumber
+     * @param array $data
+     * @param integer|null $citationNumber
+     * @return string
      */
     public function render($data, $citationNumber = null)
     {
+        $text = "";
         if (!$this->attributesInitialized) {
             $this->initInheritableNameAttributes($this->node);
         }
@@ -112,8 +115,6 @@ class Name implements HasParent
         } elseif ('symbol' === $this->and) {
             $this->and = '&#38;';
         }
-
-        $lastName = null;
 
         $resultNames = [];
 
@@ -199,11 +200,10 @@ class Name implements HasParent
                         $text = implode($this->delimiter, $resultNames);
                     }
             }
-        } else {
+        }
+        if (empty($text)) {
             $text = implode($this->delimiter, $resultNames);
         }
-
-
 
         //append et al abbreviation
         if (count($data) > 1 &&
@@ -226,6 +226,11 @@ class Name implements HasParent
         return $text;
     }
 
+    /**
+     * @param \stdClass $name
+     * @param int $rank
+     * @return string
+     */
     private function formatName($name, $rank)
     {
         $nameObj = $this->cloneNamePOSC($name);
@@ -261,13 +266,13 @@ class Name implements HasParent
             return $text;
         }
 
-        $given = !empty($name->given) ? $this->format(trim($name->given)) : "";
+        $given = !empty($name->given) ? trim($name->given) : "";
         $nonDroppingParticle = isset($name->{'non-dropping-particle'}) ? $name->{'non-dropping-particle'} : "";
         $droppingParticle = isset($name->{'dropping-particle'}) ? $name->{'dropping-particle'} : "";
         $suffix = (isset($name->{'suffix'})) ? $name->{'suffix'} : "";
 
         if (isset($name->family)) {
-            $family = $this->format($name->family);
+            $family = $name->family;
             if ($this->form == 'short') {
                 $text = (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") . $family;
             } else {
@@ -317,29 +322,7 @@ class Name implements HasParent
             return preg_replace("/&nbsp;+/", " ", $text);
         }
         $text = html_entity_decode(preg_replace("/[\s]+/", " ", $text));
-        return trim($text);
-    }
-
-    public function getOptions()
-    {
-        $ignore = ["namePart", "parent", "substitute"];
-        $options = [];
-        $reflectedName = new \ReflectionClass($this);
-
-        foreach ($reflectedName->getProperties() as $property) {
-            $property->setAccessible(true);
-            if (in_array($property->getName(), $ignore)) {
-                continue;
-            } else if ($property->getName() == "and" && $property->getValue($this) === "&#38;") {
-                $options["and"] = "symbol";
-            } else {
-                $propValue = $property->getValue($this);
-                if (isset($propValue) && !empty($propValue)) {
-                    $options[StringHelper::camelCase2Hyphen($property->getName())] = $propValue;
-                }
-            }
-        }
-        return $options;
+        return $this->format(trim($text));
     }
 
     /**
@@ -445,7 +428,9 @@ class Name implements HasParent
         return $resultNames;
     }
 
-
+    /**
+     * @return Names
+     */
     public function getParent()
     {
         return $this->parent;
@@ -512,6 +497,11 @@ class Name implements HasParent
         return $resultNames;
     }
 
+    /**
+     * @param \stdClass $preceding
+     * @param \stdClass $name
+     * @return bool
+     */
     public function precedingHasAuthor($preceding, $name)
     {
         foreach ($preceding->author as $author) {
@@ -524,6 +514,8 @@ class Name implements HasParent
 
     /**
      * @param \stdClass $precedingItem
+     * @param \stdClass $currentAuthor
+     * @return bool
      */
     private function identicalAuthors($precedingItem, $currentAuthor)
     {

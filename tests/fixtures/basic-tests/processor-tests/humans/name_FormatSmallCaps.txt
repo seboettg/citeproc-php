@@ -1,0 +1,52 @@
+
+>>===== MODE =====>>
+bibliography
+<<===== MODE=====<<
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry"><span style="font-variant: small-caps;">Hotho, Andreas</span> ; <span style="font-variant: small-caps;">Benz, Dominik</span> ; <span style="font-variant: small-caps;">Eisterlehner, Folke</span> ; <span style="font-variant: small-caps;">Jäschke, Robert</span></div>
+</div>
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="de-DE">
+  <info />
+  <bibliography hanging-indent="true" et-al-min="9" et-al-use-first="9">
+    <layout>
+      <names variable="author" delimiter=" ; ">
+        <name name-as-sort-order="all" sort-separator=", " delimiter=" ; " delimiter-precedes-last="always" font-variant="small-caps"/>
+        <label form="short" prefix=" (" suffix=")"/>
+      </names>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL======<<
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Hotho", 
+                "given": "Andreas"
+            }, 
+            {
+                "family": "Benz", 
+                "given": "Dominik"
+            }, 
+            {
+                "family": "Eisterlehner", 
+                "given": "Folke"
+            }, 
+            {
+                "family": "Jäschke", 
+                "given": "Robert"
+            }
+        ], 
+        "id": "item1", 
+        "title": "Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler"
+    }
+]
+<<===== INPUT=====<<

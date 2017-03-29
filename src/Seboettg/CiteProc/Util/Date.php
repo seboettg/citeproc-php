@@ -42,6 +42,11 @@ class Date
         return sprintf("%04d%02d%02d", $year, $month, $day);
     }
 
+    /**
+     * @param $date
+     * @return array
+     * @throws CiteProcException
+     */
     public static function parseDateParts($date)
     {
         if (!isset($date->{'raw'})) {
