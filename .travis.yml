@@ -4,10 +4,10 @@ php:
 
 before_script:
  - wget http://getcomposer.org/composer.phar
- - rm -r locales; git clone https://github.com/citation-style-language/locales locales
- - rm -r styles; git clone https://github.com/citation-style-language/styles styles
  - php composer.phar install --dev --no-interaction
  - php composer.phar run-script post-install-cmd
+ - rm -r locales; ln -s vendor/academicpuma/locales locales
+ - rm -r styles; ln -s vendor/academicpuma/styles styles
 
 script:
  - mkdir -p build/logs
