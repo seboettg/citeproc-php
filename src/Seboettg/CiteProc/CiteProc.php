@@ -170,7 +170,7 @@ class CiteProc
         return $res;
     }
 
-    private function init()
+    public function init()
     {
         self::$context = new Context($this);
         self::$context->setLocale(new Locale\Locale($this->lang)); //init locale

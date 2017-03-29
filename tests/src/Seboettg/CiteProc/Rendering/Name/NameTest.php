@@ -106,4 +106,14 @@ class NameTest extends \PHPUnit_Framework_TestCase
     {
         $this->_testRenderTestSuite("name_FormatSmallCaps");
     }
+
+    public function testNameNamepartAffixes()
+    {
+        $this->_testRenderTestSuite("name_namepartAffixes.json");
+    }
+
+    public function testNameNamepartAffixesNameAsSortOrder()
+    {
+        $this->_testRenderTestSuite("name_namepartAffixesNameAsSortOrder");
+    }
 }

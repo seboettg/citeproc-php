@@ -141,22 +141,6 @@ class Group implements RenderingInterface, HasParent
         return "";
     }
 
-
-    private function doesRenderingElementCallsVariable($child)
-    {
-        if ($child instanceof Text) {
-            if ($child->rendersVariable()) {
-                return true;
-            }
-            return false;
-        }
-        if (in_array(get_class($child), self::$suppressableElements)) {
-
-            return true;
-        }
-        return false;
-    }
-
     /**
      * @return mixed
      */

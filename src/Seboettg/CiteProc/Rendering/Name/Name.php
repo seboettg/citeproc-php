@@ -233,6 +233,7 @@ class Name implements HasParent
      */
     private function formatName($name, $rank)
     {
+
         $nameObj = $this->cloneNamePOSC($name);
 
         $useInitials = $this->initialize && !is_null($this->initializeWith) && $this->initializeWith !== false;
@@ -244,13 +245,12 @@ class Name implements HasParent
         if (count($this->nameParts) > 0) {
             /** @var NamePart $namePart */
             foreach ($this->nameParts as $namePart) {
-                $nameObj->{$namePart->getName()} = $namePart->render($name);
+                $nameObj = $namePart->render($nameObj);
             }
         }
+        $ret = $this->getNamesString($nameObj, $rank);
 
-        $return = $this->getNamesString($nameObj, $rank);
-
-        return trim($return);
+        return trim($ret);
     }
 
     /**
@@ -542,5 +542,15 @@ class Name implements HasParent
             $resultNames[] = $this->formatName($name, $rank);
         }
         return $resultNames;
+    }
+
+    public function getForm()
+    {
+        return $this->form;
+    }
+
+    public function isNameAsSortOrder()
+    {
+        return $this->nameAsSortOrder;
     }
 }
