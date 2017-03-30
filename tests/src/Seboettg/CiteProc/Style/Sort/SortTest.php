@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,13 +9,11 @@
 
 namespace Seboettg\CiteProc\Style\Sort;
 
-
-use PHPUnit_Framework_ExpectationFailedException;
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
-use Seboettg\CiteProc\TestSuiteTests;
 
-class SortTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
+class SortTest extends TestCase
 {
     use TestSuiteTestCaseTrait;
 
@@ -232,11 +230,5 @@ class SortTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
     public function testSortVariousNameMacros3()
     {
             $this->_testRenderTestSuite("sort_VariousNameMacros3");
-    }
-
-    public function testRenderTestSuite()
-    {
-        //TODO: implement remaining sort tests
-        //$this->_testRenderTestSuite("sort_");
     }
 }

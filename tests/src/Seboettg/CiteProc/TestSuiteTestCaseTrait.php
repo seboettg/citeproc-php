@@ -9,8 +9,7 @@
 
 namespace Seboettg\CiteProc;
 
-
-use PHPUnit_Framework_ExpectationFailedException;
+use \PHPUnit_Framework_ExpectationFailedException;
 use Seboettg\CiteProc\Exception\CiteProcException;
 
 trait TestSuiteTestCaseTrait

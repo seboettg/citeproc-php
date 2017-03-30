@@ -9,15 +9,10 @@
 
 namespace Seboettg\CiteProc\Rendering\Date;
 
-
-use PHPUnit_Framework_ExpectationFailedException;
-use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Context;
-use Seboettg\CiteProc\Locale\Locale;
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
-use Seboettg\CiteProc\TestSuiteTests;
 
-class DateTest extends \PHPUnit_Framework_TestCase
+class DateTest extends TestCase
 {
 
     use TestSuiteTestCaseTrait;

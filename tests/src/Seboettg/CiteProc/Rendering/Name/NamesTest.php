@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,15 +9,10 @@
 
 namespace Seboettg\CiteProc\Rendering\Names;
 
-use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Context;
-use Seboettg\CiteProc\Locale\Locale;
-use Seboettg\CiteProc\Rendering\Group;
-use Seboettg\CiteProc\Rendering\Name\Names;
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
-use Seboettg\CiteProc\TestSuiteTests;
 
-class NamesTest extends \PHPUnit_Framework_TestCase
+class NamesTest extends TestCase
 {
 
     use TestSuiteTestCaseTrait;

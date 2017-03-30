@@ -9,10 +9,10 @@
 
 namespace Seboettg\CiteProc\Rendering\Name;
 
-
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
-class NameTest extends \PHPUnit_Framework_TestCase
+class NameTest extends TestCase
 {
 
     use TestSuiteTestCaseTrait;

@@ -9,13 +9,13 @@
 
 namespace Seboettg\CiteProc\Rendering;
 
-
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\Style\Macro;
 
-class TextTest extends \PHPUnit_Framework_TestCase
+class TextTest extends TestCase
 {
 
     private $textXml = ['<text variable="title"/>'];

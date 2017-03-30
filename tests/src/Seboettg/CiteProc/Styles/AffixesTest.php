@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,10 +9,10 @@
 
 namespace Seboettg\CiteProc\Styles;
 
-
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
-class AffixesTest extends \PHPUnit_Framework_TestCase
+class AffixesTest extends TestCase
 {
     use TestSuiteTestCaseTrait;
 

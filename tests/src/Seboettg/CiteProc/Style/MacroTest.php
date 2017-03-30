@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,13 +9,10 @@
 
 namespace Seboettg\CiteProc\Rendering;
 
-
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Context;
-use Seboettg\CiteProc\Style\Citation;
-use Seboettg\CiteProc\Style\Macro;
 
-class MacroTest extends \PHPUnit_Framework_TestCase
+class MacroTest extends TestCase
 {
 
     public function setUp()

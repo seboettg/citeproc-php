@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,10 +9,11 @@
 
 namespace src\Seboettg\CiteProc\Rendering\Name;
 
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
 
-class SubstituteTest extends \PHPUnit_Framework_TestCase
+class SubstituteTest extends TestCase
 {
     use TestSuiteTestCaseTrait;
 

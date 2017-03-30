@@ -9,11 +9,11 @@
 
 namespace Seboettg\CiteProc\Node\Choose\Choose;
 
-
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\Rendering\Choose\Choose;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
-class ChooseTest extends \PHPUnit_Framework_TestCase
+class ChooseTest extends TestCase
 {
     use TestSuiteTestCaseTrait;
 

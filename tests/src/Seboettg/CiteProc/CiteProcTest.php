@@ -9,11 +9,10 @@
 
 namespace Seboettg\CiteProc;
 
+use PHPUnit\Framework\TestCase;
 
-use PHPUnit_Framework_ExpectationFailedException;
-use Seboettg\CiteProc\Exception\CiteProcException;
 
-class CiteProcTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
+class CiteProcTest extends TestCase
 {
 
     use TestSuiteTestCaseTrait;
@@ -47,11 +46,5 @@ class CiteProcTest extends \PHPUnit_Framework_TestCase implements TestSuiteTests
     {
         $this->_testRenderTestSuite("fullstyles_DINBibliography");
     }
-
-    public function testRenderTestSuite()
-    {
-        //$this->_testRenderTestSuite(".json", ['bugreports_', 'number_FailingDelimiters', 'number_LeadingZeros.json']);
-    }
-
 
 }

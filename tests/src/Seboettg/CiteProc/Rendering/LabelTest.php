@@ -8,14 +8,10 @@
  */
 
 namespace Seboettg\CiteProc\Rendering;
-
-
-use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Context;
-use Seboettg\CiteProc\Locale\Locale;
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
-class LabelTest extends \PHPUnit_Framework_TestCase
+class LabelTest extends TestCase
 {
     use TestSuiteTestCaseTrait;
 

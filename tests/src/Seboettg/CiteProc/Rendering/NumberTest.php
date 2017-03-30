@@ -9,13 +9,13 @@
 
 namespace Seboettg\CiteProc\Rendering;
 
-
+use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
-class NumberTest extends \PHPUnit_Framework_TestCase
+class NumberTest extends TestCase
 {
     use TestSuiteTestCaseTrait;
 
