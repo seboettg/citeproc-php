@@ -10,9 +10,8 @@
 namespace Seboettg\CiteProc\Util;
 use PHPUnit\Framework\TestCase;
 
-class NumberTest extends \PHPUnit_Framework_TestCase
+class NumberTest extends TestCase
 {
-
 
     public function testRoman2Dec()
     {

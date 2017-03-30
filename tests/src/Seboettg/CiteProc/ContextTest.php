@@ -12,8 +12,6 @@ namespace src\Seboettg\CiteProc;
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
-use Seboettg\CiteProc\Data\DataList;
-use Seboettg\CiteProc\StyleSheet;
 
 class ContextTest extends TestCase
 {
