@@ -21,7 +21,7 @@ class StyleSheetTest extends TestCase
     public function testLoadStyleSheet()
     {
 
-        $style = StyleSheet::loadStyleSheet("DIN-1505-2");
+        $style = StyleSheet::loadStyleSheet("din-1505-2");
         $xmlStyle = new \SimpleXMLElement($style);
         foreach ($xmlStyle as $child) {
             if ($child->getName() === "info") {
