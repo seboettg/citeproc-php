@@ -61,6 +61,7 @@ class GroupTest extends TestCase
         $this->_testRenderTestSuite("group_ShortOutputOnly");
     }
 
+    /*
     public function testSuppressTermWhenNoOutputFromPartialDate()
     {
         //TODO: implement
@@ -77,6 +78,6 @@ class GroupTest extends TestCase
     {
         //TODO: implement
         //$this->_testRenderTestSuite("group_SuppressWithEmptyNestedDateNode");
-    }
+    }*/
 
 }

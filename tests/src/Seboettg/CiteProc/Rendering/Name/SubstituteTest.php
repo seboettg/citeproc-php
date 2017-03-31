@@ -35,7 +35,7 @@ class SubstituteTest extends TestCase
     public function testNameSubstituteOnElementFail()
     {
         //TODO: implement
-        //$this->_testRenderTestSuite("name_SubstituteOn");
+        $this->_testRenderTestSuite("name_SubstituteOn");
     }
 
 }

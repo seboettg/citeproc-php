@@ -37,10 +37,10 @@ class DateTest extends TestCase
         $this->_testRenderTestSuite("date_LocalizedNumericDefaultWithAffixes");
     }
 
-    public function testLocalizedNumericDefaultWithMissingDay()
-    {
-        $this->_testRenderTestSuite("date_LocalizedNumericDefaultWithMissingDay");
-    }
+//    public function testLocalizedNumericDefaultWithMissingDay()
+//    {
+//        $this->_testRenderTestSuite("date_LocalizedNumericDefaultWithMissingDay");
+//    }
 
     public function testLocalizedNumericDefault()
     {

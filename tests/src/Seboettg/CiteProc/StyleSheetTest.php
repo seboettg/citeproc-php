@@ -20,7 +20,7 @@ class StyleSheetTest extends TestCase
      */
     public function testLoadStyleSheet()
     {
-        /*
+
         $style = StyleSheet::loadStyleSheet("DIN-1505-2");
         $xmlStyle = new \SimpleXMLElement($style);
         foreach ($xmlStyle as $child) {
@@ -34,7 +34,7 @@ class StyleSheetTest extends TestCase
                 break;
             }
         }
-        */
+
     }
 
     /**
@@ -42,7 +42,7 @@ class StyleSheetTest extends TestCase
      */
     public function testLoadLocales()
     {
-        /*
+
         $locales = StyleSheet::loadLocales("de-DE");
         $xmlLocales = new \SimpleXMLElement($locales);
         foreach ($xmlLocales as $child) {
@@ -57,6 +57,6 @@ class StyleSheetTest extends TestCase
                 break;
             }
         }
-        */
+
     }
 }

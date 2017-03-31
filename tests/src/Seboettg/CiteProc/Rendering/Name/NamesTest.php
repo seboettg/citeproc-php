@@ -37,11 +37,11 @@ class NamesTest extends TestCase
     {
         $this->_testRenderTestSuite("name_EtAlUseLast");
     }
-
+    /*
     public function testEtAlWithCombined()
     {
         //TODO: implement
         //$this->_testRenderTestSuite("name_EtAlWithCombined");
     }
-
+    */
 }

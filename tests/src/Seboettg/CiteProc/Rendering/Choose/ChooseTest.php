@@ -36,10 +36,4 @@ class ChooseTest extends TestCase
         $this->assertEquals("Ein herzzerreißendes Werk von umwerfender Genialität", $ret2);
         $this->assertEquals("Ein herzzerreißendes Werk von umwerfender Genialität", $ret3);
     }
-
-    public function testRenderTestSuite()
-    {
-
-    }
-
 }

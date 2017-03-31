@@ -165,7 +165,7 @@ class SortTest extends TestCase
     {
         $this->_testRenderTestSuite("sort_Citation.json");
     }
-
+/*
     public function testSortCiteGroupDelimiter()
     {
         //$this->_testRenderTestSuite("sort_CiteGroupDelimiter");
@@ -180,7 +180,7 @@ class SortTest extends TestCase
     public function testSortDateMacroSortWithSecondFieldAlign()
     {
         //$this->_testRenderTestSuite("sort_DateMacroSortWithSecondFieldAlign");
-    }
+    }*/
 
     public function testSortDateVariable()
     {

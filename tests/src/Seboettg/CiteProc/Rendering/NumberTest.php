@@ -87,11 +87,6 @@ class NumberTest extends TestCase
         $this->_testRenderTestSuite("number_format");
     }
 
-    public function testNumberGender()
-    {
-        //$this->_testRenderTestSuite("number_gender");
-    }
-
     public function testNumberSpacing()
     {
         $this->_testRenderTestSuite("number_spacing");

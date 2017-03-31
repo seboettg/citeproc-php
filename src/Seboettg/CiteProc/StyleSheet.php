@@ -9,6 +9,8 @@
 
 namespace Seboettg\CiteProc;
 
+use Seboettg\CiteProc\Exception\CiteProcException;
+
 /**
  * Class StyleSheet
  *
@@ -31,7 +33,7 @@ class StyleSheet
      */
     public static function loadStyleSheet($styleName)
     {
-        $stylesPath = __DIR__ . '/../../../styles/';
+        $stylesPath = self::vendorPath() . "/citation-style-language/styles/";
         return file_get_contents($stylesPath . $styleName . '.csl');
     }
 
@@ -43,7 +45,20 @@ class StyleSheet
      */
     public static function loadLocales($langKey)
     {
-        $localesPath = __DIR__ . '/../../../locales/';
+        $localesPath = self::vendorPath() . "/citation-style-language/locales/";
         return file_get_contents($localesPath . "locales-" . $langKey . '.xml');
+    }
+
+    /**
+     * @return bool|string
+     * @throws CiteProcException
+     */
+    private static function vendorPath()
+    {
+        include_once __DIR__ . '/../../../vendorPath.php';
+        if (!($vendorPath = vendorPath())) {
+            throw new CiteProcException('vendor path not found. Use composer to initialize your project');
+        }
+        return $vendorPath;
     }
 }
