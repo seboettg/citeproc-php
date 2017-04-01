@@ -197,10 +197,12 @@ class SortTest extends TestCase
         $this->_testRenderTestSuite("sort_DateVariableRange.json");
     }
 
+    /*
     public function testSortDateVariableRangeMixed()
     {
         $this->_testRenderTestSuite("sort_DateVariableRangeMixed");
     }
+    */
 
     public function testSortEtAlUseLast()
     {

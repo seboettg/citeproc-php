@@ -13,6 +13,4 @@ script:
  - phpunit --coverage-clover build/logs/clover.xml tests
 
 after_script:
- - rm -r locales; ln -s vendor/academicpuma/locales locales
- - rm -r styles; ln -s vendor/academicpuma/styles styles
  - php vendor/bin/coveralls -v

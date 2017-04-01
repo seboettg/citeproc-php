@@ -32,10 +32,15 @@ class SubstituteTest extends TestCase
         $this->_testRenderTestSuite("name_SubstituteName");
     }
 
+
     public function testNameSubstituteOnElementFail()
     {
-        //TODO: implement
-        $this->_testRenderTestSuite("name_SubstituteOn");
+        $this->_testRenderTestSuite("name_SubstituteOnDateGroupSpanFail");
+        $this->_testRenderTestSuite("name_SubstituteOnGroupSpanGroupSpanFail");
+        $this->_testRenderTestSuite("name_SubstituteOnMacroGroupSpanFail");
+        $this->_testRenderTestSuite("name_SubstituteOnNamesSingletonGroupSpanFail.json");
+        $this->_testRenderTestSuite("name_SubstituteOnNamesSpanNamesSpanFail.json");
+        $this->_testRenderTestSuite("name_SubstituteOnNumberGroupSpanFail");
     }
 
 }

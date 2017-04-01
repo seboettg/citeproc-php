@@ -47,4 +47,9 @@ class CiteProcTest extends TestCase
         $this->_testRenderTestSuite("fullstyles_DINBibliography");
     }
 
+    public function testInternationalJournalOfHumanoidRobotics()
+    {
+        $this->_testRenderTestSuite("fullstyles_InternationalJournalOfHumanoid");
+    }
+
 }

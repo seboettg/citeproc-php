@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc;
 
+use PHPUnit\Framework\ExpectationFailedException;
 use \PHPUnit_Framework_ExpectationFailedException;
 use Seboettg\CiteProc\Exception\CiteProcException;
 
@@ -51,7 +52,7 @@ trait TestSuiteTestCaseTrait
                 $this->assertEquals($expected, $actual, "Test case \"$testFile\" ($i) has failed.");
                 //echo "succeeded.\n\n\n";
                 $success[] = $echo . "\n$actual";
-            } catch (PHPUnit_Framework_ExpectationFailedException $e) {
+            } catch (ExpectationFailedException $e) {
                 echo "failed\n";
                 $str = $e->getMessage() . "\n" . $e->getComparisonFailure()->getDiff() . "\n\n\n";
                 $failures[] = "$echo\n$str";
@@ -74,7 +75,7 @@ trait TestSuiteTestCaseTrait
 
         if (!empty($failures)) {
             print "\n\n".count($failures)." assertions failed:\n\t".implode("\n\t", $failures);
-            throw new PHPUnit_Framework_ExpectationFailedException(count($failures)." assertions failed:\n\t".implode("\n\t", $failures));
+            throw new ExpectationFailedException(count($failures)." assertions failed:\n\t".implode("\n\t", $failures));
         }
 
         if (!empty($exceptions)) {

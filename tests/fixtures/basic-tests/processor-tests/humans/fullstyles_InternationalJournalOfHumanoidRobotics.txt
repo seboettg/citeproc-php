@@ -1,0 +1,333 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE=====<<
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">1. H. Potter, <i>People will never learn</i> (2016).</div>
+  <div class="csl-entry">2. A. Hotho, D. Benz, F. Eisterlehner, R. Jäschke, B. Krause, C. Schmitz and G. Stumme, Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler, <i>HMD - Praxis Der Wirtschaftsinformatik</i> <b>271</b> (2010) 47--58.</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="en-US">
+  <info>
+    <title>International Journal of Humanoid Robotics</title>
+    <title-short>IJHR</title-short>
+    <id>http://www.zotero.org/styles/international-journal-of-humanoid-robotics</id>
+    <link href="http://www.zotero.org/styles/international-journal-of-humanoid-robotics" rel="self"/>
+    <link href="http://www.zotero.org/styles/advances-in-complex-systems" rel="template"/>
+    <link href="http://www.worldscientific.com/sda/1037/ws-ijhr.pdf" rel="documentation"/>
+    <author>
+      <name>Sebastian Karcher</name>
+    </author>
+    <category citation-format="numeric"/>
+    <category field="engineering"/>
+    <issn>0219-8436</issn>
+    <eissn>1793-6942</eissn>
+    <updated>2012-09-14T21:22:32+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <macro name="author">
+    <names variable="author">
+      <name and="text" delimiter-precedes-last="never" initialize-with=". "/>
+      <label form="short" prefix=" (" suffix=")"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="editor">
+    <names variable="editor">
+      <label form="short" prefix=" " suffix=" "/>
+      <name and="text" delimiter-precedes-last="never" initialize-with=". "/>
+    </names>
+  </macro>
+  <macro name="year-date">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="access">
+    <choose>
+      <if variable="URL">
+        <group delimiter=". ">
+          <group delimiter=": ">
+            <text term="available at" text-case="capitalize-first"/>
+            <text variable="URL"/>
+          </group>
+          <group prefix="[" suffix="]" delimiter=": ">
+            <text term="accessed" text-case="capitalize-first"/>
+            <date variable="accessed">
+              <date-part name="day" form="numeric-leading-zeros" suffix="-"/>
+              <date-part name="month" form="short" suffix="-" strip-periods="true"/>
+              <date-part name="year" form="long"/>
+            </date>
+          </group>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <macro name="publisher">
+    <group delimiter=", " prefix="(" suffix=")">
+      <text variable="publisher" form="long"/>
+      <text variable="publisher-place" form="long"/>
+      <text macro="year-date"/>
+    </group>
+  </macro>
+  <macro name="edition">
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal"/>
+          <text term="edition" form="short"/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition"/>
+      </else>
+    </choose>
+  </macro>
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout delimiter="," vertical-align="sup">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+  <bibliography entry-spacing="0" second-field-align="flush" et-al-min="31" et-al-use-first="30">
+    <layout suffix=".">
+      <text variable="citation-number" suffix=". "/>
+      <text macro="author" suffix=", "/>
+      <choose>
+        <if type="bill book graphic legal_case legislation motion_picture report song" match="any">
+          <group delimiter=" ">
+            <group delimiter=", ">
+              <text variable="title" font-style="italic"/>
+              <text macro="edition"/>
+            </group>
+            <text macro="publisher"/>
+          </group>
+        </if>
+        <else-if type="chapter paper-conference" match="any">
+          <text variable="title" suffix=", "/>
+          <text term="in" suffix=" "/>
+          <group delimiter=", ">
+            <text variable="container-title" form="short" text-case="title" font-style="italic"/>
+            <text macro="edition"/>
+            <text macro="editor"/>
+          </group>
+          <group delimiter=", " prefix=" ">
+            <text macro="publisher"/>
+            <group delimiter=" ">
+              <label variable="page" form="short"/>
+              <text variable="page"/>
+            </group>
+          </group>
+        </else-if>
+        <else-if type="webpage">
+          <group delimiter=", " suffix=". ">
+            <text variable="title"/>
+            <text variable="container-title" font-style="italic"/>
+            <text macro="year-date"/>
+          </group>
+          <text macro="access" prefix=". "/>
+        </else-if>
+        <else-if type="patent">
+          <group delimiter=", ">
+            <text variable="title"/>
+            <text variable="number"/>
+            <text macro="year-date"/>
+          </group>
+        </else-if>
+        <else-if type="thesis">
+          <group delimiter=" ">
+            <text variable="title"/>
+            <group delimiter=", " prefix="(" suffix=")">
+              <text variable="genre"/>
+              <text variable="publisher"/>
+              <text macro="year-date"/>
+            </group>
+          </group>
+        </else-if>
+        <else>
+          <group delimiter=" ">
+            <text variable="title" suffix=","/>
+            <text variable="container-title" font-style="italic" form="short" text-case="title"/>
+            <text variable="volume" font-weight="bold"/>
+            <text macro="year-date" prefix="(" suffix=")"/>
+            <text variable="page" form="short"/>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>
+
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "DOI": "", 
+        "ISBN": "", 
+        "URL": "http://www.google.com", 
+        "abstract": "", 
+        "author": [
+            {
+                "family": "Potter", 
+                "given": "Heribert"
+            }
+        ], 
+        "citation-label": "google", 
+        "container-title": "", 
+        "documents": [], 
+        "edition": "", 
+        "editor": [], 
+        "event-place": "", 
+        "id": "eb4818ba044f52ec9da9c3a4ff76e7b4awolff", 
+        "issue": "HKUST-TCSC-2000-06", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2016"
+                ]
+            ], 
+            "literal": "2016"
+        }, 
+        "note": "", 
+        "number": "", 
+        "page": "", 
+        "publisher": "", 
+        "publisher-place": "", 
+        "title": "People will never learn", 
+        "type": "book", 
+        "volume": ""
+    }, 
+    {
+        "DOI": "", 
+        "ISBN": "", 
+        "ISSN": "1436-3011", 
+        "URL": "http://hmd.dpunkt.de/271/05.php", 
+        "abstract": "Kooperative Verschlagwortungs- bzw. Social-Bookmarking-Systeme wie Delicious, Mister Wong oder auch unser eigenes System BibSonomy erfreuen sich immer größerer Beliebtheit und bilden einen zentralen Bestandteil des heutigen Web 2.0. In solchen Systemen erstellen Nutzer leichtgewichtige Begriffssysteme, sogenannte Folksonomies, die die Nutzerdaten strukturieren. Die einfache Bedienbarkeit, die Allgegenwärtigkeit, die ständige Verfügbarkeit, aber auch die Möglichkeit, Gleichgesinnte spontan in solchen Systemen zu entdecken oder sie schlicht als Informationsquelle zu nutzen, sind Gründe für ihren gegenwärtigen Erfolg. Der Artikel führt den Begriff Social Bookmarking ein und diskutiert zentrale Elemente wie Browsing und Suche am Beispiel von BibSonomy anhand typischer Arbeitsabläufe eines Wissenschaftlers. Wir beschreiben die Architektur von BibSonomy sowie Wege der Integration und Vernetzung von BibSonomy mit Content-Management-Systemen und Webauftritten. Der Artikel schließt mit Querbezügen zu aktuellen Forschungsfragen im Bereich Social Bookmarking.", 
+        "annote": "", 
+        "author": [
+            {
+                "family": "Hotho", 
+                "given": "Andreas"
+            }, 
+            {
+                "family": "Benz", 
+                "given": "Dominik"
+            }, 
+            {
+                "family": "Eisterlehner", 
+                "given": "Folke"
+            }, 
+            {
+                "family": "Jäschke", 
+                "given": "Robert"
+            }, 
+            {
+                "family": "Krause", 
+                "given": "Beate"
+            }, 
+            {
+                "family": "Schmitz", 
+                "given": "Christoph"
+            }, 
+            {
+                "family": "Stumme", 
+                "given": "Gerd"
+            }
+        ], 
+        "citation-label": "hotho2010publikationsmanagement", 
+        "collection-editor": [
+            {
+                "family": "Hengartner", 
+                "given": "Urs"
+            }, 
+            {
+                "family": "Meier", 
+                "given": "Andreas"
+            }
+        ], 
+        "collection-title": "", 
+        "container-author": [
+            {
+                "family": "Hengartner", 
+                "given": "Urs"
+            }, 
+            {
+                "family": "Meier", 
+                "given": "Andreas"
+            }
+        ], 
+        "container-title": "HMD - Praxis der Wirtschaftsinformatik", 
+        "documents": [], 
+        "edition": "", 
+        "editor": [
+            {
+                "family": "Hengartner", 
+                "given": "Urs"
+            }, 
+            {
+                "family": "Meier", 
+                "given": "Andreas"
+            }
+        ], 
+        "event-date": {
+            "date-parts": [
+                [
+                    "2010", 
+                    "feb"
+                ]
+            ], 
+            "literal": "2010"
+        }, 
+        "event-place": "", 
+        "id": "422096948d4de38a725b428be3222d60jaeschke", 
+        "interhash": "c19880489182c86e1573a2ac983c7cff", 
+        "intrahash": "422096948d4de38a725b428be3222d60", 
+        "issue": "", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2010", 
+                    "feb"
+                ]
+            ], 
+            "literal": "2010"
+        }, 
+        "keyword": "2010 bibsonomy bookmarking myown social", 
+        "misc": {
+            "issn": "1436-3011"
+        }, 
+        "note": "", 
+        "number": "", 
+        "number-of-pages": "11", 
+        "page": "47--58", 
+        "page-first": "47", 
+        "publisher": "dpunkt.verlag", 
+        "publisher-place": "", 
+        "status": "", 
+        "title": "Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler", 
+        "type": "article-journal", 
+        "username": "jaeschke", 
+        "version": "", 
+        "volume": "271"
+    }
+]
+<<===== INPUT=====<<
