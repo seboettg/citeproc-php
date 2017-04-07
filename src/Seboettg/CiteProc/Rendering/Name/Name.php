@@ -441,7 +441,7 @@ class Name implements HasParent
 
         if ($hasPreceding && !is_null($subsequentSubstitution) && !empty($subsequentSubstitutionRule)) {
             /** @var \stdClass $preceding */
-            $identicalAuthors = $this->identicalAuthors($preceding, $data);
+            $identicalAuthors = NameHelper::identicalAuthors($preceding, $data);
             if ($subsequentSubstitutionRule == SubsequentAuthorSubstituteRule::COMPLETE_ALL) {
                 if ($identicalAuthors) {
                     return [];
