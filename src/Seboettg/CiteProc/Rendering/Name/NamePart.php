@@ -68,6 +68,10 @@ class NamePart
         $this->initAffixesAttributes($node);
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function render($data)
     {
         if (!isset($data->{$this->name})) {
@@ -125,6 +129,9 @@ class NamePart
         return $data;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;

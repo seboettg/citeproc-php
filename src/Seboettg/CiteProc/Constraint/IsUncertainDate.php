@@ -20,8 +20,11 @@ namespace Seboettg\CiteProc\Constraint;
  */
 class IsUncertainDate implements ConstraintInterface
 {
-
+    /**
+     * @var string
+     */
     private $varName;
+
 
     private $match;
 
@@ -31,6 +34,11 @@ class IsUncertainDate implements ConstraintInterface
         $this->match = $match;
     }
 
+    /**
+     * @param $value
+     * @param int|null $citationNumber
+     * @return bool
+     */
     public function validate($value, $citationNumber = null)
     {
         $value = $value->{$this->varName};

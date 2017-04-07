@@ -266,16 +266,25 @@ class Names implements RenderingInterface, HasParent
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getDelimiter()
     {
         return $this->delimiter;
     }
 
+    /**
+     * @return ArrayList
+     */
     public function getVariables()
     {
         return $this->variables;
     }
 
+    /**
+     * @return bool
+     */
     public function hasLabel()
     {
         return !empty($this->label);

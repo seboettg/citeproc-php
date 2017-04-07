@@ -12,6 +12,7 @@ use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
+use Seboettg\CiteProc\Style\GlobalOptions;
 use Seboettg\CiteProc\Style\Macro;
 use Seboettg\CiteProc\Style\Root;
 
@@ -48,16 +49,6 @@ class CiteProc
     }
 
     /**
-     * @param $styleName
-     * @deprecated
-     */
-    public static function loadStyleSheet($styleName)
-    {
-        return StyleSheet::loadStyleSheet($styleName);
-    }
-
-
-    /**
      * @var string
      */
     private $styleSheet;
@@ -85,6 +76,8 @@ class CiteProc
         $root = new Root();
         $root->initInheritableNameAttributes($style);
         self::$context->setRoot($root);
+        $globalOptions = new GlobalOptions($style);
+        self::$context->setGlobalOptions($globalOptions);
 
         /** @var \SimpleXMLElement $node */
         foreach ($style as $node) {
@@ -170,6 +163,9 @@ class CiteProc
         return $res;
     }
 
+    /**
+     * initializes CiteProc and start parsing XML stylesheet
+     */
     public function init()
     {
         self::$context = new Context($this);

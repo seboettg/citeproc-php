@@ -8,11 +8,9 @@
  */
 
 namespace Seboettg\CiteProc\Style;
-use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Rendering\Layout;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
-use Seboettg\CiteProc\Style\Sort\Sort;
 
+use Seboettg\CiteProc\Style\Options\SubsequentAuthorSubstituteRule;
+use Seboettg\CiteProc\CiteProc;
 
 /**
  * Class Bibliography
@@ -68,6 +66,9 @@ class Bibliography extends StyleElement
                     $this->subsequentAuthorSubstituteRule = new SubsequentAuthorSubstituteRule((string) $attribute);
             }
         }
+        if (empty($this->subsequentAuthorSubstituteRule)) {
+            $this->subsequentAuthorSubstituteRule = new SubsequentAuthorSubstituteRule("complete-all");
+        }
         $this->initInheritableNameAttributes($node);
     }
 
@@ -82,7 +83,7 @@ class Bibliography extends StyleElement
             $this->initInheritableNameAttributes($this->node);
         }
 
-        if (!empty($this->subsequentAuthorSubstitute) && !empty($this->subsequentAuthorSubstituteRule)) {
+        if ($this->subsequentAuthorSubstitute !== null && !empty($this->subsequentAuthorSubstituteRule)) {
             CiteProc::getContext()->getCitationItems()->setSubsequentAuthorSubstitute($this->subsequentAuthorSubstitute);
             CiteProc::getContext()->getCitationItems()->setSubsequentAuthorSubstituteRule($this->subsequentAuthorSubstituteRule);
         }

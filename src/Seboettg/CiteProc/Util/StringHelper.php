@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -59,7 +59,20 @@ class StringHelper
         'ISO-8859-16'
     ];
 
+    /**
+     * opening quote sign
+     */
+    const OPENING_QUOTE = "“";
 
+    /**
+     * closing quote sign
+     */
+    const CLOSING_QUOTE = "”";
+
+    /**
+     * @param $text
+     * @return string
+     */
     public static function capitalizeAll($text)
     {
         $wordArray = explode(" ", $text);
@@ -71,6 +84,10 @@ class StringHelper
         return implode(" ", $wordArray);
     }
 
+    /**
+     * @param $titleString
+     * @return string
+     */
     public static function capitalizeForTitle($titleString)
     {
         if (preg_match('/(.+[^\<\>][\.:\/;\?\!]\s?)([a-z])(.+)/', $titleString, $match)) {
@@ -94,6 +111,10 @@ class StringHelper
         return implode(" ", $wordArray);
     }
 
+    /**
+     * @param $word
+     * @return bool
+     */
     public static function keepLowerCase($word)
     {
         $lowerCase = in_array($word, self::PREPOSITIONS) ||
@@ -104,6 +125,11 @@ class StringHelper
 
     }
 
+    /**
+     * @param $string
+     * @param string $encoding
+     * @return string
+     */
     public static function mb_ucfirst($string, $encoding = 'UTF-8')
     {
         $strlen = mb_strlen($string, $encoding);
@@ -114,6 +140,11 @@ class StringHelper
         return in_array($encoding, self::ISO_ENCODINGS) ? Mbstring::mb_strtoupper($firstChar, $encoding) . $then : $firstChar . $then;
     }
 
+    /**
+     * @param $string
+     * @param $initializeSign
+     * @return string
+     */
     public static function initializeBySpaceOrHyphen($string, $initializeSign)
     {
         $res = "";
@@ -132,6 +163,10 @@ class StringHelper
         return $res;
     }
 
+    /**
+     * @param $string
+     * @return mixed|string
+     */
     public static function camelCase2Hyphen($string)
     {
         $hyphenated = preg_replace("/([A-Z])/", "-$1", $string);
@@ -139,19 +174,49 @@ class StringHelper
         return mb_strtolower($hyphenated);
     }
 
+    /**
+     * @param $string
+     * @return bool
+     */
     public static function checkLowerCaseString($string)
     {
         return ($string === mb_strtolower($string));
     }
 
+    /**
+     * @param $string
+     * @return bool
+     */
     public static function checkUpperCaseString($string)
     {
         return ($string === mb_strtoupper($string));
     }
 
-    public static function clear($string)
+    /**
+     * @param $string
+     * @return mixed
+     */
+    public static function clearApostrophes($string)
     {
         return preg_replace("/\'/", "’", $string);
+    }
+
+    /**
+     * replaces outer quotes of $text by given inner quotes
+     *
+     * @param $text
+     * @param $outerOpenQuote
+     * @param $outerCloseQuote
+     * @param $innerOpenQuote
+     * @param $innerCloseQuote
+     * @return string
+     */
+    public static function replaceOuterQuotes($text, $outerOpenQuote, $outerCloseQuote, $innerOpenQuote, $innerCloseQuote)
+    {
+        if (preg_match("/(.*)$outerOpenQuote(.+)$outerCloseQuote(.*)/u", $text, $match)) {
+            return $match[1] . $innerOpenQuote . $match[2] . $innerCloseQuote . $match[3];
+        }
+        return $text;
     }
 
 }

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,10 +9,27 @@
 
 namespace Seboettg\CiteProc\Styles;
 
-
+/**
+ * Trait DisplayTrait
+ * @package Seboettg\CiteProc\Styles
+ * @author Sebastian Böttger <seboettg@gmail.com>
+ */
 trait DisplayTrait
 {
 
+    /**
+     * @var array
+     */
+    private static $allowedValues = [
+        "block",
+        "left-margin",
+        "right-inline",
+        "indent"
+    ];
+
+    /**
+     * @var string
+     */
     private $display;
 
     /**
@@ -29,16 +46,16 @@ trait DisplayTrait
         }
     }
 
+    /**
+     * @param $text
+     * @return string
+     */
     public function wrapDisplayBlock($text)
     {
-        $divStyle = "";
-        if ($this->display == "indent") {
-            $divStyle = "style=\"text-indent: 0px; padding-left: 45px;\"";
+        if (!in_array($this->display, self::$allowedValues)) {
+            return $text;
         }
-        if ($this->display == "block") {
-            $divStyle = "style=\"display: block;\"";
-        }
-
-        return empty($divStyle) ? $text : "<div $divStyle>$text</div>";
+        $divStyle = "class=\"csl-".$this->display."\"";
+        return "<div $divStyle>$text</div>";
     }
 }

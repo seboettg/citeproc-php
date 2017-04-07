@@ -41,4 +41,15 @@ class StringHelperTest extends TestCase
         $this->assertFalse(StringHelper::checkLowerCaseString("Äthiopien"));
         $this->assertTrue(StringHelper::checkLowerCaseString("äthiopien"));
     }
+
+    public function testReplaceOuterQuotes()
+    {
+        $string = "Getting Property Right: “Informal” Mortgages in the Japanese Courts";
+        $actual = StringHelper::replaceOuterQuotes($string, "“", "”", "‘", "’");
+        $this->assertEquals("Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts", $actual);
+
+        $string = "Getting Property Right: \"Informal\" Mortgages in the Japanese Courts";
+        $actual = StringHelper::replaceOuterQuotes($string, "\"", "\"", "‘", "’");
+        $this->assertEquals("Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts", $actual);
+    }
 }

@@ -41,7 +41,8 @@ class Type implements ConstraintInterface
     }
 
     /**
-     * @param \stdClass $value
+     * @param $value
+     * @param int|null $citationNumber
      * @return bool
      */
     public function validate($value, $citationNumber = null)

@@ -11,12 +11,12 @@ namespace Seboettg\CiteProc\Rendering;
 
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Data\DataList;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Util\Factory;
+use Seboettg\CiteProc\Util\StringHelper;
 use Seboettg\Collection\ArrayList;
 
 
@@ -77,7 +77,9 @@ class Layout implements RenderingInterface
         $ret = "";
         $sorting = CiteProc::getContext()->getSorting();
         if (!empty($sorting)) {
+            CiteProc::getContext()->setRenderingState("sorting");
             $sorting->sort($data);
+            CiteProc::getContext()->setRenderingState("rendering");
         }
 
         if (CiteProc::getContext()->isModeBibliography()) {
@@ -90,7 +92,7 @@ class Layout implements RenderingInterface
             } else {
                 $ret .= $this->wrapBibEntry($this->renderSingle($data, $citationNumber));
             }
-
+            $ret = StringHelper::clearApostrophes($ret);
             return "<div class=\"csl-bib-body\">".$ret."\n</div>";
 
         } else if (CiteProc::getContext()->isModeCitation()) {
@@ -103,10 +105,15 @@ class Layout implements RenderingInterface
                 $ret .= $this->renderSingle($data, $citationNumber);
             }
         }
-
+        $ret = StringHelper::clearApostrophes($ret);
         return $this->addAffixes($ret);
     }
 
+    /**
+     * @param $data
+     * @param int|null $citationNumber
+     * @return string
+     */
     private function renderSingle($data, $citationNumber = null)
     {
         $ret = [];
@@ -121,7 +128,7 @@ class Layout implements RenderingInterface
 
         if (!empty($ret)) {
             $res = $this->format(implode($this->delimiter, $ret));
-            return $this->removeConsecutiveChars($res);
+            return $this->htmlentities($this->removeConsecutiveChars($res));
         }
         return "";
     }
@@ -136,10 +143,21 @@ class Layout implements RenderingInterface
 
     /**
      * @param string $value
+     * @return string
      */
     private function wrapBibEntry($value)
     {
         return "\n  <div class=\"csl-entry\">" . $this->addAffixes($value) . "</div>";
+    }
+
+    /**
+     * @param string $text
+     * @return string
+     */
+    private function htmlentities($text)
+    {
+        $text = preg_replace("/(.*)&([^#38;|amp;].*)/u", "$1&#38;$2", $text);
+        return $text;
     }
 
 }

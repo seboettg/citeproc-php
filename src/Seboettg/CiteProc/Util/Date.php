@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Util;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\Style\Sort\Key;
 
 
 /**
@@ -64,18 +65,24 @@ class Date
 
     /**
      * creates sort key for variables containing date and date ranges
-     * @param $variable
-     * @param $dataItem
+     * @param array $dataItem
+     * @param Key $key
      * @return string
      */
-    public static function getSortKeyDate($variable, $dataItem)
+    public static function getSortKeyDate($dataItem, $key)
     {
+        $variable = $variable = $key->getVariable();
+        $part = $key->getRangePart();
         if (count($dataItem->{$variable}->{'date-parts'}) > 1) {
-            $datePartsFrom = $dataItem->{$variable}->{'date-parts'}[0];
-            $datePartsTo   = $dataItem->{$variable}->{'date-parts'}[1];
-            $sortKey = self::serializeDate($datePartsFrom) . "-" . Date::serializeDate($datePartsTo);
-        } else {
             //Date range
+            $datePart = $dataItem->{$variable}->{'date-parts'}[$part];
+            $sortKey = self::serializeDate($datePart);
+            if ($key->getSort() === "descending" && $part === 0 ||
+                $key->getSort() === "ascending" && $part === 1) {
+                $sortKey .= "-";
+            }
+        } else {
+
             if (!isset($dataItem->{$variable}->{'date-parts'})) {
                 $dateParts = self::parseDateParts($dataItem->{$variable});
             } else {
@@ -84,5 +91,27 @@ class Date
             $sortKey = self::serializeDate($dateParts);
         }
         return $sortKey;
+    }
+
+    /**
+     * @param array $items
+     * @param string $variable name of the date variable
+     * @param string $match ("all"|"any") default "all"
+     * @return bool
+     */
+    public static function hasDateRanges($items, $variable, $match = "all")
+    {
+        $ret = true;
+        foreach ($items as $item) {
+            $dateParts = $item->{$variable}->{"date-parts"};
+            if ($match === "all" && count($dateParts) !== 2) {
+                return false;
+            } else if ($match === "any" && count($dateParts) === 2) {
+                return true;
+            } else {
+                $ret = ($match === "all") ? $ret & true : $ret | true;
+            }
+        }
+        return boolval($ret);
     }
 }

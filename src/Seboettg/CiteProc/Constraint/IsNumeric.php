@@ -30,6 +30,11 @@ class IsNumeric implements ConstraintInterface
         $this->isNumeric = $value;
     }
 
+    /**
+     * @param $value
+     * @param int|null $citationNumber
+     * @return bool
+     */
     public function validate($value, $citationNumber = null)
     {
         if (isset($value->{$this->isNumeric})) {

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -143,7 +143,11 @@ class Label implements RenderingInterface
         return $this->addAffixes($text);
     }
 
-
+    /**
+     * @param $data
+     * @param $variable
+     * @return string
+     */
     private function evaluateStringPluralism($data, $variable)
     {
         $str = $data->{$variable};

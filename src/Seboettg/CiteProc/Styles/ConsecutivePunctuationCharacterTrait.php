@@ -10,19 +10,27 @@
 namespace Seboettg\CiteProc\Styles;
 
 /**
- * Class ConsecutivePunctuationCharacterTrait
+ * Trait ConsecutivePunctuationCharacterTrait
  * @package Seboettg\CiteProc\Styles
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
 trait ConsecutivePunctuationCharacterTrait
 {
 
+    /**
+     * @var array
+     */
+    private $childrenPrefixes = [];
 
-    private $childsPrefixes = [];
+    /**
+     * @var array
+     */
+    private $childrenSuffixes = [];
 
-    private $childsSuffixes = [];
-
-    private $childsDelimiter = [];
+    /**
+     * @var array
+     */
+    private $childrenDelimiter = [];
 
     /**
      * @param $punctuationSign
@@ -45,18 +53,18 @@ trait ConsecutivePunctuationCharacterTrait
     protected function getChildsAffixesAndDelimiter($child)
     {
         if (method_exists($child, "renderPrefix")) {
-            if (!empty($child->renderPrefix()) && !in_array($child->renderPrefix(), $this->childsPrefixes)) {
-                $this->childsPrefixes[] = $child->renderPrefix();
+            if (!empty($child->renderPrefix()) && !in_array($child->renderPrefix(), $this->childrenPrefixes)) {
+                $this->childrenPrefixes[] = $child->renderPrefix();
             }
         }
         if (method_exists($child, "renderSuffix")) {
-            if (!empty($child->renderSuffix()) && !in_array($child->renderSuffix(), $this->childsSuffixes)) {
-                $this->childsSuffixes[] = $child->renderSuffix();
+            if (!empty($child->renderSuffix()) && !in_array($child->renderSuffix(), $this->childrenSuffixes)) {
+                $this->childrenSuffixes[] = $child->renderSuffix();
             }
         }
         if (method_exists($child, "getDelimiter")) {
-            if (!empty($child->getDelimiter()) && !in_array($child->getDelimiter(), $this->childsDelimiter)) {
-                $this->childsDelimiter[] = $child->getDelimiter();
+            if (!empty($child->getDelimiter()) && !in_array($child->getDelimiter(), $this->childrenDelimiter)) {
+                $this->childrenDelimiter[] = $child->getDelimiter();
             }
         }
     }
@@ -67,13 +75,13 @@ trait ConsecutivePunctuationCharacterTrait
      */
     protected function removeConsecutiveChars($string)
     {
-        foreach ($this->childsPrefixes as $prefix) {
+        foreach ($this->childrenPrefixes as $prefix) {
             $string = $this->removeConsecutivePunctuation($prefix, $string);
         }
-        foreach ($this->childsSuffixes as $suffix) {
+        foreach ($this->childrenSuffixes as $suffix) {
             $string = $this->removeConsecutivePunctuation($suffix, $string);
         }
-        foreach ($this->childsDelimiter as $delimiter) {
+        foreach ($this->childrenDelimiter as $delimiter) {
             $string = $this->removeConsecutivePunctuation($delimiter, $string);
         }
 

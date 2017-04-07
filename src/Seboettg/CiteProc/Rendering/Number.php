@@ -36,8 +36,14 @@ class Number implements RenderingInterface
         TextCaseTrait,
         DisplayTrait;
 
+    /**
+     * @var string
+     */
     private $variable;
 
+    /**
+     * @var string
+     */
     private $form;
 
     public function __construct(\SimpleXMLElement $node)
@@ -126,6 +132,10 @@ class Number implements RenderingInterface
         return $this->wrapDisplayBlock($this->addAffixes($this->format($this->applyTextCase($text, $lang))));
     }
 
+    /**
+     * @param $num
+     * @return string
+     */
     public static function ordinal($num) {
         if (($num / 10) % 10 == 1) {
             $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal')->single;
@@ -144,7 +154,10 @@ class Number implements RenderingInterface
         return $num . $ordinalSuffix;
     }
 
-
+    /**
+     * @param $num
+     * @return string
+     */
     public static function longOrdinal($num) {
         $num = sprintf("%02d", $num);
         $ret = CiteProc::getContext()->getLocale()->filter('terms', 'long-ordinal-' . $num)->single;

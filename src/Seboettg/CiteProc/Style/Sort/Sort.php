@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -90,6 +90,15 @@ class Sort
         $variable = $key->getVariable();
         $groupedItems = [];
 
+        if ($key->isDateVariable()) {
+            if (Date::hasDateRanges($dataToSort, $variable, "all")) {
+                $newKey = clone $key;
+                $newKey->setRangePart(2);
+                $key->setRangePart(1);
+                $this->sortingKeys->append($newKey);
+            }
+        }
+
         //grouping by value
         foreach ($dataToSort as $citationNumber => $dataItem) {
             if ($key->isNameVariable()) {
@@ -97,7 +106,7 @@ class Sort
             } else if ($key->isNumberVariable()) {
                 $sortKey = $dataItem->{$variable};
             } else if ($key->isDateVariable()) {
-                $sortKey = Date::getSortKeyDate($variable, $dataItem);
+                $sortKey = Date::getSortKeyDate($dataItem, $key);
             } else if ($key->isMacro()) {
                 $sortKey = mb_strtolower(strip_tags(CiteProc::getContext()->getMacro($key->getMacro())->render($dataItem, $citationNumber)));
             } else if ($variable === "citation-number") {

@@ -18,5 +18,10 @@ namespace Seboettg\CiteProc\Constraint;
  */
 interface ConstraintInterface
 {
+    /**
+     * @param $value
+     * @param null $citationNumber
+     * @return bool
+     */
     public function validate($value, $citationNumber = null);
 }

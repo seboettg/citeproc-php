@@ -9,7 +9,7 @@
 
 namespace Seboettg\CiteProc\Data;
 
-use Seboettg\CiteProc\Style\SubsequentAuthorSubstituteRule;
+use Seboettg\CiteProc\Style\Options\SubsequentAuthorSubstituteRule;
 use Seboettg\Collection\ArrayList;
 
 /**
@@ -28,7 +28,7 @@ class DataList extends ArrayList
     /**
      * @var SubsequentAuthorSubstituteRule
      */
-    private $subsequentAuthorSubstituteRule;
+    private $subsequentAuthorSubstituteRule = "complete-all";
 
     /**
      * @var Citation

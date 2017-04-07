@@ -47,7 +47,7 @@ class GroupTest extends TestCase
     {
         $str = '<group display="indent" prefix="[" suffix="]" delimiter=" "><text term="retrieved"/><text term="from"/><text variable="URL"/></group>';
         $group = new Group(new \SimpleXMLElement($str), null);
-        $this->assertEquals("<div style=\"text-indent: 0px; padding-left: 45px;\">[abgerufen von http://foo.bar]</div>", $group->render(json_decode($this->data)));
+        $this->assertEquals("<div class=\"csl-indent\">[abgerufen von http://foo.bar]</div>", $group->render(json_decode($this->data)));
     }
 
 

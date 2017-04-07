@@ -93,11 +93,17 @@ class Macro implements RenderingInterface, HasParent
         return $res;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @return Root
+     */
     public function getParent()
     {
         return $this->parent;

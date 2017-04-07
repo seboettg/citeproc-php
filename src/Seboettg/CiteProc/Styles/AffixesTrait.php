@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,17 +9,32 @@
 
 namespace Seboettg\CiteProc\Styles;
 
-use Seboettg\CiteProc\CiteProc;
-
+/**
+ * Trait AffixesTrait
+ * @package Seboettg\CiteProc\Styles
+ * @author Sebastian Böttger <seboettg@gmail.com>
+ */
 trait AffixesTrait
 {
 
+    /**
+     * @var string
+     */
     private $prefix = "";
 
+    /**
+     * @var string
+     */
     private $suffix = "";
 
+    /**
+     * @var bool
+     */
     private $quotes = false;
 
+    /**
+     * @param \SimpleXMLElement $node
+     */
     protected function initAffixesAttributes(\SimpleXMLElement $node)
     {
         /** @var \SimpleXMLElement $attribute */
@@ -41,25 +56,15 @@ trait AffixesTrait
         }
     }
 
+    /**
+     * @param $text
+     * @return string
+     */
     protected function addAffixes($text)
     {
-        if ($this->quotes) {
-            $openQuotes = CiteProc::getContext()->getLocale()->filter("terms", "open-quote")->single;
-            $closeQuote = CiteProc::getContext()->getLocale()->filter("terms", "close-quote")->sinlge;
-            $punctuationInQuote = CiteProc::getContext()->getLocale()->filter("terms", "punctuation-in-quote")->single;
-        }
-
-
         $prefix = $this->prefix;
-        $prefix .= isset($openQuotes) ? $openQuotes : '';
         $suffix = $this->suffix;
-        if (isset($closeQuote) && !empty($suffix) && isset($punctuationInQuote)) {
-            if (strpos($suffix, '.') !== false || strpos($suffix, ',') !== false) {
-                $suffix = $suffix . $closeQuote;
-            }
-        } elseif (isset($closeQuote)) {
-            $suffix = $closeQuote . $suffix;
-        }
+
         if (!empty($suffix)) { // guard against repeated suffixes...
             $no_tags = strip_tags($text);
             if (strlen($no_tags) && ($no_tags{(strlen($no_tags) - 1)} == $suffix{0})) {
@@ -70,11 +75,17 @@ trait AffixesTrait
         return $prefix . $text . $suffix;
     }
 
+    /**
+     * @return string
+     */
     public function renderPrefix()
     {
         return $this->prefix;
     }
 
+    /**
+     * @return string
+     */
     public function renderSuffix()
     {
         return $this->suffix;

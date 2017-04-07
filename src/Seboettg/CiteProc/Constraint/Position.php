@@ -41,7 +41,11 @@ namespace Seboettg\CiteProc\Constraint;
  */
 class Position implements ConstraintInterface
 {
-
+    /**
+     * @param $value
+     * @param int|null $citationNumber
+     * @return bool
+     */
     public function validate($value, $citationNumber = null)
     {
         if (!is_null($citationNumber)) {

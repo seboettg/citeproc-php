@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Rendering;
+
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Styles\AffixesTrait;
@@ -31,7 +32,8 @@ class Text implements RenderingInterface
         AffixesTrait,
         TextCaseTrait,
         DisplayTrait,
-        ConsecutivePunctuationCharacterTrait;
+        ConsecutivePunctuationCharacterTrait,
+        QuotesTrait;
 
     /**
      * @var string
@@ -43,8 +45,15 @@ class Text implements RenderingInterface
      */
     private $toRenderTypeValue;
 
+    /**
+     * @var string
+     */
     private $form = "long";
 
+    /**
+     * Text constructor.
+     * @param \SimpleXMLElement $node
+     */
     public function __construct(\SimpleXMLElement $node)
     {
         foreach ($node->attributes() as $attribute) {
@@ -61,6 +70,7 @@ class Text implements RenderingInterface
         $this->initDisplayAttributes($node);
         $this->initTextCaseAttributes($node);
         $this->initAffixesAttributes($node);
+        $this->initQuotesAttributes($node);
     }
 
     /**
@@ -91,7 +101,7 @@ class Text implements RenderingInterface
                     }
                 }
                 if (!empty($data->{$this->toRenderTypeValue})) {
-                    $renderedText = $this->applyTextCase(StringHelper::clear($data->{$this->toRenderTypeValue}), $lang);
+                    $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}), $lang);
                 }
                 // for test sort_BibliographyCitationNumberDescending.json
                 if ($this->toRenderTypeValue === "citation-number" && !is_null($citationNumber)) {
@@ -121,21 +131,31 @@ class Text implements RenderingInterface
             if (!empty($res)) {
                 $res = $this->removeConsecutiveChars($res);
             }
-            return $res;
+            $res = $this->addSurroundingQuotes($res);
+            return $this->wrapDisplayBlock($res);
         }
         return "";
     }
 
+    /**
+     * @return bool
+     */
     public function rendersVariable()
     {
         return $this->toRenderType === "variable" || $this->toRenderType === "macro";
     }
 
+    /**
+     * @return string
+     */
     public function getSource()
     {
         return $this->toRenderTypeValue;
     }
 
+    /**
+     * @return string
+     */
     public function getVariable()
     {
         return $this->toRenderTypeValue;

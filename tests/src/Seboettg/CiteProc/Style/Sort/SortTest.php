@@ -165,22 +165,13 @@ class SortTest extends TestCase
     {
         $this->_testRenderTestSuite("sort_Citation.json");
     }
-/*
-    public function testSortCiteGroupDelimiter()
-    {
-        //$this->_testRenderTestSuite("sort_CiteGroupDelimiter");
-    }
 
+    /*
     public function testSortConditionalMacroDates()
     {
-        //$this->_testRenderTestSuite("sort_ConditionalMacroDates");
+        $this->_testRenderTestSuite("sort_ConditionalMacroDates");
     }
-
-
-    public function testSortDateMacroSortWithSecondFieldAlign()
-    {
-        //$this->_testRenderTestSuite("sort_DateMacroSortWithSecondFieldAlign");
-    }*/
+    */
 
     public function testSortDateVariable()
     {
@@ -197,12 +188,12 @@ class SortTest extends TestCase
         $this->_testRenderTestSuite("sort_DateVariableRange.json");
     }
 
-    /*
+
     public function testSortDateVariableRangeMixed()
     {
         $this->_testRenderTestSuite("sort_DateVariableRangeMixed");
     }
-    */
+
 
     public function testSortEtAlUseLast()
     {

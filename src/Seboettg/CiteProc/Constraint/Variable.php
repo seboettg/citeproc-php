@@ -25,9 +25,13 @@ class Variable implements ConstraintInterface
     {
         $this->name = $name;
     }
-
-    public function validate($data, $citationNumber = null)
+    /**
+     * @param $value
+     * @param int|null $citationNumber
+     * @return bool
+     */
+    public function validate($value, $citationNumber = null)
     {
-        return !empty($data->{$this->name});
+        return !empty($value->{$this->name});
     }
 }

@@ -11,7 +11,7 @@ namespace Seboettg\CiteProc\Rendering\Name;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Style\InheritableNameAttributesTrait;
-use Seboettg\CiteProc\Style\SubsequentAuthorSubstituteRule;
+use Seboettg\CiteProc\Style\Options\SubsequentAuthorSubstituteRule;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
@@ -121,7 +121,7 @@ class Name implements HasParent
         $hasPreceding = CiteProc::getContext()->getCitationItems()->hasKey($citationNumber - 1);
         $subsequentSubstitution = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
         $subsequentSubstitutionRule = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstituteRule();
-        $useSubseqSubstitution = !empty($subsequentSubstitution) && !empty($subsequentSubstitutionRule);
+        $useSubseqSubstitution = !is_null($subsequentSubstitution) && !empty($subsequentSubstitutionRule);
         $preceding = CiteProc::getContext()->getCitationItems()->get($citationNumber - 1);
 
 
@@ -544,11 +544,17 @@ class Name implements HasParent
         return $resultNames;
     }
 
+    /**
+     * @return string
+     */
     public function getForm()
     {
         return $this->form;
     }
 
+    /**
+     * @return string
+     */
     public function isNameAsSortOrder()
     {
         return $this->nameAsSortOrder;

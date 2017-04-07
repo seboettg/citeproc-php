@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,7 +9,11 @@
 
 namespace Seboettg\CiteProc\Styles;
 
-
+/**
+ * Trait RangeDelimiterTrait
+ * @package Seboettg\CiteProc\Styles
+ * @author Sebastian Böttger <seboettg@gmail.com>
+ */
 trait RangeDelimiterTrait
 {
 

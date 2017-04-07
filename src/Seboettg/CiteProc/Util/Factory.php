@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -22,6 +22,9 @@ class Factory
 {
     const CITE_PROC_NODE_NAMESPACE = "Seboettg\\CiteProc\\Rendering";
 
+    /**
+     * @var array
+     */
     static $nodes = [
 
         'layout'        => "\\Layout",
@@ -43,6 +46,12 @@ class Factory
         "et-al"         => "\\Name\\EtAl"
     ];
 
+    /**
+     * @param \SimpleXMLElement $node
+     * @param mixed $param
+     * @return mixed
+     * @throws ClassNotFoundException
+     */
     public static function create($node, $param = null)
     {
         $nodeClass = self::CITE_PROC_NODE_NAMESPACE . self::$nodes[$node->getName()];

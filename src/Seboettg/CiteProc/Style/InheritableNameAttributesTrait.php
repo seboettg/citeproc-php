@@ -222,7 +222,9 @@ trait InheritableNameAttributesTrait
         return false;
     }
 
-
+    /**
+     * @param \SimpleXMLElement $node
+     */
     public function initInheritableNameAttributes(\SimpleXMLElement $node)
     {
         $context = CiteProc::getContext();

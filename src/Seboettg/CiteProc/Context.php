@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -12,6 +12,7 @@ use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
+use Seboettg\CiteProc\Style\GlobalOptions;
 use Seboettg\CiteProc\Style\Macro;
 use Seboettg\CiteProc\Style\Sort\Sort;
 use Seboettg\CiteProc\Style\Root;
@@ -76,6 +77,16 @@ class Context
      */
     private $citeProc;
 
+    /**
+     * @var GlobalOptions
+     */
+    private $globalOptions;
+
+    /**
+     * @var string (sorting|rendering)
+     */
+    private $renderingState;
+
     public function __construct($locale = null)
     {
         if (!empty($locale)) {
@@ -85,6 +96,7 @@ class Context
         $this->macros = new ArrayList();
         $this->citationItems = new DataList();
         $this->results = new ArrayList();
+        $this->renderingState = "rendering";
     }
 
     public function addMacro($key, $macro)
@@ -245,6 +257,38 @@ class Context
     public function setRoot($root)
     {
         $this->root = $root;
+    }
+
+    /**
+     * @return GlobalOptions
+     */
+    public function getGlobalOptions()
+    {
+        return $this->globalOptions;
+    }
+
+    /**
+     * @param GlobalOptions $globalOptions
+     */
+    public function setGlobalOptions($globalOptions)
+    {
+        $this->globalOptions = $globalOptions;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRenderingState()
+    {
+        return $this->renderingState;
+    }
+
+    /**
+     * @param string $renderingState
+     */
+    public function setRenderingState($renderingState)
+    {
+        $this->renderingState = $renderingState;
     }
 
 }
