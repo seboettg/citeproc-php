@@ -116,29 +116,10 @@ class Name implements HasParent
             $this->and = '&#38;';
         }
 
-        $resultNames = [];
+        $resultNames = $this->handleSubsequentAuthorSubstitution($data, $citationNumber);
 
-        $hasPreceding = CiteProc::getContext()->getCitationItems()->hasKey($citationNumber - 1);
-        $subsequentSubstitution = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
-        $subsequentSubstitutionRule = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstituteRule();
-        $useSubseqSubstitution = !is_null($subsequentSubstitution) && !empty($subsequentSubstitutionRule);
-        $preceding = CiteProc::getContext()->getCitationItems()->get($citationNumber - 1);
-
-
-        if ($hasPreceding && $useSubseqSubstitution) {
-            /** @var \stdClass $preceding */
-            $identicalAuthors = $this->identicalAuthors($preceding, $data);
-            if ($subsequentSubstitutionRule == SubsequentAuthorSubstituteRule::COMPLETE_ALL) {
-                if ($identicalAuthors) {
-                    return $subsequentSubstitution;
-                } else {
-                    $resultNames = $this->getFormattedNames($data, $resultNames);
-                }
-            } else {
-                $resultNames = $this->renderSubsequentSubstitution($data, $preceding);
-            }
-        } else {
-            $resultNames = $this->getFormattedNames($data, $resultNames);
+        if (empty($resultNames)) {
+            return CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
         }
 
         $resultNames = $this->prepareAbbreviation($resultNames);
@@ -178,16 +159,7 @@ class Name implements HasParent
                             $lastName = array_pop($resultNames);
                             $text = implode($this->delimiter, $resultNames) . " " . $lastName;
                         }
-                    } /*else {
-                        if (count($resultNames) === 1) {
-                            $text = $resultNames[0];
-                        } else if (count($resultNames) === 2) {
-                            $text = implode(" ", $resultNames);
-                        } else { // >2
-                            $lastName = array_pop($resultNames);
-                            $text = implode($this->delimiter, $resultNames) . ", " . $lastName;
-                        }
-                    }*/
+                    }
 
                     break;
                 case 'contextual':
@@ -449,7 +421,7 @@ class Name implements HasParent
 
         /**
          * @var string $type
-         * @var array $name
+         * @var \stdClass $name
          */
         foreach ($data as $rank => $name) {
 
@@ -532,19 +504,6 @@ class Name implements HasParent
     }
 
     /**
-     * @param $data
-     * @param $resultNames
-     * @return array
-     */
-    protected function getFormattedNames($data, $resultNames)
-    {
-        foreach ($data as $rank => $name) {
-            $resultNames[] = $this->formatName($name, $rank);
-        }
-        return $resultNames;
-    }
-
-    /**
      * @return string
      */
     public function getForm()
@@ -576,5 +535,49 @@ class Name implements HasParent
         $this->delimiter = $delimiter;
     }
 
+    /**
+     * @param array $data
+     * @param int $citationNumber
+     * @return array
+     */
+    private function handleSubsequentAuthorSubstitution($data, $citationNumber)
+    {
+        $hasPreceding = CiteProc::getContext()->getCitationItems()->hasKey($citationNumber - 1);
+        $subsequentSubstitution = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
+        $subsequentSubstitutionRule = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstituteRule();
+        $preceding = CiteProc::getContext()->getCitationItems()->get($citationNumber - 1);
+
+
+        if ($hasPreceding && !is_null($subsequentSubstitution) && !empty($subsequentSubstitutionRule)) {
+            /** @var \stdClass $preceding */
+            $identicalAuthors = $this->identicalAuthors($preceding, $data);
+            if ($subsequentSubstitutionRule == SubsequentAuthorSubstituteRule::COMPLETE_ALL) {
+                if ($identicalAuthors) {
+                    return [];
+                } else {
+                    $resultNames = $this->getFormattedNames($data);
+                }
+            } else {
+                $resultNames = $this->renderSubsequentSubstitution($data, $preceding);
+            }
+        } else {
+            $resultNames = $this->getFormattedNames($data);
+        }
+        return $resultNames;
+    }
+
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function getFormattedNames($data)
+    {
+        $resultNames = [];
+        foreach ($data as $rank => $name) {
+            $resultNames[] = $this->formatName($name, $rank);
+        }
+        return $resultNames;
+    }
 
 }

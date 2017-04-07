@@ -72,7 +72,6 @@ class Group implements RenderingInterface, HasParent
      */
     public function render($data, $citationNumber = null)
     {
-        //$text = '';
         $textParts = array();
         $terms = $variables = $haveVariables = $elementCount = 0;
         foreach ($this->children as $child) {
@@ -111,8 +110,9 @@ class Group implements RenderingInterface, HasParent
                     $textParts[$elementCount] = $text;
                 }
 
+                if (method_exists($child, "getSource") && $child->getSource() == 'variable' ||
+                   (method_exists($child, "getVariable") && !empty($child->getVariable()))) {
 
-                if (method_exists($child, "getSource") && $child->getSource() == 'variable' || (method_exists($child, "getVariable") && !empty($child->getVariable()))) {
                     $haveVariables++;
                 }
 
@@ -121,6 +121,26 @@ class Group implements RenderingInterface, HasParent
                 }
             }
         }
+        return $this->formatting($textParts, $variables, $haveVariables, $terms);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param $textParts
+     * @param $variables
+     * @param $haveVariables
+     * @param $terms
+     * @return string
+     */
+    protected function formatting($textParts, $variables, $haveVariables, $terms)
+    {
         if (empty($textParts)) {
             return "";
         }
@@ -132,20 +152,11 @@ class Group implements RenderingInterface, HasParent
             return ""; // there has to be at least one other none empty value before the term is output
         }
 
-        //$text = implode($delimiter, $textParts); // insert the delimiter if supplied.
-        $text = implode($this->delimiter, $textParts);
+        $text = implode($this->delimiter, $textParts); // insert the delimiter if supplied.
         if (!empty($text)) {
             return $this->wrapDisplayBlock($this->addAffixes($this->format(($text))));
         }
 
         return "";
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getParent()
-    {
-        return $this->parent;
     }
 }

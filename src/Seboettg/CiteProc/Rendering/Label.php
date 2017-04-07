@@ -22,7 +22,6 @@ use Seboettg\CiteProc\Styles\TextCaseTrait;
  */
 class Label implements RenderingInterface
 {
-
     use AffixesTrait,
         FormattingTrait,
         TextCaseTrait;
@@ -92,17 +91,7 @@ class Label implements RenderingInterface
         $text = '';
         $variables = explode(' ', $this->variable);
         $form = !empty($this->form) ? $this->form : 'long';
-        $plural = "";
-        switch ($this->plural) {
-            case 'never':
-                $plural = 'single';
-                break;
-            case 'always':
-                $plural = 'multiple';
-                break;
-            case 'contextual':
-            default:
-        }
+        $plural = $this->defaultPlural();
 
         if ($this->variable === "editortranslator") {
             if (isset($data->editor) && isset($data->translator)) {
@@ -119,9 +108,8 @@ class Label implements RenderingInterface
                 if (isset($data->{$variable})) {
                     $plural = $this->getPlural($data, $plural, $variable);
                     $term = CiteProc::getContext()->getLocale()->filter('terms', $variable, $form);
-                    $var = $data->{$variable};
                     $pluralForm = $term->{$plural};
-                    if (!empty($var) && !empty($pluralForm)) {
+                    if (!empty($data->{$variable}) && !empty($pluralForm)) {
                         $text = $pluralForm;
                         break;
                     }
@@ -129,17 +117,7 @@ class Label implements RenderingInterface
             }
         }
 
-        if (empty($text)) {
-            return "";
-        }
-        if ($this->stripPeriods) {
-            $text = str_replace('.', '', $text);
-        }
-
-        $text = preg_replace("/\s\&\s/", " &#38; ", $text); //replace ampersands by html entity
-
-        $text = $this->format($this->applyTextCase($text, $lang));
-        return $this->addAffixes($text);
+        return $this->formatting($text, $lang);
     }
 
     /**
@@ -233,5 +211,41 @@ class Label implements RenderingInterface
         $this->form = $form;
     }
 
+    /**
+     * @param $text
+     * @param $lang
+     * @return string
+     */
+    protected function formatting($text, $lang)
+    {
+        if (empty($text)) {
+            return "";
+        }
+        if ($this->stripPeriods) {
+            $text = str_replace('.', '', $text);
+        }
 
+        $text = preg_replace("/\s\&\s/", " &#38; ", $text); //replace ampersands by html entity
+        $text = $this->format($this->applyTextCase($text, $lang));
+        return $this->addAffixes($text);
+    }
+
+    /**
+     * @return string
+     */
+    protected function defaultPlural()
+    {
+        $plural = "";
+        switch ($this->plural) {
+            case 'never':
+                $plural = 'single';
+                break;
+            case 'always':
+                $plural = 'multiple';
+                break;
+            case 'contextual':
+            default:
+        }
+        return $plural;
+    }
 }
