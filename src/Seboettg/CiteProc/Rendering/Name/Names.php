@@ -149,7 +149,7 @@ class Names implements RenderingInterface, HasParent
      * default “editor” and “translator” terms (e.g. resulting in “Doe (editor & translator)”).
      *
      * @param \stdClass $data
-     * @param int $citationNumber
+     * @param int|null $citationNumber
      * @return string
      */
     public function render($data, $citationNumber = null)

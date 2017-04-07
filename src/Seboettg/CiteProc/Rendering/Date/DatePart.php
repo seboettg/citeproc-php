@@ -140,7 +140,7 @@ class DatePart
 
     /**
      * @param DateTime $date
-     * @return string
+     * @return string|int
      */
     protected function renderYear(DateTime $date)
     {
@@ -176,13 +176,11 @@ class DatePart
                 $text = sprintf("%02d", $text);
                 break;
             case 'short':
-                $month = 'month-' . sprintf('%02d', $text);
-                $text = CiteProc::getContext()->getLocale()->filter('terms', $month, 'short')->single;
+                $text = $this->monthFromLocale($text, $form);
                 break;
             case 'long':
             default:
-                $month = 'month-' . sprintf('%02d', $text);
-                $text = CiteProc::getContext()->getLocale()->filter('terms', $month)->single;
+                $text = $this->monthFromLocale($text, $form);
                 break;
         }
         return $text;
@@ -215,25 +213,19 @@ class DatePart
         return $text;
     }
 
-    private function renderDateRange(DateTime $from, DateTime $to)
+    /**
+     * @param $text
+     * @param $form
+     * @return mixed
+     */
+    protected function monthFromLocale($text, $form)
     {
-        $dateInterval = $to->diff($from);
-        if ($dateInterval->y > 0) {
-            if ($dateInterval->m > 0) {
-
-            }
+        if (empty($form)) {
+            $form = "long";
         }
-        switch ($this->rangePart($from, $to)) {
-            case 'year-month-day':
-            case 'year-month':
-            case 'year':
-
-            case 'month-day':
-            case 'month':
-
-            case 'day':
-        }
-
-        return "";
+        $month = 'month-' . sprintf('%02d', $text);
+        $text = CiteProc::getContext()->getLocale()->filter('terms', $month, $form)->single;
+        return $text;
     }
+
 }

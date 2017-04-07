@@ -238,8 +238,9 @@ class Date
     private function renderDateRange($differentParts, DateTime $from, DateTime $to, $delim)
     {
         $ret = "";
+        $dateParts_ = [];
         switch ($differentParts) {
-            case Date::DATE_RANGE_STATE_YEAR:
+            case self::DATE_RANGE_STATE_YEAR:
                 foreach ($this->dateParts as $key => $datePart) {
                     if (strpos($key, "year") !== false) {
                         $ret .= $this->renderOneRangePart($datePart, $from, $to, $delim);
@@ -254,7 +255,7 @@ class Date
                     }
                 }
                 break;
-            case Date::DATE_RANGE_STATE_MONTH:
+            case self::DATE_RANGE_STATE_MONTH:
                 /**
                  * @var string $key
                  * @var DatePart $datePart
@@ -272,7 +273,7 @@ class Date
                     }
                 }
                 break;
-            case Date::DATE_RANGE_STATE_DAY:
+            case self::DATE_RANGE_STATE_DAY:
                 /**
                  * @var string $key
                  * @var DatePart $datePart
@@ -289,7 +290,7 @@ class Date
                     }
                 }
                 break;
-            case Date::DATE_RANGE_STATE_YEARMONTHDAY:
+            case self::DATE_RANGE_STATE_YEARMONTHDAY:
                 $i = 0;
                 foreach ($this->dateParts as $datePart) {
                     if ($i === $this->dateParts->count() - 1) {
@@ -312,7 +313,7 @@ class Date
                     ++$i;
                 }
                 break;
-            case Date::DATE_RANGE_STATE_YEARMONTH:
+            case self::DATE_RANGE_STATE_YEARMONTH:
                 $dp = $this->dateParts->toArray();
                 $i = 0;
                 $dateParts_ = [];
@@ -325,7 +326,7 @@ class Date
                     }
                 });
                 break;
-            case Date::DATE_RANGE_STATE_YEARDAY:
+            case self::DATE_RANGE_STATE_YEARDAY:
                 $dp = $this->dateParts->toArray();
                 $i = 0;
                 $dateParts_ = [];
@@ -338,7 +339,7 @@ class Date
                     }
                 });
                 break;
-            case Date::DATE_RANGE_STATE_MONTHDAY:
+            case self::DATE_RANGE_STATE_MONTHDAY:
                 $dp = $this->dateParts->toArray();
                 $i = 0;
                 $dateParts_ = [];
@@ -354,9 +355,9 @@ class Date
                 break;
         }
         switch ($differentParts) {
-            case Date::DATE_RANGE_STATE_YEARMONTH:
-            case Date::DATE_RANGE_STATE_YEARDAY:
-            case Date::DATE_RANGE_STATE_MONTHDAY:
+            case self::DATE_RANGE_STATE_YEARMONTH:
+            case self::DATE_RANGE_STATE_YEARDAY:
+            case self::DATE_RANGE_STATE_MONTHDAY:
                 /**
                  * @var $key
                  * @var DatePart $datePart */

@@ -514,7 +514,7 @@ class Name implements HasParent
 
     /**
      * @param \stdClass $precedingItem
-     * @param \stdClass $currentAuthor
+     * @param array $currentAuthor
      * @return bool
      */
     private function identicalAuthors($precedingItem, $currentAuthor)

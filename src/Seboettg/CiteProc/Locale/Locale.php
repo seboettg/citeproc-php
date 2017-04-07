@@ -65,6 +65,8 @@ class Locale
 
     /**
      * @param string $type
+     * @param $name
+     * @param string $form
      * @return \stdClass
      */
     public function filter($type, $name, $form = "long") {

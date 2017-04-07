@@ -102,7 +102,6 @@ class Label implements RenderingInterface
                 break;
             case 'contextual':
             default:
-                //$this->detectPlural($data);
         }
 
         if ($this->variable === "editortranslator") {
@@ -153,7 +152,6 @@ class Label implements RenderingInterface
         $str = $data->{$variable};
         $plural = 'single';
         if (!empty($str)) {
-//      $regex = '/(?:[0-9],\s*[0-9]|\s+and\s+|&|([0-9]+)\s*[\-\x2013]\s*([0-9]+))/';
             switch ($variable) {
                 case 'page':
                     $pageRegex = "/([a-zA-Z]*)([0-9]+)\s*(?:–|-)\s*([a-zA-Z]*)([0-9]+)/";
