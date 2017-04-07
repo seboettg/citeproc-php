@@ -61,10 +61,13 @@ class Sort
      * continues until either the order of all items is fixed, or until the sort keys are exhausted. Items with an
      * empty sort key value are placed at the end of the sort, both for ascending and descending sorts.
      *
-     * @param DataList $data reference
+     * @param DataList|array $data reference
      */
     public function sort(&$data)
     {
+        if (is_array($data)) {
+            $data = new DataList($data);
+        }
         $dataToSort = $data->toArray();
         $data->replace($this->performSort(0, $dataToSort));
     }

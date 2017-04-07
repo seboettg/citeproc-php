@@ -48,6 +48,8 @@ class CiteProc
         self::$context = $context;
     }
 
+    private $lang;
+
     /**
      * @var string
      */

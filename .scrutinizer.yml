@@ -23,16 +23,3 @@ coding_style:
         spaces:
             around_operators:
                 concatenation: true
-build:
-    environment:
-        php:
-            version: 7.0.7
-            ini:
-                date.timezone: 'Europe/Berlin'
-    tests:
-        override:
-            -
-                command: ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml tests
-                coverage:
-                    file: clover.xml
-                    format: clover

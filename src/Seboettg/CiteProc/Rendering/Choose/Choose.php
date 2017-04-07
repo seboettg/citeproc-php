@@ -29,6 +29,11 @@ class Choose implements RenderingInterface, HasParent
 
     private $parent;
 
+    /**
+     * Choose constructor.
+     * @param \SimpleXMLElement $node
+     * @param $parent
+     */
     public  function __construct(\SimpleXMLElement $node, $parent)
     {
         $this->parent = $parent;
@@ -52,6 +57,11 @@ class Choose implements RenderingInterface, HasParent
         }
     }
 
+    /**
+     * @param array|\Seboettg\CiteProc\Data\DataList $data
+     * @param null|int $citationNumber
+     * @return string
+     */
     public function render($data, $citationNumber = null)
     {
         $arr = [];

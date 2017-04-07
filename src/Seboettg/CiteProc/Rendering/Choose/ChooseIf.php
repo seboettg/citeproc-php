@@ -30,6 +30,11 @@ class ChooseIf implements RenderingInterface, HasParent
     private $constraints;
 
     /**
+     * @var ConstraintInterface
+     */
+    private $constraint;
+
+    /**
      * @var ArrayList
      */
     protected $children;
@@ -42,6 +47,7 @@ class ChooseIf implements RenderingInterface, HasParent
     protected $parent;
 
     /**
+     * @param \SimpleXMLElement $node
      * @param Choose $parent
      */
     public function __construct(\SimpleXMLElement $node, $parent)
@@ -66,16 +72,26 @@ class ChooseIf implements RenderingInterface, HasParent
         }
     }
 
+    /**
+     * @param array|\Seboettg\CiteProc\Data\DataList $data
+     * @param null|int $citationNumber
+     * @return string
+     */
     public function render($data, $citationNumber = null)
     {
-        $ret = "";
+        $ret = [];
         /** @var RenderingInterface $child */
         foreach ($this->children as $child) {
-            $ret .= $child->render($data, $citationNumber);
+            $ret[] = $child->render($data, $citationNumber);
         }
-        return $ret;
+        return implode("", $ret);
     }
 
+    /**
+     * @param $data
+     * @param null|int $citationNumber
+     * @return bool
+     */
     public function match($data, $citationNumber = null)
     {
         if (isset($this->constraint)) {

@@ -29,7 +29,7 @@ class Locale
     use LocaleXmlParserTrait;
 
     /**
-     * @var string
+     * @var \SimpleXMLElement
      */
     private $localeXml;
 

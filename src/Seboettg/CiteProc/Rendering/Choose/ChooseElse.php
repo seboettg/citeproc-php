@@ -19,13 +19,5 @@ use Seboettg\CiteProc\Rendering\RenderingInterface;
  */
 class ChooseElse extends ChooseIf implements RenderingInterface
 {
-    public function render($data, $citationNumber = null)
-    {
-        $ret = "";
-        /** @var RenderingInterface $child */
-        foreach ($this->children as $child) {
-            $ret .= $child->render($data);
-        }
-        return $ret;
-    }
+    //render function is inherited from ChooseIf
 }

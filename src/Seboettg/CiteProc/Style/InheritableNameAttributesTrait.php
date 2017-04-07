@@ -63,7 +63,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    private $and;
+    protected $and;
 
     /**
      * Determines when the name delimiter or a space is used between a truncated name list and the “et-al”
@@ -84,7 +84,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    private $delimiterPrecedesEtAl;
+    protected $delimiterPrecedesEtAl;
 
     /**
      * Determines when the name delimiter is used to separate the second to last and the last name in name lists (if
@@ -107,7 +107,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    private $delimiterPrecedesLast;
+    protected $delimiterPrecedesLast;
 
     /**
      * Use of etAlMin (et-al-min attribute) and etAlUseFirst (et-al-use-first attribute) enables et-al abbreviation. If
@@ -116,7 +116,7 @@ trait InheritableNameAttributesTrait
      *
      * @var int
      */
-    private $etAlMin;
+    protected $etAlMin;
 
     /**
      * Use of etAlMin (et-al-min attribute) and etAlUseFirst (et-al-use-first attribute) enables et-al abbreviation. If
@@ -125,7 +125,7 @@ trait InheritableNameAttributesTrait
      *
      * @var int
      */
-    private $etAlUseFirst;
+    protected $etAlUseFirst;
 
     /**
      * When set to “true” (the default is “false”), name lists truncated by et-al abbreviation are followed by the name
@@ -136,7 +136,7 @@ trait InheritableNameAttributesTrait
      *
      * @var bool
      */
-    private $etAlUseLast = false;
+    protected $etAlUseLast = false;
 
     /**
      * If used, the values of these attributes (et-al-subsequent-min and et-al-subsequent-use-first) replace those of
@@ -144,7 +144,7 @@ trait InheritableNameAttributesTrait
      *
      * @var int
      */
-    private $etAlSubsequentMin;
+    protected $etAlSubsequentMin;
 
     /**
      * If used, the values of these attributes (et-al-subsequent-min and et-al-subsequent-use-first) replace those of
@@ -152,7 +152,7 @@ trait InheritableNameAttributesTrait
      *
      * @var int
      */
-    private $etAlSubsequentUseFirst;
+    protected $etAlSubsequentUseFirst;
 
     /**
      * When set to “false” (the default is “true”), given names are no longer initialized when “initialize-with” is set.
@@ -161,7 +161,7 @@ trait InheritableNameAttributesTrait
      *
      * @var bool
      */
-    private $initialize = true;
+    protected $initialize = true;
 
     /**
      * When set, given names are converted to initials. The attribute value is added after each initial (”.” results
@@ -170,7 +170,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    private $initializeWith = false;
+    protected $initializeWith = false;
 
     /**
      * Specifies that names should be displayed with the given name following the family name (e.g. “John Doe” becomes
@@ -184,7 +184,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    private $nameAsSortOrder = "";
+    protected $nameAsSortOrder = "";
 
     /**
      * Sets the delimiter for name-parts that have switched positions as a result of name-as-sort-order. The default
@@ -193,7 +193,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    private $sortSeparator = ", ";
+    protected $sortSeparator = ", ";
 
     /**
      * Specifies whether all the name-parts of personal names should be displayed (value “long”, the default), or only
@@ -203,11 +203,11 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    private $form;
+    protected $form;
 
-    private $nameForm = "long";
+    protected $nameForm = "long";
 
-    private $nameDelimiter = ", ";
+    protected $nameDelimiter = ", ";
 
     public function isDescendantOfMacro()
     {
