@@ -559,4 +559,22 @@ class Name implements HasParent
     {
         return $this->nameAsSortOrder;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDelimiter()
+    {
+        return $this->delimiter;
+    }
+
+    /**
+     * @param mixed $delimiter
+     */
+    public function setDelimiter($delimiter)
+    {
+        $this->delimiter = $delimiter;
+    }
+
+
 }

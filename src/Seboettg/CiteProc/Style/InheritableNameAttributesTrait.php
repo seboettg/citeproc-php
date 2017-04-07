@@ -63,7 +63,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    protected $and;
+    private $and;
 
     /**
      * Determines when the name delimiter or a space is used between a truncated name list and the “et-al”
@@ -84,7 +84,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    protected $delimiterPrecedesEtAl;
+    private $delimiterPrecedesEtAl;
 
     /**
      * Determines when the name delimiter is used to separate the second to last and the last name in name lists (if
@@ -107,7 +107,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    protected $delimiterPrecedesLast;
+    private $delimiterPrecedesLast;
 
     /**
      * Use of etAlMin (et-al-min attribute) and etAlUseFirst (et-al-use-first attribute) enables et-al abbreviation. If
@@ -116,7 +116,7 @@ trait InheritableNameAttributesTrait
      *
      * @var int
      */
-    protected $etAlMin;
+    private $etAlMin;
 
     /**
      * Use of etAlMin (et-al-min attribute) and etAlUseFirst (et-al-use-first attribute) enables et-al abbreviation. If
@@ -125,7 +125,7 @@ trait InheritableNameAttributesTrait
      *
      * @var int
      */
-    protected $etAlUseFirst;
+    private $etAlUseFirst;
 
     /**
      * When set to “true” (the default is “false”), name lists truncated by et-al abbreviation are followed by the name
@@ -136,7 +136,7 @@ trait InheritableNameAttributesTrait
      *
      * @var bool
      */
-    protected $etAlUseLast = false;
+    private $etAlUseLast = false;
 
     /**
      * If used, the values of these attributes (et-al-subsequent-min and et-al-subsequent-use-first) replace those of
@@ -144,7 +144,7 @@ trait InheritableNameAttributesTrait
      *
      * @var int
      */
-    protected $etAlSubsequentMin;
+    private $etAlSubsequentMin;
 
     /**
      * If used, the values of these attributes (et-al-subsequent-min and et-al-subsequent-use-first) replace those of
@@ -152,7 +152,7 @@ trait InheritableNameAttributesTrait
      *
      * @var int
      */
-    protected $etAlSubsequentUseFirst;
+    private $etAlSubsequentUseFirst;
 
     /**
      * When set to “false” (the default is “true”), given names are no longer initialized when “initialize-with” is set.
@@ -161,7 +161,7 @@ trait InheritableNameAttributesTrait
      *
      * @var bool
      */
-    protected $initialize = true;
+    private $initialize = true;
 
     /**
      * When set, given names are converted to initials. The attribute value is added after each initial (”.” results
@@ -170,7 +170,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    protected $initializeWith = false;
+    private $initializeWith = false;
 
     /**
      * Specifies that names should be displayed with the given name following the family name (e.g. “John Doe” becomes
@@ -184,7 +184,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    protected $nameAsSortOrder = "";
+    private $nameAsSortOrder = "";
 
     /**
      * Sets the delimiter for name-parts that have switched positions as a result of name-as-sort-order. The default
@@ -193,7 +193,7 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    protected $sortSeparator = ", ";
+    private $sortSeparator = ", ";
 
     /**
      * Specifies whether all the name-parts of personal names should be displayed (value “long”, the default), or only
@@ -203,11 +203,11 @@ trait InheritableNameAttributesTrait
      *
      * @var string
      */
-    protected $form;
+    private $form;
 
-    protected $nameForm = "long";
+    private $nameForm = "long";
 
-    protected $nameDelimiter = ", ";
+    private $nameDelimiter = ", ";
 
     public function isDescendantOfMacro()
     {
@@ -333,36 +333,36 @@ trait InheritableNameAttributesTrait
                 case 'name-form':
                     if ($this instanceof Root || $this instanceof StyleElement) {
                         if (!empty($attribute)) {
-                            $this->nameForm = (string) $attribute;
+                            $this->setNameForm((string) $attribute);
                         } else if (!empty($parentStyleElement)) {
-                            $this->nameForm = $parentStyleElement->getNameForm();
+                            $this->setNameForm($parentStyleElement->getNameForm());
                         }
-                        break;
                     }
+                    break;
                 case 'form':
                     if ($this instanceof Name) {
                         if (!empty($attribute)) {
-                            $this->form = (string) $attribute;
+                            $this->setForm((string) $attribute);
                         } else if (!empty($parentStyleElement)) {
-                            $this->form = $parentStyleElement->getNameForm();
+                            $this->setForm($parentStyleElement->getNameForm());
                         }
                     }
                     break;
                 case 'name-delimiter':
                     if ($this instanceof Root || $this instanceof StyleElement) {
                         if (!empty($attribute)) {
-                            $this->nameDelimiter = (string) $attribute;
+                            $this->setNameDelimiter((string) $attribute);
                         } else if (!empty($parentStyleElement)) {
-                            $this->nameDelimiter = $parentStyleElement->getNameDelimiter();
+                            $this->setNameDelimiter($parentStyleElement->getNameDelimiter());
                         }
                     }
                     break;
                 case 'delimiter':
                     if ($this instanceof Name) {
                         if (!empty($attribute)) {
-                            $this->delimiter = (string) $attribute;
+                            $this->setDelimiter((string) $attribute);
                         } else if (!empty($parentStyleElement)) {
-                            $this->delimiter = $parentStyleElement->getNameDelimiter();
+                            $this->setDelimiter($parentStyleElement->getNameDelimiter());
                         }
                     }
             }
