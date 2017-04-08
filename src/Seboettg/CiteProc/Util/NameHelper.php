@@ -50,4 +50,33 @@ class NameHelper
         }
         return false;
     }
+
+
+    /**
+     * removes the field $particle from $data and appends its content to the $namePart field of $data
+     * @param \stdClass $data
+     * @param string $namePart
+     * @param string $particle
+     */
+    public static function appendParticleTo(&$data, $namePart, $particle)
+    {
+        if (isset($data->{$particle}) && isset($data->{$namePart})) {
+            $data->{$namePart} = $data->{$namePart} . " " . $data->{$particle}; // append $particle to $namePart
+            unset($data->{$particle}); //remove particle from $data
+        }
+    }
+
+    /**
+     * removes the field $particle from $data and prepends its content to the $namePart field of $data
+     * @param \stdClass $data
+     * @param string $namePart ("given"|"family")
+     * @param string $particle
+     */
+    public static function prependParticleTo(&$data, $namePart, $particle)
+    {
+        if (isset($data->{$particle}) && isset($data->{$namePart})) {
+            $data->{$namePart} = $data->{$particle} . " " . $data->{$namePart}; //prepend $particle to $namePart
+            unset($data->{$particle});//remove particle from $data
+        }
+    }
 }

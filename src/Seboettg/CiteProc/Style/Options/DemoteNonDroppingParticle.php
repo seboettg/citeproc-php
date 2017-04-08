@@ -9,6 +9,8 @@
 
 namespace Seboettg\CiteProc\Style\Options;
 
+use MyCLabs\Enum\Enum;
+
 /**
  * Class DemoteNonDroppingParticle
  *
@@ -19,7 +21,7 @@ namespace Seboettg\CiteProc\Style\Options;
  * @package Seboettg\CiteProc\Style
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class DemoteNonDroppingParticle
+class DemoteNonDroppingParticle extends Enum
 {
     /**
      * “never”: the non-dropping-particle is treated as part of the family name, whereas the dropping-particle is

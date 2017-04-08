@@ -8,9 +8,13 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Name;
+use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\Style\Options\DemoteNonDroppingParticle;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
+use Seboettg\CiteProc\Util\NameHelper;
 
 /**
  * Class NamePart
@@ -71,11 +75,12 @@ class NamePart
     /**
      * @param $data
      * @return mixed
+     * @throws CiteProcException
      */
     public function render($data)
     {
         if (!isset($data->{$this->name})) {
-            return $data;
+            return "";
         }
 
         switch ($this->name) {
@@ -84,49 +89,16 @@ class NamePart
             “dropping-particle” name-parts. affixes surround the “given” name-part, enclosing any demoted name particles
             for inverted names.*/
             case 'given':
-                if ($this->parent->getForm() === "long" && $this->parent->isNameAsSortOrder()) {
-                    //TODO: demote-non-dropping-particle = (never|sort-only)
-                    if (isset($data->{'dropping-particle'})) {
-                        $data->given = $data->given . " " . $data->{'dropping-particle'};
-                        unset($data->{'dropping-particle'});
-                    }
-                }
-                $data->given = $this->addAffixes($this->format($this->applyTextCase($data->given)));
-                break;
+                return $this->addAffixes($this->format($this->applyTextCase($data->given)));
 
             /* if name set to “family”, formatting and text-case attributes affect the “family” and
             “non-dropping-particle” name-parts. affixes surround the “family” name-part, enclosing any preceding name
             particles, as well as the “suffix” name-part for non-inverted names.*/
             case 'family':
-                if ($this->parent->getForm() === "long" && !$this->parent->isNameAsSortOrder()) {
+                return $this->addAffixes($this->format($this->applyTextCase($data->family)));
 
-                    if (isset($data->{'non-dropping-particle'})) {
-                        $data->family = $data->{'non-dropping-particle'} . " " . $data->family;
-                        unset($data->{'non-dropping-particle'});
-                    }
-
-                    if (isset($data->{'suffix'})) {
-                        $data->family .= " " . $data->{'suffix'};
-                        unset($data->{'suffix'});
-                    }
-
-                    if (isset($data->{'dropping-particle'})) {
-                        $data->family = $data->{'dropping-particle'} . " " . $data->family;
-                        unset($data->{'dropping-particle'});
-                    }
-
-                } else if (($this->parent->getForm() === "long" || $this->parent->getForm() === "short") && $this->parent->isNameAsSortOrder()) {
-                    if (isset($data->{'non-dropping-particle'})) {
-                        $data->family = $data->{'non-dropping-particle'} . " " . $data->family;
-                        unset($data->{'non-dropping-particle'});
-                    }
-
-                }
-                $data->family = $this->addAffixes($this->format($this->applyTextCase($data->family)));
-                break;
         }
-
-        return $data;
+        throw new CiteProcException("This shouldn't happen.");
     }
 
     /**
@@ -136,4 +108,5 @@ class NamePart
     {
         return $this->name;
     }
+
 }

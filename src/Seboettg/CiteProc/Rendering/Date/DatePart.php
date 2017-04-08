@@ -168,7 +168,7 @@ class DatePart
 
         $text = $date->getMonth();
 
-        $form = !empty($this->form) ? $this->form : $this->parent->getForm();
+        $form = !empty($this->form) ? $this->form : "long";
         switch ($form) {
             case 'numeric':
                 break;

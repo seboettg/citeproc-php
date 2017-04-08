@@ -9,8 +9,10 @@
 
 namespace Seboettg\CiteProc\Rendering\Name;
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Style\InheritableNameAttributesTrait;
+use Seboettg\CiteProc\Style\Options\DemoteNonDroppingParticle;
 use Seboettg\CiteProc\Style\Options\SubsequentAuthorSubstituteRule;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
@@ -89,7 +91,7 @@ class Name implements HasParent
         foreach ($node->attributes() as $attribute) {
             switch ($attribute->getName()) {
                 case 'form':
-                    $this->form = (string) $attribute;
+                    $this->form = (string)$attribute;
                     break;
             }
 
@@ -149,7 +151,7 @@ class Name implements HasParent
         cs:names element (taking into account the effects of et-al abbreviation and editor/translator collapsing),
         which allows for advanced sorting. */
         if ($this->form == 'count') {
-            return (int) count($resultNames);
+            return (int)count($resultNames);
         }
 
         return $text;
@@ -170,13 +172,6 @@ class Name implements HasParent
             $nameObj->given = StringHelper::initializeBySpaceOrHyphen($name->given, $this->initializeWith);
         }
 
-        // format name-parts
-        if (count($this->nameParts) > 0) {
-            /** @var NamePart $namePart */
-            foreach ($this->nameParts as $namePart) {
-                $nameObj = $namePart->render($nameObj);
-            }
-        }
         $ret = $this->getNamesString($nameObj, $rank);
 
         return trim($ret);
@@ -195,53 +190,7 @@ class Name implements HasParent
             return $text;
         }
 
-        $given = !empty($name->given) ? trim($name->given) : "";
-        $nonDroppingParticle = isset($name->{'non-dropping-particle'}) ? $name->{'non-dropping-particle'} : "";
-        $droppingParticle = isset($name->{'dropping-particle'}) ? $name->{'dropping-particle'} : "";
-        $suffix = (isset($name->{'suffix'})) ? $name->{'suffix'} : "";
-
-        if (isset($name->family)) {
-            $family = $name->family;
-            if ($this->form == 'short') {
-                $text = (!empty($nonDroppingParticle) ? $nonDroppingParticle . " " : "") . $family;
-            } else {
-                switch ($this->nameAsSortOrder) {
-
-                    case 'all':
-                    case 'first':
-                        if ($this->nameAsSortOrder === "first" && $rank !== 0) {
-                            break;
-                        }
-                        /*
-                        use form "[non-dropping particel] family name,
-                        given name [dropping particle], [suffix]"
-                        */
-                        $text  = !empty($nonDroppingParticle) ? "$nonDroppingParticle " : "";
-                        $text .= $family;
-                        $text .= !empty($given) ? $this->sortSeparator . $given : "";
-                        $text .= !empty($droppingParticle) ? " $droppingParticle" : "";
-                        $text .= !empty($suffix) ? $this->sortSeparator . $suffix : "";
-
-                        //remove last comma when no suffix exist.
-                        $text = trim($text);
-                        $text = substr($text, -1) === $this->sortSeparator ? substr($text, 0, strlen($text) - 1) : $text;
-                        break;
-                    default:
-                        /*
-                        use form "given name [dropping particles] [non-dropping particles] family name [suffix]"
-                        e.g. [Jean] [de] [La] [Fontaine] [III]
-                        */
-                        $text = sprintf(
-                            "%s %s %s %s %s",
-                            $given,
-                            $droppingParticle,
-                            $nonDroppingParticle,
-                            $family,
-                            $suffix);
-
-                }
-            }
-        }
+        $text = $this->nameOrder($name, $rank);
 
         //contains nbsp prefixed by normal space or followed by normal space?
         $text = htmlentities($text);
@@ -292,7 +241,8 @@ class Name implements HasParent
             !empty($resultNames) &&
             !empty($this->etAl) &&
             !empty($this->etAlMin) &&
-            !empty($this->etAlUseFirst)) {
+            !empty($this->etAlUseFirst)
+        ) {
 
 
             /* By default, when a name list is truncated to a single name, the name and the “et-al” (or “and others”)
@@ -318,6 +268,7 @@ class Name implements HasParent
         }
         return $text;
     }
+
     /**
      * @param $resultNames
      * @return array
@@ -475,7 +426,7 @@ class Name implements HasParent
      * @param $resultNames
      * @return array
      */
-    protected function renderDelimiterPrecesdesLastNever($resultNames)
+    protected function renderDelimiterPrecedesLastNever($resultNames)
     {
         $text = "";
         if (!$this->etAlUseLast) {
@@ -495,7 +446,7 @@ class Name implements HasParent
      * @param $resultNames
      * @return string
      */
-    protected function renderDelimiterPrecesdesLastContextual($resultNames)
+    protected function renderDelimiterPrecedesLastContextual($resultNames)
     {
         if (count($resultNames) === 1) {
             $text = $resultNames[0];
@@ -535,15 +486,82 @@ class Name implements HasParent
                     $text = implode($this->delimiter, $resultNames);
                     break;
                 case 'never':
-                    $text = $this->renderDelimiterPrecesdesLastNever($resultNames);
+                    $text = $this->renderDelimiterPrecedesLastNever($resultNames);
                     break;
                 case 'contextual':
                 default:
-                    $text = $this->renderDelimiterPrecesdesLastContextual($resultNames);
+                    $text = $this->renderDelimiterPrecedesLastContextual($resultNames);
             }
         }
         return $text;
     }
+
+
+    private function nameOrder($data, $rank)
+    {
+        $nameAsSortOrder = (($this->nameAsSortOrder === "first" && $rank === 0) || $this->nameAsSortOrder === "all");
+        $demoteNonDroppingParticle = CiteProc::getContext()->getGlobalOptions()->getDemoteNonDroppingParticles();
+
+        if ($this->form === "long" && $nameAsSortOrder &&
+            ((string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::NEVER ||
+                (string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::SORT_ONLY)
+        ) {
+
+            // [La] [Fontaine], [Jean] [de], [III]
+            NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
+            NameHelper::appendParticleTo($data, "given", "dropping-particle");
+
+            list($family, $given) = $this->renderNameParts($data);
+
+            $text = $family . (!empty($given) ? $this->sortSeparator . $given : "");
+            $text .= !empty($data->suffix) ? $this->sortSeparator . $data->suffix : "";
+        } else if ($this->form === "long" && $nameAsSortOrder &&
+            (is_null($demoteNonDroppingParticle) ||
+                (string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::DISPLAY_AND_SORT)
+        ) {
+            // [Fontaine], [Jean] [de] [La], [III]
+
+            NameHelper::appendParticleTo($data, "given", "dropping-particle");
+            NameHelper::appendParticleTo($data, "given", "non-dropping-particle");
+            list($family, $given) = $this->renderNameParts($data);
+            $text = $family;
+            $text .= !empty($given) ? $this->sortSeparator . $given : "";
+            $text .= !empty($data->suffix) ? $this->sortSeparator . $data->suffix : "";
+
+        } else if ($this->form === "long") {
+            // [Jean] [de] [La] [Fontaine] [III]
+
+            NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
+            NameHelper::prependParticleTo($data, "family", "dropping-particle");
+            NameHelper::appendParticleTo($data, "family", "suffix");
+            list($family, $given) = $this->renderNameParts($data);
+            $text = !empty($given) ? $given . " " . $family : $family;
+        } else if ($this->form === "short") {
+            // [La] [Fontaine]
+
+            NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
+            $text = $data->family;
+        } else {
+
+            throw new CiteProcException("This should not happen.");
+        }
+        return $text;
+    }
+
+    /**
+     * @param $data
+     * @return array
+     */
+    private function renderNameParts($data)
+    {
+        $given = "";
+        $family = array_key_exists("family", $this->nameParts) ? $this->nameParts["family"]->render($data) : $data->family;
+        if (isset($data->given)) {
+            $given = array_key_exists("given", $this->nameParts) ? $this->nameParts["given"]->render($data) : $data->given;
+        }
+        return [$family, $given];
+    }
+
 
     /**
      * @return string
