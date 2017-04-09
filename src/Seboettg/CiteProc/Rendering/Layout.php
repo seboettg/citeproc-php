@@ -26,7 +26,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Layout implements RenderingInterface
+class Layout implements Rendering
 {
 
     private static $numberOfCitedItems = 0;
@@ -117,7 +117,7 @@ class Layout implements RenderingInterface
     private function renderSingle($data, $citationNumber = null)
     {
         $ret = [];
-        /** @var RenderingInterface $child */
+        /** @var Rendering $child */
         foreach ($this->children as $child) {
             $rendered = $child->render($data, $citationNumber);
             $this->getChildsAffixesAndDelimiter($child);
@@ -127,7 +127,7 @@ class Layout implements RenderingInterface
         }
 
         if (!empty($ret)) {
-            $res = $this->format(implode($this->delimiter, $ret));
+            $res = $this->format(implode("", $ret));
             return $this->htmlentities($this->removeConsecutiveChars($res));
         }
         return "";
