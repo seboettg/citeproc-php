@@ -11,11 +11,12 @@ namespace Seboettg\CiteProc\Rendering\Name;
 
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Label;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
+use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Util\Factory;
+use Seboettg\CiteProc\Util\NameHelper;
 use Seboettg\Collection\ArrayList;
 
 
@@ -25,7 +26,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Names implements RenderingInterface, HasParent
+class Names implements Rendering, HasParent
 {
     use DelimiterTrait;
     use AffixesTrait;
@@ -161,7 +162,7 @@ class Names implements RenderingInterface, HasParent
         term is used if the cs:names element contains a cs:label element, replacing the default “editor” and
         “translator” terms (e.g. resulting in “Doe (editor & translator)”) */
         if ($this->variables->hasValue("editor") && $this->variables->hasValue("translator")) {
-            if (isset($data->editor) && isset($data->translator) && $this->sameNames($data->editor, $data->translator)) {
+            if (isset($data->editor) && isset($data->translator) && NameHelper::sameNames($data->editor, $data->translator)) {
                 if (isset($this->name)) {
                     $str .= $this->name->render($data->editor);
                 } else {
@@ -184,21 +185,21 @@ class Names implements RenderingInterface, HasParent
         }
 
         $results = [];
-
         foreach ($this->variables as $var) {
 
             if (!empty($data->{$var})) {
                 if (!empty($this->name)) {
-                    $name = $this->name->render($data->{$var}, $citationNumber);
+                    $res = $this->name->render($data->{$var}, $citationNumber);
+                    $name = $res;
                     if (!empty($this->label)) {
-                        $this->label->setVariable($var);
-                        if (in_array($this->label->getForm(), ["verb", "verb-short"])) {
-                            $name = $this->label->render($data) . $name;
-                        } else {
-                            $name .= $this->label->render($data);
-                        }
+                        $name = $this->appendLabel($data, $var, $name);
                     }
-                    $results[] = $this->format($name);
+                    //add multiple counting values
+                    if (is_numeric($name) && $this->name->getForm() === "count") {
+                        $results = $this->addCountValues($res, $results);
+                    } else {
+                        $results[] = $this->format($name);
+                    }
                 } else {
                     foreach ($data->{$var} as $name) {
                         $results[] = $this->format($name->given . " " . $name->family);
@@ -212,6 +213,42 @@ class Names implements RenderingInterface, HasParent
         }
         $str .= implode($this->delimiter, $results);
         return !empty($str) ? $this->addAffixes($str) : "";
+    }
+
+
+    /**
+     * @param $data
+     * @param $var
+     * @param $name
+     * @return string
+     */
+    private function appendLabel($data, $var, $name)
+    {
+        $this->label->setVariable($var);
+        if (in_array($this->label->getForm(), ["verb", "verb-short"])) {
+            $name = $this->label->render($data) . $name;
+        } else {
+            $name .= $this->label->render($data);
+        }
+        return $name;
+    }
+
+    /**
+     * @param $res
+     * @param $results
+     * @return array
+     */
+    private function addCountValues($res, $results)
+    {
+        $lastElement = current($results);
+        $key = key($results);
+        if (!empty($lastElement)) {
+            $lastElement += $res;
+            $results[$key] = $lastElement;
+        } else {
+            $results[] = $res;
+        }
+        return $results;
     }
 
     /**
@@ -307,34 +344,11 @@ class Names implements RenderingInterface, HasParent
     }
 
     /**
-     * @param array $persons1
-     * @param array $persons2
-     * @return bool
-     */
-    private function sameNames($persons1, $persons2)
-    {
-        $same = count($persons1) === count($persons2);
-
-        if (!$same) {
-            return false;
-        }
-
-        array_walk($persons1, function($name, $key) use ($persons2, &$same) {
-            $family1 = $name->family;
-            $family2 = $persons2[$key]->family;
-            $same = $same && ($family1 === $family2);
-        });
-
-        return (bool) $same;
-    }
-
-    /**
      * @return mixed
      */
     public function getParent()
     {
         return $this->parent;
     }
-
 
 }

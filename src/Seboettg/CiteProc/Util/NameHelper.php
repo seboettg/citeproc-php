@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Util;
+use Seboettg\CiteProc\Exception\CiteProcException;
 
 /**
  * Class NameHelper
@@ -78,5 +79,40 @@ class NameHelper
             $data->{$namePart} = $data->{$particle} . " " . $data->{$namePart}; //prepend $particle to $namePart
             unset($data->{$particle});//remove particle from $data
         }
+    }
+
+    /**
+     * @param array $persons1
+     * @param array $persons2
+     * @return bool
+     */
+    public static function sameNames($persons1, $persons2)
+    {
+        $same = count($persons1) === count($persons2);
+
+        if (!$same) {
+            return false;
+        }
+
+        array_walk($persons1, function($name, $key) use ($persons2, &$same) {
+            $family1 = $name->family;
+            $family2 = $persons2[$key]->family;
+            $same = $same && ($family1 === $family2);
+        });
+
+        return (bool) $same;
+    }
+
+    /**
+     * @param $data
+     * @return string
+     * @throws CiteProcException
+     */
+    public static function normalizeName($data)
+    {
+        if (empty($data->family)) {
+            throw new CiteProcException("Illegal argument. Name has no family name.");
+        }
+        return $data->family . (isset($data->given) ? $data->given : "");
     }
 }

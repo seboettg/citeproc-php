@@ -9,7 +9,7 @@
 
 namespace Seboettg\CiteProc\Rendering\Name;
 use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
+use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 
 
@@ -24,7 +24,7 @@ use Seboettg\CiteProc\Styles\FormattingTrait;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class EtAl implements RenderingInterface
+class EtAl implements Rendering
 {
     use FormattingTrait;
 

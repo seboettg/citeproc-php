@@ -219,4 +219,23 @@ class StringHelper
         return $text;
     }
 
+    /**
+     * @param $string
+     * @return bool
+     */
+    public static function isLatinString($string)
+    {
+        return boolval(preg_match_all("/^[\p{Latin}\s\p{P}]*$/u", $string));
+        //return !$noLatin;
+    }
+
+    /**
+     * @param $string
+     * @return bool
+     */
+    public static function isCyrillicString($string)
+    {
+        return boolval(preg_match("/^[\p{Cyrillic}\s\p{P}]*$/u", $string));
+    }
+
 }

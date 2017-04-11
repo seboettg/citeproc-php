@@ -52,4 +52,24 @@ class StringHelperTest extends TestCase
         $actual = StringHelper::replaceOuterQuotes($string, "\"", "\"", "‘", "’");
         $this->assertEquals("Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts", $actual);
     }
+
+    public function testIsLatinString()
+    {
+        $this->assertFalse(StringHelper::isLatinString("栄我妻"));
+        $this->assertFalse(StringHelper::isLatinString("栄我 妻"));
+        $this->assertFalse(StringHelper::isLatinString("栄我妻 Hello World.!¡"));
+        $this->assertTrue(StringHelper::isLatinString("Hello World"));
+        $this->assertFalse(StringHelper::isLatinString("АаБбВвГг"));
+        $this->assertFalse(StringHelper::isLatinString("HАllo"));
+    }
+
+    public function testIsCyrillicString()
+    {
+        $this->assertFalse(StringHelper::isCyrillicString("栄我妻"));
+        $this->assertFalse(StringHelper::isCyrillicString("栄我 妻"));
+        $this->assertFalse(StringHelper::isCyrillicString("Hallo Welt оформления"));
+        $this->assertTrue(StringHelper::isCyrillicString("Пример чиком. : чиком!"));
+        $this->assertFalse(StringHelper::isCyrillicString("Nicht"));
+        $this->assertFalse(StringHelper::isCyrillicString("пеpеводчиком"));
+    }
 }

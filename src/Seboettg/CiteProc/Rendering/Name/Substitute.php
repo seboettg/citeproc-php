@@ -11,7 +11,7 @@ namespace Seboettg\CiteProc\Rendering\Name;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Rendering\Label;
 use Seboettg\CiteProc\Rendering\Layout;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
+use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\Collection\ArrayList;
 
@@ -43,7 +43,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Substitute implements RenderingInterface
+class Substitute implements Rendering
 {
 
     /**
@@ -109,7 +109,7 @@ class Substitute implements RenderingInterface
     {
         $ret = [];
 
-        /** @var RenderingInterface $child */
+        /** @var Rendering $child */
         foreach ($this->children as $child) {
             /* If cs:substitute contains multiple child elements, the first element to return a
             non-empty result is used for substitution. */

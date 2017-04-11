@@ -11,6 +11,7 @@ namespace Seboettg\CiteProc\Rendering\Name;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Rendering\HasParent;
+use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Style\InheritableNameAttributesTrait;
 use Seboettg\CiteProc\Style\Options\DemoteNonDroppingParticle;
 use Seboettg\CiteProc\Style\Options\SubsequentAuthorSubstituteRule;
@@ -32,7 +33,7 @@ use Seboettg\CiteProc\Util\StringHelper;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Name implements HasParent
+class Name implements Rendering, HasParent
 {
     use InheritableNameAttributesTrait,
         FormattingTrait,
@@ -502,49 +503,55 @@ class Name implements HasParent
         $nameAsSortOrder = (($this->nameAsSortOrder === "first" && $rank === 0) || $this->nameAsSortOrder === "all");
         $demoteNonDroppingParticle = CiteProc::getContext()->getGlobalOptions()->getDemoteNonDroppingParticles();
 
-        if ($this->form === "long" && $nameAsSortOrder &&
-            ((string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::NEVER ||
-                (string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::SORT_ONLY)
-        ) {
+        if (StringHelper::isLatinString(NameHelper::normalizeName($data)) || StringHelper::isCyrillicString(NameHelper::normalizeName($data))) {
+            if ($this->form === "long" && $nameAsSortOrder &&
+                ((string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::NEVER ||
+                    (string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::SORT_ONLY)
+            ) {
 
-            // [La] [Fontaine], [Jean] [de], [III]
-            NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
-            NameHelper::appendParticleTo($data, "given", "dropping-particle");
+                // [La] [Fontaine], [Jean] [de], [III]
+                NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
+                NameHelper::appendParticleTo($data, "given", "dropping-particle");
 
-            list($family, $given) = $this->renderNameParts($data);
+                list($family, $given) = $this->renderNameParts($data);
 
-            $text = $family . (!empty($given) ? $this->sortSeparator . $given : "");
-            $text .= !empty($data->suffix) ? $this->sortSeparator . $data->suffix : "";
-        } else if ($this->form === "long" && $nameAsSortOrder &&
-            (is_null($demoteNonDroppingParticle) ||
-                (string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::DISPLAY_AND_SORT)
-        ) {
-            // [Fontaine], [Jean] [de] [La], [III]
+                $text = $family . (!empty($given) ? $this->sortSeparator . $given : "");
+                $text .= !empty($data->suffix) ? $this->sortSeparator . $data->suffix : "";
+            } else if ($this->form === "long" && $nameAsSortOrder &&
+                (is_null($demoteNonDroppingParticle) ||
+                    (string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::DISPLAY_AND_SORT)
+            ) {
+                // [Fontaine], [Jean] [de] [La], [III]
 
-            NameHelper::appendParticleTo($data, "given", "dropping-particle");
-            NameHelper::appendParticleTo($data, "given", "non-dropping-particle");
-            list($family, $given) = $this->renderNameParts($data);
-            $text = $family;
-            $text .= !empty($given) ? $this->sortSeparator . $given : "";
-            $text .= !empty($data->suffix) ? $this->sortSeparator . $data->suffix : "";
+                NameHelper::appendParticleTo($data, "given", "dropping-particle");
+                NameHelper::appendParticleTo($data, "given", "non-dropping-particle");
+                list($family, $given) = $this->renderNameParts($data);
+                $text = $family;
+                $text .= !empty($given) ? $this->sortSeparator . $given : "";
+                $text .= !empty($data->suffix) ? $this->sortSeparator . $data->suffix : "";
 
-        } else if ($this->form === "long") {
-            // [Jean] [de] [La] [Fontaine] [III]
+            } else if ($this->form === "long" && $nameAsSortOrder && empty($demoteNonDroppingParticle)) {
+                list($family, $given) = $this->renderNameParts($data);
+                $text = $family;
+                $text .= !empty($given) ? $this->delimiter . $given : "";
+                $text .= !empty($data->suffix) ? $this->sortSeparator . $data->suffix : "";
+            } else if ($this->form === "short") {
+                // [La] [Fontaine]
+                NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
+                $text = $data->family;
+            } else { //form "long" (default)
 
-            NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
-            NameHelper::prependParticleTo($data, "family", "dropping-particle");
-            NameHelper::appendParticleTo($data, "family", "suffix");
-            list($family, $given) = $this->renderNameParts($data);
-            $text = !empty($given) ? $given . " " . $family : $family;
-        } else if ($this->form === "short") {
-            // [La] [Fontaine]
-
-            NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
-            $text = $data->family;
+                // [Jean] [de] [La] [Fontaine] [III]
+                NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
+                NameHelper::prependParticleTo($data, "family", "dropping-particle");
+                NameHelper::appendParticleTo($data, "family", "suffix");
+                list($family, $given) = $this->renderNameParts($data);
+                $text = !empty($given) ? $given . " " . $family : $family;
+            }
         } else {
-
-            throw new CiteProcException("This should not happen.");
+            $text = $this->form === "long" ? $data->family.$data->given : $data->family;
         }
+
         return $text;
     }
 
