@@ -8,7 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Choose;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
+use Seboettg\CiteProc\Rendering\Rendering;
 
 
 /**
@@ -17,7 +17,7 @@ use Seboettg\CiteProc\Rendering\RenderingInterface;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class ChooseElse extends ChooseIf implements RenderingInterface
+class ChooseElse extends ChooseIf
 {
     //render function is inherited from ChooseIf
 }

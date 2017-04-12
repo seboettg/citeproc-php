@@ -18,7 +18,7 @@ use Seboettg\CiteProc\Data\DataList;
  *
  * @package Seboettg\CiteProc\Rendering
  */
-interface RenderingInterface
+interface Rendering
 {
 
     /**

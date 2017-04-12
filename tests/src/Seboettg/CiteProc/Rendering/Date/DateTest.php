@@ -67,5 +67,15 @@ class DateTest extends TestCase
         $this->_testRenderTestSuite("date_RawParseSimpleDate");
     }
 
+    /*
+    public function testDateAD()
+    {
+        $this->_testRenderTestSuite("date_DateAD");
+    }
 
+    public function testDateBC()
+    {
+        $this->_testRenderTestSuite("date_DateBC");
+    }
+    */
 }

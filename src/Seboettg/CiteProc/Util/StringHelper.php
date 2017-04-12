@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Util;
 
+use Seboettg\CiteProc\CiteProc;
 use Symfony\Polyfill\Mbstring\Mbstring;
 
 /**
@@ -147,15 +148,17 @@ class StringHelper
      */
     public static function initializeBySpaceOrHyphen($string, $initializeSign)
     {
+        $initializeWithHyphen = CiteProc::getContext()->getGlobalOptions()->isInitializeWithHyphen();
         $res = "";
         $exploded = explode("-", $string);
         $i = 0;
         foreach ($exploded as $explode) {
             $spaceExploded = explode(" ", $explode);
             foreach ($spaceExploded as $givenPart) {
-                $res .= substr($givenPart, 0, 1) . $initializeSign;
+                $firstLetter = substr($givenPart, 0, 1);
+                $res .= ctype_upper($firstLetter) ? $firstLetter . $initializeSign : " " . $givenPart . " ";
             }
-            if ($i < count($exploded) - 1) {
+            if ($i < count($exploded) - 1 && $initializeWithHyphen) {
                 $res = rtrim($res) . "-";
             }
             ++$i;

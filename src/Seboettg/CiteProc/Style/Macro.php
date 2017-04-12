@@ -10,7 +10,7 @@
 namespace Seboettg\CiteProc\Style;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Rendering\HasParent;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
+use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\Collection\ArrayList;
@@ -31,7 +31,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Macro implements RenderingInterface, HasParent
+class Macro implements Rendering, HasParent
 {
     use ConsecutivePunctuationCharacterTrait;
 
@@ -78,7 +78,7 @@ class Macro implements RenderingInterface, HasParent
     public function render($data, $citationNumber = null)
     {
         $ret = [];
-        /** @var RenderingInterface $child */
+        /** @var Rendering $child */
         foreach ($this->children as $child) {
             $res = $child->render($data, $citationNumber);
             $this->getChildsAffixesAndDelimiter($child);

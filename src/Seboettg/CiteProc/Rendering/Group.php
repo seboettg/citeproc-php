@@ -23,7 +23,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Group implements RenderingInterface, HasParent
+class Group implements Rendering, HasParent
 {
     use DelimiterTrait,
         AffixesTrait,

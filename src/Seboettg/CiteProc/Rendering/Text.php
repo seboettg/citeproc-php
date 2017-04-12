@@ -26,7 +26,7 @@ use Seboettg\CiteProc\Util\StringHelper;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Text implements RenderingInterface
+class Text implements Rendering
 {
     use FormattingTrait,
         AffixesTrait,

@@ -11,7 +11,7 @@ namespace Seboettg\CiteProc\Style;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Rendering\Layout;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
+use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Style\Sort\Sort;
 
 
@@ -26,7 +26,7 @@ use Seboettg\CiteProc\Style\Sort\Sort;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-abstract class StyleElement implements RenderingInterface
+abstract class StyleElement implements Rendering
 {
 
     use InheritableNameAttributesTrait;

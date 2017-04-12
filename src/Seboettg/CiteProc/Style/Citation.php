@@ -9,7 +9,7 @@
 
 namespace Seboettg\CiteProc\Style;
 use Seboettg\CiteProc\Rendering\Layout;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
+use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Util\Factory;
 
 

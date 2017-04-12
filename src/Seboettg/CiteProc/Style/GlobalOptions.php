@@ -44,7 +44,7 @@ class GlobalOptions
         foreach ($node->attributes() as $attribute) {
             switch ($attribute->getName()) {
                 case 'initialize-with-hyphen':
-                    $this->initializeWithHyphen = boolval((string) $attribute);
+                    $this->initializeWithHyphen = "false" === (string) $attribute ? false : true;
                     break;
                 case 'page-range-format':
                     $this->pageRangeFormat = new PageRangeFormats((string) $attribute);

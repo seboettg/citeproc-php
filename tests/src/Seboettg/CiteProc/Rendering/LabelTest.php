@@ -15,8 +15,14 @@ class LabelTest extends TestCase
 {
     use TestSuiteTestCaseTrait;
 
-
+    /*
     public function testLabelEditorTranslator()
+    {
+        $this->_testRenderTestSuite("label_EditorTranslator1");
+    }
+    */
+
+    public function testNameCollapseRoleLables()
     {
         $this->_testRenderTestSuite("name_CollapseRoleLabels");
     }

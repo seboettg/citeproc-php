@@ -22,7 +22,7 @@ use Seboettg\CiteProc\Styles\TextCaseTrait;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Number implements RenderingInterface
+class Number implements Rendering
 {
 
     const RANGE_DELIMITER_HYPHEN = "-";

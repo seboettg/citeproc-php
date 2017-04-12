@@ -11,7 +11,7 @@ namespace Seboettg\CiteProc\Rendering\Choose;
 use Seboettg\CiteProc\Constraint\ConstraintInterface;
 use Seboettg\CiteProc\Constraint\Factory;
 use Seboettg\CiteProc\Rendering\HasParent;
-use Seboettg\CiteProc\Rendering\RenderingInterface;
+use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\Collection\ArrayList;
 
 
@@ -21,7 +21,7 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class ChooseIf implements RenderingInterface, HasParent
+class ChooseIf implements Rendering, HasParent
 {
 
     /**
@@ -80,7 +80,7 @@ class ChooseIf implements RenderingInterface, HasParent
     public function render($data, $citationNumber = null)
     {
         $ret = [];
-        /** @var RenderingInterface $child */
+        /** @var Rendering $child */
         foreach ($this->children as $child) {
             $ret[] = $child->render($data, $citationNumber);
         }

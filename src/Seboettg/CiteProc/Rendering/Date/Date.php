@@ -196,16 +196,6 @@ class Date
         return !empty($ret) ? $this->addAffixes($this->format($this->applyTextCase($ret))) : "";
     }
 
-    private function renderNumeric(DateTime $date)
-    {
-        return $date->renderNumeric();
-    }
-
-    public function getForm()
-    {
-        return $this->form;
-    }
-
     private function createDateTime($dates)
     {
         $data = [];
@@ -497,5 +487,16 @@ class Date
                 }
             }
         }
+    }
+
+
+    private function renderNumeric(DateTime $date)
+    {
+        return $date->renderNumeric();
+    }
+
+    public function getForm()
+    {
+        return $this->form;
     }
 }

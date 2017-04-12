@@ -17,6 +17,76 @@ class NameTest extends TestCase
 
     use TestSuiteTestCaseTrait;
 
+    public function testNameArticularNameAsSortOrder()
+    {
+        $this->_testRenderTestSuite("name_ArticularNameAsSortOrder");
+    }
+
+    public function testNameArticularPlain()
+    {
+        $this->_testRenderTestSuite("name_ArticularPlain");
+    }
+
+    public function testNameArticularShortForm()
+    {
+        $this->_testRenderTestSuite("name_ArticularShortForm.json");
+    }
+
+    public function testNameAsianGlyphs()
+    {
+        $this->_testRenderTestSuite("name_AsianGlyphs");
+    }
+
+    public function testNameAuthorCount()
+    {
+        $this->_testRenderTestSuite("name_AuthorCount.json");
+    }
+
+    public function testNameAuthorCountWithMultipleVariables()
+    {
+        $this->_testRenderTestSuite("name_AuthorCountWithMultipleVariables");
+    }
+
+    public function testNameAuthorCountWithSameVarContentAndCombinedTermFail()
+    {
+        $this->_testRenderTestSuite("name_AuthorCountWithSameVarContentAndCombinedTermFail");
+    }
+
+    public function testNameAuthorCountWithSameVarContentAndCombinedTermSucceed()
+    {
+        $this->_testRenderTestSuite("name_AuthorCountWithSameVarContentAndCombinedTermSucceed");
+    }
+
+    public function testNameAuthorEditorCount()
+    {
+        $this->_testRenderTestSuite("name_AuthorEditorCount");
+    }
+
+    public function testNameCelticClanName()
+    {
+        $this->_testRenderTestSuite("name_CelticClanName");
+    }
+
+    public function testNameCeltsAndToffsCrowdedInitials()
+    {
+        $this->_testRenderTestSuite("name_CeltsAndToffsCrowdedInitials");
+    }
+
+    public function testNameCeltsAndToffsNoHyphens()
+    {
+        $this->_testRenderTestSuite("name_CeltsAndToffsNoHyphens");
+    }
+
+    public function testNameCeltsAndToffsSpacedInitials()
+    {
+        $this->_testRenderTestSuite("name_CeltsAndToffsSpacedInitials");
+    }
+
+    public function testNameCeltsAndToffsWithHyphens()
+    {
+        $this->_testRenderTestSuite("name_CeltsAndToffsWithHyphens");
+    }
+
     public function testNameAttrAnd()
     {
         $this->_testRenderTestSuite("nameattr_And");

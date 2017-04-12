@@ -20,7 +20,7 @@ use Seboettg\CiteProc\Styles\TextCaseTrait;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Label implements RenderingInterface
+class Label implements Rendering
 {
     use AffixesTrait,
         FormattingTrait,
