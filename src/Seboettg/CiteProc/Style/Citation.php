@@ -8,9 +8,10 @@
  */
 
 namespace Seboettg\CiteProc\Style;
-use Seboettg\CiteProc\Rendering\Layout;
-use Seboettg\CiteProc\Rendering\Rendering;
-use Seboettg\CiteProc\Util\Factory;
+
+use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Data\DataList;
+use Seboettg\CiteProc\Style\Options\CitationOptions;
 
 
 /**
@@ -37,6 +38,8 @@ class Citation extends StyleElement
     public function __construct(\SimpleXMLElement $node, $parent)
     {
         parent::__construct($node, $parent);
+        $citationOptions = new CitationOptions($node);
+        CiteProc::getContext()->setCitationSpecificOptions($citationOptions);
         $this->node = $node;
     }
 

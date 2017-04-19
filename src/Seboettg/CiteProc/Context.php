@@ -12,8 +12,10 @@ use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
-use Seboettg\CiteProc\Style\GlobalOptions;
 use Seboettg\CiteProc\Style\Macro;
+use Seboettg\CiteProc\Style\Options\BibliographyOptions;
+use Seboettg\CiteProc\Style\Options\CitationOptions;
+use Seboettg\CiteProc\Style\Options\GlobalOptions;
 use Seboettg\CiteProc\Style\Sort\Sort;
 use Seboettg\CiteProc\Style\Root;
 use Seboettg\Collection\ArrayList;
@@ -81,6 +83,16 @@ class Context
      * @var GlobalOptions
      */
     private $globalOptions;
+
+    /**
+     * @var BibliographyOptions
+     */
+    private $bibliographySpecificOptions;
+
+    /**
+     * @var CitationOptions
+     */
+    private $citationSpecificOptions;
 
     /**
      * @var string (sorting|rendering)
@@ -290,5 +302,38 @@ class Context
     {
         $this->renderingState = $renderingState;
     }
+
+    /**
+     * @return BibliographyOptions
+     */
+    public function getBibliographySpecificOptions()
+    {
+        return $this->bibliographySpecificOptions;
+    }
+
+    /**
+     * @param BibliographyOptions $bibliographySpecificOptions
+     */
+    public function setBibliographySpecificOptions($bibliographySpecificOptions)
+    {
+        $this->bibliographySpecificOptions = $bibliographySpecificOptions;
+    }
+
+    /**
+     * @return CitationOptions
+     */
+    public function getCitationSpecificOptions()
+    {
+        return $this->citationSpecificOptions;
+    }
+
+    /**
+     * @param CitationOptions $citationSpecificOptions
+     */
+    public function setCitationSpecificOptions($citationSpecificOptions)
+    {
+        $this->citationSpecificOptions = $citationSpecificOptions;
+    }
+
 
 }

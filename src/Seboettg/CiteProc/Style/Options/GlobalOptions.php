@@ -7,10 +7,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Style;
+namespace Seboettg\CiteProc\Style\Options;
 
-use Seboettg\CiteProc\Style\Options\PageRangeFormats;
-use Seboettg\CiteProc\Style\Options\DemoteNonDroppingParticle;
 
 /**
  * Class GlobalOptionsTrait

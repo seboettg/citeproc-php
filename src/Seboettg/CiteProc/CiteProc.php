@@ -12,8 +12,8 @@ use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
-use Seboettg\CiteProc\Style\GlobalOptions;
 use Seboettg\CiteProc\Style\Macro;
+use Seboettg\CiteProc\Style\Options\GlobalOptions;
 use Seboettg\CiteProc\Style\Root;
 
 

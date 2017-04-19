@@ -10,6 +10,7 @@
 namespace Seboettg\CiteProc\Rendering;
 
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
@@ -116,18 +117,34 @@ class Layout implements Rendering
      */
     private function renderSingle($data, $citationNumber = null)
     {
-        $ret = [];
-        /** @var Rendering $child */
-        foreach ($this->children as $child) {
+
+        $bibliographyOptions = CiteProc::getContext()->getBibliographySpecificOptions();
+        $inMargin = [];
+        $margin = [];
+        foreach ($this->children as $key => $child) {
             $rendered = $child->render($data, $citationNumber);
             $this->getChildsAffixesAndDelimiter($child);
-            if (!empty($rendered)) {
-                $ret[] = $rendered;
+            if (CiteProc::getContext()->isModeBibliography() && $bibliographyOptions->getSecondFieldAlign() === "flush") {
+
+                if ($key === 0 && !empty($rendered)) {
+                    $inMargin[] = $rendered;
+                } else {
+                    $margin[] = $rendered;
+                }
+            } else {
+                $inMargin[] = $rendered;
             }
         }
 
-        if (!empty($ret)) {
-            $res = $this->format(implode("", $ret));
+
+        if (!empty($inMargin) && !empty($margin) && CiteProc::getContext()->isModeBibliography()) {
+            $leftMargin = $this->removeConsecutiveChars($this->htmlentities($this->format(implode("", $inMargin))));
+            $rightInline = $this->removeConsecutiveChars($this->htmlentities($this->format(implode("", $margin))).$this->suffix);
+            $res  = '<div class="csl-left-margin">' . $leftMargin . '</div>';
+            $res .= '<div class="csl-right-inline">' . $rightInline . '</div>';
+            return $res;
+        } else if (!empty($inMargin)) {
+            $res = $this->format(implode("", $inMargin));
             return $this->htmlentities($this->removeConsecutiveChars($res));
         }
         return "";

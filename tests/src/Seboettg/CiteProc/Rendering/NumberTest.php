@@ -106,4 +106,16 @@ class NumberTest extends TestCase
     {
         $this->_testRenderTestSuite("number_vertical-align");
     }
+
+    /*
+    public function testNumberPlainHyphenOrEnDashAlwaysPlural()
+    {
+        $this->_testRenderTestSuite("number_PlainHyphenOrEnDashAlwaysPlural");
+    }
+    */
+
+    public function testNumberSimpleRoman()
+    {
+        $this->_testRenderTestSuite("number_SimpleNumberRoman");
+    }
 }

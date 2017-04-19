@@ -9,7 +9,8 @@
 
 namespace Seboettg\CiteProc\Style;
 
-use Seboettg\CiteProc\Style\Options\SubsequentAuthorSubstituteRule;
+use Seboettg\CiteProc\Data\DataList;
+use Seboettg\CiteProc\Style\Options\BibliographyOptions;
 use Seboettg\CiteProc\CiteProc;
 
 /**
@@ -26,23 +27,6 @@ use Seboettg\CiteProc\CiteProc;
  */
 class Bibliography extends StyleElement
 {
-    /**
-     * If set, the value of this attribute replaces names in a bibliographic entry that also occur in the preceding
-     * entry. The exact method of substitution depends on the value of the subsequent-author-substitute-rule attribute.
-     * Substitution is limited to the names of the first cs:names element rendered. (Bibliography-specific option)
-     *
-     * @var string
-     */
-    private $subsequentAuthorSubstitute;
-
-    /**
-     * Specifies when and how names are substituted as a result of subsequent-author-substitute.
-     * (Bibliography-specific option)
-     *
-     * @var SubsequentAuthorSubstituteRule
-     */
-    private $subsequentAuthorSubstituteRule;
-
     private $node;
 
     /**
@@ -54,26 +38,13 @@ class Bibliography extends StyleElement
     {
         parent::__construct($node, $parent);
         $this->node = $node;
-
-        //<bibliography subsequent-author-substitute="---" subsequent-author-substitute-rule="complete-all">
-        /** @var \SimpleXMLElement $attribute */
-        foreach ($node->attributes() as $attribute) {
-            switch ($attribute->getName()) {
-                case 'subsequent-author-substitute':
-                    $this->subsequentAuthorSubstitute = (string) $attribute;
-                    break;
-                case 'subsequent-author-substitute-rule':
-                    $this->subsequentAuthorSubstituteRule = new SubsequentAuthorSubstituteRule((string) $attribute);
-            }
-        }
-        if (empty($this->subsequentAuthorSubstituteRule)) {
-            $this->subsequentAuthorSubstituteRule = new SubsequentAuthorSubstituteRule("complete-all");
-        }
+        $bibliographyOptions = new BibliographyOptions($node);
+        CiteProc::getContext()->setBibliographySpecificOptions($bibliographyOptions);
         $this->initInheritableNameAttributes($node);
     }
 
     /**
-     * @param \stdClass $data
+     * @param array|DataList $data
      * @param int|null $citationNumber
      * @return string
      */
@@ -82,29 +53,19 @@ class Bibliography extends StyleElement
         if (!$this->attributesInitialized) {
             $this->initInheritableNameAttributes($this->node);
         }
+        $subsequentAuthorSubstitute = CiteProc::getContext()
+            ->getBibliographySpecificOptions()
+            ->getSubsequentAuthorSubstitute();
 
-        if ($this->subsequentAuthorSubstitute !== null && !empty($this->subsequentAuthorSubstituteRule)) {
-            CiteProc::getContext()->getCitationItems()->setSubsequentAuthorSubstitute($this->subsequentAuthorSubstitute);
-            CiteProc::getContext()->getCitationItems()->setSubsequentAuthorSubstituteRule($this->subsequentAuthorSubstituteRule);
+        $subsequentAuthorSubstituteRule = CiteProc::getContext()
+            ->getBibliographySpecificOptions()
+            ->getSubsequentAuthorSubstituteRule();
+
+        if ($subsequentAuthorSubstitute !== null && !empty($subsequentAuthorSubstituteRule)) {
+            CiteProc::getContext()->getCitationItems()->setSubsequentAuthorSubstitute($subsequentAuthorSubstitute);
+            CiteProc::getContext()->getCitationItems()->setSubsequentAuthorSubstituteRule($subsequentAuthorSubstituteRule);
         }
 
         return $this->layout->render($data, $citationNumber);
     }
-
-    /**
-     * @return string
-     */
-    public function getSubsequentAuthorSubstitute()
-    {
-        return $this->subsequentAuthorSubstitute;
-    }
-
-    /**
-     * @return SubsequentAuthorSubstituteRule
-     */
-    public function getSubsequentAuthorSubstituteRule()
-    {
-        return $this->subsequentAuthorSubstituteRule;
-    }
-
 }

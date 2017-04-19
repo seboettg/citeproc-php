@@ -26,7 +26,7 @@ The old version 1.x (established by Ron Jerome) has been moved to [this Reposito
 
 Version 2.x is a completely new written version of citeproc-php. In this connection, the license of version 2.x has been changed from GPLv3 to MIT.
 
-citeproc-php 2.x is still in development and not stable. Have a look at [tasks of milestone Version 2.0](https://github.com/seboettg/citeproc-php/issues?q=is%3Aissue+milestone%3A%22Version+2.0%22) in order to get an overview about finished and open features.
+citeproc-php 2.x is still in development and not stable. Have a look at [tasks of milestone Version 2.0](https://github.com/seboettg/citeproc-php/milestone/1) in order to get an overview about finished and open features.
 
 ## Installing citeproc-php ##
 

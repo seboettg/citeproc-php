@@ -39,7 +39,10 @@ trait ConsecutivePunctuationCharacterTrait
      */
     public function removeConsecutivePunctuation($punctuationSign, $subject)
     {
-        $pattern = '/\\' . trim($punctuationSign) . '{2,}/';
+        if (empty($punctuationSign) || preg_match("/^\s+$/", $punctuationSign)) {
+            return $subject;
+        }
+        $pattern = '/' . preg_quote(trim($punctuationSign)) . '{2,}/';
         if (preg_match($pattern, $subject)) {
             $res = preg_replace($pattern, $punctuationSign, $subject);
             return $res;

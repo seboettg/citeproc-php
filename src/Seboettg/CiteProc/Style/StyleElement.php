@@ -83,4 +83,5 @@ abstract class StyleElement implements Rendering
     {
         return $this->parent;
     }
+
 }

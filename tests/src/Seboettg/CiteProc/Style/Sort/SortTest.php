@@ -220,8 +220,14 @@ class SortTest extends TestCase
     {
         $this->_testRenderTestSuite("sort_VariousNameMacros2");
     }
+
     public function testSortVariousNameMacros3()
     {
-            $this->_testRenderTestSuite("sort_VariousNameMacros3");
+        $this->_testRenderTestSuite("sort_VariousNameMacros3");
+    }
+
+    public function testSortDateMacroSortWithSecondFieldAlign()
+    {
+        $this->_testRenderTestSuite("sort_DateMacroSortWithSecondFieldAlign");
     }
 }

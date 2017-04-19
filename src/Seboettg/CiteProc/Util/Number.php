@@ -33,6 +33,16 @@ class Number
         ["", "m", "mm", "mmm", "mmmm", "mmmmm"]
     ];
 
+    const ROMAN_DIGITS = [
+        "M" => 1000,
+        "D" => 500,
+        "C" => 100,
+        "L" => 50,
+        "X" => 10,
+        "V" => 5,
+        "I" => 1
+    ];
+
     /**
      * @return \Closure
      */
@@ -76,17 +86,6 @@ class Number
      */
     public static function roman2Dec($romanNumber)
     {
-
-        $roman = [
-            "M" => 1000,
-            "D" => 500,
-            "C" => 100,
-            "L" => 50,
-            "X" => 10,
-            "V" => 5,
-            "I" => 1
-        ];
-
         if (is_numeric($romanNumber)) {
             return 0;
         }
@@ -95,8 +94,8 @@ class Number
         // Convert the string to an array of roman values:
         for ($i = 0; $i < strlen($romanNumber); ++$i) {
             $char = strtoupper($romanNumber{$i});
-            if (isset($roman[$char])) {
-                $values[] = $roman[$char];
+            if (isset(self::ROMAN_DIGITS[$char])) {
+                $values[] = self::ROMAN_DIGITS[$char];
             }
         }
 
@@ -110,4 +109,43 @@ class Number
         return $sum;
     }
 
+    public static function isRomanNumber($str)
+    {
+        for ($i = 0; $i < strlen($str); ++$i) {
+            $char = strtoupper($str{$i});
+            if (!in_array($char, array_keys(self::ROMAN_DIGITS))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param $str
+     * @return string
+     */
+    public static function evaluateStringPluralism($str)
+    {
+        $plural = 'single';
+        if (!empty($str)) {
+            $ranges = preg_split("/[-–&,]/", $str);
+            if (count($ranges) > 1) {
+
+                $range = 1;
+                foreach ($ranges as $range) {
+                    if (Number::isRomanNumber($range) || is_numeric($range)) {
+                        $range &= 1;
+                    }
+                }
+                if ($range == 1) {
+                    return 'multiple';
+                }
+            } else {
+                if (is_numeric($str)) {
+                    return $str > 1 ? 'multiple' : 'single';
+                }
+            }
+        }
+        return $plural;
+    }
 }
