@@ -21,7 +21,7 @@ use Seboettg\CiteProc\Style\Sort\Key;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Date
+class DateHelper
 {
 
     /**

@@ -106,11 +106,11 @@ class Number implements Rendering
             case 'roman':
                 $var = $data->{$this->variable};
                 if (preg_match("/\s*(\d+)\s*([\-\-\&,])\s*(\d+)\s*/", $var, $matches)) {
-                    $num1 = Util\Number::dec2roman($matches[1]);
-                    $num2 = Util\Number::dec2roman($matches[3]);
+                    $num1 = Util\NumberHelper::dec2roman($matches[1]);
+                    $num2 = Util\NumberHelper::dec2roman($matches[3]);
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
                 } else {
-                    $text = Util\Number::dec2roman($var);
+                    $text = Util\NumberHelper::dec2roman($var);
                 }
                 break;
             case 'numeric':

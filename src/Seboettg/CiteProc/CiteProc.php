@@ -15,6 +15,7 @@ use Seboettg\CiteProc\Style\Citation;
 use Seboettg\CiteProc\Style\Macro;
 use Seboettg\CiteProc\Style\Options\GlobalOptions;
 use Seboettg\CiteProc\Style\Root;
+use Seboettg\CiteProc\Styles\Css\CssStyle;
 
 
 /**
@@ -68,6 +69,11 @@ class CiteProc
     {
         $this->styleSheet = $styleSheet;
         $this->lang = $lang;
+    }
+
+    public function __destruct()
+    {
+        self::$context = null;
     }
 
     /**
@@ -174,5 +180,22 @@ class CiteProc
         self::$context->setLocale(new Locale\Locale($this->lang)); //init locale
         $this->styleSheetXml = new \SimpleXMLElement($this->styleSheet);
         $this->parse($this->styleSheetXml);
+    }
+
+    /**
+     * @return string
+     */
+    public function renderCssStyles()
+    {
+        if (self::getContext() === null) {
+            $this->init();
+        }
+
+        if (self::getContext()->getCssStyle() == null) {
+            $cssStyle = new CssStyle(self::getContext()->getBibliographySpecificOptions());
+            self::getContext()->setCssStyle($cssStyle);
+        }
+
+        return self::getContext()->getCssStyle()->render();
     }
 }

@@ -18,6 +18,7 @@ use Seboettg\CiteProc\Style\Options\CitationOptions;
 use Seboettg\CiteProc\Style\Options\GlobalOptions;
 use Seboettg\CiteProc\Style\Sort\Sort;
 use Seboettg\CiteProc\Style\Root;
+use Seboettg\CiteProc\Styles\Css\CssStyle;
 use Seboettg\Collection\ArrayList;
 
 
@@ -98,6 +99,11 @@ class Context
      * @var string (sorting|rendering)
      */
     private $renderingState;
+
+    /**
+     * @var CssStyle
+     */
+    private $cssStyle;
 
     public function __construct($locale = null)
     {
@@ -335,5 +341,20 @@ class Context
         $this->citationSpecificOptions = $citationSpecificOptions;
     }
 
+    /**
+     * @param CssStyle $cssStyle
+     */
+    public function setCssStyle($cssStyle)
+    {
+        $this->cssStyle = $cssStyle;
+    }
+
+    /**
+     * @return CssStyle
+     */
+    public function getCssStyle()
+    {
+        return $this->cssStyle;
+    }
 
 }

@@ -15,7 +15,7 @@ namespace Seboettg\CiteProc\Util;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Number
+class NumberHelper
 {
 
     const PATTERN_ORDINAL = "/\d+(st|nd|rd|th)?\.?$/";
@@ -131,18 +131,18 @@ class Number
             $ranges = preg_split("/[-–&,]/", $str);
             if (count($ranges) > 1) {
 
-                $range = 1;
+                $isRange = 1;
                 foreach ($ranges as $range) {
-                    if (Number::isRomanNumber($range) || is_numeric($range)) {
-                        $range &= 1;
+                    if (NumberHelper::isRomanNumber(trim($range)) || is_numeric(trim($range))) {
+                        $isRange &= 1;
                     }
                 }
-                if ($range == 1) {
+                if ($isRange == 1) {
                     return 'multiple';
                 }
             } else {
-                if (is_numeric($str)) {
-                    return $str > 1 ? 'multiple' : 'single';
+                if (is_numeric($str) || NumberHelper::isRomanNumber($str)) {
+                    return 'single';
                 }
             }
         }

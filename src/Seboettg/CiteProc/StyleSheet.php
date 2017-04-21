@@ -33,7 +33,7 @@ class StyleSheet
      */
     public static function loadStyleSheet($styleName)
     {
-        $stylesPath = self::vendorPath() . "/citation-style-language/styles/";
+        $stylesPath = self::vendorPath() . "/citation-style-language/styles-distribution/";
         return file_get_contents($stylesPath . $styleName . '.csl');
     }
 

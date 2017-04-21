@@ -52,4 +52,32 @@ class CiteProcTest extends TestCase
         $this->_testRenderTestSuite("fullstyles_InternationalJournalOfHumanoid");
     }
 
+    public function testRenderCssStyle()
+    {
+        $style = StyleSheet::loadStyleSheet("international-journal-of-humanoid-robotics");
+        $citeProc = new CiteProc($style);
+        $cssStyles = $citeProc->renderCssStyles();
+
+        $this->assertTrue(strpos($cssStyles, "csl-left-margin") !== false);
+        $this->assertTrue(strpos($cssStyles, "csl-right-inline") !== false);
+    }
+
+    public function testRenderCssStyleHangingIndent()
+    {
+        $style = StyleSheet::loadStyleSheet("din-1505-2");
+        $citeProc = new CiteProc($style);
+        $cssStyles = $citeProc->renderCssStyles();
+        $this->assertTrue(strpos($cssStyles, "csl-entry") !== false);
+        $this->assertTrue(strpos($cssStyles, "text-indent: 45px") !== false);
+    }
+
+    public function testRenderCssStyleLineAndEntrySpacing()
+    {
+        $style = StyleSheet::loadStyleSheet("harvard-north-west-university");
+        $citeProc = new CiteProc($style);
+        $cssStyles = $citeProc->renderCssStyles();
+        $this->assertTrue(strpos($cssStyles, "csl-entry") !== false);
+        $this->assertTrue(strpos($cssStyles, "line-height: 1em") !== false);
+        $this->assertTrue(strpos($cssStyles, "margin-bottom: 2em") !== false);
+    }
 }

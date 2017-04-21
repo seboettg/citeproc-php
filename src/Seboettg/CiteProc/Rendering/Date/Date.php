@@ -447,7 +447,7 @@ class Date
             if (isset($data->{$this->variable}->raw) && !empty($data->{$this->variable}->raw)) {
                 //try {
                 // try to parse date parts from "raw" attribute
-                $var->{'date-parts'} = Util\Date::parseDateParts($data->{$this->variable});
+                $var->{'date-parts'} = Util\DateHelper::parseDateParts($data->{$this->variable});
                 //} catch (CiteProcException $e) {
                 //    if (!preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $data->{$this->variable}->raw)) {
                 //        return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->raw)));

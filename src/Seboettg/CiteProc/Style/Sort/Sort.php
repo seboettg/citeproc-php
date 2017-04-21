@@ -12,7 +12,7 @@ namespace Seboettg\CiteProc\Style\Sort;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Util\Variables;
-use Seboettg\CiteProc\Util\Date;
+use Seboettg\CiteProc\Util\DateHelper;
 use Seboettg\Collection\ArrayList;
 
 
@@ -94,7 +94,7 @@ class Sort
         $groupedItems = [];
 
         if ($key->isDateVariable()) {
-            if (Date::hasDateRanges($dataToSort, $variable, "all")) {
+            if (DateHelper::hasDateRanges($dataToSort, $variable, "all")) {
                 $newKey = clone $key;
                 $newKey->setRangePart(2);
                 $key->setRangePart(1);
@@ -109,7 +109,7 @@ class Sort
             } else if ($key->isNumberVariable()) {
                 $sortKey = $dataItem->{$variable};
             } else if ($key->isDateVariable()) {
-                $sortKey = Date::getSortKeyDate($dataItem, $key);
+                $sortKey = DateHelper::getSortKeyDate($dataItem, $key);
             } else if ($key->isMacro()) {
                 $sortKey = mb_strtolower(strip_tags(CiteProc::getContext()->getMacro($key->getMacro())->render($dataItem, $citationNumber)));
             } else if ($variable === "citation-number") {
