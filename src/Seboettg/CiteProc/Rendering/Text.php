@@ -28,15 +28,14 @@ use Seboettg\CiteProc\Util\StringHelper;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Text implements Rendering, RendersEmptyVariables
+class Text implements Rendering
 {
     use FormattingTrait,
         AffixesTrait,
         TextCaseTrait,
         DisplayTrait,
         ConsecutivePunctuationCharacterTrait,
-        QuotesTrait,
-        RendersEmptyVariablesTrait;
+        QuotesTrait;
 
     /**
      * @var string
@@ -182,18 +181,6 @@ class Text implements Rendering, RendersEmptyVariables
             return "$from-$to";
         }
         return $data->page;
-    }
-
-    public function rendersEmptyVariables($data)
-    {
-        if($this->toRenderType === "variable" &&
-            (!isset($data->{$this->toRenderTypeValue}) || empty($data->{$this->toRenderTypeValue}))) {
-            return true;
-        } else if ($this->toRenderType === "macro") {
-            $macro = CiteProc::getContext()->getMacro($this->toRenderTypeValue);
-            return !empty($macro) ? $macro->rendersEmptyVariables($data) : false;
-        }
-        return false;
     }
 
     private function normalizeDateRange($page)

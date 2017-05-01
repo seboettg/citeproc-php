@@ -16,6 +16,8 @@ namespace Seboettg\CiteProc\Constraint;
  * identical citations. This attempt at disambiguation is only made when all other disambiguation methods have failed
  * to uniquely identify the target source.
  *
+ * @codeCoverageIgnore
+ *
  * @package Seboettg\CiteProc\Choose\Constraint
  *
  * @author Sebastian Böttger <seboettg@gmail.com>

@@ -24,9 +24,8 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class ChooseIf implements Rendering, HasParent, RendersEmptyVariables
+class ChooseIf implements Rendering, HasParent
 {
-    use RendersEmptyVariablesTrait;
 
     /**
      * @var ArrayList<ConstraintInterface>
@@ -131,9 +130,4 @@ class ChooseIf implements Rendering, HasParent, RendersEmptyVariables
         return $this->parent;
     }
 
-
-    public function rendersEmptyVariables($data)
-    {
-        // TODO: Implement rendersEmptyVariables() method.
-    }
 }

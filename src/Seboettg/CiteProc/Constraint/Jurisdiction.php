@@ -14,6 +14,8 @@ namespace Seboettg\CiteProc\Constraint;
  * Class Jurisdiction
  * @package Seboettg\CiteProc\Constraint
  *
+ * @codeCoverageIgnore
+ *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
 class Jurisdiction implements ConstraintInterface

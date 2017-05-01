@@ -14,6 +14,8 @@ namespace Seboettg\CiteProc\Exception;
  * Class ClassNotFoundException
  * @package Seboettg\CiteProc\Exception
  *
+ * @codeCoverageIgnore
+ *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
 class ClassNotFoundException extends CiteProcException

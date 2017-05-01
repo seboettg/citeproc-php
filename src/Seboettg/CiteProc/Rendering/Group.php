@@ -31,23 +31,15 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Group implements Rendering, HasParent, RendersEmptyVariables
+class Group implements Rendering, HasParent
 {
     use DelimiterTrait,
         AffixesTrait,
         DisplayTrait,
         FormattingTrait,
-        ConsecutivePunctuationCharacterTrait,
-        RendersEmptyVariablesTrait;
+        ConsecutivePunctuationCharacterTrait;
 
     const CLASS_PATH = 'Seboettg\CiteProc\Rendering';
-
-    private static $suppressableElements = [
-        self::CLASS_PATH . '\Number',
-        self::CLASS_PATH . '\Group',
-        self::CLASS_PATH . '\Date\Date',
-        self::CLASS_PATH . '\Choose\Choose'
-    ]; 
 
     /**
      * @var ArrayList
@@ -109,14 +101,6 @@ class Group implements Rendering, HasParent, RendersEmptyVariables
                 ++$variables;
             }
 
-            /*
-            if (method_exists($child, "getSource") && $child->getSource() == 'macro') {
-                //if ($this->doesRendersEmptyVariable($child, $data)) {
-                    ++$variables;
-                //}
-            }
-            */
-
             $text = $child->render($data, $citationNumber);
             $delimiter = $this->delimiter;
             if (!empty($text)) {
@@ -147,23 +131,6 @@ class Group implements Rendering, HasParent, RendersEmptyVariables
     }
 
     /**
-     * cs:group implicitly acts as a conditional: cs:group and its child elements are suppressed if a) at least one
-     * rendering element in cs:group calls a variable (either directly or via a macro), and b) all variables that are
-     * called are empty. This accommodates descriptive cs:text elements. For example,
-     * @param $child
-     * @param $data
-     * @return bool
-     */
-    private function doesRendersEmptyVariable($child, $data)
-    {
-        if ($child instanceof RendersEmptyVariables/*Text || $child instanceof Choose*/) {
-            return $child->rendersEmptyVariables($data);
-        }
-
-        return false;
-    }
-
-    /**
      * @return mixed
      */
     public function getParent()
@@ -184,7 +151,7 @@ class Group implements Rendering, HasParent, RendersEmptyVariables
             return "";
         }
 
-        if ($variables && $haveVariables < 1) {
+        if ($variables && !$haveVariables) {
             return ""; // there has to be at least one other none empty value before the term is output
         }
 

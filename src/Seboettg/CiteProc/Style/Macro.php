@@ -34,10 +34,9 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Macro implements Rendering, HasParent, RendersEmptyVariables
+class Macro implements Rendering, HasParent
 {
-    use ConsecutivePunctuationCharacterTrait,
-        RendersEmptyVariablesTrait;
+    use ConsecutivePunctuationCharacterTrait;
 
     /**
      * @var ArrayList

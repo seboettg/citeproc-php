@@ -57,7 +57,9 @@ class StyleSheet
     {
         include_once __DIR__ . '/../../../vendorPath.php';
         if (!($vendorPath = vendorPath())) {
+            // @codeCoverageIgnoreStart
             throw new CiteProcException('vendor path not found. Use composer to initialize your project');
+            // @codeCoverageIgnoreEnd
         }
         return $vendorPath;
     }
