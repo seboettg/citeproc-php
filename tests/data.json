@@ -1,75 +1,36 @@
-{
-    "8d485c9303aa78c8de7260e7bc48f2efmfreiberg":{
-        "locales":"en-US",
-        "rawdata":{"DOI":"","ISBN":"","URL":"","abstract":"","author":[{"family":"Freiberg","given":"Martina"},{"family":"Herrmann","given":"Felix"},{"family":"Puppe","given":"Frank"}],"citation-label":"freiberg2014spreadsheetbased","container-title":"Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear","documents":[],"edition":"","editor":[],"event-place":"","id":"8d485c9303aa78c8de7260e7bc48f2efmfreiberg","issue":"","issued":{"date-parts":[["2014"]],"literal":"2014"},"note":"","number":"","page":"","publisher":"","publisher-place":"","title":"Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation","type":"paper-conference","volume":""},
-        "rendereddata": {
-            "apa": "Freiberg, M., Herrmann, F., & Puppe, F. (2014). Spreadsheet-based Knowledge Acquisition for Facilitating Active Domain Expert Participation. In Proceedings of the 19th European Conference on Knowledge Engineering and Knowledge Management EKAW - to appear."
-        }
+[
+    {
+        "author": [
+            {
+                "family": "Doe",
+                "given": "James",
+                "suffix": "III"
+            }
+        ],
+        "id": "item-1",
+        "issued": {
+            "date-parts": [
+                [
+                    "2001"
+                ]
+            ]
+        },
+        "title": "My Anonymous Heritage",
+        "type": "book"
     },
-    "cfea9fe6a18518a41393e9999a4a5184jspoerhase": {
-        "locales":"en-US",
-        "rawdata" : {"DOI":"","ISBN":"","URL":"http://dx.doi.org/10.1007/s00453-013-9778-z","abstract":"","author":[{"family":"Das","given":"Aparna"},{"family":"Gansner","given":"Emden R."},{"family":"Kaufmann","given":"Michael"},{"family":"Kobourov","given":"Stephen"},{"family":"Spoerhase","given":"Joachim"},{"family":"Wolff","given":"Alexander"}],"citation-label":"das-etal:mmn-journal","container-title":"Algorithmica","documents":[],"edition":"","editor":[],"event-place":"","id":"cfea9fe6a18518a41393e9999a4a5184jspoerhase","issue":"","issued":{"date-parts":[["2013"]],"literal":"2013"},"note":"","number":"","number-of-pages":"1-17","page":"1-17","page-first":"1-17","publisher":"Springer-Verlag","publisher-place":"","title":"Approximating Minimum Manhattan Networks in Higher Dimensions","type":"article-journal","volume":""},
-        "rendereddata": {
-            "din-1505-2": "Das, Aparna ; Gansner, Emden R. ; Kaufmann, Michael ; Kobourov, Stephen ; Spoerhase, Joachim ; Wolff, Alexander: Approximating Minimum Manhattan Networks in Higher Dimensions. In: Algorithmica, Springer-Verlag (2013), pp. 1-17",
-            "apa": "Das, A., Gansner, E. R., Kaufmann, M., Kobourov, S., Spoerhase, J., & Wolff, A. (2013). Approximating Minimum Manhattan Networks in Higher Dimensions. Algorithmica, 1-17. Retrieved from http://dx.doi.org/10.1007/s00453-013-9778-z"
-        }
-    },
-    "0ff411c62299cbce10508671d98a5b87jspoerhase": {
-        "locales":"en-US",
-        "rawdata":{"DOI":"","ISBN":"","URL":"http://doi.org/10.1007/s00453-013-9827-7","abstract":"","author":[{"family":"Knauer","given":"Martin"},{"family":"Spoerhase","given":"Joachim"}],"citation-label":"knauer-spoerhase:maxist","container-title":"Algorithmica accepted","documents":[],"edition":"","editor":[],"event-place":"","id":"0ff411c62299cbce10508671d98a5b87jspoerhase","issue":"","issued":{"date-parts":[["2013"]],"literal":"2013"},"note":"","number":"","page":"","publisher":"","publisher-place":"","title":"Better Approximation Algorithms for the Maximum Internal Spanning\r\n\tTree Problem","type":"article-journal","volume":""},
-        "rendereddata": {
-            "din-1505-2": "Knauer, Martin ; Spoerhase, Joachim: Better Approximation Algorithms for the Maximum Internal Spanning Tree Problem. In: Algorithmica accepted (2013)",
-            "apa": "Knauer, M., & Spoerhase, J. (2013). Better Approximation Algorithms for the Maximum Internal Spanning Tree Problem. Algorithmica Accepted. Retrieved from http://doi.org/10.1007/s00453-013-9827-7"
-        }
-    },
-    "46f7a831481ba0761e10798be044f691hotho":{
-        "locales":"en-US",
-        "rawdata": {"DOI":"","ISBN":"","URL":"","abstract":"","author":[{"family":"Mitzlaff","given":"Folke"},{"family":"Atzmueller","given":"Martin"},{"family":"Hotho","given":"Andreas"},{"family":"Stumme","given":"Gerd"}],"citation-label":"mitzlaff2014social","container-title":"Journal of Social Network Analysis and Mining","documents":[],"edition":"","editor":[],"event-place":"","id":"46f7a831481ba0761e10798be044f691hotho","issue":"216","issued":{"date-parts":[["2014"]],"literal":"2014"},"note":"","number":"216","page":"","publisher":"","publisher-place":"","title":"The Social Distributional Hypothesis","type":"article-journal","volume":"4"},
-        "rendereddata": {
-            "din-1505-2": "Mitzlaff, Folke ; Atzmueller, Martin ; Hotho, Andreas ; Stumme, Gerd: The Social Distributional Hypothesis. In: Journal of Social Network Analysis and Mining vol. 4 (2014), Nr. 216",
-            "apa": "Mitzlaff, F., Atzmueller, M., Hotho, A., & Stumme, G. (2014). The Social Distributional Hypothesis. Journal Of Social Network Analysis And Mining, 4(216)."
-        }
-    },
-    "62303a12ab2aa7f02a5ad163adcf9203awolff":{
-        "locales":"en-US",
-        "rawdata": {"DOI":"","ISBN":"","URL":"","abstract":"","author":[{"family":"Wolff","given":"Alexander"}],"citation-label":"w-ml-95","container-title":"","documents":[],"edition":"","editor":[],"event-place":"","genre":"Master thesis","id":"62303a12ab2aa7f02a5ad163adcf9203awolff","issue":"","issued":{"date-parts":[["1995"]],"literal":"1995"},"note":"","number":"","page":"","publisher":"Fachbereich Mathematik und Informatik, \n                Freie Universität Berlin","publisher-place":"","title":"Map Labeling","type":"thesis","volume":""},
-        "rendereddata": {
-            "din-1505-2": "Wolff, Alexander: Map Labeling, Fachbereich Mathematik und Informatik, Freie Universität Berlin, Master thesis, 1995",
-            "apa": "Wolff, A. (1995). Map Labeling (Master thesis). Fachbereich Mathematik und Informatik, Freie Universität Berlin."
-        }
-    },
-    "3a8b6409c8e753eaa46e3da453b5757fawolff":{
-        "locales":"en-US",
-        "rawdata": {"DOI":"","ISBN":"","URL":"","abstract":"","author":[{"family":"Wolff","given":"Alexander"}],"citation-label":"w-alptp-99","container-title":"","documents":[],"edition":"","editor":[],"event-place":"","genre":"PhD dissertation","id":"3a8b6409c8e753eaa46e3da453b5757fawolff","issue":"","issued":{"date-parts":[["1999"]],"literal":"1999"},"note":"","number":"","page":"","publisher":"Fachbereich Mathematik und Informatik, \n                Freie Universität Berlin","publisher-place":"","title":"Automated Label Placement in Theory and Practice","type":"thesis","volume":""},
-        "rendereddata": {
-            "din-1505-2": "Wolff, Alexander: Automated Label Placement in Theory and Practice, Fachbereich Mathematik und Informatik, Freie Universität Berlin, PhD dissertation, 1999",
-            "apa": "Wolff, A. (1999). Automated Label Placement in Theory and Practice (PhD dissertation). Fachbereich Mathematik und Informatik, Freie Universität Berlin."
-        }
-    },
-    "eb4818ba044f52ec9da9c3a4ff76e7b4awolff":{
-        "locales":"en-US",
-        "rawdata": {"DOI":"","ISBN":"","URL":"http://www.cs.ust.hk/tcsc/RR/index_3.html","abstract":"","author":[{"family":"Qin","given":"Zhongping"},{"family":"Wolff","given":"Alexander"},{"family":"Xu","given":"Yinfeng"},{"family":"Zhu","given":"Binhai"}],"citation-label":"qwxz-na2lp-00t","container-title":"","documents":[],"edition":"","editor":[],"event-place":"","id":"eb4818ba044f52ec9da9c3a4ff76e7b4awolff","issue":"HKUST-TCSC-2000-06","issued":{"date-parts":[["2000"]],"literal":"2000"},"note":"","number":"HKUST-TCSC-2000-06","page":"","publisher":"Hongkong University of Science and Technology","publisher-place":"","title":"New Algorithms for Two-Label Point Labeling","type":"report","volume":""},
-        "rendereddata": {
-            "din-1505-2": "Qin, Zhongping ; Wolff, Alexander ; Xu, Yinfeng ; Zhu, Binhai: New Algorithms for Two-Label Point Labeling ( Nr. HKUST-TCSC-2000-06) : Hongkong University of Science and Technology, 2000",
-            "apa": "Qin, Z., Wolff, A., Xu, Y., & Zhu, B. (2000). New Algorithms for Two-Label Point Labeling (No. HKUST-TCSC-2000-06). Hongkong University of Science and Technology. Retrieved from http://www.cs.ust.hk/tcsc/RR/index_3.html"
-        }
-    },
-    "google": {
-        "locales":"en-US",
-        "rawdata": {"DOI":"","ISBN":"","URL":"<www.google.com>","abstract":"","author":[{"family":"Potter", "given":"Heribert"}],"citation-label":"google","container-title":"","documents":[],"edition":"","editor":[],"event-place":"","id":"eb4818ba044f52ec9da9c3a4ff76e7b4awolff","issue":"HKUST-TCSC-2000-06","issued":{"date-parts":[["2016"]],"literal":"2016"},"note":"","number":"","page":"","publisher":"","publisher-place":"","title":"People will never learn","type":"report","volume":""},
-        "rendereddata": {
-            "apa": "Potter, H. (2016). People will never learn. Retrieved from &lt;www.google.com&gt;"
-        }
-
-    },
-    "google2": {
-        "locales":"en-US",
-        "rawdata": {"DOI":"","ISBN":"","URL":"http://www.google.com","abstract":"","author":[{"family":"Potter", "given":"Heribert"}],"citation-label":"google","container-title":"","documents":[],"edition":"","editor":[],"event-place":"","id":"eb4818ba044f52ec9da9c3a4ff76e7b4awolff","issue":"HKUST-TCSC-2000-06","issued":{"date-parts":[["2016"]],"literal":"2016"},"note":"","number":"","page":"","publisher":"","publisher-place":"","title":"People will never learn","type":"report","volume":""},
-        "rendereddata": {
-            "apa": "Potter, H. (2016). People will never learn. Retrieved from http://www.google.com",
-            "acta-philosophica": "Potter, H. , People will never learn (2016) [http://www.google.com].",
-            "international-journal-of-humanoid-robotics": "H. Potter, People will never learn (2016)."
-        }
-
+    {
+        "author": [
+            {
+                "family": "Anderson",
+                "given": "John"
+            },
+            {
+                "family": "Brown",
+                "given": "John"
+            }
+        ],
+        "id": "ITEM-2",
+        "type": "book",
+        "title": "Two authors writing a book"
     }
-}
+]

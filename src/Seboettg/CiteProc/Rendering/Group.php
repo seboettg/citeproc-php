@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Rendering;
+
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
@@ -19,24 +20,33 @@ use Seboettg\Collection\ArrayList;
 
 /**
  * Class Group
+ * The cs:group rendering element must contain one or more rendering elements (with the exception of cs:layout).
+ * cs:group may carry the delimiter attribute to separate its child elements, as well as affixes and display attributes
+ * (applied to the output of the group as a whole) and formatting attributes (transmitted to the enclosed elements).
+ * cs:group implicitly acts as a conditional: cs:group and its child elements are suppressed if a) at least one
+ * rendering element in cs:group calls a variable (either directly or via a macro), and b) all variables that are
+ * called are empty. This accommodates descriptive cs:text elements.
+ *
  * @package Seboettg\CiteProc\Rendering
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Group implements Rendering, HasParent
+class Group implements Rendering, HasParent, RendersEmptyVariables
 {
     use DelimiterTrait,
         AffixesTrait,
         DisplayTrait,
         FormattingTrait,
-        ConsecutivePunctuationCharacterTrait;
+        ConsecutivePunctuationCharacterTrait,
+        RendersEmptyVariablesTrait;
 
     const CLASS_PATH = 'Seboettg\CiteProc\Rendering';
 
     private static $suppressableElements = [
         self::CLASS_PATH . '\Number',
         self::CLASS_PATH . '\Group',
-        self::CLASS_PATH . '\Date\Date'
+        self::CLASS_PATH . '\Date\Date',
+        self::CLASS_PATH . '\Choose\Choose'
     ]; 
 
     /**
@@ -51,6 +61,12 @@ class Group implements Rendering, HasParent
     private $delimiter = "";
 
     private $parent;
+
+    /**
+     * @var array
+     */
+    private $renderedChildsWithVariable = [];
+
 
     public function __construct(\SimpleXMLElement $node, $parent)
     {
@@ -76,20 +92,31 @@ class Group implements Rendering, HasParent
         $terms = $variables = $haveVariables = $elementCount = 0;
         foreach ($this->children as $child) {
             $elementCount++;
+
             if (($child instanceof Text) &&
                 ($child->getSource() == 'term' ||
                     $child->getSource() == 'value')) {
-                $terms++;
+                ++$terms;
             }
+
             if (($child instanceof Label)) {
                 ++$terms;
             }
             if (method_exists($child, "getSource") && $child->getSource() == 'variable' &&
-                !empty($child->getVariable()) &&
+                !empty($child->getVariable()) && $child->getVariable() != "date" &&
                 !empty($data->{$child->getVariable()})
             ) {
                 ++$variables;
             }
+
+            /*
+            if (method_exists($child, "getSource") && $child->getSource() == 'macro') {
+                //if ($this->doesRendersEmptyVariable($child, $data)) {
+                    ++$variables;
+                //}
+            }
+            */
+
             $text = $child->render($data, $citationNumber);
             $delimiter = $this->delimiter;
             if (!empty($text)) {
@@ -103,15 +130,10 @@ class Group implements Rendering, HasParent
                         $text = str_replace('----REPLACE----', $stext, $text);
                     }
                 }
-                //give the text parts a name
-                if ($child instanceof Text) {
-                    $textParts[$child->getVariable()] = $text;
-                } else {
-                    $textParts[$elementCount] = $text;
-                }
+                $textParts[] = $text;
 
                 if (method_exists($child, "getSource") && $child->getSource() == 'variable' ||
-                   (method_exists($child, "getVariable") && !empty($child->getVariable()))) {
+                   (method_exists($child, "getVariable") && $child->getVariable() != "date" && !empty($child->getVariable()))) {
 
                     $haveVariables++;
                 }
@@ -122,6 +144,23 @@ class Group implements Rendering, HasParent
             }
         }
         return $this->formatting($textParts, $variables, $haveVariables, $terms);
+    }
+
+    /**
+     * cs:group implicitly acts as a conditional: cs:group and its child elements are suppressed if a) at least one
+     * rendering element in cs:group calls a variable (either directly or via a macro), and b) all variables that are
+     * called are empty. This accommodates descriptive cs:text elements. For example,
+     * @param $child
+     * @param $data
+     * @return bool
+     */
+    private function doesRendersEmptyVariable($child, $data)
+    {
+        if ($child instanceof RendersEmptyVariables/*Text || $child instanceof Choose*/) {
+            return $child->rendersEmptyVariables($data);
+        }
+
+        return false;
     }
 
     /**
@@ -144,7 +183,8 @@ class Group implements Rendering, HasParent
         if (empty($textParts)) {
             return "";
         }
-        if ($variables && !$haveVariables) {
+
+        if ($variables && $haveVariables < 1) {
             return ""; // there has to be at least one other none empty value before the term is output
         }
 

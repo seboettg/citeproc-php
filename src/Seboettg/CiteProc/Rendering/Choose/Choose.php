@@ -10,6 +10,8 @@
 namespace Seboettg\CiteProc\Rendering\Choose;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Rendering;
+use Seboettg\CiteProc\Rendering\Text;
+use Seboettg\CiteProc\Style\Macro;
 use Seboettg\Collection\ArrayList;
 
 
@@ -89,6 +91,30 @@ class Choose implements Rendering, HasParent
 
         }
         return implode("", $arr);
+    }
+
+    public function rendersEmptyVariables($data)
+    {
+        if ($prevCondition = $this->children->get("if")->match($data)) {
+            return $this->children->get("if")->rendersEmptyVariables($data);
+
+        } else if (!$prevCondition && $this->children->hasKey("elseif")) { // ELSEIF
+            /** @var ChooseElseIf $child */
+            foreach ($this->children->get("elseif") as $child) {
+                $condition = $child->match($data);
+                if ($condition && !$prevCondition) {
+                    return $child->rendersEmptyVariables($data);
+                }
+                $prevCondition = $condition;
+            }
+        }
+
+        //ELSE
+        if (!$prevCondition && $this->children->hasKey("else")) {
+            return $this->children->get("else")->rendersEmptyVariables($data);
+
+        }
+        return false;
     }
 
     /**

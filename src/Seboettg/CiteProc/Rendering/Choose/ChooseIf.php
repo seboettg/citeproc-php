@@ -8,10 +8,13 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Choose;
+
 use Seboettg\CiteProc\Constraint\ConstraintInterface;
 use Seboettg\CiteProc\Constraint\Factory;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Rendering;
+use Seboettg\CiteProc\Rendering\RendersEmptyVariables;
+use Seboettg\CiteProc\Rendering\RendersEmptyVariablesTrait;
 use Seboettg\Collection\ArrayList;
 
 
@@ -21,8 +24,9 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class ChooseIf implements Rendering, HasParent
+class ChooseIf implements Rendering, HasParent, RendersEmptyVariables
 {
+    use RendersEmptyVariablesTrait;
 
     /**
      * @var ArrayList<ConstraintInterface>
@@ -128,4 +132,8 @@ class ChooseIf implements Rendering, HasParent
     }
 
 
+    public function rendersEmptyVariables($data)
+    {
+        // TODO: Implement rendersEmptyVariables() method.
+    }
 }

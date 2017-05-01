@@ -5,7 +5,7 @@ bibliography
 >>===== RESULT =====>>
 <div class="csl-bib-body">
   <div class="csl-entry"><div class="csl-left-margin">1. </div><div class="csl-right-inline">H. Potter, <i>People will never learn</i> (2016).</div></div>
-  <div class="csl-entry"><div class="csl-left-margin">2. </div><div class="csl-right-inline">A. Hotho, D. Benz, F. Eisterlehner, R. Jäschke, B. Krause, C. Schmitz and G. Stumme, Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler, <i>HMD - Praxis Der Wirtschaftsinformatik</i> <b>271</b> (2010) 47--58.</div></div>
+  <div class="csl-entry"><div class="csl-left-margin">2. </div><div class="csl-right-inline">A. Hotho, D. Benz, F. Eisterlehner, R. Jäschke, B. Krause, C. Schmitz and G. Stumme, Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler, <i>HMD - Praxis Der Wirtschaftsinformatik</i> <b>271</b> (2010) 47-58.</div></div>
 </div>
 <<===== RESULT =====<<
 

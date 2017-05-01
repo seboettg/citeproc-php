@@ -70,28 +70,12 @@ class PageHelper
 
     private static function renderChicago($from, $to)
     {
-        if ($from == 100 || $from % 100 === 0) {
-            return $to;
-        } else if ($from < 100) {
-            return $to;
-        } else if ($from % 100 < 10) {
-            return self::renderMinimal($from, $to); //Use changed part only, omitting unneeded zeros
-        } else if (strlen($from) == 4) {
-            if ($from % 1000 != $to % 1000) {
-                return $to;
-            }
-            return self::renderMinimal($from, $to);
-        } else if (strlen($from) != 4 && $from % 100 >= 10 && $from % 100 <= 99) {
-            $resTo = substr($to,-2);
-            $from_ = substr($from, 0, strlen($from) - 2);
-            $to_ = substr($to, 0, strlen($to) - 2);
-            if ($from_ != $to_ && strlen($from_) == strlen($to_)) {
-                for ($i = strlen($from_)-1; $i >= 0 && $to_{$i} != $from_{$i}; --$i) {
-                    $resTo = $to{$i} . $resTo;
-                }
-            }
-            return $resTo;
+
+        if ($from > 100 && ($from % 100 > 0) && intval(($from / 100), 10) === intval(($to / 100), 10)) {
+            return "" . ($to % 100);
+        } else if ($from >= 10000) {
+            return "" . ($to % 1000);
         }
-        return self::renderMinimal($from, $to, 1);
+        return $to;
     }
 }

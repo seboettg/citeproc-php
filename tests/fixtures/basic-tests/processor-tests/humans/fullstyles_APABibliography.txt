@@ -2,12 +2,6 @@
 bibliography
 <<===== MODE=====<<
 
-This is correct APA ...
-
-See:
-   http://forums.zotero.org/discussion/17859/style-error-for-apa-non-primary-author-initials-incorrectly-included/
-and followup thread:
-   http://forums.zotero.org/discussion/19570/option-to-disable-disambiguation/
 
 >>===== RESULT =====>>
 <div class="csl-bib-body">

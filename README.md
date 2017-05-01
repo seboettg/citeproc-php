@@ -1,11 +1,16 @@
 # citeproc-php #
-[![PHP](https://img.shields.io/badge/PHP-%3E=5.6-green.svg?style=flat)](http://docs.php.net/manual/en/migration53.new-features.php)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/licenses/MIT)  
+![PHP](https://img.shields.io/badge/PHP-5.6-green.svg?style=flat)
+![PHP](https://img.shields.io/badge/PHP-7.0-green.svg?style=flat)
+![PHP](https://img.shields.io/badge/PHP-7.1-green.svg?style=flat)
+![Version](https://img.shields.io/badge/status-beta-yellow.svg?style=flat)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/seboettg/citeproc-php.svg)](https://travis-ci.org/seboettg/citeproc-php)
 [![Coverage Status](https://coveralls.io/repos/github/seboettg/citeproc-php/badge.svg)](https://coveralls.io/github/seboettg/citeproc-php)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/seboettg/citeproc-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/seboettg/citeproc-php/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/seboettg/citeproc-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/seboettg/citeproc-php/)
 
 citeproc-php is a full-featured CSL 1.0.1 processor that renders bibliographic metadata into html formatted citations or bibliographies using CSL stylesheets. citeproc-php renders bibliographies as well as citations (except of [Citation-specific Options](http://docs.citationstyles.org/en/stable/specification.html#citation-specific-options)).
+
+## Citation Style Language CSL ##
 
 The Citation Style Language (CSL) is an XML-based format to describe the formatting of citations, notes and bibliographies, offering:
 
@@ -71,7 +76,7 @@ Add the following lines to your `composer.json` file in order to add required pr
     "require": {
         "citation-style-language/locales":"@dev",
         "citation-style-language/styles-distribution":"@dev",
-        "seboettg/citeproc-php"
+        "seboettg/citeproc-php": "^2"
     }
 }
 ```
@@ -152,7 +157,7 @@ If you don't use any of these services, you can use the following test data for 
     }
 ]
 ```
-Copy this into a file in your project root and name the file `metadata.json`.
+Copy this into a file in your project root and name that file `metadata.json`.
 
 ### Build a first simple script ###
 
@@ -168,7 +173,7 @@ $citeProc = new CiteProc($style);
 echo $citeProc->render(json_decode($data), "bibliography");
 ```
 
-You can also render citations instead of the bibliographies:
+You can also render citations instead of bibliographies:
 
 ```php
 echo $citeProc->render(json_decode($data), "citation");
@@ -177,7 +182,7 @@ echo $citeProc->render(json_decode($data), "citation");
 
 ### Bibliography-specific styles using CSS ###
 
-Some CSL stylesheets using bibliography-specific style options like hanging indents or alignments. To get an effect of these options you can render separated Cascading Stylesheets using CiteProc. 
+Some CSL stylesheets uses bibliography-specific style options like hanging indents or alignments. To get an effect of these options you can render separated Cascading Stylesheets using CiteProc. 
 You have to include these styles within the `<head>` tag of your html output page.
 
 ```php
@@ -205,5 +210,13 @@ $cssStyles = $citeProc->renderCssStyles();
 </body>
 </html>
 ```
+
+Now, you can watch and test the output using PHP's internal web server:
+
+```bash
+php -S localhost:8080
+```
+
+Start your Browser and open the URL `http://localhost:8080`.
 
 ## Contribution ##

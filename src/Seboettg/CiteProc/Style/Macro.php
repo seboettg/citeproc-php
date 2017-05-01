@@ -8,7 +8,10 @@
  */
 
 namespace Seboettg\CiteProc\Style;
+
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\Rendering\RendersEmptyVariables;
+use Seboettg\CiteProc\Rendering\RendersEmptyVariablesTrait;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
@@ -31,9 +34,10 @@ use Seboettg\Collection\ArrayList;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Macro implements Rendering, HasParent
+class Macro implements Rendering, HasParent, RendersEmptyVariables
 {
-    use ConsecutivePunctuationCharacterTrait;
+    use ConsecutivePunctuationCharacterTrait,
+        RendersEmptyVariablesTrait;
 
     /**
      * @var ArrayList
@@ -108,4 +112,5 @@ class Macro implements Rendering, HasParent
     {
         return $this->parent;
     }
+
 }

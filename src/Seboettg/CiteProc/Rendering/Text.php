@@ -17,6 +17,8 @@ use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\QuotesTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
+use Seboettg\CiteProc\Util\NumberHelper;
+use Seboettg\CiteProc\Util\PageHelper;
 use Seboettg\CiteProc\Util\StringHelper;
 
 
@@ -26,14 +28,15 @@ use Seboettg\CiteProc\Util\StringHelper;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Text implements Rendering
+class Text implements Rendering, RendersEmptyVariables
 {
     use FormattingTrait,
         AffixesTrait,
         TextCaseTrait,
         DisplayTrait,
         ConsecutivePunctuationCharacterTrait,
-        QuotesTrait;
+        QuotesTrait,
+        RendersEmptyVariablesTrait;
 
     /**
      * @var string
@@ -92,20 +95,25 @@ class Text implements Rendering
                     $renderedText = $citationNumber + 1;
                     break;
                 }
-                // check if there is an attribute with prefix short or long e.g. shortTitle or longAbstract
-                // test case group_ShortOutputOnly.json
-                if (in_array($this->form, ["short", "long"])) {
-                    $attrWithPrefix = $this->form . ucfirst($this->toRenderTypeValue);
-                    if (isset($data->{$attrWithPrefix}) && !empty($data->{$attrWithPrefix})) {
-                        $renderedText = $this->applyTextCase($data->{$attrWithPrefix}, $lang);
-                    }
-                }
-                if (!empty($data->{$this->toRenderTypeValue})) {
-                    $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}), $lang);
-                }
-                // for test sort_BibliographyCitationNumberDescending.json
-                if ($this->toRenderTypeValue === "citation-number" && !is_null($citationNumber)) {
+
+                if ($this->toRenderTypeValue === "page") {
+                    $renderedText = $this->renderPage($data);
+                    // for test sort_BibliographyCitationNumberDescending.json
+                } else if ($this->toRenderTypeValue === "citation-number" && !is_null($citationNumber)) {
                     $renderedText = strval($citationNumber + 1);
+                } else {
+
+                    // check if there is an attribute with prefix short or long e.g. shortTitle or longAbstract
+                    // test case group_ShortOutputOnly.json
+                    if (in_array($this->form, ["short", "long"])) {
+                        $attrWithPrefix = $this->form . ucfirst($this->toRenderTypeValue);
+                        if (isset($data->{$attrWithPrefix}) && !empty($data->{$attrWithPrefix})) {
+                            $renderedText = $this->applyTextCase($data->{$attrWithPrefix}, $lang);
+                        }
+                    }
+                    if (!empty($data->{$this->toRenderTypeValue})) {
+                        $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}), $lang);
+                    }
                 }
                 break;
             case 'macro':
@@ -137,12 +145,9 @@ class Text implements Rendering
         return "";
     }
 
-    /**
-     * @return bool
-     */
-    public function rendersVariable()
+    public function rendersMacro()
     {
-        return $this->toRenderType === "variable" || $this->toRenderType === "macro";
+        return $this->toRenderType === "macro";
     }
 
     /**
@@ -150,7 +155,7 @@ class Text implements Rendering
      */
     public function getSource()
     {
-        return $this->toRenderTypeValue;
+        return $this->toRenderType;
     }
 
     /**
@@ -159,5 +164,43 @@ class Text implements Rendering
     public function getVariable()
     {
         return $this->toRenderTypeValue;
+    }
+
+    private function renderPage($data)
+    {
+        if (empty($data->page)) {
+            return "";
+        }
+
+        if (preg_match(NumberHelper::PATTERN_COMMA_AMPERSAND_RANGE, $data->page)) {
+            $data->page = $this->normalizeDateRange($data->page);
+            $ranges = preg_split("/[-–]/", trim($data->page));
+            if (!empty(CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat())) {
+                return PageHelper::processPageRangeFormats($ranges, CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat());
+            }
+            list($from, $to) = $ranges;
+            return "$from-$to";
+        }
+        return $data->page;
+    }
+
+    public function rendersEmptyVariables($data)
+    {
+        if($this->toRenderType === "variable" &&
+            (!isset($data->{$this->toRenderTypeValue}) || empty($data->{$this->toRenderTypeValue}))) {
+            return true;
+        } else if ($this->toRenderType === "macro") {
+            $macro = CiteProc::getContext()->getMacro($this->toRenderTypeValue);
+            return !empty($macro) ? $macro->rendersEmptyVariables($data) : false;
+        }
+        return false;
+    }
+
+    private function normalizeDateRange($page)
+    {
+        if (preg_match("/^(\d+)--(\d+)$/", trim($page), $matches)) {
+            return $matches[1]."-".$matches[2];
+        }
+        return $page;
     }
 }

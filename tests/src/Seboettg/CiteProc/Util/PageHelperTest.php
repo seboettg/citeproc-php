@@ -11,9 +11,12 @@ namespace Seboettg\CiteProc\Util;
 
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\Style\Options\PageRangeFormats;
+use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
 class PageHelperTest extends TestCase
 {
+    use TestSuiteTestCaseTrait;
+
     private $chicago;
     private $minimal;
     private $minimalTwo;
@@ -193,5 +196,10 @@ class PageHelperTest extends TestCase
                 $this->minimalTwo
             )
         );
+    }
+
+    public function testPageRangeFormatCitationChicago()
+    {
+        $this->_testRenderTestSuite("page_ChicagoAuthorDateLooping");
     }
 }

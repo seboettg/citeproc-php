@@ -6,7 +6,7 @@ bibliography
 
 >>===== RESULT =====>>
 <div class="csl-bib-body">
-  <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
+  <div class="csl-entry">Doe Inc. Retrieved June 1, 1965, from http://example.com/</div>
 </div>
 <<===== RESULT =====<<
 
