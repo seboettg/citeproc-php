@@ -56,7 +56,9 @@
 
     "scripts": {
         "post-install-cmd": [
-            "cd ./tests/fixtures/basic-tests/; ./processor.py -g"
-        ]
+            "cd ./tests/fixtures/basic-tests/; ./processor.py -g",
+            "chmod +x vendor/bin/phpunit"
+        ],
+        "test": "vendor/bin/phpunit"
     }
 }

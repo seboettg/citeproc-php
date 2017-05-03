@@ -39,8 +39,7 @@ The recommended way to install citeproc-php is through
 [Composer](http://getcomposer.org).
 
 ```bash
-# Install Composer
-curl -sS https://getcomposer.org/installer | php
+$ curl -sS https://getcomposer.org/installer | php
 ```
 Add the following lines to your `composer.json` file in order to add required program libraries as well as CSL styles and locales:
 
@@ -84,7 +83,7 @@ Add the following lines to your `composer.json` file in order to add required pr
 Next, run the Composer command to install the latest stable version of citeproc-php and its dependencies:
 
 ```bash
-php composer.phar install --no-dev
+$ php composer.phar install --no-dev
 ```
 
 After installing, you need to require Composer's autoloader:
@@ -96,7 +95,7 @@ require 'vendor/autoload.php';
 You can then later update citeproc-php using composer:
 
  ```bash
-composer.phar update --no-dev
+$ composer.phar update --no-dev
  ```
 
 If you have trouble using composer you will find further information on [https://getcomposer.org/doc/](https://getcomposer.org/doc/).
@@ -112,8 +111,8 @@ citation rules.
 Create a project folder:
 
 ```bash
-mkdir mycslproject
-cd mycslproject
+$ mkdir mycslproject
+$ cd mycslproject
 ```
 
 First, you need json formatted metadata array of publication's metadata. There are a lot of services that supports CSL exports. For instance [BibSonomy](https://www.bibsonomy.org) Zotero, Mendeley. 
@@ -214,9 +213,69 @@ $cssStyles = $citeProc->renderCssStyles();
 Now, you can watch and test the output using PHP's internal web server:
 
 ```bash
-php -S localhost:8080
+$ php -S localhost:8080
 ```
 
 Start your Browser and open the URL `http://localhost:8080`.
 
+Under examples folder you will find another example script.
+
 ## Contribution ##
+
+citeproc-php is an Open Source project. You can support it by reporting bugs, contributing code or contributing documentation.
+
+### Star the Repo ###
+Developing software is a hard job and one has to spend a lot of time. Every open-source developer is looking forward 
+about esteem for his work. If you use citeproc-php and if you like it, star it and talk about it in Blogs.
+
+### Reporting a Bug ###
+Use the [Issue Tracker](https://github.com/seboettg/citeproc-php/issues) in order to report a bug.
+
+### Contribute Code ###
+You are a developer and you like to help developing new features or bug fixes? Fork citeproc-php, setup a workspace and send
+a pull request.
+
+I would suggest the following way:
+
+* Fork citeproc-php on Github
+* Clone the forked repo
+```bash
+$ git clone https://github.com/<yourname>/citeproc-php
+``` 
+* Setup your preferred IDE
+* Run the UnitTests within your IDE
+* Write a test case for your issue. My tests are based on the original [test-suite](https://github.com/citation-style-language/test-suite). You can build custom (human-readable) test cases following the described [Fixture layout](https://github.com/citation-style-language/test-suite#fixture-layout). 
+* Additionally, you have to translate (human-readable) test-cases into json format (machine-readable)
+```bash
+$ cd <project-root>/tests/fixtures/basic-tests
+$ ./processor.py -g
+```
+* create a test function within an already existing test class or create a new test class:
+```php
+<?php 
+namespace Seboettg\CiteProc;
+use PHPUnit\Framework\TestCase;
+
+class MyNewClassTest extends TestCase
+{
+    use TestSuiteTestCaseTrait;
+    // ...
+    public function testMyBrandNewFunction() 
+    {
+        //my brand new function is the file name (without file extension)
+        $this->_testRenderTestSuite("myBrandNewFunction");
+    }
+    // ...
+}
+```
+* Make sure that your test case covers relevant code parts
+* Implement the code until all tests finishing successfully
+* Send a pull request
+
+## Testing ##
+
+You can also run test cases without IDE:
+
+```bash
+composer test
+```
