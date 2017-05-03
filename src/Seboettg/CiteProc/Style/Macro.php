@@ -10,8 +10,6 @@
 namespace Seboettg\CiteProc\Style;
 
 use Seboettg\CiteProc\Exception\CiteProcException;
-use Seboettg\CiteProc\Rendering\RendersEmptyVariables;
-use Seboettg\CiteProc\Rendering\RendersEmptyVariablesTrait;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
