@@ -230,10 +230,14 @@ trait InheritableNameAttributesTrait
         $context = CiteProc::getContext();
         $parentStyleElement = null;
         if ($this instanceof  Name) {
-            if ($this->isDescendantOfMacro()) {
-                $parentStyleElement = $context->getRoot();
+            if ($context->getMode() === "bibliography") {
+                if ($this->isDescendantOfMacro()) {
+                    $parentStyleElement = $context->getRoot();
+                } else {
+                    $parentStyleElement = $context->getBibliography();
+                }
             } else {
-                $parentStyleElement = ($context->isModeBibliography() ? $context->getBibliography() : $context->getCitation());
+                $parentStyleElement = $context->getCitation();
             }
 
         } else if ($this instanceof StyleElement) {

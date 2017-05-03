@@ -50,7 +50,9 @@ class Citation extends StyleElement
      */
     public function render($data, $citationNumber = null)
     {
-        $this->initInheritableNameAttributes($this->node);
+        if (!$this->attributesInitialized) {
+            $this->initInheritableNameAttributes($this->node);
+        }
         return $this->layout->render($data, $citationNumber);
     }
 

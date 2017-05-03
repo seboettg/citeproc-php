@@ -28,7 +28,7 @@ class IsUncertainDate implements ConstraintInterface
 
     private $match;
 
-    public function __construct($value, $match)
+    public function __construct($value, $match = "all")
     {
         $this->varName = $value;
         $this->match = $match;

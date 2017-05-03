@@ -186,4 +186,8 @@ class NameTest extends TestCase
     {
         $this->_testRenderTestSuite("name_namepartAffixesNameAsSortOrder");
     }
+
+    public function testNameCitationMacroNoInheritanceFromRoot() {
+        $this->_testRenderTestSuite("name_CitationMacroNoInheritanceFromRoot");
+    }
 }
