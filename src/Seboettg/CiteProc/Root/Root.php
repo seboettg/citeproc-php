@@ -7,7 +7,9 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Style;
+namespace Seboettg\CiteProc\Root;
+
+use Seboettg\CiteProc\Style\InheritableNameAttributesTrait;
 
 /**
  * Class Root

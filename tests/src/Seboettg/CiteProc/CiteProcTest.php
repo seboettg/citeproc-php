@@ -86,4 +86,14 @@ class CiteProcTest extends TestCase
         $this->assertTrue(strpos($cssStyles, "line-height: 1em") !== false);
         $this->assertTrue(strpos($cssStyles, "margin-bottom: 2em") !== false);
     }
+
+    public function testGetInfo()
+    {
+        $style = StyleSheet::loadStyleSheet("harvard-north-west-university");
+        $citeProc = new CiteProc($style);
+        $citeProc->init();
+        $info = CiteProc::getContext()->getInfo();
+        $this->assertEquals("Hermien Wolff", $info->getAuthors()[0]->name);
+        $this->assertEquals("North-West University - Harvard", $info->getTitle());
+    }
 }

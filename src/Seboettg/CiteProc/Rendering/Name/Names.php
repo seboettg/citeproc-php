@@ -12,6 +12,7 @@ namespace Seboettg\CiteProc\Rendering\Name;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Label;
 use Seboettg\CiteProc\Rendering\Rendering;
+use Seboettg\CiteProc\Style\InheritableNameAttributesTrait;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
@@ -28,9 +29,10 @@ use Seboettg\Collection\ArrayList;
  */
 class Names implements Rendering, HasParent
 {
-    use DelimiterTrait;
-    use AffixesTrait;
-    use FormattingTrait;
+    use DelimiterTrait,
+        AffixesTrait,
+        FormattingTrait,
+        InheritableNameAttributesTrait;
 
     /**
      * Variables (selected with the required variable attribute), each of which can contain multiple names (e.g. the
@@ -108,6 +110,7 @@ class Names implements Rendering, HasParent
      */
     public function __construct(\SimpleXMLElement $node, $parent)
     {
+        $this->initInheritableNameAttributes($node);
         $this->parent = $parent;
         /** @var \SimpleXMLElement $child */
         foreach ($node->children() as $child) {

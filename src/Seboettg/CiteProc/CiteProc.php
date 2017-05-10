@@ -8,13 +8,15 @@
  */
 
 namespace Seboettg\CiteProc;
+
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\Root\Info;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
 use Seboettg\CiteProc\Style\Macro;
 use Seboettg\CiteProc\Style\Options\GlobalOptions;
-use Seboettg\CiteProc\Style\Root;
+use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Styles\Css\CssStyle;
 
 
@@ -92,6 +94,7 @@ class CiteProc
             $name = $node->getName();
             switch ($name) {
                 case 'info':
+                    self::$context->setInfo(new Info($node));
                     break;
                 case 'locale':
                     self::$context->getLocale()->addXml($node);

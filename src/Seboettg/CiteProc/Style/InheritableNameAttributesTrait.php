@@ -12,6 +12,8 @@ namespace Seboettg\CiteProc\Style;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Name\Name;
+use Seboettg\CiteProc\Rendering\Name\Names;
+use Seboettg\CiteProc\Root\Root;
 
 /**
  * Class InheritableNameAttributesTrait
@@ -229,7 +231,7 @@ trait InheritableNameAttributesTrait
     {
         $context = CiteProc::getContext();
         $parentStyleElement = null;
-        if ($this instanceof  Name) {
+        if ($this instanceof  Name || $this instanceof Names) {
             if ($context->getMode() === "bibliography") {
                 if ($this->isDescendantOfMacro()) {
                     $parentStyleElement = $context->getRoot();
@@ -359,6 +361,14 @@ trait InheritableNameAttributesTrait
                         } else if (!empty($parentStyleElement)) {
                             $this->setNameDelimiter($parentStyleElement->getNameDelimiter());
                         }
+                    } else {
+                        /* The attributes name-form and name-delimiter correspond to the form and delimiter attributes
+                           on cs:name. Similarly, names-delimiter corresponds to the delimiter attribute on cs:names. */
+                        if (!empty($attribute)) {
+                            $this->nameDelimiter = $this->delimiter = (string) $attribute;
+                        } else if (!empty($parentStyleElement)) {
+                            $this->nameDelimiter = $this->delimiter = $parentStyleElement->getNameDelimiter();
+                        }
                     }
                     break;
                 case 'delimiter':
@@ -369,6 +379,7 @@ trait InheritableNameAttributesTrait
                             $this->setDelimiter($parentStyleElement->getNameDelimiter());
                         }
                     }
+
             }
         }
         $this->attributesInitialized = true;

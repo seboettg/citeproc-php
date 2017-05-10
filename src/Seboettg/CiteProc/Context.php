@@ -10,6 +10,7 @@
 namespace Seboettg\CiteProc;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Locale\Locale;
+use Seboettg\CiteProc\Root\Info;
 use Seboettg\CiteProc\Style\Bibliography;
 use Seboettg\CiteProc\Style\Citation;
 use Seboettg\CiteProc\Style\Macro;
@@ -17,7 +18,7 @@ use Seboettg\CiteProc\Style\Options\BibliographyOptions;
 use Seboettg\CiteProc\Style\Options\CitationOptions;
 use Seboettg\CiteProc\Style\Options\GlobalOptions;
 use Seboettg\CiteProc\Style\Sort\Sort;
-use Seboettg\CiteProc\Style\Root;
+use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Styles\Css\CssStyle;
 use Seboettg\Collection\ArrayList;
 
@@ -76,11 +77,6 @@ class Context
     private $root;
 
     /**
-     * @var CiteProc
-     */
-    private $citeProc;
-
-    /**
      * @var GlobalOptions
      */
     private $globalOptions;
@@ -104,6 +100,11 @@ class Context
      * @var CssStyle
      */
     private $cssStyle;
+
+    /**
+     * @var Info
+     */
+    private $info;
 
     public function __construct($locale = null)
     {
@@ -272,7 +273,7 @@ class Context
     /**
      * @param Root $root
      */
-    public function setRoot($root)
+    public function setRoot(Root $root)
     {
         $this->root = $root;
     }
@@ -288,7 +289,7 @@ class Context
     /**
      * @param GlobalOptions $globalOptions
      */
-    public function setGlobalOptions($globalOptions)
+    public function setGlobalOptions(GlobalOptions $globalOptions)
     {
         $this->globalOptions = $globalOptions;
     }
@@ -320,7 +321,7 @@ class Context
     /**
      * @param BibliographyOptions $bibliographySpecificOptions
      */
-    public function setBibliographySpecificOptions($bibliographySpecificOptions)
+    public function setBibliographySpecificOptions(BibliographyOptions $bibliographySpecificOptions)
     {
         $this->bibliographySpecificOptions = $bibliographySpecificOptions;
     }
@@ -336,7 +337,7 @@ class Context
     /**
      * @param CitationOptions $citationSpecificOptions
      */
-    public function setCitationSpecificOptions($citationSpecificOptions)
+    public function setCitationSpecificOptions(CitationOptions $citationSpecificOptions)
     {
         $this->citationSpecificOptions = $citationSpecificOptions;
     }
@@ -344,7 +345,7 @@ class Context
     /**
      * @param CssStyle $cssStyle
      */
-    public function setCssStyle($cssStyle)
+    public function setCssStyle(CssStyle $cssStyle)
     {
         $this->cssStyle = $cssStyle;
     }
@@ -357,4 +358,13 @@ class Context
         return $this->cssStyle;
     }
 
+    public function setInfo(Info $info)
+    {
+        $this->info = $info;
+    }
+
+    public function getInfo()
+    {
+        return $this->info;
+    }
 }
