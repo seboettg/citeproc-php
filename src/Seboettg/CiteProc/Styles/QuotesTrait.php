@@ -55,7 +55,7 @@ trait QuotesTrait
             } else {
                 $lastChar = substr($text, -1);
                 if (preg_match("/[,\.;]/", $text)) {
-                    $subStr = substr($text, 0,strlen($text)-1);
+                    $subStr = substr($text, 0, strlen($text) - 1);
                     return $openQuote . $subStr . $closeQuote . $lastChar;
                 }
             }

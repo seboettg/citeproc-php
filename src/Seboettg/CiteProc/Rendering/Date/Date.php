@@ -219,7 +219,7 @@ class Date
     }
 
     /**
-     * @param $differentParts
+     * @param integer $differentParts
      * @param DateTime $from
      * @param DateTime $to
      * @param $delim
@@ -460,6 +460,9 @@ class Date
         }
     }
 
+    /**
+     * @param string $form
+     */
     private function prepareDatePartsChildren($dateParts, $form)
     {
         /* Localized date formats are selected with the optional form attribute, which must set to either “numeric”

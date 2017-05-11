@@ -205,7 +205,7 @@ class Name implements Rendering, HasParent
     }
 
     /**
-     * @param $name
+     * @param \stdClass $name
      * @return \stdClass
      */
     private function cloneNamePOSC($name)
@@ -498,6 +498,12 @@ class Name implements Rendering, HasParent
     }
 
 
+    /**
+     * @param \stdClass $data
+     * @param integer $rank
+     *
+     * @return string
+     */
     private function nameOrder($data, $rank)
     {
         $nameAsSortOrder = (($this->nameAsSortOrder === "first" && $rank === 0) || $this->nameAsSortOrder === "all");
@@ -587,7 +593,7 @@ class Name implements Rendering, HasParent
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDelimiter()
     {

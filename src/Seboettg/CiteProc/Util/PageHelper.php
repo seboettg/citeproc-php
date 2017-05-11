@@ -23,7 +23,7 @@ class PageHelper
     {
         list($from, $to) = $ranges;
 
-        if (!empty($pageRangeFormat) ) {
+        if (!empty($pageRangeFormat)) {
 
             switch ($pageRangeFormat) {
                 case PageRangeFormats::MINIMAL:
@@ -31,7 +31,7 @@ class PageHelper
                     break;
                 case PageRangeFormats::MINIMAL_TWO:
                     if (strlen($to) > 2) {
-                        $resTo = self::renderMinimal($from, $to, strlen($to)-2);
+                        $resTo = self::renderMinimal($from, $to, strlen($to) - 2);
                     } else {
                         $resTo = $to;
                     }

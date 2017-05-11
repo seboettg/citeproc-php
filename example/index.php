@@ -31,7 +31,7 @@ $cssStyles = $citeProc->renderCssStyles();
             margin: 0.5em 0;
         }
 
-        <?php echo "\n".$cssStyles; ?>
+        <?php echo "\n" . $cssStyles; ?>
     </style>
 </head>
 <body>

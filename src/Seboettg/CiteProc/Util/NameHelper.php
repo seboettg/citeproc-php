@@ -77,7 +77,7 @@ class NameHelper
     {
         if (isset($data->{$particle}) && isset($data->{$namePart})) {
             $data->{$namePart} = $data->{$particle} . " " . $data->{$namePart}; //prepend $particle to $namePart
-            unset($data->{$particle});//remove particle from $data
+            unset($data->{$particle}); //remove particle from $data
         }
     }
 
