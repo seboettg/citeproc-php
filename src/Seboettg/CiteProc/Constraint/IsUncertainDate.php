@@ -41,10 +41,10 @@ class IsUncertainDate implements ConstraintInterface
      */
     public function validate($value, $citationNumber = null)
     {
-        $value = $value->{$this->varName};
-
-        if (is_array($value) && array_key_exists('circa', $value)) {
-            return true;
+        if (!empty($value->{$this->varName})) {
+            if (isset($value->{$this->varName}->{'circa'}) && !empty($value->{$this->varName})) {
+                return true;
+            }
         }
 
         return false;

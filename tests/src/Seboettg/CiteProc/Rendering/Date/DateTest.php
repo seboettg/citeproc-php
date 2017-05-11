@@ -67,6 +67,16 @@ class DateTest extends TestCase
         $this->_testRenderTestSuite("date_RawParseSimpleDate");
     }
 
+    public function testDateUncertain()
+    {
+        $this->_testRenderTestSuite("date_Uncertain");
+    }
+
+    public function testCondition_EmptyIsUncertainDate()
+    {
+        $this->_testRenderTestSuite("condition_EmptyIsUncertain");
+    }
+
     /*
     public function testDateAD()
     {
