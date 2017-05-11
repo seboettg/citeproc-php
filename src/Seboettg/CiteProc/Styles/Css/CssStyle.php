@@ -46,11 +46,11 @@ class CssStyle
         if ($lineSpacing || $entrySpacing || $hangingIndent) {
             $rule = $this->cssRules->getRule(".csl-entry");
             if (!empty($lineSpacing)) {
-                $rule->addDirective("line-height", intval($lineSpacing)."em");
+                $rule->addDirective("line-height", intval($lineSpacing) . "em");
             }
 
             if (!empty($entrySpacing)) {
-                $rule->addDirective("margin-bottom", intval($entrySpacing)."em");
+                $rule->addDirective("margin-bottom", intval($entrySpacing) . "em");
             }
 
             if (!empty($hangingIndent)) {

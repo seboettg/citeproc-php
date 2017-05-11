@@ -94,7 +94,7 @@ class Layout implements Rendering
                 $ret .= $this->wrapBibEntry($this->renderSingle($data, $citationNumber));
             }
             $ret = StringHelper::clearApostrophes($ret);
-            return "<div class=\"csl-bib-body\">".$ret."\n</div>";
+            return "<div class=\"csl-bib-body\">" . $ret . "\n</div>";
 
         } else if (CiteProc::getContext()->isModeCitation()) {
             if (is_array($data) || $data instanceof DataList) {
@@ -139,7 +139,7 @@ class Layout implements Rendering
 
         if (!empty($inMargin) && !empty($margin) && CiteProc::getContext()->isModeBibliography()) {
             $leftMargin = $this->removeConsecutiveChars($this->htmlentities($this->format(implode("", $inMargin))));
-            $rightInline = $this->removeConsecutiveChars($this->htmlentities($this->format(implode("", $margin))).$this->suffix);
+            $rightInline = $this->removeConsecutiveChars($this->htmlentities($this->format(implode("", $margin))) . $this->suffix);
             $res  = '<div class="csl-left-margin">' . $leftMargin . '</div>';
             $res .= '<div class="csl-right-inline">' . $rightInline . '</div>';
             return $res;

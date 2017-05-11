@@ -55,7 +55,7 @@ trait DisplayTrait
         if (!in_array($this->display, self::$allowedValues)) {
             return $text;
         }
-        $divStyle = "class=\"csl-".$this->display."\"";
+        $divStyle = "class=\"csl-" . $this->display . "\"";
         return "<div $divStyle>$text</div>";
     }
 }
