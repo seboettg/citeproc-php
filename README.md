@@ -32,8 +32,6 @@ The old version 1.x (established by Ron Jerome) has been moved to [this Reposito
 
 Version 2.x is a completely new written version of citeproc-php. In this connection, the license of version 2.x has been changed from GPLv3 to MIT.
 
-The current version is still beta. If you find an error or running in trouble, please help and add an entry in the [issue tracker](https://github.com/seboettg/citeproc-php/issues).
-
 ## Installing citeproc-php ##
 
 The recommended way to install citeproc-php is through
@@ -278,5 +276,5 @@ class MyNewClassTest extends TestCase
 You can also run test cases without IDE:
 
 ```bash
-composer test
+$ composer test
 ```
