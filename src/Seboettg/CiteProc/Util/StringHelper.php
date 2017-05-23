@@ -241,4 +241,12 @@ class StringHelper
         return boolval(preg_match("/^[\p{Cyrillic}\s\p{P}]*$/u", $string));
     }
 
+    /**
+     * removes all kind of brackets from a given string
+     * @param $datePart
+     * @return mixed
+     */
+    public static function removeBrackets($datePart) {
+        return str_replace(["[","]", "(", ")", "{", "}"], "", $datePart);
+    }
 }

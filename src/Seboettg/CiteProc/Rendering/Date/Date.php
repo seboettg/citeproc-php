@@ -200,6 +200,7 @@ class Date
     {
         $data = [];
         foreach ($dates as $date) {
+            $date = $this->cleanDate($date);
             if ($date[0] < 1000) {
                 $dateTime = new DateTime(0, 0, 0);
                 $dateTime->setDay(0)->setMonth(0)->setYear(0);
@@ -501,5 +502,14 @@ class Date
     public function getForm()
     {
         return $this->form;
+    }
+
+    private function cleanDate($date)
+    {
+        $ret = [];
+        foreach ($date as $key => $datePart) {
+            $ret[$key] = Util\NumberHelper::extractNumber(Util\StringHelper::removeBrackets($datePart));
+        }
+        return $ret;
     }
 }

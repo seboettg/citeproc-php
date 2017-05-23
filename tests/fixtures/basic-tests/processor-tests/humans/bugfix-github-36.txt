@@ -1,0 +1,72 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+https://github.com/seboettg/citeproc-php/issues/37
+
+>>===== RESULT =====>>
+(Beethoven and Backhaus 1970)
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" default-locale="en-US" version="1.0" demote-non-dropping-particle="never">
+  <info>
+      <id />
+      <title />
+      <updated>2017-05-23T18:03:00+01:00</updated>
+  </info>
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" and="text"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="year">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+  <citation>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=" ">
+        <text macro="author-short"/>
+        <text macro="year"/>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Beethoven", 
+                "given": "Ludwig van"
+            }, 
+            {
+                "family": "Backhaus", 
+                "given": "Wilhelm"
+            }
+        ], 
+        "issued": {
+            "date-parts": [
+                [
+                    "[ca. 1970]"
+                ]
+            ], 
+            "literal": "[ca. 1970]"
+        }, 
+        "number-of-pages": "1 Schallpl.", 
+        "publisher": "Decca", 
+        "publisher-place": "[Hamburg]", 
+        "title": "Wilhelm Backhaus spielt Ludwig van Beethoven", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

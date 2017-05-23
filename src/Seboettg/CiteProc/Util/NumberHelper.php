@@ -148,4 +148,12 @@ class NumberHelper
         }
         return $plural;
     }
+
+    public static function extractNumber($string)
+    {
+        if (preg_match("/(\d+)[^\d]*$/", $string, $match)) {
+            return $match[1];
+        }
+        return $string;
+    }
 }
