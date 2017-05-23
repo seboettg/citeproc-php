@@ -13,6 +13,9 @@
     "support": {
         "issues": "https://github.com/seboettg/citeproc-php/issues"
     },
+    "config": {
+        "preferred-install": "dist"
+    },
     "repositories": [
         {
             "type": "package",
@@ -21,7 +24,7 @@
                 "version":"1.0.0",
                 "source": {
                     "type": "git",
-                    "url": "https://github.com/citation-style-language/locales.git",
+                    "url": "http://github.com/citation-style-language/locales.git",
                     "reference": "master"
                 }
             }
@@ -33,7 +36,7 @@
                 "version":"1.0.0",
                 "source": {
                     "type": "git",
-                    "url": "https://github.com/citation-style-language/styles-distribution.git",
+                    "url": "http://github.com/citation-style-language/styles-distribution.git",
                     "reference": "master"
                 }
             }
