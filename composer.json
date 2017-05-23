@@ -34,8 +34,8 @@
             "chmod +x vendor/bin/phpunit"
         ],
         "post-update-cmd": [
-            "php ./install.php styles-distribution",
-            "php ./install.php locales",
+            "./install.sh styles-distribution",
+            "./install.sh locales",
             "cd ./tests/fixtures/basic-tests/; ./processor.py -g",
             "chmod +x vendor/bin/phpunit"
         ],
