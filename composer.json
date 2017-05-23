@@ -24,7 +24,7 @@
                 "version":"1.0.0",
                 "source": {
                     "type": "git",
-                    "url": "http://github.com/citation-style-language/locales.git",
+                    "url": "https://github.com/citation-style-language/locales.git",
                     "reference": "master"
                 }
             }
@@ -36,10 +36,14 @@
                 "version":"1.0.0",
                 "source": {
                     "type": "git",
-                    "url": "http://github.com/citation-style-language/styles-distribution.git",
+                    "url": "https://github.com/citation-style-language/styles-distribution.git",
                     "reference": "master"
                 }
             }
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.org"
         }
     ],
     "autoload": {
