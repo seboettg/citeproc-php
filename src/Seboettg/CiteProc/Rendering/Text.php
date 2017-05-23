@@ -174,11 +174,13 @@ class Text implements Rendering
         if (preg_match(NumberHelper::PATTERN_COMMA_AMPERSAND_RANGE, $data->page)) {
             $data->page = $this->normalizeDateRange($data->page);
             $ranges = preg_split("/[-–]/", trim($data->page));
-            if (!empty(CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat())) {
-                return PageHelper::processPageRangeFormats($ranges, CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat());
+            if (count($ranges) > 1) {
+                if (!empty(CiteProc::getContext()->getGlobalOptions()) && !empty(CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat())) {
+                    return PageHelper::processPageRangeFormats($ranges, CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat());
+                }
+                list($from, $to) = $ranges;
+                return "$from-$to";
             }
-            list($from, $to) = $ranges;
-            return "$from-$to";
         }
         return $data->page;
     }
