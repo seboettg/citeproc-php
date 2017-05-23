@@ -13,48 +13,13 @@
     "support": {
         "issues": "https://github.com/seboettg/citeproc-php/issues"
     },
-    "config": {
-        "preferred-install": "dist"
-    },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "citation-style-language/locales",
-                "version":"1.0.0",
-                "source": {
-                    "type": "git",
-                    "url": "https://github.com/citation-style-language/locales.git",
-                    "reference": "master"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "citation-style-language/styles-distribution",
-                "version":"1.0.0",
-                "source": {
-                    "type": "git",
-                    "url": "https://github.com/citation-style-language/styles-distribution.git",
-                    "reference": "master"
-                }
-            }
-        },
-        {
-            "type": "composer",
-            "url": "https://packagist.org"
-        }
-    ],
     "autoload": {
         "psr-4": {"": "src/"}
     },
     "require": {
         "seboettg/collection": "^1.1",
         "myclabs/php-enum": "^1.5",
-        "symfony/polyfill-mbstring": "^1.3",
-        "citation-style-language/locales":"@dev",
-        "citation-style-language/styles-distribution":"@dev"
+        "symfony/polyfill-mbstring": "^1.3"
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1",
@@ -63,6 +28,14 @@
 
     "scripts": {
         "post-install-cmd": [
+            "./install.sh styles-distribution",
+            "./install.sh locales",
+            "cd ./tests/fixtures/basic-tests/; ./processor.py -g",
+            "chmod +x vendor/bin/phpunit"
+        ],
+        "post-update-cmd": [
+            "php ./install.php styles-distribution",
+            "php ./install.php locales",
             "cd ./tests/fixtures/basic-tests/; ./processor.py -g",
             "chmod +x vendor/bin/phpunit"
         ],
