@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.0.1 - 2017-05-23
+
+* bugfix for issue [36](https://github.com/seboettg/citeproc-php/issues/36).
+* bugfix for issue [37](https://github.com/seboettg/citeproc-php/issues/37).
+* solves a problem of exceeded script runtime which sometimes occurs while running `composer update`. Now, 
+the depended citation styles and locales are not longer composer dependencies but will be cloned by a shell script instead which simply will triggered from `composer update`.
+
 ## 2.0.0 - 2017-05-11
 
 * 1st stable release
