@@ -91,7 +91,12 @@ class Text implements Rendering
                 break;
             case 'variable':
                 if ($this->toRenderTypeValue === "citation-number") {
-                    $renderedText = $citationNumber + 1;
+                     $var = "citation-number";
+                    if (isset($data->$var)) {
+                        $renderedText = $data->$var;
+                    } else {
+                        $renderedText = $citationNumber + 1;
+                    }
                     break;
                 }
 
