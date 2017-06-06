@@ -139,17 +139,18 @@ class CiteProc
     /**
      * @param array|DataList $data
      * @param string $mode (citation|bibliography)
-     * @return string
+     * @param array $citationItems
+     * @return string|array
      * @throws CiteProcException
      */
-    public function render($data, $mode = "bibliography", $citationItems = [])
+    public function render($data, $mode = "bibliography", $citationItems = [], $citationAsArray = false)
     {
 
         if (!in_array($mode, ['citation', 'bibliography'])) {
             throw new \InvalidArgumentException("\"$mode\" is not a valid mode.");
         }
 
-        $this->init(); //initialize
+        $this->init($citationAsArray); //initialize
 
         $res = "";
 
@@ -171,12 +172,12 @@ class CiteProc
             case 'citation':
                 if (is_array($citationItems)) {
                     $citationItems = new ArrayList($citationItems);
-                } else if (!($data instanceof ArrayList)) {
-                    throw new CiteProcException('No valid format for variable data. Either ArrayList or array expected');
+                } else if (!($citationItems instanceof ArrayList)) {
+                    throw new CiteProcException('No valid format for variable `citationItems`, ArrayList expected.');
                 }
                 self::$context->setMode($mode);
                 // set CitationItems to Context
-                self::getContext()->setCitationItems($data);
+                //self::getContext()->setCitationItems($data); will now set in Layout
                 $res = $this->citation($data, $citationItems);
         }
         self::setContext(null);
@@ -187,10 +188,11 @@ class CiteProc
     /**
      * initializes CiteProc and start parsing XML stylesheet
      */
-    public function init()
+    public function init($citationAsArray = false)
     {
         self::$context = new Context($this);
         self::$context->setLocale(new Locale\Locale($this->lang)); //init locale
+        self::$context->setCitationsAsArray($citationAsArray);
         $this->styleSheetXml = new \SimpleXMLElement($this->styleSheet);
         $this->parse($this->styleSheetXml);
     }

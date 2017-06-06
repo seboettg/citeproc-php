@@ -7,7 +7,7 @@
         "suffix": "III"
       }
     ],
-    "id": "item-1",
+    "id": "ITEM-1",
     "issued": {
       "date-parts": [
         [
@@ -54,7 +54,7 @@
       }
     ],
     "container-title": "Journal of Hydrology",
-    "id": "ITEM-1",
+    "id": "ITEM-3",
     "issue": "3-4",
     "issued": {
       "date-parts": [
@@ -124,7 +124,7 @@
       "literal": "2010"
     },
     "event-place": "Berlin/Heidelberg",
-    "id": "11bdf4636bc92aed96461eace25484f7jaeschke",
+    "id": "ITEM-4",
     "interhash": "db94bafecb815048ede11f6d28e5a9f1",
     "intrahash": "11bdf4636bc92aed96461eace25484f7",
     "issue": "",

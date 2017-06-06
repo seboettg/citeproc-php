@@ -5,7 +5,7 @@ use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\CiteProc;
 
 $dataString = file_get_contents("data.json");
-$style = StyleSheet::loadStyleSheet("apa");
+$style = StyleSheet::loadStyleSheet("elsevier-vancouver");
 $citeProc = new CiteProc($style, "en-US");
 $data = json_decode($dataString);
 $bibliography = $citeProc->render($data, "bibliography");
@@ -45,13 +45,13 @@ $cssStyles = $citeProc->renderCssStyles();
     dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
     labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
     Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet
-    <?php echo $citeProc->render([$data[3]], "citation"); ?>.</p>
+    <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"ITEM-4"}]')); ?>.</p>
 
 <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat
     nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
     duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
     nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat
-    <?php echo $citeProc->render([$data[1]], "citation"); ?>.</p>
+    <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"ITEM-2"}]')); ?>.</p>
 
 <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
     consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore
@@ -61,16 +61,16 @@ $cssStyles = $citeProc->renderCssStyles();
 <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim
     assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
     dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit
-    lobortis nisl ut aliquip ex ea commodo consequat <?php echo $citeProc->render([$data[0]], "citation"); ?>.</p>
+    lobortis nisl ut aliquip ex ea commodo consequat <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"ITEM-1"}]')); ?>.</p>
 
 <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat
-    nulla facilisis <?php echo $citeProc->render([$data[2]], "citation"); ?>.</p>
+    nulla facilisis <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"ITEM-3"}]')); ?>.</p>
 
 <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
     ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
     invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et
     ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet
-    <?php echo $citeProc->render([$data[3]], "citation"); ?>.</p>
+    <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"ITEM-3"},{"id":"ITEM-4"}]')); ?>.</p>
 
 <h3>Literature</h3>
 <?php echo $bibliography; ?>

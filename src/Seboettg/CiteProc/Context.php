@@ -106,6 +106,11 @@ class Context
      */
     private $info;
 
+    /**
+     * @var bool
+     */
+    private $citationsAsArray = false;
+
     public function __construct($locale = null)
     {
         if (!empty($locale)) {
@@ -178,6 +183,19 @@ class Context
     public function setCitation($citation)
     {
         $this->citation = $citation;
+    }
+
+    /**
+     * @param $citationsAsArray
+     */
+    public function setCitationsAsArray($citationsAsArray = true)
+    {
+        $this->citationsAsArray = $citationsAsArray;
+    }
+
+    public function isCitationsAsArray()
+    {
+        return $this->citationsAsArray;
     }
 
     public function setSorting($sorting)
