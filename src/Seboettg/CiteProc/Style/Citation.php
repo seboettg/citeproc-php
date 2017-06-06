@@ -12,6 +12,7 @@ namespace Seboettg\CiteProc\Style;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Style\Options\CitationOptions;
+use Seboettg\Collection\ArrayList;
 
 
 /**
@@ -45,15 +46,15 @@ class Citation extends StyleElement
 
     /**
      * @param array|DataList $data
-     * @param int|null $citationNumber
+     * @param ArrayList $citationItems
      * @return string
      */
-    public function render($data, $citationNumber = null)
+    public function render($data, $citationItems)
     {
         if (!$this->attributesInitialized) {
             $this->initInheritableNameAttributes($this->node);
         }
-        return $this->layout->render($data, $citationNumber);
+        return $this->layout->render($data, $citationItems);
     }
 
 }

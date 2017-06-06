@@ -70,10 +70,11 @@ class Layout implements Rendering
 
     /**
      * @param array|DataList $data
-     * @param int|null $citationNumber
+     * @param ArrayList $citationItems
      * @return string
+     * @internal param array $citationNumber
      */
-    public function render($data, $citationNumber = null)
+    public function render($data, $citationItems = [])
     {
         $ret = "";
         $sorting = CiteProc::getContext()->getSorting();
@@ -91,19 +92,19 @@ class Layout implements Rendering
                 }
                 $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
             } else {
-                $ret .= $this->wrapBibEntry($this->renderSingle($data, $citationNumber));
+                $ret .= $this->wrapBibEntry($this->renderSingle($data, null));
             }
             $ret = StringHelper::clearApostrophes($ret);
             return "<div class=\"csl-bib-body\">" . $ret . "\n</div>";
 
         } else if (CiteProc::getContext()->isModeCitation()) {
             if (is_array($data) || $data instanceof DataList) {
-                foreach ($data as $citationNumber => $item) {
-                    CiteProc::getContext()->getResults()->append($this->renderSingle($item, $citationNumber));
+                if ($citationItems->count() > 0) {
+                    $data = $this->filterCitationItems($data, $citationItems);
                 }
-                $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
+                $ret = $this->renderCitations($data, $ret);
             } else {
-                $ret .= $this->renderSingle($data, $citationNumber);
+                $ret .= $this->renderSingle($data, null);
             }
         }
         $ret = StringHelper::clearApostrophes($ret);
@@ -175,6 +176,44 @@ class Layout implements Rendering
     {
         $text = preg_replace("/(.*)&([^#38;|amp;].*)/u", "$1&#38;$2", $text);
         return $text;
+    }
+
+    /**
+     * @param $data
+     * @param $ret
+     * @return string
+     */
+    private function renderCitations($data, $ret)
+    {
+        foreach ($data as $citationNumber => $item) {
+            CiteProc::getContext()->getResults()->append($this->renderSingle($item, $citationNumber));
+        }
+        $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
+        return $ret;
+    }
+
+    /**
+     * @param DataList $data
+     * @param array $citationItems
+     * @return mixed
+     */
+    private function filterCitationItems($data, $citationItems)
+    {
+        $arr = $data->toArray();
+        if (is_array($c = current($citationItems))) {
+            $citationItems = $c;
+        }
+
+        $arr_ = array_filter($arr, function($dataItem) use ($citationItems) {
+            foreach ($citationItems as $citationItem) {
+                if ($dataItem->id === $citationItem->id) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        return $data->replace($arr_);
     }
 
 }

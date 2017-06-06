@@ -26,7 +26,7 @@ use Seboettg\CiteProc\Style\Sort\Sort;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-abstract class StyleElement implements Rendering
+abstract class StyleElement
 {
 
     use InheritableNameAttributesTrait;

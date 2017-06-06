@@ -57,6 +57,10 @@ class CiteProcTest extends TestCase
         $this->_testRenderTestSuite("fullstyles_NorthWestUniversityHarvard");
     }
 
+    public function testRenderCitationNumber()
+    {
+        $this->_testRenderTestSuite("text_renderCitationNumber");
+    }
 
     public function testRenderCssStyle()
     {

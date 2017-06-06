@@ -18,6 +18,7 @@ use Seboettg\CiteProc\Style\Macro;
 use Seboettg\CiteProc\Style\Options\GlobalOptions;
 use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Styles\Css\CssStyle;
+use Seboettg\Collection\ArrayList;
 
 
 /**
@@ -127,11 +128,12 @@ class CiteProc
 
     /**
      * @param DataList $data
+     * @param ArrayList $citationItems
      * @return string
      */
-    protected function citation($data)
+    protected function citation($data, $citationItems)
     {
-        return self::$context->getCitation()->render($data);
+        return self::$context->getCitation()->render($data, $citationItems);
     }
 
     /**
@@ -140,7 +142,7 @@ class CiteProc
      * @return string
      * @throws CiteProcException
      */
-    public function render($data, $mode = "bibliography")
+    public function render($data, $mode = "bibliography", $citationItems = [])
     {
 
         if (!in_array($mode, ['citation', 'bibliography'])) {
@@ -157,17 +159,25 @@ class CiteProc
             throw new CiteProcException('No valid format for variable data. Either DataList or array expected');
         }
 
-        // set CitationItems to Context
-        self::getContext()->setCitationItems($data);
+
 
         switch ($mode) {
             case 'bibliography':
                 self::$context->setMode($mode);
+                // set CitationItems to Context
+                self::getContext()->setCitationItems($data);
                 $res = $this->bibliography($data);
                 break;
             case 'citation':
+                if (is_array($citationItems)) {
+                    $citationItems = new ArrayList($citationItems);
+                } else if (!($data instanceof ArrayList)) {
+                    throw new CiteProcException('No valid format for variable data. Either ArrayList or array expected');
+                }
                 self::$context->setMode($mode);
-                $res = $this->citation($data);
+                // set CitationItems to Context
+                self::getContext()->setCitationItems($data);
+                $res = $this->citation($data, $citationItems);
         }
         self::setContext(null);
 
