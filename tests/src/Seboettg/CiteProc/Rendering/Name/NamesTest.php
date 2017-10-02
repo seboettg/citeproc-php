@@ -27,6 +27,10 @@ class NamesTest extends TestCase
         $this->_testRenderTestSuite("names_substitute");
     }
 
+    public function testRenderSubstituteSuppressMultipleValues()
+    {
+        $this->_testRenderTestSuite("names_SubstituteSuppress");
+    }
 
     public function testEditorTranslator()
     {
