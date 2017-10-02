@@ -5,7 +5,7 @@ bibliography
 
 >>===== RESULT =====>>
 <div class="csl-bib-body">
-   <div class="csl-entry"><i>Make racists afraid again</i>.</div>
+  <div class="csl-entry"><i>Make racists afraid again</i></div>
 </div>
 <<===== RESULT =====<<
 
@@ -104,7 +104,7 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "title": "Make racists afraid again", 
+        "title": "Make racists afraid again",
         "type": "book"
     }
 ]
