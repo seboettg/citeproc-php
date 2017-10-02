@@ -12,6 +12,7 @@ namespace Seboettg\CiteProc\Rendering;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Data\DataList;
+use Seboettg\CiteProc\RenderingState;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
@@ -78,9 +79,9 @@ class Layout implements Rendering
         $ret = "";
         $sorting = CiteProc::getContext()->getSorting();
         if (!empty($sorting)) {
-            CiteProc::getContext()->setRenderingState("sorting");
+            CiteProc::getContext()->setRenderingState(new RenderingState("sorting"));
             $sorting->sort($data);
-            CiteProc::getContext()->setRenderingState("rendering");
+            CiteProc::getContext()->setRenderingState(new RenderingState("rendering"));
         }
 
         if (CiteProc::getContext()->isModeBibliography()) {
