@@ -22,12 +22,26 @@ class CssRule
 
     const SELECTOR_TYPE_CLASS = ".";
 
+    /**
+     * @var string
+     */
     private $selectorType;
 
+    /**
+     * @var string
+     */
     private $selector;
 
+    /**
+     * @var ArrayList
+     */
     private $directives;
 
+    /**
+     * CssRule constructor.
+     * @param string $selector
+     * @param string $selectorType
+     */
     public function __construct($selector, $selectorType = self::SELECTOR_TYPE_CLASS)
     {
         $this->selector = $selector;
@@ -35,11 +49,19 @@ class CssRule
         $this->directives = new ArrayList();
     }
 
+    /**
+     *
+     * @param string $property
+     * @param string $value
+     */
     public function addDirective($property, $value)
     {
         $this->directives->append("$property: $value;");
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $directives = "\t" . implode("\n\t", $this->directives->toArray());
