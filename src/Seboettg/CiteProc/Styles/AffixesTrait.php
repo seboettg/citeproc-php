@@ -30,7 +30,7 @@ trait AffixesTrait
     /**
      * @var bool
      */
-    private $quotes = false;
+    private $quote = false;
 
     /**
      * @param \SimpleXMLElement $node
@@ -51,7 +51,7 @@ trait AffixesTrait
                     $this->suffix = $value;
                     break;
                 case 'quote':
-                    $this->quotes = (bool) $attribute;
+                    $this->quote = (bool) $attribute;
             }
         }
     }

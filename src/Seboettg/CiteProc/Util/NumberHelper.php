@@ -94,7 +94,7 @@ class NumberHelper
         // Convert the string to an array of roman values:
         for ($i = 0; $i < strlen($romanNumber); ++$i) {
             $char = strtoupper($romanNumber{$i});
-            if (isset(self::ROMAN_DIGITS[$char])) {
+            if (self::ROMAN_DIGITS[$char] !== null) {
                 $values[] = self::ROMAN_DIGITS[$char];
             }
         }
