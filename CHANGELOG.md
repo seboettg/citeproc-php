@@ -1,5 +1,11 @@
 # CHANGELOG
 
+##2.0,2 - 2017-10-04
+
+* bugfix for issue [41](https://github.com/seboettg/citeproc-php/issues/41): fixed missing suppression of substituted values
+* bugfix for issue [42](https://github.com/seboettg/citeproc-php/issues/42): citeproc-php caused a fatal error if php 5.6 was used
+* citeproc-php uses now version 1.2 of [seboettg/collection](https://packagist.org/packages/seboettg/collection)
+
 ## 2.0.1 - 2017-05-23
 
 * bugfix for issue [36](https://github.com/seboettg/citeproc-php/issues/36).
