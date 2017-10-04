@@ -27,7 +27,6 @@ class NamesTest extends TestCase
         $this->_testRenderTestSuite("names_substitute");
     }
 
-
     public function testEditorTranslator()
     {
         $this->_testRenderTestSuite("name_EditorTranslatorBoth");

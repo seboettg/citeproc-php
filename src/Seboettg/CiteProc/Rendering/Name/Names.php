@@ -9,9 +9,11 @@
 
 namespace Seboettg\CiteProc\Rendering\Name;
 
+use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Label;
 use Seboettg\CiteProc\Rendering\Rendering;
+use Seboettg\CiteProc\RenderingState;
 use Seboettg\CiteProc\Style\InheritableNameAttributesTrait;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
@@ -207,6 +209,10 @@ class Names implements Rendering, HasParent
                     foreach ($data->{$var} as $name) {
                         $results[] = $this->format($name->given . " " . $name->family);
                     }
+                }
+                // suppress substituted variables
+                if (CiteProc::getContext()->getRenderingState()->getValue() === RenderingState::SUBSTITUTION) {
+                    unset($data->{$var});
                 }
             } else {
                 if (!empty($this->substitute)) {

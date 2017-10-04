@@ -11,6 +11,7 @@ namespace Seboettg\CiteProc\Rendering;
 
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\RenderingState;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
@@ -113,6 +114,9 @@ class Text implements Rendering
                     if (!empty($data->{$this->toRenderTypeValue})) {
                         $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}), $lang);
                     }
+                }
+                if (CiteProc::getContext()->getRenderingState()->getValue() === RenderingState::SUBSTITUTION) {
+                    unset($data->{$this->toRenderTypeValue});
                 }
                 break;
             case 'macro':

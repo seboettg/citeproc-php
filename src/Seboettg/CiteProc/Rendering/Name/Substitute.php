@@ -8,10 +8,9 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Name;
-use Seboettg\CiteProc\Exception\CiteProcException;
-use Seboettg\CiteProc\Rendering\Label;
-use Seboettg\CiteProc\Rendering\Layout;
+use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Rendering\Rendering;
+use Seboettg\CiteProc\RenderingState;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\Collection\ArrayList;
 
@@ -108,6 +107,9 @@ class Substitute implements Rendering
     public function render($data, $citationNumber = null)
     {
         $ret = [];
+        if (CiteProc::getContext()->getRenderingState()->getValue() !== RenderingState::SORTING) {
+            CiteProc::getContext()->setRenderingState(new RenderingState(RenderingState::SUBSTITUTION));
+        }
 
         /** @var Rendering $child */
         foreach ($this->children as $child) {
@@ -118,6 +120,9 @@ class Substitute implements Rendering
                 $ret[] = $res;
                 break;
             }
+        }
+        if (CiteProc::getContext()->getRenderingState()->getValue() === RenderingState::SUBSTITUTION) {
+            CiteProc::getContext()->setRenderingState(new RenderingState(RenderingState::RENDERING));
         }
         return implode("", $ret);
     }

@@ -18,11 +18,20 @@ use Seboettg\CiteProc\Style\Options\BibliographyOptions;
  */
 class CssStyle
 {
-
+    /**
+     * @var BibliographyOptions
+     */
     private $bibliographyOptions;
 
+    /**
+     * @var CssRules
+     */
     private $cssRules = null;
 
+    /**
+     * CssStyle constructor.
+     * @param BibliographyOptions $bibliographyOptions
+     */
     public function __construct(BibliographyOptions $bibliographyOptions)
     {
         $this->bibliographyOptions = $bibliographyOptions;
@@ -30,15 +39,20 @@ class CssStyle
         $this->init();
     }
 
+    /**
+     * renders CSS output
+     * @return string
+     */
     public function render()
     {
         return implode("\n", $this->cssRules->toArray());
     }
 
+    /**
+     * initialize CSS rules
+     */
     private function init()
     {
-        //'hanging-indent', 'line-spacing', 'entry-spacing', 'second-field-align'
-
         $lineSpacing = $this->bibliographyOptions->getLineSpacing();
         $entrySpacing = $this->bibliographyOptions->getEntrySpacing();
         $hangingIndent = $this->bibliographyOptions->getHangingIndent();
