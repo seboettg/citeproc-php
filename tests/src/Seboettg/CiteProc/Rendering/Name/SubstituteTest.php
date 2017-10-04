@@ -37,6 +37,11 @@ class SubstituteTest extends TestCase
         $this->_testRenderTestSuite("names_substituteSuppressSubstitution");
     }
 
+    public function testNameSubstituteSuppressOrdinaryVariable()
+    {
+        $this->_testRenderTestSuite("name_substitute_SuppressOrdinaryVariable");
+    }
+
     public function testNameSubstituteOnElementFail()
     {
         $this->_testRenderTestSuite("name_SubstituteOnDateGroupSpanFail");
