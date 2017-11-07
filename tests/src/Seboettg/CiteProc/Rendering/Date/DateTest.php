@@ -77,6 +77,10 @@ class DateTest extends TestCase
         $this->_testRenderTestSuite("condition_EmptyIsUncertain");
     }
 
+    public function testBugfixDateparts()
+    {
+        $this->_testRenderTestSuite("bugfix-dateparts");
+    }
     /*
     public function testDateAD()
     {
