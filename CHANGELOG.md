@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.3 - 2017-11-11
+
+* bugfix for issue [44](https://github.com/seboettg/citeproc-php/issues/44): Missing title with chicago-fullnote-bibliography. The problem occurred because of an incorrect implementation of the "none-condition" in ChooseIf.
+* bugfix for an issue that appears sometimes in connection with date-parts.
+
 ## 2.0.2 - 2017-10-04
 
 * bugfix for issue [41](https://github.com/seboettg/citeproc-php/issues/41): fixed missing suppression of substituted values
