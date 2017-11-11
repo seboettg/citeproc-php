@@ -1,0 +1,97 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry"><i>My Anonymous Heritage</i>.</div>
+  <div class="csl-entry"><i>Two Authors Writing a Book</i>.</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" demote-non-dropping-particle="display-and-sort" page-range-format="chicago">
+  <macro name="title">
+    <choose>
+      <if variable="title" match="none">
+        <choose>
+          <if type="personal_communication" match="none">
+            <text variable="genre" text-case="capitalize-first"/>
+          </if>
+        </choose>
+      </if>
+      <else-if type="book graphic motion_picture song" match="any">
+        <text variable="title" text-case="title" font-style="italic"/>
+        <group prefix=" (" suffix=")" delimiter=" ">
+          <text term="version"/>
+          <text variable="version"/>
+        </group>
+      </else-if>
+      <else-if variable="reviewed-author">
+        <group delimiter=", ">
+          <text variable="title" font-style="italic" prefix="Review of "/>
+          <names variable="reviewed-author">
+            <label form="verb-short" text-case="lowercase" suffix=" "/>
+            <name and="text" delimiter=", "/>
+          </names>
+        </group>
+      </else-if>
+      <else-if type="bill legislation legal_case interview patent" match="any">
+        <text variable="title"/>
+      </else-if>
+      <else>
+        <text variable="title" text-case="title" quotes="true"/>
+      </else>
+    </choose>
+  </macro>
+  <bibliography hanging-indent="true" et-al-min="11" et-al-use-first="7" subsequent-author-substitute="———" entry-spacing="0">
+      <sort>
+        <key variable="title"/>
+      </sort>
+      <layout suffix=".">
+        <text macro="title"/>
+      </layout>
+  </bibliography>
+</style>
+
+<<===== CSL =====<<
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "James", 
+                "suffix": "III"
+            }
+        ], 
+        "id": "item-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    "2001"
+                ]
+            ]
+        }, 
+        "title": "My Anonymous Heritage", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Anderson", 
+                "given": "John"
+            }, 
+            {
+                "family": "Brown", 
+                "given": "John"
+            }
+        ], 
+        "id": "ITEM-2", 
+        "title": "Two authors writing a book", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<
