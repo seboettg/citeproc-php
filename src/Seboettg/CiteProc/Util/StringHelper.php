@@ -155,8 +155,13 @@ class StringHelper
         foreach ($exploded as $explode) {
             $spaceExploded = explode(" ", $explode);
             foreach ($spaceExploded as $givenPart) {
-                $firstLetter = substr($givenPart, 0, 1);
-                $res .= ctype_upper($firstLetter) ? $firstLetter . $initializeSign : " " . $givenPart . " ";
+                $firstLetter = mb_substr($givenPart, 0, 1, "UTF-8");
+                if (StringHelper::isLatinString($firstLetter)) {
+                    $res .= ctype_upper($firstLetter) ? $firstLetter . $initializeSign : " " . $givenPart . " ";
+                } else {
+                    $res .= $firstLetter . $initializeSign;
+                }
+
             }
             if ($i < count($exploded) - 1 && $initializeWithHyphen) {
                 $res = rtrim($res) . "-";
