@@ -161,7 +161,6 @@ class StringHelper
                 } else {
                     $res .= $firstLetter . $initializeSign;
                 }
-
             }
             if ($i < count($exploded) - 1 && $initializeWithHyphen) {
                 $res = rtrim($res) . "-";
