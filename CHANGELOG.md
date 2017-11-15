@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.4 - 2017-11-15
+
+* bugfix for issue [46](https://github.com/seboettg/citeproc-php/issues/46): initialize names didn't work for cyrillic characters
+
+
 ## 2.0.3 - 2017-11-11
 
 * bugfix for issue [44](https://github.com/seboettg/citeproc-php/issues/44): Missing title with chicago-fullnote-bibliography. The problem occurred because of an incorrect implementation of the "none-condition" in ChooseIf.
