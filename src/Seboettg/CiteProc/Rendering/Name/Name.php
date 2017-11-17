@@ -33,7 +33,7 @@ use Seboettg\CiteProc\Util\StringHelper;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Name implements Rendering, HasParent
+class Name implements HasParent
 {
     use InheritableNameAttributesTrait,
         FormattingTrait,
@@ -65,6 +65,11 @@ class Name implements Rendering, HasParent
      * @var string
      */
     private $etAl;
+
+    /**
+     * @var string
+     */
+    private $variable;
 
     /**
      * Name constructor.
@@ -104,12 +109,14 @@ class Name implements Rendering, HasParent
     }
 
     /**
-     * @param array $data
+     * @param array $name
      * @param integer|null $citationNumber
      * @return string
      */
-    public function render($data, $citationNumber = null)
+    public function render($data, $var, $citationNumber = null)
     {
+        $this->variable = $var;
+        $name = $data->{$var};
         if (!$this->attributesInitialized) {
             $this->initInheritableNameAttributes($this->node);
         }
@@ -119,7 +126,7 @@ class Name implements Rendering, HasParent
             $this->and = '&#38;';
         }
 
-        $resultNames = $this->handleSubsequentAuthorSubstitution($data, $citationNumber);
+        $resultNames = $this->handleSubsequentAuthorSubstitution($name, $citationNumber);
 
         if (empty($resultNames)) {
             return CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
@@ -146,7 +153,7 @@ class Name implements Rendering, HasParent
             $text = implode($this->delimiter, $resultNames);
         }
 
-        $text = $this->appendEtAl($data, $text, $resultNames);
+        $text = $this->appendEtAl($name, $text, $resultNames);
 
         /* A third value, “count”, returns the total number of names that would otherwise be rendered by the use of the
         cs:names element (taking into account the effects of et-al abbreviation and editor/translator collapsing),
@@ -174,7 +181,7 @@ class Name implements Rendering, HasParent
         }
 
         $ret = $this->getNamesString($nameObj, $rank);
-
+        NameHelper::addExtendedMarkup($this->parent->getVariables()[0], $name, $ret);
         return trim($ret);
     }
 
@@ -344,7 +351,7 @@ class Name implements Rendering, HasParent
                     if (NameHelper::precedingHasAuthor($preceding, $name)) {
                         $resultNames[] = $subsequentSubstitution;
                     } else {
-                        $resultNames[] = $this->formatName($name, $rank);
+                        $resultNames[] = $this->formatName($data, $name, $rank);
                     }
                     break;
 
@@ -418,7 +425,8 @@ class Name implements Rendering, HasParent
     {
         $resultNames = [];
         foreach ($data as $rank => $name) {
-            $resultNames[] = $this->formatName($name, $rank);
+            $formatted = $this->formatName($name, $rank);
+            $resultNames[] = NameHelper::addExtendedMarkup($this->variable, $name, $formatted);
         }
         return $resultNames;
     }

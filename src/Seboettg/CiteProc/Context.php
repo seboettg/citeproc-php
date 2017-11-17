@@ -106,6 +106,11 @@ class Context
      */
     private $info;
 
+    /**
+     * @var array
+     */
+    protected $markupExtension;
+
     public function __construct($locale = null)
     {
         if (!empty($locale)) {
@@ -366,5 +371,21 @@ class Context
     public function getInfo()
     {
         return $this->info;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMarkupExtension()
+    {
+        return $this->markupExtension;
+    }
+
+    /**
+     * @param array $markupExtension
+     */
+    public function setMarkupExtension($markupExtension)
+    {
+        $this->markupExtension = $markupExtension;
     }
 }

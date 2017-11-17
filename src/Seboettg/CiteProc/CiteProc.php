@@ -137,10 +137,11 @@ class CiteProc
     /**
      * @param array|DataList $data
      * @param string $mode (citation|bibliography)
+     * @param array $markupExtension
      * @return string
      * @throws CiteProcException
      */
-    public function render($data, $mode = "bibliography")
+    public function render($data, $mode = "bibliography", $markupExtension = [])
     {
 
         if (!in_array($mode, ['citation', 'bibliography'])) {
@@ -159,6 +160,9 @@ class CiteProc
 
         // set CitationItems to Context
         self::getContext()->setCitationItems($data);
+
+        // set markup extensions
+        self::getContext()->setMarkupExtension($markupExtension);
 
         switch ($mode) {
             case 'bibliography':

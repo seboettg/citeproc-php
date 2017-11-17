@@ -118,6 +118,12 @@ class Text implements Rendering
                 if (CiteProc::getContext()->getRenderingState()->getValue() === RenderingState::SUBSTITUTION) {
                     unset($data->{$this->toRenderTypeValue});
                 }
+                if (array_key_exists($this->toRenderTypeValue, CiteProc::getContext()->getMarkupExtension())) {
+                    $function = CiteProc::getContext()->getMarkupExtension()[$this->toRenderTypeValue];
+                    if (is_callable($function)) {
+                        $renderedText = $function($data, $renderedText);
+                    }
+                }
                 break;
             case 'macro':
                 $macro = CiteProc::getContext()->getMacro($this->toRenderTypeValue);

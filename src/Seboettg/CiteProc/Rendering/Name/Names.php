@@ -169,11 +169,12 @@ class Names implements Rendering, HasParent
         if ($this->variables->hasValue("editor") && $this->variables->hasValue("translator")) {
             if (isset($data->editor) && isset($data->translator) && NameHelper::sameNames($data->editor, $data->translator)) {
                 if (isset($this->name)) {
-                    $str .= $this->name->render($data->editor);
+                    $str .= $this->name->render($data, 'editor');
                 } else {
                     $arr = [];
                     foreach ($data->editor as $editor) {
-                        $arr[] = $this->format($editor->family . ", " . $editor->given);
+                        $edt = $this->format($editor->family . ", " . $editor->given);
+                        $results[] = NameHelper::addExtendedMarkup('editor', $editor, $edt);
                     }
                     $str .= implode($this->delimiter, $arr);
                 }
@@ -194,7 +195,7 @@ class Names implements Rendering, HasParent
 
             if (!empty($data->{$var})) {
                 if (!empty($this->name)) {
-                    $res = $this->name->render($data->{$var}, $citationNumber);
+                    $res = $this->name->render($data, $var, $citationNumber);
                     $name = $res;
                     if (!empty($this->label)) {
                         $name = $this->appendLabel($data, $var, $name);
@@ -207,7 +208,8 @@ class Names implements Rendering, HasParent
                     }
                 } else {
                     foreach ($data->{$var} as $name) {
-                        $results[] = $this->format($name->given . " " . $name->family);
+                        $formatted = $this->format($name->given . " " . $name->family);
+                        $results[] = NameHelper::addExtendedMarkup($var, $name, $formatted);
                     }
                 }
                 // suppress substituted variables

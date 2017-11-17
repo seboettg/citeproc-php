@@ -8,7 +8,17 @@ $dataString = file_get_contents("data.json");
 $style = StyleSheet::loadStyleSheet("apa");
 $citeProc = new CiteProc($style, "en-US");
 $data = json_decode($dataString);
-$bibliography = $citeProc->render($data, "bibliography");
+$bibliography = $citeProc->render($data, "bibliography", [
+    "title" => function($item, $text) {
+        return '<a href="https://example.org/publication/' . $item->id . '">' . $text . '</a>';
+    },
+    "author" => function($item, $text) {
+        if (isset($item->id)) {
+            return '<a href="https://example.org/author/' . $item->id . '">' . $text . '</a>';
+        }
+        return $text;
+    }
+]);
 $cssStyles = $citeProc->renderCssStyles();
 ?>
 <html>

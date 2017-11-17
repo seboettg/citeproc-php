@@ -22,11 +22,13 @@
     "author": [
       {
         "family": "Anderson",
-        "given": "John"
+        "given": "John",
+        "id": "anderson.j"
       },
       {
         "family": "Brown",
-        "given": "John"
+        "given": "John",
+        "id": "brown.j"
       }
     ],
     "issued": {
@@ -46,11 +48,13 @@
     "author": [
       {
         "family": "Cole",
-        "given": "Steven J."
+        "given": "Steven J.",
+        "id": "steven.j"
       },
       {
         "family": "Moore",
-        "given": "Robert"
+        "given": "Robert",
+        "id": "moore.r"
       }
     ],
     "container-title": "Journal of Hydrology",
@@ -75,19 +79,23 @@
     "author": [
       {
         "family": "Benz",
-        "given": "Dominik"
+        "given": "Dominik",
+        "id": "benz"
       },
       {
         "family": "Hotho",
-        "given": "Andreas"
+        "given": "Andreas",
+        "id": "hotho"
       },
       {
         "family": "Jäschke",
-        "given": "Robert"
+        "given": "Robert",
+        "id": "rjaeschke"
       },
       {
         "family": "Stumme",
-        "given": "Gerd"
+        "given": "Gerd",
+        "id": "stumme"
       },
       {
         "family": "Halle",

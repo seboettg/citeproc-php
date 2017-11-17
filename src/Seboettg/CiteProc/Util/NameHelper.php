@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Util;
+use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\CiteProcException;
 
 /**
@@ -114,5 +115,17 @@ class NameHelper
             throw new CiteProcException("Illegal argument. Name has no family name.");
         }
         return $data->family . (isset($data->given) ? $data->given : "");
+    }
+
+    public static function addExtendedMarkup($nameVar, $nameItem, $formattedName)
+    {
+        $markupExtesions = CiteProc::getContext()->getMarkupExtension();
+        if (array_key_exists($nameVar, $markupExtesions)) {
+            $function = CiteProc::getContext()->getMarkupExtension()[$nameVar];
+            if (is_callable($function)) {
+                return $function($nameItem, $formattedName);
+            }
+        }
+        return $formattedName;
     }
 }
