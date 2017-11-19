@@ -11,6 +11,11 @@ namespace Seboettg\CiteProc\Styles\Css;
 
 use Seboettg\Collection\ArrayList;
 
+/**
+ * Class CssRules
+ * @package Seboettg\CiteProc\Styles\Css
+ * @author Sebastian Böttger <seboettg@gmail.com>
+ */
 class CssRules extends ArrayList
 {
     /**

@@ -101,7 +101,7 @@ class ChooseIf implements Rendering, HasParent
             return $this->constraint->validate($data);
         }
 
-        $result = $this->match === "none" ? false : true;
+        $result = true;
 
         /** @var ConstraintInterface $constraint */
         foreach ($this->constraints as $constraint) {

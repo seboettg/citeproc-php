@@ -190,4 +190,9 @@ class NameTest extends TestCase
     public function testNameCitationMacroNoInheritanceFromRoot() {
         $this->_testRenderTestSuite("name_CitationMacroNoInheritanceFromRoot");
     }
+
+    public function testInitializeCyrillicName()
+    {
+        $this->_testRenderTestSuite("nameattr_initializeCyrillicName");
+    }
 }

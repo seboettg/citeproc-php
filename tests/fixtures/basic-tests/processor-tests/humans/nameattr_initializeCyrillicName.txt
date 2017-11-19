@@ -1,0 +1,63 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">С. В. Месяц.</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only">
+  <macro name="author">
+    <names variable="author">
+      <name and="text" et-al-min="7" et-al-use-first="1" initialize-with=". "/>
+      <label form="short" prefix=", " text-case="capitalize-first"/>
+      <et-al font-style="italic"/>
+    </names>
+  </macro>
+
+  <!-- Bibliography -->
+  <bibliography entry-spacing="0" second-field-align="flush">
+    <layout suffix=".">
+      <!-- Author(s) -->
+      <text macro="author"/>
+    </layout>
+  </bibliography>
+</style>
+
+<<===== CSL =====<<
+
+>>===== INPUT =====>>
+[
+    {
+        "URL": "https://pj.iph.ras.ru/index.php/ph_j/article/view/31", 
+        "accessed": {
+            "date-parts": [], 
+            "raw": ""
+        }, 
+        "author": [
+            {
+                "family": "Месяц", 
+                "given": "Светлана Викторовна"
+            }
+        ], 
+        "container-title": "Philosophy Journal", 
+        "container-title-short": "PhJ", 
+        "id": "31", 
+        "issue": "1", 
+        "issued": {
+            "date-parts": [], 
+            "raw": "2015-03-05 00:00:00"
+        }, 
+        "page": "7-22", 
+        "section": "ACADEMIC DISCUSSIONS", 
+        "title": "Proclus’ metaphysics: between worldview and language game. Reflections on the book of Radek Chlup", 
+        "type": "article-journal", 
+        "volume": "8"
+    }
+]
+<<===== INPUT =====<<

@@ -5,7 +5,7 @@ bibliography
 
 >>===== RESULT =====>>
 <div class="csl-bib-body">
-  <div class="csl-entry">Hotho, A., Benz, D., Eisterlehner, F., Jäschke, R., Krause, B., Schmitz, C., &#38; Stumme, G. (2010, February). Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler. (U. Hengartner &#38; A. Meier, Eds.)<i>HMD - Praxis der Wirtschaftsinformatik</i>, <i>271</i>, 47-58. dpunkt.verlag. Retrieved from http://hmd.dpunkt.de/271/05.php</div>
+  <div class="csl-entry">Hotho, A., Benz, D., Eisterlehner, F., Jäschke, R., Krause, B., Schmitz, C., &#38; Stumme, G. (2010). Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler. (U. Hengartner &#38; A. Meier, Eds.)<i>HMD - Praxis der Wirtschaftsinformatik</i>, <i>271</i>, 47-58. dpunkt.verlag. Retrieved from http://hmd.dpunkt.de/271/05.php</div>
 </div>
 <<===== RESULT =====<<
 

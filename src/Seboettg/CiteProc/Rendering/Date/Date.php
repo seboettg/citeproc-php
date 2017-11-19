@@ -122,7 +122,7 @@ class Date
         }
 
         $form = $this->form;
-        $dateParts = explode("-", $this->datePartsAttribute);
+        $dateParts = !empty($this->datePartsAttribute) ? explode("-", $this->datePartsAttribute) : [];
         $this->prepareDatePartsChildren($dateParts, $form);
 
 

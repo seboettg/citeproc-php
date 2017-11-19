@@ -92,7 +92,7 @@ class Context
     private $citationSpecificOptions;
 
     /**
-     * @var string (sorting|rendering)
+     * @var RenderingState
      */
     private $renderingState;
 
@@ -120,7 +120,7 @@ class Context
         $this->macros = new ArrayList();
         $this->citationItems = new DataList();
         $this->results = new ArrayList();
-        $this->renderingState = "rendering";
+        $this->renderingState = new RenderingState(RenderingState::__default);
     }
 
     public function addMacro($key, $macro)
@@ -313,7 +313,7 @@ class Context
     }
 
     /**
-     * @return string
+     * @return RenderingState
      */
     public function getRenderingState()
     {
@@ -321,9 +321,9 @@ class Context
     }
 
     /**
-     * @param string $renderingState
+     * @param RenderingState|string $renderingState
      */
-    public function setRenderingState($renderingState)
+    public function setRenderingState(RenderingState $renderingState)
     {
         $this->renderingState = $renderingState;
     }
