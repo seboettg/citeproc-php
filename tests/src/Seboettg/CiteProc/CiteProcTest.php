@@ -62,51 +62,6 @@ class CiteProcTest extends TestCase
         $this->_testRenderTestSuite("text_renderCitationNumber");
     }
 
-    public function testRenderCitationNumberResultAsArray()
-    {
-        $style = StyleSheet::loadStyleSheet("elsevier-vancouver");
-        $citeProc = new CiteProc($style);
-        $result = $citeProc->render(json_decode("
-        [
-            {
-                \"id\": \"ITEM-1\",
-                \"title\": \"Book 1\",
-                \"type\": \"book\"
-            },
-            {
-                \"id\": \"ITEM-2\",
-                \"title\": \"Book 2\",
-                \"type\": \"book\"
-            },
-            {
-                \"id\": \"ITEM-3\",
-                \"title\": \"Book 3\",
-                \"type\": \"book\"
-            }
-        ]"), "citation", json_decode("
-        [
-            [
-                {
-                    \"id\": \"ITEM-1\"
-                }, 
-                {
-                    \"id\": \"ITEM-3\"
-                }
-            ],
-            [
-                {
-                    \"id\": \"ITEM-2\"
-                }
-            ]
-        ]"), true);
-
-        $this->assertTrue(is_array($result));
-        $this->assertEquals(2, count($result));
-        $this->assertEquals("[1,3]", $result[0]);
-        $this->assertEquals("[2]", $result[1]);
-
-    }
-
     public function testRenderCssStyle()
     {
         $style = StyleSheet::loadStyleSheet("international-journal-of-humanoid-robotics");
@@ -210,5 +165,50 @@ class CiteProcTest extends TestCase
         $actualFilteredElsevier = $citeProc->render(json_decode($dataString), "citation", json_decode('[{"id": "ITEM-2"}]'));
         $expectedFilteredElsevier = '[2]';
         $this->assertEquals($actualFilteredElsevier, $expectedFilteredElsevier);
+    }
+
+
+    public function testRenderCitationNumberResultAsArray()
+    {
+        $style = StyleSheet::loadStyleSheet("elsevier-vancouver");
+        $citeProc = new CiteProc($style);
+        $result = $citeProc->render(json_decode("
+        [
+            {
+                \"id\": \"ITEM-1\",
+                \"title\": \"Book 1\",
+                \"type\": \"book\"
+            },
+            {
+                \"id\": \"ITEM-2\",
+                \"title\": \"Book 2\",
+                \"type\": \"book\"
+            },
+            {
+                \"id\": \"ITEM-3\",
+                \"title\": \"Book 3\",
+                \"type\": \"book\"
+            }
+        ]"), "citation", json_decode("
+        [
+            [
+                {
+                    \"id\": \"ITEM-1\"
+                }, 
+                {
+                    \"id\": \"ITEM-3\"
+                }
+            ],
+            [
+                {
+                    \"id\": \"ITEM-2\"
+                }
+            ]
+        ]"), true);
+
+        $this->assertTrue(is_array($result));
+        $this->assertEquals(2, count($result));
+        $this->assertEquals("[1,3]", $result[0]);
+        $this->assertEquals("[2]", $result[1]);
     }
 }
