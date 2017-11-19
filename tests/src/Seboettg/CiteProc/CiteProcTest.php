@@ -145,4 +145,70 @@ class CiteProcTest extends TestCase
         $this->assertEquals("Hermien Wolff", $info->getAuthors()[0]->name);
         $this->assertEquals("North-West University - Harvard", $info->getTitle());
     }
+
+    public function testFilterCitations()
+    {
+        $style = StyleSheet::loadStyleSheet("harvard-north-west-university");
+        $citeProc = new CiteProc($style);
+
+        $dataString = '[
+            {
+                "author": [
+                    {
+                        "family": "Doe",
+                        "given": "John"
+                    }
+                ],
+                "id": "ITEM-1",
+                "issued": {
+                    "date-parts":[[2012]]
+                },
+                "title": "Book 1",
+                "type": "book"
+            },
+            {
+                "author": [
+                    {
+                        "family": "Doe",
+                        "given": "Jane"
+                    }
+                ],
+                "issued": {
+                    "date-parts":[[2012]]
+                },
+                "id": "ITEM-2",
+                "title": "Book 2",
+                "type": "book"
+            },
+            {
+                "author": [
+                    {
+                        "family": "Doe",
+                        "given": "John"
+                    }
+                ],
+                "issued": {
+                    "date-parts":[[2011]]
+                },
+                "id": "ITEM-3",
+                "title": "Book 3",
+                "type": "book"
+            }
+        ]';
+
+        $actual = $citeProc->render(json_decode($dataString), "citation");
+        $expected = '(Doe, 2011; Doe, 2012; Doe, 2012)';
+        $this->assertEquals($expected, $actual);
+
+        $filter = '[{"id": "ITEM-1"}]';
+        $actualFiltered = $citeProc->render(json_decode($dataString), "citation", json_decode($filter));
+        $expectedFiltered = '(Doe, 2012)';
+        $this->assertEquals($actualFiltered, $expectedFiltered);
+
+        $citeProc = new CiteProc(StyleSheet::loadStyleSheet("elsevier-vancouver"));
+
+        $actualFilteredElsevier = $citeProc->render(json_decode($dataString), "citation", json_decode('[{"id": "ITEM-2"}]'));
+        $expectedFilteredElsevier = '[2]';
+        $this->assertEquals($actualFilteredElsevier, $expectedFilteredElsevier);
+    }
 }
