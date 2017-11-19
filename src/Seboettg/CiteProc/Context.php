@@ -109,7 +109,7 @@ class Context
     /**
      * @var array
      */
-    protected $markupExtension;
+    protected $markupExtension = [];
 
     public function __construct($locale = null)
     {

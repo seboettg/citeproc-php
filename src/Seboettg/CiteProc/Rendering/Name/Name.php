@@ -351,7 +351,7 @@ class Name implements HasParent
                     if (NameHelper::precedingHasAuthor($preceding, $name)) {
                         $resultNames[] = $subsequentSubstitution;
                     } else {
-                        $resultNames[] = $this->formatName($data, $name, $rank);
+                        $resultNames[] = $this->formatName($name, $rank);
                     }
                     break;
 
