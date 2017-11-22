@@ -100,10 +100,7 @@ class Text implements Rendering
                 if ($this->toRenderTypeValue === "page") {
                     $renderedText = $this->renderPage($data);
                     // for test sort_BibliographyCitationNumberDescending.json
-                } else if ($this->toRenderTypeValue === "citation-number" && !is_null($citationNumber)) {
-                    $renderedText = strval($citationNumber + 1);
                 } else {
-
                     // check if there is an attribute with prefix short or long e.g. shortTitle or longAbstract
                     // test case group_ShortOutputOnly.json
                     if (in_array($this->form, ["short", "long"])) {
