@@ -147,11 +147,6 @@ class Text implements Rendering
         return "";
     }
 
-    public function rendersMacro()
-    {
-        return $this->toRenderType === "macro";
-    }
-
     /**
      * @return string
      */
