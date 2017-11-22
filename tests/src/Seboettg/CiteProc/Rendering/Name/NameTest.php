@@ -10,6 +10,8 @@
 namespace Seboettg\CiteProc\Rendering\Name;
 
 use PHPUnit\Framework\TestCase;
+use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
 class NameTest extends TestCase
@@ -194,5 +196,50 @@ class NameTest extends TestCase
     public function testInitializeCyrillicName()
     {
         $this->_testRenderTestSuite("nameattr_initializeCyrillicName");
+    }
+
+    public function testEnrichMarkupNames()
+    {
+        $cslJson = '[{
+            "author": [
+              {
+                "family": "Doe",
+                "given": "John",
+                "id": "doe"
+              },
+              {
+                "family": "Müller",
+                "given": "Alexander"
+              }
+            ],
+            "id": "item-1",
+            "issued": {
+              "date-parts": [
+                [
+                  "2001"
+                ]
+              ]
+            },
+            "title": "My Anonymous Heritage",
+            "type": "book"
+        }]';
+
+        $enrichAuthorWithLinkFunction = function($authorItem, $authorName) {
+            return isset($authorItem->id) ? '<a href="https://example.org/author/' . $authorItem->id . '" title="' . $authorName . '">'
+                . $authorName . '</a>' : $authorName;
+        };
+
+        $apa = StyleSheet::loadStyleSheet("apa");
+        $citeproc = new CiteProc($apa, "de-DE");
+        $actual = $citeproc->render(json_decode($cslJson), "bibliography",
+            [
+                'author' => $enrichAuthorWithLinkFunction
+            ]
+        );
+
+        $expected = '<div class="csl-bib-body">
+  <div class="csl-entry"><a href="https://example.org/author/doe" title="Doe, J.">Doe, J.</a>, &#38; Müller, A. (2001). <i>My Anonymous Heritage</i>.</div>
+</div>';
+        $this->assertEquals($expected, $actual);
     }
 }

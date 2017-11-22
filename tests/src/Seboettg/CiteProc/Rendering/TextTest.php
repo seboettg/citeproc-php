@@ -14,6 +14,7 @@ use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\Style\Macro;
+use Seboettg\CiteProc\StyleSheet;
 
 class TextTest extends TestCase
 {
@@ -81,5 +82,100 @@ EOT;
             "Ein Buch",
             $citeProc->render(json_decode("[{\"title\":\"Ein Buch\", \"type\": \"thesis\"}]"), "citation")
         );
+    }
+
+    public function testEnrichMarkupTitles()
+    {
+        $cslJson = '[{
+            "author": [
+              {
+                "family": "Doe",
+                "given": "John",
+                "id": "doe"
+              },
+              {
+                "family": "Müller",
+                "given": "Alexander"
+              }
+            ],
+            "id": "item-1",
+            "issued": {
+              "date-parts": [
+                [
+                  "2001"
+                ]
+              ]
+            },
+            "title": "My Anonymous Heritage",
+            "type": "book"
+        }]';
+
+        $enrichTitleWithLinkFunction = function($citeItem, $renderedVariable) {
+            return isset($citeItem->id) ? '<a href="https://example.org/publication/' . $citeItem->id . '" title="' . $renderedVariable . '">'
+                . $renderedVariable . '</a>' : $renderedVariable;
+        };
+
+        $apa = StyleSheet::loadStyleSheet("apa");
+        $citeproc = new CiteProc($apa, "de-DE");
+        $actual = $citeproc->render(json_decode($cslJson), "bibliography",
+            [
+                'title' => $enrichTitleWithLinkFunction
+            ]
+        );
+
+        $expected = '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, J., &#38; Müller, A. (2001). <i><a href="https://example.org/publication/item-1" title="My Anonymous Heritage">My Anonymous Heritage</a></i>.</div>
+</div>';
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testEnrichMarkupURL()
+    {
+        $cslJson = '[{
+            "author": [
+              {
+                "family": "Doe",
+                "given": "John",
+                "id": "doe"
+              },
+              {
+                "family": "Müller",
+                "given": "Alexander"
+              }
+            ],
+            "container-title": "Heritages and taxes. How to avoid responsibility.",
+            "id": "item-1",
+            "issued": {
+              "date-parts": [
+                [
+                  "2001"
+                ]
+              ]
+            },
+            "page": "123-127",
+            "publisher": "Initiative Neue Soziale Marktwirtschaft (INSM)",
+            "publisher-place": "Berlin, Germany",
+            "title": "My Anonymous Heritage",
+            "type": "book",
+            "URL": "https://example.org/publication/item-1"
+        }]';
+
+        $enrichUrlWithLinkFunction = function($citeItem, $renderedVariable) {
+            return preg_match("/http[s]?:\/\/.+/", $citeItem->URL) ? '<a href="' . $citeItem->URL . '">'
+                . $citeItem->URL . '</a>' : $citeItem->URL;
+        };
+
+        $apa = StyleSheet::loadStyleSheet("apa");
+        $citeproc = new CiteProc($apa);
+        $actual = $citeproc->render(json_decode($cslJson), "bibliography",
+            [
+                'URL' => $enrichUrlWithLinkFunction
+            ]
+        );
+
+        $expected = '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, J., &#38; Müller, A. (2001). <i>My Anonymous Heritage</i>. <i>Heritages and taxes. How to avoid responsibility.</i> (pp. 123-127). Berlin, Germany: Initiative Neue Soziale Marktwirtschaft (INSM). Retrieved from <a href="https://example.org/publication/item-1">https://example.org/publication/item-1</a></div>
+</div>';
+        $this->assertEquals($expected, $actual);
     }
 }
