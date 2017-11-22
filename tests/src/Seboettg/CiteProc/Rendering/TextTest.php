@@ -178,4 +178,85 @@ EOT;
 </div>';
         $this->assertEquals($expected, $actual);
     }
+
+    public function testEnrichMarkupCitationNumber()
+    {
+        $cslJson = '[
+          {
+            "author": [
+              {
+                "family": "Doe",
+                "given": "James",
+                "suffix": "III"
+              }
+            ],
+            "id": "item-1",
+            "issued": {
+              "date-parts": [
+                [
+                  "2001"
+                ]
+              ]
+            },
+            "title": "My Anonymous Heritage",
+            "type": "book"
+          },
+          {
+            "author": [
+              {
+                "family": "Anderson",
+                "given": "John",
+                "id": "anderson.j"
+              },
+              {
+                "family": "Brown",
+                "given": "John",
+                "id": "brown.j"
+              }
+            ],
+            "issued": {
+              "date-parts": [
+                [
+                  "1998"
+                ]
+              ]
+            },
+            "id": "ITEM-2",
+            "type": "book",
+            "title": "Two authors writing a book"
+          }]';
+
+        $enrichCitationNumberWithLinkFunction = function($citeItem, $renderedVariable) {
+            return isset($citeItem->id) ? '<a id="' . $citeItem->id. '" href="#' . $citeItem->id . '">'
+                . $renderedVariable . '</a>' : $renderedVariable;
+        };
+        $apa = StyleSheet::loadStyleSheet("elsevier-with-titles");
+
+        $citeproc = new CiteProc($apa);
+
+        $actual = $citeproc->render(json_decode($cslJson), "bibliography",
+            [
+                'citation-number' => $enrichCitationNumberWithLinkFunction
+            ]
+        );
+
+        $expected = '<div class="csl-bib-body">
+  <div class="csl-entry"><div class="csl-left-margin">[<a id="item-1" href="#item-1">1</a>]</div><div class="csl-right-inline">J. Doe III, My Anonymous Heritage, 2001.</div></div>
+  <div class="csl-entry"><div class="csl-left-margin">[<a id="ITEM-2" href="#ITEM-2">2</a>]</div><div class="csl-right-inline">J. Anderson, J. Brown, Two authors writing a book, 1998.</div></div>
+</div>';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $citeproc->render(json_decode($cslJson), "citation",
+            [
+                'citation-number' => function($citeItem, $renderedVariable) {
+                    return isset($citeItem->id) ? '<a href="#' . $citeItem->id . '">'
+                        . $renderedVariable . '</a>' : $renderedVariable;
+                }
+            ]
+        );
+
+        $expected = '[<a href="#item-1">1</a>,<a href="#ITEM-2">2</a>]';
+
+        $this->assertEquals($expected, $actual);
+    }
 }

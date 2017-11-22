@@ -93,6 +93,7 @@ class Text implements Rendering
             case 'variable':
                 if ($this->toRenderTypeValue === "citation-number") {
                     $renderedText = $citationNumber + 1;
+                    $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
                     break;
                 }
 
@@ -118,12 +119,7 @@ class Text implements Rendering
                 if (CiteProc::getContext()->getRenderingState()->getValue() === RenderingState::SUBSTITUTION) {
                     unset($data->{$this->toRenderTypeValue});
                 }
-                if (array_key_exists($this->toRenderTypeValue, CiteProc::getContext()->getMarkupExtension())) {
-                    $function = CiteProc::getContext()->getMarkupExtension()[$this->toRenderTypeValue];
-                    if (is_callable($function)) {
-                        $renderedText = $function($data, $renderedText);
-                    }
-                }
+                $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
                 break;
             case 'macro':
                 $macro = CiteProc::getContext()->getMacro($this->toRenderTypeValue);
@@ -201,5 +197,21 @@ class Text implements Rendering
             return $matches[1]."-".$matches[2];
         }
         return $page;
+    }
+
+    /**
+     * @param $data
+     * @param $renderedText
+     * @return mixed
+     */
+    private function applyAdditionalMarkupFunction($data, $renderedText)
+    {
+        if (array_key_exists($this->toRenderTypeValue, CiteProc::getContext()->getMarkupExtension())) {
+            $function = CiteProc::getContext()->getMarkupExtension()[$this->toRenderTypeValue];
+            if (is_callable($function)) {
+                $renderedText = $function($data, $renderedText);
+            }
+        }
+        return $renderedText;
     }
 }
