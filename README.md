@@ -181,8 +181,8 @@ echo $citeProc->render(json_decode($data), "citation");
 You have also the possibility to apply a filter so that just specific citations appear.
 
 ```php
-<p>This a wise sentence <?= $citeProc->render($data, "citation", json_decode('[{"id":"item-1"}]')); ?>.</p>
-<p>this is the most wise setence <?= $citeProc->render($data, "citation", json_decode('[{"id":"item-1"},{"id":"ITEM-2"}]')); ?>.</p>
+<p>This a wise sentence <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"item-1"}]')); ?>.</p>
+<p>this is the most wise setence <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"item-1"},{"id":"ITEM-2"}]')); ?>.</p>
 ```
 
 ### Bibliography-specific styles using CSS ###
@@ -233,7 +233,7 @@ Since version 2.1, citeproc-php comes with additional features that are not a pa
 
 You can enrich bibliographies and citations with additional HTML tags to inject links (i.e. to set a link to an author's CV), or other html markup.
 
-### Setup citeproc-php for additional markup ###
+### Use Lambda Functions to setup citeproc-php in order to render advanced citations or bibliographies ###
 
 ```php
 <?php
@@ -259,7 +259,7 @@ $authorFunction = function($authorItem, $renderedText) {
 ?>
 ```
 
-As you can see, `$titleFunction` wraps the title and `$authorFunction wraps author's name in a link.
+As you can see, `$titleFunction` wraps the title and `$authorFunction` wraps author's name in a link.
 
 Assign these functions to its associated CSL variable (in this case title and author) as follows.
 
@@ -283,9 +283,9 @@ $citeProc = new CiteProc($style, "en-US", $additionalMarkup);
 </html>
 ```
 
-You can also use additional markup functions in order to enrich citations.
+You can also use custom Lambda Functions in order to enrich citations with additional HTML markup.
 
-If you want to restrict citeproc-php to use closure functions either for bibliographies or citations, or you want to apply different 
+If you want to restrict citeproc-php to use a custom Lambda Function either for bibliographies or citations, or you want to apply different 
 functions for both, you can define the array as follows:
 
 ```php
@@ -308,19 +308,21 @@ $additionalMarkup = [
 $citeProc = new CiteProc($style, "en-US", $additionalMarkup);
 
 ?>
-<p>This ia a wise sentence <?= $citeProc->render(json_decode($data), "citation", json_decode('[{"id":"item-1"}]')); ?>.</p>
+<p>This ia a wise sentence <?php echo $citeProc->render(json_decode($data), "citation", json_decode('[{"id":"item-1"}]')); ?>.</p>
 <h3>Literature</h3>
-<?= $citeProc->render(json_decode($data), "bibliography");
+<?php echo $citeProc->render(json_decode($data), "bibliography");
 
 ```
 In this example each entry of the bibliography gets an anchor by its `id` and the citation (in elsevier-vancouver style [1]) gets an URL with a fragment by its `id`. Hence, every citation mark gets a link to its entry in the bibliography.
 Further examples you will find in the example folder.
 
 ### Good to know ###
-* You can apply closure functions on all Standard Variables (according to the [CSL specification](http://docs.citationstyles.org/en/1.0.1/specification.html#standard-variables))
-* You can apply closure functions on all Name Variables (according to the [CSL specification](http://docs.citationstyles.org/en/1.0.1/specification.html#name-variables)). Be aware, just one name item will passed as parameter instead of the full citation item.
-* Number Variables and Date Variables will be ignored.
-* ```csl-entry``` is not a valid variable according to the CSL specifications. citeproc-php use ```csl-entry``` to hook in and apply a function after a whole citation item or bibliography entry is rendered. 
+* A custom Lambda Function must have two parameters (`function ($item, $renderedValue) { ... }`) in their signature and must return a string.
+* The 1st parameter of a custom Lambda Function is the item (either a citation item or a name item. Both of type `\stdClass`). The 2nd parameter is the rendered result of the associated item.
+* Custom Lambda Functions may be applied on all Standard Variables (according to the [CSL specification](http://docs.citationstyles.org/en/1.0.1/specification.html#standard-variables)).
+* Custom Lambda Functions may be applied on all Name Variables (according to the [CSL specification](http://docs.citationstyles.org/en/1.0.1/specification.html#name-variables)). Be aware, just one name item will passed as parameter instead of the full citation item.
+* Custom Lambda Function for Number Variables or Date Variables will be ignored.
+* ```csl-entry``` is not a valid variable according to the CSL specifications. citeproc-php use ```csl-entry``` to hook in and apply a custom Lambda Function after a whole citation item or bibliography entry is rendered. 
 
 ## Contribution ##
 
