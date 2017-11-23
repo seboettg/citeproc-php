@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.1.0 - 2017-11-23
+
+* possibility to filter specific citations independently from CSL input data (inspired by @CarlosCraviotto PR #39). Have a look [here](https://github.com/seboettg/citeproc-php/blob/master/README.md#filter-citations).
+* possibility to use custom Lambda functions to enrich bibliographies and citations with additional HTML markup. Have a look [here](https://github.com/seboettg/citeproc-php/blob/master/README.md#advanced-usage-of-citeproc-php).
+
 ## 2.0.4 - 2017-11-15
 
 * bugfix for issue [46](https://github.com/seboettg/citeproc-php/issues/46): initialize names didn't work for cyrillic characters
