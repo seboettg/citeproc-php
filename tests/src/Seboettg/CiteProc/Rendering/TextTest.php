@@ -116,12 +116,12 @@ EOT;
         };
 
         $apa = StyleSheet::loadStyleSheet("apa");
-        $citeproc = new CiteProc($apa, "de-DE");
-        $actual = $citeproc->render(json_decode($cslJson), "bibliography",
+        $citeproc = new CiteProc($apa, "de-DE",
             [
                 'title' => $enrichTitleWithLinkFunction
             ]
         );
+        $actual = $citeproc->render(json_decode($cslJson), "bibliography");
 
         $expected = '<div class="csl-bib-body">
   <div class="csl-entry">Doe, J., &#38; Müller, A. (2001). <i><a href="https://example.org/publication/item-1" title="My Anonymous Heritage">My Anonymous Heritage</a></i>.</div>
@@ -166,12 +166,10 @@ EOT;
         };
 
         $apa = StyleSheet::loadStyleSheet("apa");
-        $citeproc = new CiteProc($apa);
-        $actual = $citeproc->render(json_decode($cslJson), "bibliography",
-            [
-                'URL' => $enrichUrlWithLinkFunction
-            ]
-        );
+        $citeproc = new CiteProc($apa, "en-US",             [
+            'URL' => $enrichUrlWithLinkFunction
+        ]);
+        $actual = $citeproc->render(json_decode($cslJson), "bibliography");
 
         $expected = '<div class="csl-bib-body">
   <div class="csl-entry">Doe, J., &#38; Müller, A. (2001). <i>My Anonymous Heritage</i>. <i>Heritages and taxes. How to avoid responsibility.</i> (pp. 123-127). Berlin, Germany: Initiative Neue Soziale Marktwirtschaft (INSM). Retrieved from <a href="https://example.org/publication/item-1">https://example.org/publication/item-1</a></div>
@@ -226,19 +224,26 @@ EOT;
             "title": "Two authors writing a book"
           }]';
 
-        $enrichCitationNumberWithLinkFunction = function($citeItem, $renderedVariable) {
-            return isset($citeItem->id) ? '<a id="' . $citeItem->id. '" href="#' . $citeItem->id . '">'
-                . $renderedVariable . '</a>' : $renderedVariable;
-        };
         $apa = StyleSheet::loadStyleSheet("elsevier-with-titles");
 
-        $citeproc = new CiteProc($apa);
-
-        $actual = $citeproc->render(json_decode($cslJson), "bibliography",
+        $citeproc = new CiteProc($apa, "en-US",
             [
-                'citation-number' => $enrichCitationNumberWithLinkFunction
+                "bibliography" => [
+                    "citation-number" => function($citeItem, $renderedVariable) {
+                        return isset($citeItem->id) ? '<a id="' . $citeItem->id. '" href="#' . $citeItem->id . '">'
+                            . $renderedVariable . '</a>' : $renderedVariable;
+                    }
+                ],
+                "citation" => [
+                    "citation-number" => function($citeItem, $renderedVariable) {
+                        return isset($citeItem->id) ? '<a href="#' . $citeItem->id . '">'
+                            . $renderedVariable . '</a>' : $renderedVariable;
+                    }
+                ]
             ]
         );
+
+        $actual = $citeproc->render(json_decode($cslJson), "bibliography");
 
         $expected = '<div class="csl-bib-body">
   <div class="csl-entry"><div class="csl-left-margin">[<a id="item-1" href="#item-1">1</a>]</div><div class="csl-right-inline">J. Doe III, My Anonymous Heritage, 2001.</div></div>
@@ -246,14 +251,7 @@ EOT;
 </div>';
         $this->assertEquals($expected, $actual);
 
-        $actual = $citeproc->render(json_decode($cslJson), "citation",
-            [
-                'citation-number' => function($citeItem, $renderedVariable) {
-                    return isset($citeItem->id) ? '<a href="#' . $citeItem->id . '">'
-                        . $renderedVariable . '</a>' : $renderedVariable;
-                }
-            ]
-        );
+        $actual = $citeproc->render(json_decode($cslJson), "citation");
 
         $expected = '[<a href="#item-1">1</a>,<a href="#ITEM-2">2</a>]';
 

@@ -119,11 +119,18 @@ class NameHelper
 
     public static function addExtendedMarkup($nameVar, $nameItem, $formattedName)
     {
-        $markupExtesions = CiteProc::getContext()->getMarkupExtension();
-        if (array_key_exists($nameVar, $markupExtesions)) {
-            $function = CiteProc::getContext()->getMarkupExtension()[$nameVar];
+        $markupExtension = CiteProc::getContext()->getMarkupExtension();
+        if (array_key_exists($nameVar, $markupExtension)) {
+            $function = $markupExtension[$nameVar];
             if (is_callable($function)) {
                 return $function($nameItem, $formattedName);
+            }
+        } else if (array_key_exists($mode = CiteProc::getContext()->getMode(), $markupExtension)) {
+            if (array_key_exists($nameVar, $markupExtension[$mode])) {
+                $function = $markupExtension[$mode][$nameVar];
+                if (is_callable($function)) {
+                    return $function($nameItem, $formattedName);
+                }
             }
         }
         return $formattedName;

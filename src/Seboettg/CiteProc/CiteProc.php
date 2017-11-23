@@ -65,13 +65,21 @@ class CiteProc
     private $styleSheetXml;
 
     /**
+     * @var array
+     */
+    private $markupExtension;
+
+    /**
      * CiteProc constructor.
      * @param string $styleSheet xml formatted csl stylesheet
+     * @param string $lang
+     * @param array $markupExtension
      */
-    public function __construct($styleSheet, $lang = "en-US")
+    public function __construct($styleSheet, $lang = "en-US", $markupExtension = [])
     {
         $this->styleSheet = $styleSheet;
         $this->lang = $lang;
+        $this->markupExtension = $markupExtension;
     }
 
     public function __destruct()
@@ -142,7 +150,7 @@ class CiteProc
      * @return string
      * @throws CiteProcException
      */
-    public function render($data, $mode = "bibliography", $citationItems = [], $citationAsArray = false, $markupExtension = [])
+    public function render($data, $mode = "bibliography", $citationItems = [], $citationAsArray = false)
     {
 
         if (!in_array($mode, ['citation', 'bibliography'])) {
@@ -158,9 +166,6 @@ class CiteProc
         } else if (!($data instanceof DataList)) {
             throw new CiteProcException('No valid format for variable data. Either DataList or array expected');
         }
-
-        // set markup extensions
-        self::getContext()->setMarkupExtension($markupExtension);
 
         switch ($mode) {
             case 'bibliography':
@@ -187,12 +192,15 @@ class CiteProc
 
     /**
      * initializes CiteProc and start parsing XML stylesheet
+     * @param bool $citationAsArray
      */
     public function init($citationAsArray = false)
     {
         self::$context = new Context($this);
         self::$context->setLocale(new Locale\Locale($this->lang)); //init locale
         self::$context->setCitationsAsArray($citationAsArray);
+        // set markup extensions
+        self::$context->setMarkupExtension($this->markupExtension);
         $this->styleSheetXml = new \SimpleXMLElement($this->styleSheet);
         $this->parse($this->styleSheetXml);
     }

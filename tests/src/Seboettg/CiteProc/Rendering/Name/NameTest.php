@@ -230,16 +230,69 @@ class NameTest extends TestCase
         };
 
         $apa = StyleSheet::loadStyleSheet("apa");
-        $citeproc = new CiteProc($apa, "de-DE");
-        $actual = $citeproc->render(json_decode($cslJson), "bibliography", [], false,
-            [
-                'author' => $enrichAuthorWithLinkFunction
-            ]
-        );
+        $citeproc = new CiteProc($apa, "de-DE", [
+            'author' => $enrichAuthorWithLinkFunction
+        ]);
+        $actual = $citeproc->render(json_decode($cslJson), "bibliography");
 
         $expected = '<div class="csl-bib-body">
   <div class="csl-entry"><a href="https://example.org/author/doe" title="Doe, J.">Doe, J.</a>, &#38; Müller, A. (2001). <i>My Anonymous Heritage</i>.</div>
 </div>';
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testEnrichMarkupNamesCitationsAndBibliography()
+    {
+        $cslJson = '[{
+            "author": [
+              {
+                "family": "Doe",
+                "given": "John",
+                "id": "doe"
+              },
+              {
+                "family": "Müller",
+                "given": "Alexander"
+              }
+            ],
+            "id": "item-1",
+            "issued": {
+              "date-parts": [
+                [
+                  "2001"
+                ]
+              ]
+            },
+            "title": "My Anonymous Heritage",
+            "type": "book"
+        }]';
+
+        $enrichAuthorWithLinkFunctionBibliography = function($authorItem, $authorName) {
+            return isset($authorItem->id) ? '<a href="https://example.org/author/' . $authorItem->id . '" title="' . $authorName . '">'
+                . $authorName . '</a>' : $authorName;
+        };
+
+        $apa = StyleSheet::loadStyleSheet("apa");
+        $citeproc = new CiteProc($apa, "de-DE", [
+            "bibliography" => [
+                "author" => $enrichAuthorWithLinkFunctionBibliography,
+                "csl-entry" => function($item, $renderedItem) {
+                    return '<a id="' . $item->id . '"></a>' . $renderedItem;
+                }
+            ],
+            "citation" => [
+                "csl-entry" => function($item, $renderedItem) {
+                    return '<a href="#' . $item->id . '">' . $renderedItem . '</a>';
+                }
+            ]
+        ]);
+        $actualBibliography = $citeproc->render(json_decode($cslJson), "bibliography");
+        $actualCitation = $citeproc->render(json_decode($cslJson), "citation");
+        $expectedBibliography = '<div class="csl-bib-body">
+  <div class="csl-entry"><a id="item-1"></a><a href="https://example.org/author/doe" title="Doe, J.">Doe, J.</a>, &#38; Müller, A. (2001). <i>My Anonymous Heritage</i>.</div>
+</div>';
+        $expectedCitation = '(<a href="#item-1">Doe &#38; Müller, 2001</a>)';
+        $this->assertEquals($expectedCitation, $actualCitation);
+        $this->assertEquals($expectedBibliography, $actualBibliography);
     }
 }

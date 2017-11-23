@@ -10,6 +10,7 @@
 namespace Seboettg\CiteProc\Rendering;
 
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\RenderingState;
 use Seboettg\CiteProc\Styles\AffixesTrait;
@@ -18,6 +19,7 @@ use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\QuotesTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
+use Seboettg\CiteProc\Util\CiteProcHelper;
 use Seboettg\CiteProc\Util\NumberHelper;
 use Seboettg\CiteProc\Util\PageHelper;
 use Seboettg\CiteProc\Util\StringHelper;
@@ -198,12 +200,6 @@ class Text implements Rendering
      */
     private function applyAdditionalMarkupFunction($data, $renderedText)
     {
-        if (array_key_exists($this->toRenderTypeValue, CiteProc::getContext()->getMarkupExtension())) {
-            $function = CiteProc::getContext()->getMarkupExtension()[$this->toRenderTypeValue];
-            if (is_callable($function)) {
-                $renderedText = $function($data, $renderedText);
-            }
-        }
-        return $renderedText;
+        return CiteProcHelper::applyAdditionMarkupFunction($data, $this->toRenderTypeValue, $renderedText);
     }
 }

@@ -17,6 +17,7 @@ use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
+use Seboettg\CiteProc\Util\CiteProcHelper;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\CiteProc\Util\StringHelper;
 use Seboettg\Collection\ArrayList;
@@ -88,11 +89,11 @@ class Layout implements Rendering
             if ($data instanceof DataList) {
                 foreach ($data as $citationNumber => $item) {
                     ++self::$numberOfCitedItems;
-                    CiteProc::getContext()->getResults()->append($this->wrapBibEntry($this->renderSingle($item, $citationNumber)));
+                    CiteProc::getContext()->getResults()->append($this->wrapBibEntry($item, $this->renderSingle($item, $citationNumber)));
                 }
                 $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
             } else {
-                $ret .= $this->wrapBibEntry($this->renderSingle($data, null));
+                $ret .= $this->wrapBibEntry($data, $this->renderSingle($data, null));
             }
             $ret = StringHelper::clearApostrophes($ret);
             return "<div class=\"csl-bib-body\">" . $ret . "\n</div>";
@@ -171,9 +172,13 @@ class Layout implements Rendering
      * @param string $value
      * @return string
      */
-    private function wrapBibEntry($value)
+    private function wrapBibEntry($dataItem, $value)
     {
-        return "\n  <div class=\"csl-entry\">" . $this->addAffixes($value) . "</div>";
+        $value = $this->addAffixes($value);
+        return "\n  " .
+            "<div class=\"csl-entry\">" .
+            $renderedItem = CiteProcHelper::applyAdditionMarkupFunction($dataItem, "csl-entry", $value) .
+            "</div>";
     }
 
     /**
@@ -195,7 +200,9 @@ class Layout implements Rendering
     {
         CiteProc::getContext()->getResults()->replace([]);
         foreach ($data as $citationNumber => $item) {
-            CiteProc::getContext()->getResults()->append($this->renderSingle($item, $citationNumber));
+            $renderedItem = $this->renderSingle($item, $citationNumber);
+            $renderedItem = CiteProcHelper::applyAdditionMarkupFunction($item, "csl-entry", $renderedItem);
+            CiteProc::getContext()->getResults()->append($renderedItem);
         }
         $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
         return $ret;

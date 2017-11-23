@@ -18,6 +18,7 @@ use Seboettg\CiteProc\Style\Options\SubsequentAuthorSubstituteRule;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
+use Seboettg\CiteProc\Util\CiteProcHelper;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\CiteProc\Util\NameHelper;
 use Seboettg\CiteProc\Util\StringHelper;
@@ -166,23 +167,23 @@ class Name implements HasParent
     }
 
     /**
-     * @param \stdClass $name
+     * @param \stdClass $nameItem
      * @param int $rank
      * @return string
      */
-    private function formatName($name, $rank)
+    private function formatName($nameItem, $rank)
     {
 
-        $nameObj = $this->cloneNamePOSC($name);
+        $nameObj = $this->cloneNamePOSC($nameItem);
 
         $useInitials = $this->initialize && !is_null($this->initializeWith) && $this->initializeWith !== false;
-        if ($useInitials && isset($name->given)) {
-            $nameObj->given = StringHelper::initializeBySpaceOrHyphen($name->given, $this->initializeWith);
+        if ($useInitials && isset($nameItem->given)) {
+            $nameObj->given = StringHelper::initializeBySpaceOrHyphen($nameItem->given, $this->initializeWith);
         }
 
-        $ret = $this->getNamesString($nameObj, $rank);
-        NameHelper::addExtendedMarkup($this->parent->getVariables()[0], $name, $ret);
-        return trim($ret);
+        $renderedResult = $this->getNamesString($nameObj, $rank);
+        CiteProcHelper::applyAdditionMarkupFunction($nameItem, $this->parent->getVariables()[0], $renderedResult);
+        return trim($renderedResult);
     }
 
     /**
