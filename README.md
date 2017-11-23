@@ -178,6 +178,8 @@ You can also render citations instead of bibliographies:
 echo $citeProc->render(json_decode($data), "citation");
 ```
 
+### Filter Citations ###
+
 Since version 2.1 you have also the possibility to apply a filter so that just specific citations appear.
 
 ```php
