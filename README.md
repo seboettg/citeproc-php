@@ -231,7 +231,7 @@ Under examples folder you will find another example script.
 
 Since version 2.1, citeproc-php comes with additional features that are not a part of the CSL specifications.
 
-You can enrich bibliographies and citations with additional HTML tags to inject links (i.e. to set a link to an author's CV), or other html markup.
+You can enrich bibliographies and citations with additional HTML tags to inject links (i.e. to set a link to an author's CV), or to add other html markup.
 
 ### Use Lambda Functions to setup citeproc-php in order to render advanced citations or bibliographies ###
 
