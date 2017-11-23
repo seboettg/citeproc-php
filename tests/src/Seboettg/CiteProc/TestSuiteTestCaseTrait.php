@@ -39,16 +39,17 @@ trait TestSuiteTestCaseTrait
             if ($mode !== "bibliography" && $mode !== "citation") {
                 continue;
             }
-            if (isset($testData->citation_items) && $testData->citation_items !== false) {
-                CiteProc::getContext()->setCitationItems($testData->citation_items);
-            }
 
             $expected = $testData->result;
             $citeProc = new CiteProc($testData->csl);
             ++$i;
             $echo = sprintf("%03d (%s / %s): ", $i, $testFile, $mode);
             try {
-                $actual = $citeProc->render($testData->input, $mode);
+                $citationItems = [];
+                if (!empty($testData->citation_items)) {
+                    $citationItems = $testData->citation_items;
+                }
+                $actual = $citeProc->render($testData->input, $mode, $citationItems);
                 $this->assertEquals($expected, $actual, "Test case \"$testFile\" ($i) has failed.");
                 //echo "succeeded.\n\n\n";
                 $success[] = $echo . "\n$actual";

@@ -71,10 +71,10 @@ class Layout implements Rendering
 
     /**
      * @param array|DataList $data
-     * @param int|null $citationNumber
-     * @return string
+     * @param array|ArrayList $citationItems
+     * @return string|array
      */
-    public function render($data, $citationNumber = null)
+    public function render($data, $citationItems = [])
     {
         $ret = "";
         $sorting = CiteProc::getContext()->getSorting();
@@ -92,19 +92,27 @@ class Layout implements Rendering
                 }
                 $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
             } else {
-                $ret .= $this->wrapBibEntry($this->renderSingle($data, $citationNumber));
+                $ret .= $this->wrapBibEntry($this->renderSingle($data, null));
             }
             $ret = StringHelper::clearApostrophes($ret);
             return "<div class=\"csl-bib-body\">" . $ret . "\n</div>";
 
         } else if (CiteProc::getContext()->isModeCitation()) {
-            if (is_array($data) || $data instanceof DataList) {
-                foreach ($data as $citationNumber => $item) {
-                    CiteProc::getContext()->getResults()->append($this->renderSingle($item, $citationNumber));
+            if ($data instanceof DataList) {
+                if ($citationItems->count() > 0) { //is there a filter for specific citations?
+                    if ($this->isGroupedCitations($citationItems)) { //if citation items grouped?
+                        return $this->renderGroupedCitations($data, $citationItems);
+                    } else {
+                        $data = $this->filterCitationItems($data, $citationItems);
+                        $ret = $this->renderCitations($data, $ret);
+                    }
+
+                } else {
+                    $ret = $this->renderCitations($data, $ret);
                 }
-                $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
+
             } else {
-                $ret .= $this->renderSingle($data, $citationNumber);
+                $ret .= $this->renderSingle($data, null);
             }
         }
         $ret = StringHelper::clearApostrophes($ret);
@@ -176,6 +184,74 @@ class Layout implements Rendering
     {
         $text = preg_replace("/(.*)&([^#38;|amp;].*)/u", "$1&#38;$2", $text);
         return $text;
+    }
+
+    /**
+     * @param $data
+     * @param $ret
+     * @return string
+     */
+    private function renderCitations($data, $ret)
+    {
+        CiteProc::getContext()->getResults()->replace([]);
+        foreach ($data as $citationNumber => $item) {
+            CiteProc::getContext()->getResults()->append($this->renderSingle($item, $citationNumber));
+        }
+        $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
+        return $ret;
+    }
+
+    /**
+     * @param DataList $data
+     * @param ArrayList $citationItems
+     * @return mixed
+     */
+    private function filterCitationItems($data, $citationItems)
+    {
+        $arr = $data->toArray();
+
+        $arr_ = array_filter($arr, function($dataItem) use ($citationItems) {
+            foreach ($citationItems as $citationItem) {
+                if ($dataItem->id === $citationItem->id) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        return $data->replace($arr_);
+    }
+
+    /**
+     * @param ArrayList $citationItems
+     * @return bool
+     */
+    private function isGroupedCitations(ArrayList $citationItems)
+    {
+        $firstItem = array_values($citationItems->toArray())[0];
+        if (is_array($firstItem)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param DataList $data
+     * @param ArrayList $citationItems
+     * @return array|string
+     */
+    private function renderGroupedCitations($data, $citationItems)
+    {
+        $group = [];
+        foreach ($citationItems as $citationItemGroup) {
+            $data_ = $this->filterCitationItems(clone $data, $citationItemGroup);
+            CiteProc::getContext()->setCitationItems($data_);
+            $group[] = $this->addAffixes(StringHelper::clearApostrophes($this->renderCitations($data_, "")));
+        }
+        if (CiteProc::getContext()->isCitationsAsArray()) {
+            return $group;
+        }
+        return implode("\n", $group);
     }
 
 }

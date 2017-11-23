@@ -18,6 +18,7 @@ use Seboettg\CiteProc\Style\Macro;
 use Seboettg\CiteProc\Style\Options\GlobalOptions;
 use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Styles\Css\CssStyle;
+use Seboettg\Collection\ArrayList;
 
 
 /**
@@ -127,28 +128,28 @@ class CiteProc
 
     /**
      * @param DataList $data
+     * @param ArrayList $citationItems
      * @return string
      */
-    protected function citation($data)
+    protected function citation($data, $citationItems)
     {
-        return self::$context->getCitation()->render($data);
+        return self::$context->getCitation()->render($data, $citationItems);
     }
 
     /**
      * @param array|DataList $data
      * @param string $mode (citation|bibliography)
-     * @param array $markupExtension
      * @return string
      * @throws CiteProcException
      */
-    public function render($data, $mode = "bibliography", $markupExtension = [])
+    public function render($data, $mode = "bibliography", $citationItems = [], $citationAsArray = false, $markupExtension = [])
     {
 
         if (!in_array($mode, ['citation', 'bibliography'])) {
             throw new \InvalidArgumentException("\"$mode\" is not a valid mode.");
         }
 
-        $this->init(); //initialize
+        $this->init($citationAsArray); //initialize
 
         $res = "";
 
@@ -158,20 +159,26 @@ class CiteProc
             throw new CiteProcException('No valid format for variable data. Either DataList or array expected');
         }
 
-        // set CitationItems to Context
-        self::getContext()->setCitationItems($data);
-
         // set markup extensions
         self::getContext()->setMarkupExtension($markupExtension);
 
         switch ($mode) {
             case 'bibliography':
                 self::$context->setMode($mode);
+                // set CitationItems to Context
+                self::getContext()->setCitationItems($data);
                 $res = $this->bibliography($data);
                 break;
             case 'citation':
+                if (is_array($citationItems)) {
+                    $citationItems = new ArrayList($citationItems);
+                } else if (!($citationItems instanceof ArrayList)) {
+                    throw new CiteProcException('No valid format for variable `citationItems`, ArrayList expected.');
+                }
                 self::$context->setMode($mode);
-                $res = $this->citation($data);
+                // set CitationItems to Context
+                //self::getContext()->setCitationItems($data); will now set in Layout
+                $res = $this->citation($data, $citationItems);
         }
         self::setContext(null);
 
@@ -181,10 +188,11 @@ class CiteProc
     /**
      * initializes CiteProc and start parsing XML stylesheet
      */
-    public function init()
+    public function init($citationAsArray = false)
     {
         self::$context = new Context($this);
         self::$context->setLocale(new Locale\Locale($this->lang)); //init locale
+        self::$context->setCitationsAsArray($citationAsArray);
         $this->styleSheetXml = new \SimpleXMLElement($this->styleSheet);
         $this->parse($this->styleSheetXml);
     }

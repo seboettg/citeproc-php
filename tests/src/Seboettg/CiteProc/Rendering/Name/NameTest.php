@@ -231,7 +231,7 @@ class NameTest extends TestCase
 
         $apa = StyleSheet::loadStyleSheet("apa");
         $citeproc = new CiteProc($apa, "de-DE");
-        $actual = $citeproc->render(json_decode($cslJson), "bibliography",
+        $actual = $citeproc->render(json_decode($cslJson), "bibliography", [], false,
             [
                 'author' => $enrichAuthorWithLinkFunction
             ]
