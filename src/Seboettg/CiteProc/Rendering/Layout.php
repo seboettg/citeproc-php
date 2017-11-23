@@ -86,34 +86,25 @@ class Layout implements Rendering
         }
 
         if (CiteProc::getContext()->isModeBibliography()) {
-            if ($data instanceof DataList) {
-                foreach ($data as $citationNumber => $item) {
-                    ++self::$numberOfCitedItems;
-                    CiteProc::getContext()->getResults()->append($this->wrapBibEntry($item, $this->renderSingle($item, $citationNumber)));
-                }
-                $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
-            } else {
-                $ret .= $this->wrapBibEntry($data, $this->renderSingle($data, null));
+            foreach ($data as $citationNumber => $item) {
+                ++self::$numberOfCitedItems;
+                CiteProc::getContext()->getResults()->append($this->wrapBibEntry($item, $this->renderSingle($item, $citationNumber)));
             }
+            $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
             $ret = StringHelper::clearApostrophes($ret);
             return "<div class=\"csl-bib-body\">" . $ret . "\n</div>";
 
         } else if (CiteProc::getContext()->isModeCitation()) {
-            if ($data instanceof DataList) {
-                if ($citationItems->count() > 0) { //is there a filter for specific citations?
-                    if ($this->isGroupedCitations($citationItems)) { //if citation items grouped?
-                        return $this->renderGroupedCitations($data, $citationItems);
-                    } else {
-                        $data = $this->filterCitationItems($data, $citationItems);
-                        $ret = $this->renderCitations($data, $ret);
-                    }
-
+            if ($citationItems->count() > 0) { //is there a filter for specific citations?
+                if ($this->isGroupedCitations($citationItems)) { //if citation items grouped?
+                    return $this->renderGroupedCitations($data, $citationItems);
                 } else {
+                    $data = $this->filterCitationItems($data, $citationItems);
                     $ret = $this->renderCitations($data, $ret);
                 }
 
             } else {
-                $ret .= $this->renderSingle($data, null);
+                $ret = $this->renderCitations($data, $ret);
             }
         }
         $ret = StringHelper::clearApostrophes($ret);
