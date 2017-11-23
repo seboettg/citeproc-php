@@ -178,11 +178,13 @@ You can also render citations instead of bibliographies:
 echo $citeProc->render(json_decode($data), "citation");
 ```
 
-You have also the possibility to apply a filter so that just specific citations appear.
+Since version 2.1 you have also the possibility to apply a filter so that just specific citations appear.
 
 ```php
-<p>This a wise sentence <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"item-1"}]')); ?>.</p>
-<p>this is the most wise setence <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"item-1"},{"id":"ITEM-2"}]')); ?>.</p>
+<p>This a wise sentence 
+<?php echo $citeProc->render($data, "citation", json_decode('[{"id":"item-1"}]')); ?>.</p>
+<p>This is the most wise setence 
+<?php echo $citeProc->render($data, "citation", json_decode('[{"id":"item-1"},{"id":"ITEM-2"}]')); ?>.</p>
 ```
 
 ### Bibliography-specific styles using CSS ###
