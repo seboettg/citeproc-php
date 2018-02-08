@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2.1.1 - 2018-02-08
+* Support for render variables that are using "-short" suffixes, if Text tags have a "form" attribute which is set to "short": ``<text form="short" .../>``. This is used e.g. for abbreviated journal title (container-title-short) and occurred a wrong output in different styles (for example AMA American Medical Association) in previous citeproc-php versions. Have a look at issue [47](https://github.com/seboettg/citeproc-php/issues/47).
+
 ## 2.1.0 - 2017-11-23
 
 * possibility to filter specific citations independently from CSL input data (inspired by @CarlosCraviotto PR #39). Have a look [here](https://github.com/seboettg/citeproc-php/blob/master/README.md#filter-citations).
