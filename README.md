@@ -376,8 +376,8 @@ class MyNewClassTest extends TestCase
     // ...
 }
 ```
+* Implement or adapt your code as long as all tests finishing successfully
 * Make sure that your test case covers relevant code parts
-* Implement the code until all tests finishing successfully
 * Send a pull request
 
 ## Testing ##
