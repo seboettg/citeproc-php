@@ -107,11 +107,18 @@ class Text implements Rendering
                     // test case group_ShortOutputOnly.json
                     if (in_array($this->form, ["short", "long"])) {
                         $attrWithPrefix = $this->form . ucfirst($this->toRenderTypeValue);
+                        $attrWithSuffix = $this->toRenderTypeValue . "-" . $this->form;
                         if (isset($data->{$attrWithPrefix}) && !empty($data->{$attrWithPrefix})) {
-                            $renderedText = $this->applyTextCase($data->{$attrWithPrefix}, $lang);
+                            $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$attrWithPrefix}), $lang);
+                        } else if (isset($data->{$attrWithSuffix}) && !empty($data->{$attrWithSuffix})) {
+                            $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$attrWithSuffix}), $lang);
+                        } else {
+                            if (isset($data->{$this->toRenderTypeValue})) {
+                                $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}), $lang);
+                            }
+
                         }
-                    }
-                    if (!empty($data->{$this->toRenderTypeValue})) {
+                    } else if (!empty($data->{$this->toRenderTypeValue})) {
                         $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}), $lang);
                     }
                 }
