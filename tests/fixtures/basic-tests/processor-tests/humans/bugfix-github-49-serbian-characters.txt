@@ -1,0 +1,77 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">“Est Maximus Eu Donec Congue ‘Nešto Između’ Srđana Karanović“a”.</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" demote-non-dropping-particle="sort-only" default-locale="en-US">
+  <macro name="title">
+    <choose>
+      <if variable="title" match="none">
+        <choose>
+          <if type="personal_communication" match="none">
+            <text variable="genre" text-case="capitalize-first"/>
+          </if>
+        </choose>
+      </if>
+      <else-if type="bill book graphic legal_case legislation motion_picture report song" match="any">
+        <text variable="title" font-style="italic" text-case="title"/>
+      </else-if>
+      <else>
+        <text variable="title" quotes="true" text-case="title"/>
+      </else>
+    </choose>
+  </macro>
+  <bibliography>
+    <layout suffix=".">
+        <text macro="title"/>
+    </layout>
+  </bibliography>
+</style>
+
+<<===== CSL =====<<
+
+>>===== INPUT =====>>
+[
+    {
+        "DOI": "10.1234/publicknowledge.v2i3.30", 
+        "URL": "http://localhost/ojs/publicknowledge/article/view/30", 
+        "accessed": {
+            "date-parts": [], 
+            "raw": "2018-04-11"
+        }, 
+        "author": [
+            {
+                "family": "Corino", 
+                "given": "Carlo"
+            }, 
+            {
+                "family": "Contributor", 
+                "given": "Test"
+            }, 
+            {
+                "family": "Another", 
+                "given": "Test"
+            }
+        ], 
+        "container-title": "Journal of Public Knowledge", 
+        "container-title-short": "publicknowledge", 
+        "id": "30", 
+        "issue": "3", 
+        "issued": {
+            "date-parts": [], 
+            "raw": "2017-10-17 00:00:00"
+        }, 
+        "section": "Articles", 
+        "title": "Est maximus eu donec congue “Nešto Između” Srđana Karanović“a", 
+        "type": "article-journal", 
+        "volume": "2"
+    }
+]
+<<===== INPUT =====<<

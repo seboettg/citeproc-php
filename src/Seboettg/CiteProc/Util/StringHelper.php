@@ -121,7 +121,8 @@ class StringHelper
         $lowerCase = in_array($word, self::PREPOSITIONS) ||
             in_array($word, self::ARTICLES) ||
             in_array($word, self::CONJUNCTIONS) ||
-            in_array($word, self::ADJECTIVES);
+            in_array($word, self::ADJECTIVES) ||
+            (bool) preg_match("/[^\p{L}].+/", $word); // keep lower case if the first char is not an utf-8 letter
         return $lowerCase;
 
     }
