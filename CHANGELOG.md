@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2.1.2 - 2018-04-18
+* bugfix for issue [49](https://github.com/seboettg/citeproc-php/issues/49): Stylesheets that used the ``text-case="title"`` option, in combination with some in Slavic (or Serbo-Croatian) language, caused errors that destroyed the entire output. This was caused by the capitalization of non-letter characters.
+
 ## 2.1.1 - 2018-02-08
 * Support for render variables that are using "-short" suffixes, if Text tags have a "form" attribute which is set to "short": ``<text form="short" .../>``. This is used e.g. for abbreviated journal title (container-title-short) and occurred a wrong output in different styles (for example AMA American Medical Association) in previous citeproc-php versions. Have a look at issue [47](https://github.com/seboettg/citeproc-php/issues/47).
 
