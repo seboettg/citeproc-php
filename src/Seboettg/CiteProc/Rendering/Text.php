@@ -146,7 +146,7 @@ class Text implements Rendering
         if (!empty($renderedText)) {
             //$renderedText = $this->applyTextCase($renderedText);
             $text = $this->format($renderedText);
-            $res = $this->addAffixes($text, $this->quotes);
+            $res = $this->addAffixes($text);
             if (!empty($res)) {
                 $res = $this->removeConsecutiveChars($res);
             }
