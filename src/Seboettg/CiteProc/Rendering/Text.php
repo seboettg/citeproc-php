@@ -94,33 +94,13 @@ class Text implements Rendering
                 break;
             case 'variable':
                 if ($this->toRenderTypeValue === "citation-number") {
-                    $renderedText = $citationNumber + 1;
-                    $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
+                    $renderedText = $this->renderCitationNumber($data, $citationNumber);
                     break;
-                }
-
-                if ($this->toRenderTypeValue === "page") {
+                } else if ($this->toRenderTypeValue === "page") {
                     $renderedText = $this->renderPage($data);
                     // for test sort_BibliographyCitationNumberDescending.json
                 } else {
-                    // check if there is an attribute with prefix short or long e.g. shortTitle or longAbstract
-                    // test case group_ShortOutputOnly.json
-                    if (in_array($this->form, ["short", "long"])) {
-                        $attrWithPrefix = $this->form . ucfirst($this->toRenderTypeValue);
-                        $attrWithSuffix = $this->toRenderTypeValue . "-" . $this->form;
-                        if (isset($data->{$attrWithPrefix}) && !empty($data->{$attrWithPrefix})) {
-                            $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$attrWithPrefix}), $lang);
-                        } else if (isset($data->{$attrWithSuffix}) && !empty($data->{$attrWithSuffix})) {
-                            $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$attrWithSuffix}), $lang);
-                        } else {
-                            if (isset($data->{$this->toRenderTypeValue})) {
-                                $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}), $lang);
-                            }
-
-                        }
-                    } else if (!empty($data->{$this->toRenderTypeValue})) {
-                        $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}), $lang);
-                    }
+                    $renderedText = $this->renderVariable($data, $lang);
                 }
                 if (CiteProc::getContext()->getRenderingState()->getValue() === RenderingState::SUBSTITUTION) {
                     unset($data->{$this->toRenderTypeValue});
@@ -128,32 +108,16 @@ class Text implements Rendering
                 $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
                 break;
             case 'macro':
-                $macro = CiteProc::getContext()->getMacro($this->toRenderTypeValue);
-                if (is_null($macro)) {
-                    try {
-                        throw new CiteProcException("Macro \"" . $this->toRenderTypeValue . "\" does not exist.");
-                    } catch (CiteProcException $e) {
-                        $renderedText = "";
-                    }
-                } else {
-                    $renderedText = $macro->render($data);
-                }
+                $renderedText = $this->renderMacro($data);
                 break;
             case 'term':
                 $term = CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue, $this->form)->single;
                 $renderedText = !empty($term) ? $this->applyTextCase($term, $lang) : "";
         }
         if (!empty($renderedText)) {
-            //$renderedText = $this->applyTextCase($renderedText);
-            $text = $this->format($renderedText);
-            $res = $this->addAffixes($text);
-            if (!empty($res)) {
-                $res = $this->removeConsecutiveChars($res);
-            }
-            $res = $this->addSurroundingQuotes($res);
-            return $this->wrapDisplayBlock($res);
+            $renderedText = $this->formatRenderedText($renderedText);
         }
-        return "";
+        return $renderedText;
     }
 
     /**
@@ -208,5 +172,87 @@ class Text implements Rendering
     private function applyAdditionalMarkupFunction($data, $renderedText)
     {
         return CiteProcHelper::applyAdditionMarkupFunction($data, $this->toRenderTypeValue, $renderedText);
+    }
+
+    /**
+     * @param $data
+     * @param $lang
+     * @return string
+     */
+    private function renderVariable($data, $lang)
+    {
+        // check if there is an attribute with prefix short or long e.g. shortTitle or longAbstract
+        // test case group_ShortOutputOnly.json
+        $renderedText = "";
+        if (in_array($this->form, ["short", "long"])) {
+            $attrWithPrefix = $this->form . ucfirst($this->toRenderTypeValue);
+            $attrWithSuffix = $this->toRenderTypeValue . "-" . $this->form;
+            if (isset($data->{$attrWithPrefix}) && !empty($data->{$attrWithPrefix})) {
+                $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$attrWithPrefix}), $lang);
+            } else {
+                if (isset($data->{$attrWithSuffix}) && !empty($data->{$attrWithSuffix})) {
+                    $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$attrWithSuffix}),
+                        $lang);
+                } else {
+                    if (isset($data->{$this->toRenderTypeValue})) {
+                        $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}),
+                            $lang);
+                    }
+
+                }
+            }
+        } else {
+            if (!empty($data->{$this->toRenderTypeValue})) {
+                $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}),
+                    $lang);
+            }
+        }
+        return $renderedText;
+    }
+
+    /**
+     * @param $renderedText
+     * @return string
+     */
+    private function formatRenderedText($renderedText)
+    {
+        $text = $this->format($renderedText);
+        $res = $this->addAffixes($text);
+        if (!empty($res)) {
+            $res = $this->removeConsecutiveChars($res);
+        }
+        $res = $this->addSurroundingQuotes($res);
+        return $this->wrapDisplayBlock($res);
+    }
+
+    /**
+     * @param $data
+     * @param $citationNumber
+     * @return int|mixed
+     */
+    private function renderCitationNumber($data, $citationNumber)
+    {
+        $renderedText = $citationNumber + 1;
+        $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
+        return $renderedText;
+    }
+
+    /**
+     * @param $data
+     * @return string
+     */
+    private function renderMacro($data)
+    {
+        $macro = CiteProc::getContext()->getMacro($this->toRenderTypeValue);
+        if (is_null($macro)) {
+            try {
+                throw new CiteProcException("Macro \"" . $this->toRenderTypeValue . "\" does not exist.");
+            } catch (CiteProcException $e) {
+                $renderedText = "";
+            }
+        } else {
+            $renderedText = $macro->render($data);
+        }
+        return $renderedText;
     }
 }
