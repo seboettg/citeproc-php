@@ -42,23 +42,11 @@ trait QuotesTrait
      */
     public function addSurroundingQuotes($text)
     {
-        $punctuationInQuote = CiteProc::getContext()
-            ->getLocale()
-            ->filter('options', 'punctuation-in-quote');
         if ($this->quotes) {
             $openQuote = CiteProc::getContext()->getLocale()->filter("terms", "open-quote")->single;
             $closeQuote = CiteProc::getContext()->getLocale()->filter("terms", "close-quote")->single;
             $text = $this->replaceOuterQuotes($text, $openQuote, $closeQuote);
-
-            if ($punctuationInQuote) {
-                return $openQuote . $text . $closeQuote;
-            } else {
-                $lastChar = substr($text, -1);
-                if (preg_match("/[,\.;]/", $text)) {
-                    $subStr = substr($text, 0, strlen($text) - 1);
-                    return $openQuote . $subStr . $closeQuote . $lastChar;
-                }
-            }
+            return $openQuote . $text . $closeQuote;
         }
         return $text;
     }
