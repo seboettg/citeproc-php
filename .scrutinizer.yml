@@ -22,10 +22,3 @@ build:
             version: 7.0.20
             ini:
                 'date.timezone': 'Europe/Berlin'
-    tests:
-        override:
-            -
-                command: phpunit --coverage-clover=review/coverage
-                coverage:
-                    file: review/coverage
-                    format: php-clover
