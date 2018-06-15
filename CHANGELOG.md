@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.3 - 2018-06-15
+
+* bugfix for issue [50](https://github.com/seboettg/citeproc-php/issues/50): In some cases punctuation in quote did not work.
+
 ## 2.1.2 - 2018-04-18
 
 * bugfix for issue [49](https://github.com/seboettg/citeproc-php/issues/49): Stylesheets that used the ``text-case="title"`` option, in combination with some in Slavic (or Serbo-Croatian) language, caused errors that destroyed the entire output. This was caused by the capitalization of non-letter characters.
