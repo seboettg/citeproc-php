@@ -9,6 +9,8 @@
 
 namespace Seboettg\CiteProc\Styles;
 
+use Seboettg\CiteProc\CiteProc;
+
 /**
  * Trait AffixesTrait
  * @package Seboettg\CiteProc\Styles
@@ -69,6 +71,21 @@ trait AffixesTrait
             $no_tags = strip_tags($text);
             if (strlen($no_tags) && ($no_tags{(strlen($no_tags) - 1)} == $suffix{0})) {
                 $suffix = substr($suffix, 1);
+            }
+
+            // punctuation in quote?
+            $piq = CiteProc::getContext()
+                ->getLocale()
+                ->filter('options', 'punctuation-in-quote');
+            $punctuationInQuote = is_array($piq) ? current($piq) : $piq;
+
+            if ($punctuationInQuote && in_array($suffix, [',', ';', '.'])) {
+                $closeQuote = CiteProc::getContext()->getLocale()->filter("terms", "close-quote")->single;
+                $lastChar = mb_substr($text, -1, 1);
+                if ($closeQuote === $lastChar) { // last char is closing quote?
+                    $text = mb_substr($text, 0, mb_strlen($text) - 1); //set suffix before
+                    return $text . $suffix . $lastChar;
+                }
             }
         }
 

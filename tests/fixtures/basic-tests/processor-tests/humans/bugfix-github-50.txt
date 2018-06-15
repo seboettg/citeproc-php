@@ -1,0 +1,70 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">John Smith. “Chapter Title.”</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" page-range-format="minimal-two">
+  <info>
+    <title></title>
+    <id></id>
+    <updated>2018-01-09T14:13:59+00:00</updated>
+  </info>
+  <locale xml:lang="en">
+    <style-options punctuation-in-quote="true"/>
+  </locale>
+  <macro name="author">
+    <names variable="author">
+      <name/>
+      <label form="long" prefix=", "/>
+    </names>
+  </macro>
+  <macro name="title">
+    <text variable="title" quotes="true" text-case="title"/>
+  </macro>
+  <citation>
+    <layout>
+      <text value="Bogus"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <sort>
+      <key macro="author"/>
+      <key variable="title"/>
+    </sort>
+    <layout suffix=".">
+      <group delimiter=". ">
+        <text macro="author"/>
+        <text macro="title"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "URL": "http://example.com", 
+        "author": [
+            {
+                "family": "Smith", 
+                "given": "John"
+            }
+        ], 
+        "id": 276, 
+        "title": "Chapter Title", 
+        "type": "chapter"
+    }
+]
+<<===== INPUT =====<<

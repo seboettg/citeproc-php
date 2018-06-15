@@ -45,7 +45,7 @@ class Term
             }
         }
         if (!isset($this->{$attr})) {
-            throw new \InvalidArgumentException("Attribute \"$attr\" ($name) does not exist in " . __CLASS__);
+            throw new \InvalidArgumentException("Property \"$attr\" ($name) does not exist in " . __CLASS__);
         }
         $this->{$attr} = $value;
     }

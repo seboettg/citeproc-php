@@ -4,7 +4,7 @@ bibliography
 
 >>===== RESULT =====>>
 <div class="csl-bib-body">
-  <div class="csl-entry">“Est Maximus Eu Donec Congue ‘Nešto Između’ Srđana Karanović“a”.</div>
+  <div class="csl-entry">“Est Maximus Eu Donec Congue ‘Nešto Između’ Srđana Karanović“a.”</div>
 </div>
 <<===== RESULT =====<<
 
