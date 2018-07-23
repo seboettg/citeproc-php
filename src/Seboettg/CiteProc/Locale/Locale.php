@@ -54,7 +54,10 @@ class Locale
 
     public function addXml(\SimpleXMLElement $xml)
     {
-        $this->parseXml($xml);
+        $lang = (string) $xml->attributes('http://www.w3.org/XML/1998/namespace')->{'lang'};
+        if (empty($lang) || $this->getLanguage() === $lang || explode('-', $this->getLanguage())[0] === $lang) {
+            $this->parseXml($xml);
+        }
         return $this;
     }
 
