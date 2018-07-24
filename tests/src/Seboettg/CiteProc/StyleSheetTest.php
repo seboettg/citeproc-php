@@ -59,4 +59,38 @@ class StyleSheetTest extends TestCase
         }
 
     }
+
+    /**
+     * @coversNothing
+     */
+    public function testLoadLocalesMetadata()
+    {
+
+        $metadata = StyleSheet::loadLocalesMetadata();
+        $this->assertObjectHasAttribute('primary-dialects', $metadata);
+        $this->assertObjectHasAttribute('en', $metadata->{'primary-dialects'});
+    }
+
+    /**
+     * @coversNothing
+     */
+    public function testLoadPrimaryDialectLocale()
+    {
+
+        $locales = StyleSheet::loadLocales("de");
+        $xmlLocales = new \SimpleXMLElement($locales);
+        foreach ($xmlLocales as $child) {
+            if ($child->getName() === "terms") {
+                foreach ($child as $term) {
+                    echo $term["name"];
+                    if ("and" === (string) $term["name"]) {
+                        $this->assertEquals("und", (string) $term);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+    }
 }

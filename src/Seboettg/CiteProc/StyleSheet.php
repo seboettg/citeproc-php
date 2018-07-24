@@ -46,7 +46,22 @@ class StyleSheet
     public static function loadLocales($langKey)
     {
         $localesPath = self::vendorPath() . "/citation-style-language/locales/";
-        return file_get_contents($localesPath . "locales-" . $langKey . '.xml');
+        $data = @file_get_contents($localesPath . "locales-" . $langKey . '.xml');
+
+        if ($data === false) {
+            $metadata = self::loadLocalesMetadata();
+            if (!empty($metadata->{'primary-dialects'}->{$langKey})) {
+            $data = file_get_contents($localesPath . "locales-" . $metadata->{'primary-dialects'}->{$langKey} . '.xml');
+            }
+        }
+
+        return $data;
+    }
+
+    public static function loadLocalesMetadata()
+    {
+        $localesMetadataPath = self::vendorPath() . "/citation-style-language/locales/locales.json";
+        return json_decode(file_get_contents($localesMetadataPath));
     }
 
     /**
