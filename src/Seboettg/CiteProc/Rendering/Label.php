@@ -128,7 +128,7 @@ class Label implements Rendering
      */
     private function evaluateStringPluralism($data, $variable)
     {
-        $str = $data->{$variable};
+        $str = isset($data->{$variable}) ? $data->{$variable} : '';
         $plural = 'single';
         if (!empty($str)) {
             switch ($variable) {
