@@ -38,6 +38,11 @@ class Locale
      */
     private $language;
 
+    /**
+     * Locale constructor.
+     * @param string $lang
+     * @param string $xmlString
+     */
     public function __construct($lang = "en-US", $xmlString = null)
     {
         $this->language = $lang;
@@ -52,6 +57,10 @@ class Locale
         $this->parseXml($this->localeXml);
     }
 
+    /**
+     * @param \SimpleXMLElement $xml
+     * @return $this
+     */
     public function addXml(\SimpleXMLElement $xml)
     {
         $lang = (string) $xml->attributes('http://www.w3.org/XML/1998/namespace')->{'lang'};
@@ -61,6 +70,9 @@ class Locale
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getLanguage()
     {
         return $this->language;
