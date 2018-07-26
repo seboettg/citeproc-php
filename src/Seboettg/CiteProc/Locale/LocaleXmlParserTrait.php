@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,9 +9,13 @@
 
 namespace Seboettg\CiteProc\Locale;
 
-
 use Seboettg\Collection\ArrayList;
 
+/**
+ * Trait LocaleXmlParserTrait
+ * @package Seboettg\CiteProc\Locale
+ * @author Sebastian Böttger <seboettg@gmail.com>
+ */
 trait LocaleXmlParserTrait
 {
 
@@ -45,6 +49,9 @@ trait LocaleXmlParserTrait
      */
     private $termsXml;
 
+    /**
+     * init parser
+     */
     protected function initLocaleXmlParser()
     {
         $this->options = new ArrayList();
@@ -56,6 +63,9 @@ trait LocaleXmlParserTrait
 
     }
 
+    /**
+     * @param \SimpleXMLElement $locale
+     */
     private function parseXml(\SimpleXMLElement $locale)
     {
         /** @var \SimpleXMLElement $node */
@@ -139,7 +149,9 @@ trait LocaleXmlParserTrait
         return array_pop($arr);
     }
 
-
+    /**
+     * @return array
+     */
     public function getDateXml()
     {
         return $this->dateXml->toArray();
