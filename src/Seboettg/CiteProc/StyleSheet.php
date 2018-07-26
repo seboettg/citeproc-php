@@ -30,6 +30,7 @@ class StyleSheet
      *
      * @param string $styleName e.g. "american-physiological-society" for apa
      * @return string
+     * @throws CiteProcException
      */
     public static function loadStyleSheet($styleName)
     {
@@ -42,16 +43,18 @@ class StyleSheet
      *
      * @param string $langKey e.g. "en-US", or "de-CH"
      * @return string
+     * @throws CiteProcException
      */
     public static function loadLocales($langKey)
     {
         $localesPath = self::vendorPath() . "/citation-style-language/locales/";
-        $data = @file_get_contents($localesPath . "locales-" . $langKey . '.xml');
-
-        if ($data === false) {
+        $localeFile = $localesPath . "locales-" . $langKey . '.xml';
+        if (file_exists($localeFile)) {
+            $data = file_get_contents($localeFile);
+        } else {
             $metadata = self::loadLocalesMetadata();
             if (!empty($metadata->{'primary-dialects'}->{$langKey})) {
-            $data = file_get_contents($localesPath . "locales-" . $metadata->{'primary-dialects'}->{$langKey} . '.xml');
+                $data = file_get_contents($localesPath . "locales-" . $metadata->{'primary-dialects'}->{$langKey} . '.xml');
             }
         }
 

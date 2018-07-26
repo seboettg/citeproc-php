@@ -129,6 +129,9 @@ EOT;
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * @throws \Seboettg\CiteProc\Exception\CiteProcException
+     */
     public function testEnrichMarkupURL()
     {
         $cslJson = '[{
