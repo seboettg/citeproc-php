@@ -211,4 +211,9 @@ class CiteProcTest extends TestCase
         $this->assertEquals("[1,3]", $result[0]);
         $this->assertEquals("[2]", $result[1]);
     }
+
+    public function testOverrideOnlyCurrentLang()
+    {
+        $this->_testRenderTestSuite("locale_OverrideOnlyCurrentLang");
+    }
 }
