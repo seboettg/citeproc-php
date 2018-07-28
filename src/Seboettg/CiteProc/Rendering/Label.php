@@ -167,7 +167,7 @@ class Label implements Rendering
     protected function getPlural($data, $plural, $variable)
     {
 
-        if ($variable === "editortranslator") {
+        if ($variable === "editortranslator" && isset($data->editor)) {
             $var = $data->editor;
         } else {
             $var = $data->{$variable};
