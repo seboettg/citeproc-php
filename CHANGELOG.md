@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2.1.4 - 2018-07-30
+
+* bugfix of [PR 52](https://github.com/seboettg/citeproc-php/pull/52): Fix locale overrides using inactive language 
+* bugfix of [PR 53](https://github.com/seboettg/citeproc-php/pull/53): Guard against unset variable
+* improvement of [PR 54](https://github.com/seboettg/citeproc-php/pull/54): Add loading of primary dialect
+
+Thanks to [@jonathonwalz](https://github.com/jonathonwalz) for these Pull Requests.
+
 ## 2.1.3 - 2018-06-15
 
 * bugfix for issue [50](https://github.com/seboettg/citeproc-php/issues/50): In some cases punctuation in quote did not work.
