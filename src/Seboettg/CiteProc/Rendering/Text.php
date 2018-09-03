@@ -105,7 +105,6 @@ class Text implements Rendering
                 if (CiteProc::getContext()->getRenderingState()->getValue() === RenderingState::SUBSTITUTION) {
                     unset($data->{$this->toRenderTypeValue});
                 }
-                $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
                 break;
             case 'macro':
                 $renderedText = $this->renderMacro($data);
@@ -115,6 +114,7 @@ class Text implements Rendering
                 $renderedText = !empty($term) ? $this->applyTextCase($term, $lang) : "";
         }
         if (!empty($renderedText)) {
+            $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
             $renderedText = $this->formatRenderedText($renderedText);
         }
         return $renderedText;
