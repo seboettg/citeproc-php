@@ -68,7 +68,8 @@ class CssStyle
             }
 
             if (!empty($hangingIndent)) {
-                $rule->addDirective("text-indent", "45px");
+                $rule->addDirective("padding-left", "2em");
+                $rule->addDirective("text-indent", "-2em");
             }
         }
 
