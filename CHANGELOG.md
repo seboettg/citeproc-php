@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.1.5 - 2018-09-23
+
+* bugfix of [issue 57](https://github.com/seboettg/citeproc-php/issues/57)
+* bugfix of [issue 58](https://github.com/seboettg/citeproc-php/issues/58)
+
 ## 2.1.4 - 2018-07-30
 
 * bugfix of [PR 52](https://github.com/seboettg/citeproc-php/pull/52): Fix locale overrides using inactive language 
