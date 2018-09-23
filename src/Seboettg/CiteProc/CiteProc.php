@@ -18,7 +18,9 @@ use Seboettg\CiteProc\Style\Macro;
 use Seboettg\CiteProc\Style\Options\GlobalOptions;
 use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Styles\Css\CssStyle;
+use Seboettg\CiteProc\Util\CiteProcHelper;
 use Seboettg\Collection\ArrayList;
+use SimpleXMLElement;
 
 
 /**
@@ -60,7 +62,7 @@ class CiteProc
     private $styleSheet;
 
     /**
-     * @var \SimpleXMLElement
+     * @var SimpleXMLElement
      */
     private $styleSheetXml;
 
@@ -88,9 +90,10 @@ class CiteProc
     }
 
     /**
-     * @param \SimpleXMLElement $style
+     * @param SimpleXMLElement $style
+     * @throws CiteProcException
      */
-    private function parse(\SimpleXMLElement $style)
+    private function parse(SimpleXMLElement $style)
     {
         $root = new Root();
         $root->initInheritableNameAttributes($style);
@@ -98,7 +101,7 @@ class CiteProc
         $globalOptions = new GlobalOptions($style);
         self::$context->setGlobalOptions($globalOptions);
 
-        /** @var \SimpleXMLElement $node */
+        /** @var SimpleXMLElement $node */
         foreach ($style as $node) {
             $name = $node->getName();
             switch ($name) {
@@ -147,11 +150,16 @@ class CiteProc
     /**
      * @param array|DataList $data
      * @param string $mode (citation|bibliography)
+     * @param array $citationItems
+     * @param bool $citationAsArray
      * @return string
      * @throws CiteProcException
      */
     public function render($data, $mode = "bibliography", $citationItems = [], $citationAsArray = false)
     {
+        if (is_array($data)) {
+            $data = CiteProcHelper::cloneArray($data);
+        }
 
         if (!in_array($mode, ['citation', 'bibliography'])) {
             throw new \InvalidArgumentException("\"$mode\" is not a valid mode.");
@@ -193,6 +201,7 @@ class CiteProc
     /**
      * initializes CiteProc and start parsing XML stylesheet
      * @param bool $citationAsArray
+     * @throws CiteProcException
      */
     public function init($citationAsArray = false)
     {
@@ -201,12 +210,13 @@ class CiteProc
         self::$context->setCitationsAsArray($citationAsArray);
         // set markup extensions
         self::$context->setMarkupExtension($this->markupExtension);
-        $this->styleSheetXml = new \SimpleXMLElement($this->styleSheet);
+        $this->styleSheetXml = new SimpleXMLElement($this->styleSheet);
         $this->parse($this->styleSheetXml);
     }
 
     /**
      * @return string
+     * @throws CiteProcException
      */
     public function renderCssStyles()
     {

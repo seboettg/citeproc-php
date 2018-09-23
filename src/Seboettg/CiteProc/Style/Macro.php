@@ -9,9 +9,11 @@
 
 namespace Seboettg\CiteProc\Style;
 
+use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Rendering;
+use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\Collection\ArrayList;
@@ -72,7 +74,7 @@ class Macro implements Rendering, HasParent
     }
 
     /**
-     * @param \stdClass $data
+     * @param array|DataList $data
      * @param int|null $citationNumber
      * @return string
      */

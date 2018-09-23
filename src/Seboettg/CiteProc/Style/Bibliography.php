@@ -10,6 +10,7 @@
 namespace Seboettg\CiteProc\Style;
 
 use Seboettg\CiteProc\Data\DataList;
+use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Style\Options\BibliographyOptions;
 use Seboettg\CiteProc\CiteProc;
 

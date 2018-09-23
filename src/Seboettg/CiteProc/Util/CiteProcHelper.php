@@ -40,4 +40,17 @@ class CiteProcHelper
         }
         return $renderedText;
     }
+
+    /**
+     * @param array $array
+     * @return array
+     */
+    public static function cloneArray(array $array)
+    {
+        $newArray = [];
+        foreach ($array as $key => $value) {
+            $newArray[$key] = clone $value;
+        }
+        return $newArray;
+    }
 }
