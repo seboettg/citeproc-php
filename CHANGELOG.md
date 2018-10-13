@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.1.6 - 2018-10-13
+
+* bugfix of [issue 59](https://github.com/seboettg/citeproc-php/issues/59)
+* bugfix of [issue 58](https://github.com/seboettg/citeproc-php/issues/60)
+
 ## 2.1.5 - 2018-09-23
 
 * bugfix of [issue 57](https://github.com/seboettg/citeproc-php/issues/57)
