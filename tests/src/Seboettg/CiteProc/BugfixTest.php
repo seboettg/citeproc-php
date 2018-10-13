@@ -40,4 +40,16 @@ class BugfixTest extends TestCase
         $this->assertNotEmpty($result);
         $this->assertTrue(isset($input[0]->title), "Failed asserting that title property exists in input data");
     }
+
+    public function testBugfixGitub59()
+    {
+        $style = "modern-language-association";
+        $input = '[{"type": "book","accessed": {"date-parts": [["2016","01","01"]]},"publisher": "lol2","title": "lol"},{"type": "book","author": [{"given": "Daniel","suffix": "H.","family": "Nexon"},{"given": "Iver","suffix": "B.","family": "Neumann"}],"accessed": {"date-parts": [["2006","01","01"]]},"publisher": "Rowman & Littlefield","title": "Harry Potter and International Relations"}]';
+        $citeProc = new CiteProc(StyleSheet::loadStyleSheet($style));
+        $data = json_decode($input);
+        $datum = $data[0];
+        $this->assertNotTrue(isset($datum->author)); //first entry has no author
+        $result = $citeProc->render($data);
+        $this->assertNotEmpty($result);
+    }
 }

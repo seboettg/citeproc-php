@@ -23,9 +23,14 @@ class NameHelper
      * @param \stdClass $precedingItem
      * @param array $currentAuthor
      * @return bool
+     * @throws CiteProcException
      */
     public static function identicalAuthors($precedingItem, $currentAuthor)
     {
+        if (!property_exists($precedingItem, "author")) {
+            throw new CiteProcException("No author to present");
+        }
+
         if (count($precedingItem->author) !== count($currentAuthor)) {
             return false;
         }

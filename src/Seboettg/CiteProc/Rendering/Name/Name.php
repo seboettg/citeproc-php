@@ -375,9 +375,13 @@ class Name implements HasParent
                 /* “complete-each” - requires a complete match like “complete-all”, but now the value of
                 subsequent-author-substitute substitutes for each rendered name. */
                 case SubsequentAuthorSubstituteRule::COMPLETE_EACH:
-                    if (NameHelper::identicalAuthors($preceding, $data)) {
-                        $resultNames[] = $subsequentSubstitution;
-                    } else {
+                    try {
+                        if (NameHelper::identicalAuthors($preceding, $data)) {
+                            $resultNames[] = $subsequentSubstitution;
+                        } else {
+                            $resultNames[] = $this->formatName($name, $rank);
+                        }
+                    } catch (CiteProcException $e) {
                         $resultNames[] = $this->formatName($name, $rank);
                     }
                     break;
@@ -401,11 +405,14 @@ class Name implements HasParent
 
         if ($hasPreceding && !is_null($subsequentSubstitution) && !empty($subsequentSubstitutionRule)) {
             /** @var \stdClass $preceding */
-            $identicalAuthors = NameHelper::identicalAuthors($preceding, $data);
             if ($subsequentSubstitutionRule == SubsequentAuthorSubstituteRule::COMPLETE_ALL) {
-                if ($identicalAuthors) {
-                    return [];
-                } else {
+                try {
+                    if (NameHelper::identicalAuthors($preceding, $data)) {
+                        return [];
+                    } else {
+                        $resultNames = $this->getFormattedNames($data);
+                    }
+                } catch (CiteProcException $e) {
                     $resultNames = $this->getFormattedNames($data);
                 }
             } else {
