@@ -58,14 +58,19 @@ class PageHelper
     private static function renderMinimal($from, $to, $limit = 1)
     {
         $resTo = "";
-        for ($i = strlen($to) - 1; $i >= $limit; --$i) {
-            $digitTo = $to{$i};
-            $digitFrom = $from{$i};
-            if ($digitTo !== $digitFrom) {
-                $resTo = $digitTo . $resTo;
+        if (strlen($from) == strlen($to)) {
+            for ($i = strlen($to) - 1; $i >= $limit; --$i) {
+                $digitTo = $to{$i};
+
+                $digitFrom = $from{$i};
+                if ($digitTo !== $digitFrom) {
+                    $resTo = $digitTo . $resTo;
+                }
             }
+            return $resTo;
         }
-        return $resTo;
+        return $to;
+
     }
 
     private static function renderChicago($from, $to)
