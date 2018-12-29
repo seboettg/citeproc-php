@@ -36,7 +36,7 @@ Version 2.x is a completely new written version of citeproc-php. In this connect
 ## Installing citeproc-php ##
 
 The recommended way to install citeproc-php is through
-[Composer](http://getcomposer.org).
+[Composer](https://getcomposer.org).
 
 ```bash
 $ curl -sS https://getcomposer.org/installer | php
@@ -115,7 +115,7 @@ $ mkdir mycslproject
 $ cd mycslproject
 ```
 
-First, you need json formatted metadata array of publication's metadata. There are a lot of services that supports CSL exports. For instance [BibSonomy](https://www.bibsonomy.org) Zotero, Mendeley. 
+First, you need json formatted metadata array of publication's metadata. There are a lot of services that supports CSL exports. For instance [BibSonomy](https://www.bibsonomy.org), [Zotero](https://www.zotero.org/), [Mendeley](https://www.mendeley.com/). 
 If you don't use any of these services, you can use the following test data for a first step.
 
 ```javascript
@@ -228,7 +228,7 @@ $ php -S localhost:8080
 
 Start your Browser and open the URL `http://localhost:8080`.
 
-Under examples folder you will find another example script.
+Under `examples` folder you will find another example script.
 
 
 ## Advanced usage of citeproc-php ##
@@ -317,7 +317,7 @@ $citeProc = new CiteProc($style, "en-US", $additionalMarkup);
 <?php echo $citeProc->render(json_decode($data), "bibliography");
 
 ```
-In this example each entry of the bibliography gets an anchor by its `id` and the citation (in elsevier-vancouver style [1]) gets an URL with a fragment by its `id`. Hence, every citation mark gets a link to its entry in the bibliography.
+In this example each entry of the bibliography gets an anchor by its `id` and the citation (in Elsevier-Vancouver style [1]) gets an URL with a fragment by its `id`. Hence, every citation mark gets a link to its entry in the bibliography.
 Further examples you will find in the example folder.
 
 ### Good to know ###
