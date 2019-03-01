@@ -250,7 +250,8 @@ class Name implements HasParent
             !empty($resultNames) &&
             !empty($this->etAl) &&
             !empty($this->etAlMin) &&
-            !empty($this->etAlUseFirst)
+            !empty($this->etAlUseFirst) &&
+            count($data) != count($resultNames)
         ) {
 
 

@@ -114,6 +114,12 @@ class NameTest extends TestCase
         $this->_testRenderTestSuite("nameattr_EtAlUseFirst");
     }
 
+    public function testNameEtAlUseLast()
+    {
+        $this->_testRenderTestSuite("name_EtAlUseLast");
+    }
+
+
     public function testNameAttrNameDelimiter()
     {
         $this->_testRenderTestSuite("nameattr_NameDelimiter");
