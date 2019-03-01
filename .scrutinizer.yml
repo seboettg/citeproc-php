@@ -1,24 +1,53 @@
-checks:
-    php: true
-
 filter:
     excluded_paths:
-        - 'tests/'
-        - 'vendor/'
-        - 'styles/'
-        - 'locales/'
-        - 'doc/'
-        - 'review/'
-
+        - 'tests/*'
+checks:
+    php:
+        more_specific_types_in_doc_comments: true
+        naming_conventions:
+            local_variable: '^[a-z][a-zA-Z0-9]*$'
+            abstract_class_name: ^Abstract|Factory$
+            utility_class_name: '.*'
+            constant_name: '^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*$'
+            property_name: '^[a-z][a-zA-Z0-9]*$'
+            method_name: '^(?:[a-z]|__)[a-zA-Z0-9]*$'
+            parameter_name: '^[a-z][a-zA-Z0-9]*$'
+            interface_name: '^[A-Z][a-zA-Z0-9]*Interface$'
+            type_name: '^[A-Z][a-zA-Z0-9]*$'
+            exception_name: '^[A-Z][a-zA-Z0-9]*Exception$'
+            isser_method_name: '^(?:is|has|should|may|supports)'
+        overriding_parameter: true
+        param_doc_comment_if_not_inferrable: true
+        parameter_doc_comments: true
+        parameters_in_camelcaps: true
+        properties_in_camelcaps: true
+        return_doc_comment_if_not_inferrable: true
+        return_doc_comments: true
+        check_method_contracts:
+            verify_interface_like_constraints: true
+            verify_documented_constraints: true
+            verify_parent_constraints: true
 coding_style:
     php:
+        indentation:
+            general:
+                size: 1
         spaces:
             around_operators:
-                concatenation: true
-
+                bitwise: false
 build:
-    environment:
-        php:
-            version: 7.0.20
-            ini:
-                'date.timezone': 'Europe/Berlin'
+    tests:
+        override:
+            - command: 'mkdir -p build/logs'
+            - command: 'php vendor/bin/phpunit --coverage-clover=build/logs/clover.xml'
+              coverage:
+                  file: 'build/logs/clover.xml'
+                  format: 'clover'
+    nodes:
+        tests: true
+        analysis:
+            tests:
+                override:
+                    - command: phpcs-run
+                      use_website_config: true
+                    - php-scrutinizer-run
