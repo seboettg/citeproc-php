@@ -18,13 +18,20 @@ namespace Seboettg\CiteProc\Constraint;
  */
 class Variable implements ConstraintInterface
 {
-
+    /**
+     * @var string
+     */
     private $name;
 
-    public function __construct($name, $match = null)
+    /**
+     * Variable constructor.
+     * @param $name
+     */
+    public function __construct($name)
     {
         $this->name = $name;
     }
+
     /**
      * @param $value
      * @param int|null $citationNumber

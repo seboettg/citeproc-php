@@ -50,10 +50,6 @@ class Position implements ConstraintInterface
      */
     public function validate($value, $citationNumber = null)
     {
-        if (!is_null($citationNumber)) {
-
-        }
-
         return false;
     }
 }

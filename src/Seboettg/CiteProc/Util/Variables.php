@@ -153,6 +153,8 @@ class Variables
      * @param \stdClass $data
      * @param string $variable
      * @return string
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
+     * @throws \Seboettg\CiteProc\Exception\CiteProcException
      */
     public static function nameHash(\stdClass $data, $variable)
     {

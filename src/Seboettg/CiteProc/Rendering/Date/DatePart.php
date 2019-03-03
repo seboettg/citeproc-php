@@ -12,7 +12,6 @@ use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Rendering\Layout;
 use Seboettg\CiteProc\Rendering\Number;
 use Seboettg\CiteProc\Styles\AffixesTrait;
-use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\RangeDelimiterTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
@@ -91,7 +90,8 @@ class DatePart
     }
 
     /**
-     * @param $date
+     * @param DateTime $date
+     * @param Date|null $parent
      * @return string
      */
     public function renderWithoutAffixes(DateTime $date, Date $parent = null)

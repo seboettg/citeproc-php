@@ -47,6 +47,7 @@ class StyleSheet
      */
     public static function loadLocales($langKey)
     {
+        $data = null;
         $localesPath = self::vendorPath() . "/citation-style-language/locales/";
         $localeFile = $localesPath . "locales-" . $langKey . '.xml';
         if (file_exists($localeFile)) {
@@ -61,6 +62,10 @@ class StyleSheet
         return $data;
     }
 
+    /**
+     * @return mixed
+     * @throws CiteProcException
+     */
     public static function loadLocalesMetadata()
     {
         $localesMetadataPath = self::vendorPath() . "/citation-style-language/locales/locales.json";

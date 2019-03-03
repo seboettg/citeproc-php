@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Data;
 
+use Seboettg\CiteProc\Style\Citation;
 use Seboettg\CiteProc\Style\Options\SubsequentAuthorSubstituteRule;
 use Seboettg\Collection\ArrayList;
 
@@ -72,7 +73,6 @@ class DataList extends ArrayList
     {
         $this->subsequentAuthorSubstituteRule = $subsequentAuthorSubstituteRule;
     }
-
 
 
 }

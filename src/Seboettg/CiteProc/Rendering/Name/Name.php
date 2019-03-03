@@ -8,10 +8,10 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Name;
+
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Rendering\HasParent;
-use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Style\InheritableNameAttributesTrait;
 use Seboettg\CiteProc\Style\Options\DemoteNonDroppingParticle;
 use Seboettg\CiteProc\Style\Options\SubsequentAuthorSubstituteRule;
@@ -76,6 +76,7 @@ class Name implements HasParent
      * Name constructor.
      * @param \SimpleXMLElement $node
      * @param Names $parent
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
      */
     public function __construct(\SimpleXMLElement $node, Names $parent)
     {
@@ -110,9 +111,11 @@ class Name implements HasParent
     }
 
     /**
-     * @param array $name
+     * @param \stdClass $data
+     * @param string $var
      * @param integer|null $citationNumber
      * @return string
+     * @throws CiteProcException
      */
     public function render($data, $var, $citationNumber = null)
     {
@@ -170,6 +173,7 @@ class Name implements HasParent
      * @param \stdClass $nameItem
      * @param int $rank
      * @return string
+     * @throws CiteProcException
      */
     private function formatName($nameItem, $rank)
     {
@@ -190,6 +194,7 @@ class Name implements HasParent
      * @param \stdClass $name
      * @param int $rank
      * @return string
+     * @throws CiteProcException
      */
     private function getNamesString($name, $rank)
     {
@@ -330,6 +335,7 @@ class Name implements HasParent
      * @param $data
      * @param \stdClass $preceding
      * @return array
+     * @throws CiteProcException
      */
     protected function renderSubsequentSubstitution($data, $preceding)
     {
@@ -395,6 +401,7 @@ class Name implements HasParent
      * @param array $data
      * @param int $citationNumber
      * @return array
+     * @throws CiteProcException
      */
     private function handleSubsequentAuthorSubstitution($data, $citationNumber)
     {
@@ -429,6 +436,7 @@ class Name implements HasParent
     /**
      * @param array $data
      * @return array
+     * @throws CiteProcException
      */
     protected function getFormattedNames($data)
     {
@@ -520,6 +528,7 @@ class Name implements HasParent
      * @param integer $rank
      *
      * @return string
+     * @throws CiteProcException
      */
     private function nameOrder($data, $rank)
     {

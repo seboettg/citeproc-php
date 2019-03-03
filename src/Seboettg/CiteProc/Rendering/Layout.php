@@ -10,13 +10,13 @@
 namespace Seboettg\CiteProc\Rendering;
 
 use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Data\DataList;
+use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use Seboettg\CiteProc\RenderingState;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
-use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
+use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Util\CiteProcHelper;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\CiteProc\Util\StringHelper;
@@ -55,7 +55,9 @@ class Layout implements Rendering
     private $parent;
 
     /**
+     * @param \SimpleXMLElement $node
      * @param \Seboettg\CiteProc\Style\StyleElement $parent
+     * @throws InvalidStylesheetException
      */
     public function __construct($node, $parent)
     {
@@ -160,6 +162,7 @@ class Layout implements Rendering
     }
 
     /**
+     * @param \stdClass $dataItem
      * @param string $value
      * @return string
      */

@@ -35,6 +35,7 @@ class GlobalOptions
 
     /**
      * GlobalOptions constructor.
+     * @param \SimpleXMLElement $node
      */
     public function __construct(\SimpleXMLElement $node)
     {

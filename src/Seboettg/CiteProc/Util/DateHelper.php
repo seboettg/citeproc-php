@@ -68,6 +68,7 @@ class DateHelper
      * @param array $dataItem
      * @param Key $key
      * @return string
+     * @throws CiteProcException
      */
     public static function getSortKeyDate($dataItem, $key)
     {

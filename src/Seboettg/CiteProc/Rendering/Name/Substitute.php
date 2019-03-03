@@ -59,6 +59,8 @@ class Substitute implements Rendering
      * Substitute constructor.
      * @param \SimpleXMLElement $node
      * @param Names $parent
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
      */
     public function __construct(\SimpleXMLElement $node, Names $parent)
     {

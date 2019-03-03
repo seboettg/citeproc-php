@@ -8,8 +8,8 @@
  */
 
 namespace Seboettg\CiteProc\Util;
-use Seboettg\CiteProc\Exception\CiteProcException;
-use Seboettg\CiteProc\Exception\ClassNotFoundException;
+
+use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 
 
 /**
@@ -50,13 +50,13 @@ class Factory
      * @param \SimpleXMLElement $node
      * @param mixed $param
      * @return mixed
-     * @throws ClassNotFoundException
+     * @throws InvalidStylesheetException
      */
     public static function create($node, $param = null)
     {
         $nodeClass = self::CITE_PROC_NODE_NAMESPACE . self::$nodes[$node->getName()];
         if (!class_exists($nodeClass)) {
-            throw new ClassNotFoundException($nodeClass);
+            throw new InvalidStylesheetException("For node {$node->getName()} does not exist any counterpart class \"" . $nodeClass . "\". The given stylesheet seems to be invalid.");
         }
         if ($param != null) {
             return new $nodeClass($node, $param);

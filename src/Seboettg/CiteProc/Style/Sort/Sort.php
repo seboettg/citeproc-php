@@ -11,8 +11,9 @@ namespace Seboettg\CiteProc\Style\Sort;
 
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Data\DataList;
-use Seboettg\CiteProc\Util\Variables;
+use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Util\DateHelper;
+use Seboettg\CiteProc\Util\Variables;
 use Seboettg\Collection\ArrayList;
 
 
@@ -69,7 +70,11 @@ class Sort
             $data = new DataList($data);
         }
         $dataToSort = $data->toArray();
-        $data->replace($this->performSort(0, $dataToSort));
+        try {
+            $data->replace($this->performSort(0, $dataToSort));
+        } catch (CiteProcException $e) {
+            //nothing to do, because $data is passed by referenced
+        }
     }
 
     /**
@@ -81,6 +86,7 @@ class Sort
      * @param $keyNumber
      * @param array $dataToSort
      * @return array
+     * @throws \Seboettg\CiteProc\Exception\CiteProcException
      */
     private function performSort($keyNumber, $dataToSort)
     {

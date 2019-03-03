@@ -14,7 +14,6 @@ use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Name\Name;
 use Seboettg\CiteProc\Rendering\Name\Names;
 use Seboettg\CiteProc\Root\Root;
-use Seboettg\CiteProc\Style\Macro;
 
 /**
  * Class InheritableNameAttributesTrait

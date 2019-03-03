@@ -9,10 +9,10 @@
 
 namespace Seboettg\CiteProc\Style;
 
+use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Style\Options\BibliographyOptions;
-use Seboettg\CiteProc\CiteProc;
 
 /**
  * Class Bibliography
@@ -34,8 +34,9 @@ class Bibliography extends StyleElement
      * Bibliography constructor.
      * @param \SimpleXMLElement $node
      * @param Root $parent
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
      */
-    public function __construct(\SimpleXMLElement $node, $parent)
+    public function __construct(\SimpleXMLElement $node, Root $parent)
     {
         parent::__construct($node, $parent);
         $this->node = $node;

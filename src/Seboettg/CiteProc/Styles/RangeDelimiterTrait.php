@@ -8,8 +8,6 @@
  */
 
 namespace Seboettg\CiteProc\Styles;
-use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Style\Options\PageRangeFormats;
 
 /**
  * Trait RangeDelimiterTrait

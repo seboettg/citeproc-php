@@ -12,7 +12,6 @@ use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
-use Seboettg\CiteProc\Util\NumberHelper;
 
 
 /**

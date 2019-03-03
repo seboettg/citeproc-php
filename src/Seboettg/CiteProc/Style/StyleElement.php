@@ -46,6 +46,7 @@ abstract class StyleElement
      *
      * @param \SimpleXMLElement $node
      * @param Root $parent
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
      */
     protected function __construct(\SimpleXMLElement $node, $parent)
     {

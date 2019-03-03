@@ -8,10 +8,9 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Choose;
+
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Rendering;
-use Seboettg\CiteProc\Rendering\Text;
-use Seboettg\CiteProc\Style\Macro;
 use Seboettg\Collection\ArrayList;
 
 
@@ -35,6 +34,8 @@ class Choose implements Rendering, HasParent
      * Choose constructor.
      * @param \SimpleXMLElement $node
      * @param $parent
+     * @throws \Seboettg\CiteProc\Exception\ClassNotFoundException
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
      */
     public  function __construct(\SimpleXMLElement $node, $parent)
     {

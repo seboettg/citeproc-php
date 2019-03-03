@@ -10,7 +10,6 @@
 namespace Seboettg\CiteProc\Rendering;
 
 use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\RenderingState;
 use Seboettg\CiteProc\Styles\AffixesTrait;

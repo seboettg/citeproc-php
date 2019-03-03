@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -8,8 +8,6 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Choose;
-use Seboettg\CiteProc\Rendering\Rendering;
-
 
 /**
  * Class ChooseElse

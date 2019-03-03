@@ -82,6 +82,7 @@ trait TextCaseTrait
     /**
      * @param string $render
      * @param string $original
+     * @return string|string[]|null
      */
     private function keepNoCase($render, $original)
     {

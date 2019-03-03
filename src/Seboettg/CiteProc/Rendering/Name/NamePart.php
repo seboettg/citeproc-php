@@ -8,13 +8,11 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Name;
-use Seboettg\CiteProc\CiteProc;
+
 use Seboettg\CiteProc\Exception\CiteProcException;
-use Seboettg\CiteProc\Style\Options\DemoteNonDroppingParticle;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
-use Seboettg\CiteProc\Util\NameHelper;
 
 /**
  * Class NamePart

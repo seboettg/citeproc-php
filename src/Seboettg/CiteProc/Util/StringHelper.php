@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpInternalEntityUsedInspection */
+
 /*
  * citeproc-php
  *
@@ -138,6 +139,7 @@ class StringHelper
         $firstChar = mb_substr($string, 0, 1, $encoding);
         $then = mb_substr($string, 1, $strlen - 1, $encoding);
 
+        /** @noinspection PhpInternalEntityUsedInspection */
         $encoding = Mbstring::mb_detect_encoding($firstChar, self::ISO_ENCODINGS, true);
         return in_array($encoding, self::ISO_ENCODINGS) ? Mbstring::mb_strtoupper($firstChar, $encoding) . $then : $firstChar . $then;
     }

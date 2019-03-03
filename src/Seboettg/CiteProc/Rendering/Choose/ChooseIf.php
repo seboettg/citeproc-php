@@ -13,8 +13,6 @@ use Seboettg\CiteProc\Constraint\ConstraintInterface;
 use Seboettg\CiteProc\Constraint\Factory;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Rendering;
-use Seboettg\CiteProc\Rendering\RendersEmptyVariables;
-use Seboettg\CiteProc\Rendering\RendersEmptyVariablesTrait;
 use Seboettg\Collection\ArrayList;
 
 
@@ -52,6 +50,8 @@ class ChooseIf implements Rendering, HasParent
     /**
      * @param \SimpleXMLElement $node
      * @param Choose $parent
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
+     * @throws \Seboettg\CiteProc\Exception\ClassNotFoundException
      */
     public function __construct(\SimpleXMLElement $node, $parent)
     {

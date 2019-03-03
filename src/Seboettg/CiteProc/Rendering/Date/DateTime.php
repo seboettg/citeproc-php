@@ -11,6 +11,7 @@ namespace Seboettg\CiteProc\Rendering\Date;
 
 
 use DateTimeZone;
+use Seboettg\CiteProc\Exception\InvalidDateTimeException;
 
 class DateTime extends \DateTime
 {
@@ -32,12 +33,18 @@ class DateTime extends \DateTime
     /**
      * DateTime constructor.
      * @param string $year
-     * @param DateTimeZone $month
-     * @param $day
+     * @param string $month
+     * @param string $day
+     * @throws \Exception
      */
     public function __construct($year, $month, $day)
     {
-        parent::__construct("$year-$month-$day", new DateTimeZone("Europe/Berlin"));
+        try {
+            parent::__construct("$year-$month-$day", new DateTimeZone("Europe/Berlin"));
+        } catch (\Exception $e) {
+            throw new InvalidDateTimeException("Could not create valid date with year=$year, month=$month, day=$day.");
+        }
+
         $this->year = intval(self::format("Y"));
         $this->month = intval(self::format("n"));
         $this->day = intval(self::format("j"));

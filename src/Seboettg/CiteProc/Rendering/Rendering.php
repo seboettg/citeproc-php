@@ -22,7 +22,7 @@ interface Rendering
 {
 
     /**
-     * @param array|DataList $data
+     * @param array|DataList|\stdClass $data
      * @param int|null $citationNumber
      * @return string
      */

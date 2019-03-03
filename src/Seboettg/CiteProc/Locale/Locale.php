@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Locale;
 use Seboettg\CiteProc\StyleSheet;
+use Seboettg\Collection\ArrayList;
 
 /**
  * Class Locale
@@ -42,6 +43,7 @@ class Locale
      * Locale constructor.
      * @param string $lang
      * @param string $xmlString
+     * @throws \Seboettg\CiteProc\Exception\CiteProcException
      */
     public function __construct($lang = "en-US", $xmlString = null)
     {
@@ -90,6 +92,7 @@ class Locale
             throw new \InvalidArgumentException("There is no locale of type \"$type\".");
         }
 
+        /** @var ArrayList $localeList */
         $localeList = $this->{$type};
 
         if (is_null($name)) {

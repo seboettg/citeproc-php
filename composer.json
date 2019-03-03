@@ -19,9 +19,10 @@
     "require": {
         "seboettg/collection": "^1.2",
         "myclabs/php-enum": "^1.5",
-        "symfony/polyfill-mbstring": "^1.3",
+        "symfony/polyfill-mbstring": "v1.10.*",
         "ext-simplexml": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-intl": "*"
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1",

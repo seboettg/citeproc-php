@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Rendering;
 
+use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Styles\DelimiterTrait;
@@ -60,6 +61,12 @@ class Group implements Rendering, HasParent
     private $renderedChildsWithVariable = [];
 
 
+    /**
+     * Group constructor.
+     * @param \SimpleXMLElement $node
+     * @param $parent
+     * @throws InvalidStylesheetException
+     */
     public function __construct(\SimpleXMLElement $node, $parent)
     {
         $this->parent = $parent;
@@ -101,6 +108,7 @@ class Group implements Rendering, HasParent
                 ++$variables;
             }
 
+            /** @var \stdClass $data */
             $text = $child->render($data, $citationNumber);
             $delimiter = $this->delimiter;
             if (!empty($text)) {
@@ -117,7 +125,8 @@ class Group implements Rendering, HasParent
                 $textParts[] = $text;
 
                 if (method_exists($child, "getSource") && $child->getSource() == 'variable' ||
-                   (method_exists($child, "getVariable") && $child->getVariable() != "date" && !empty($child->getVariable()))) {
+                    (method_exists($child,
+                            "getVariable") && $child->getVariable() != "date" && !empty($child->getVariable()))) {
 
                     $haveVariables++;
                 }

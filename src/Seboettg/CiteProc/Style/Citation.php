@@ -35,6 +35,8 @@ class Citation extends StyleElement
     /**
      * Citation constructor.
      * @param \SimpleXMLElement $node
+     * @param $parent
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
      */
     public function __construct(\SimpleXMLElement $node, $parent)
     {

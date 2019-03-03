@@ -68,6 +68,11 @@ class Date
      */
     private $datePartsAttribute = "";
 
+    /**
+     * Date constructor.
+     * @param \SimpleXMLElement $node
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
+     */
     public function __construct(\SimpleXMLElement $node)
     {
         $this->dateParts = new ArrayList();
@@ -102,6 +107,8 @@ class Date
     /**
      * @param $data
      * @return string
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
+     * @throws \Exception
      */
     public function render($data)
     {
@@ -153,6 +160,7 @@ class Date
                 $data_ = $this->createDateTime($data->{$this->variable}->{'date-parts'});
                 /** @var DatePart $datePart */
                 foreach ($this->dateParts as $key => $datePart) {
+                    /** @noinspection PhpUnusedLocalVariableInspection */
                     list($f, $p) = explode("-", $key);
                     if (in_array($p, $dateParts)) {
                         $ret .= $datePart->render($data_[0], $this);
@@ -196,6 +204,11 @@ class Date
         return !empty($ret) ? $this->addAffixes($this->format($this->applyTextCase($ret))) : "";
     }
 
+    /**
+     * @param array $dates
+     * @return array
+     * @throws \Exception
+     */
     private function createDateTime($dates)
     {
         $data = [];
@@ -462,7 +475,9 @@ class Date
     }
 
     /**
+     * @param $dateParts
      * @param string $form
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
      */
     private function prepareDatePartsChildren($dateParts, $form)
     {

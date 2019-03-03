@@ -109,6 +109,8 @@ class Names implements Rendering, HasParent
     /**
      * Names constructor.
      * @param \SimpleXMLElement $node
+     * @param $parent
+     * @throws \Seboettg\CiteProc\Exception\InvalidStylesheetException
      */
     public function __construct(\SimpleXMLElement $node, $parent)
     {
@@ -157,6 +159,7 @@ class Names implements Rendering, HasParent
      * @param \stdClass $data
      * @param int|null $citationNumber
      * @return string
+     * @throws \Seboettg\CiteProc\Exception\CiteProcException
      */
     public function render($data, $citationNumber = null)
     {
