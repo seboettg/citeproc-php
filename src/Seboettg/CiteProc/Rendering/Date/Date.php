@@ -173,20 +173,30 @@ class Date
                 $interval = $to->diff($from);
                 $delim = "";
                 $toRender = 0;
-                if ($interval->y > 0) {
+                if ($interval->y > 0 && in_array('year', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_YEAR;
                     $delim = $this->dateParts->get($this->form . "-year")->getRangeDelimiter();
                 }
-                if ($interval->m > 0 && $from->getMonth() - $to->getMonth() !== 0) {
+                if ($interval->m > 0 && $from->getMonth() - $to->getMonth() !== 0 && in_array('month', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_MONTH;
                     $delim = $this->dateParts->get($this->form . "-month")->getRangeDelimiter();
                 }
-                if ($interval->d > 0 && $from->getDay() - $to->getDay() !== 0) {
+                if ($interval->d > 0 && $from->getDay() - $to->getDay() !== 0 && in_array('day', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_DAY;
                     $delim = $this->dateParts->get($this->form . "-day")->getRangeDelimiter();
                 }
-
-                $ret = $this->renderDateRange($toRender, $from, $to, $delim);
+                if ($toRender === self::DATE_RANGE_STATE_NONE) {
+                  foreach ($this->dateParts as $key => $datePart) {
+                    /** @noinspection PhpUnusedLocalVariableInspection */
+                    list($f, $p) = explode("-", $key);
+                    if (in_array($p, $dateParts)) {
+                      $ret .= $datePart->render($data_[0], $this);
+                    }
+                  }
+                }
+                else {
+                  $ret = $this->renderDateRange($toRender, $from, $to, $delim);
+                }
             }
 
             if (isset($var->raw) && preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw, $matches)) {
