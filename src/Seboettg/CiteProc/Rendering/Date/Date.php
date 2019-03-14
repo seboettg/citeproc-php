@@ -33,7 +33,7 @@ class Date
         FormattingTrait,
         TextCaseTrait;
 
-    // ymd
+    // bitmask: ymd
     const DATE_RANGE_STATE_NONE         = 0; // 000
     const DATE_RANGE_STATE_DAY          = 1; // 001
     const DATE_RANGE_STATE_MONTH        = 2; // 010
@@ -148,24 +148,13 @@ class Date
         locale-specific, are not allowed on these cs:date-part elements. */
 
         if ($this->dateParts->count() > 0) {
-
-            /* if (isset($var->raw) && !preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw) && $this->dateParts->count() > 0) {
-                //$var->{"date-parts"} = [];
-            } else*/
             if (!isset($var->{'date-parts'})) { // ignore empty date-parts
                 return "";
             }
 
             if (count($data->{$this->variable}->{'date-parts'}) === 1) {
                 $data_ = $this->createDateTime($data->{$this->variable}->{'date-parts'});
-                /** @var DatePart $datePart */
-                foreach ($this->dateParts as $key => $datePart) {
-                    /** @noinspection PhpUnusedLocalVariableInspection */
-                    list($f, $p) = explode("-", $key);
-                    if (in_array($p, $dateParts)) {
-                        $ret .= $datePart->render($data_[0], $this);
-                    }
-                }
+                $ret .= $this->iterateAndRenderDateParts($dateParts, $data_);
             } else if (count($var->{'date-parts'}) === 2) { //date range
                 $data_ = $this->createDateTime($var->{'date-parts'});
                 $from = $data_[0];
@@ -186,15 +175,9 @@ class Date
                     $delim = $this->dateParts->get($this->form . "-day")->getRangeDelimiter();
                 }
                 if ($toRender === self::DATE_RANGE_STATE_NONE) {
-                    foreach ($this->dateParts as $key => $datePart) {
-                        /* @noinspection PhpUnusedLocalVariableInspection */
-                        list($f, $p) = explode("-", $key);
-                        if (in_array($p, $dateParts)) {
-                            $ret .= $datePart->render($data_[0], $this);
-                        }
-                    }
+                    $ret .= $this->iterateAndRenderDateParts($dateParts, $data_);
                 } else {
-                      $ret = $this->renderDateRange($toRender, $from, $to, $delim);
+                    $ret .= $this->renderDateRange($toRender, $from, $to, $delim);
                 }
             }
 
@@ -533,6 +516,25 @@ class Date
         $ret = [];
         foreach ($date as $key => $datePart) {
             $ret[$key] = Util\NumberHelper::extractNumber(Util\StringHelper::removeBrackets($datePart));
+        }
+        return $ret;
+    }
+
+    /**
+     * @param array $dateParts
+     * @param array $data_
+     * @return string
+     */
+    private function iterateAndRenderDateParts(array $dateParts, array $data_)
+    {
+        $ret = "";
+        /** @var DatePart $datePart */
+        foreach ($this->dateParts as $key => $datePart) {
+            /** @noinspection PhpUnusedLocalVariableInspection */
+            list($f, $p) = explode("-", $key);
+            if (in_array($p, $dateParts)) {
+                $ret .= $datePart->render($data_[0], $this);
+            }
         }
         return $ret;
     }

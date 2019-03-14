@@ -23,7 +23,7 @@ class BugfixTest extends TestCase
 
     public function testBugfixGithub()
     {
-        $this->_testRenderTestSuite("bugfix-github", ["bugfix-github-58"]);
+        $this->_testRenderTestSuite("bugfix-github", ["bugfix-github-58", "bugfix-github-date"]);
     }
 
     /**
@@ -41,6 +41,9 @@ class BugfixTest extends TestCase
         $this->assertTrue(isset($input[0]->title), "Failed asserting that title property exists in input data");
     }
 
+    /**
+     * @throws Exception\CiteProcException
+     */
     public function testBugfixGitub59()
     {
         $style = "modern-language-association";
@@ -51,5 +54,10 @@ class BugfixTest extends TestCase
         $this->assertNotTrue(isset($datum->author)); //first entry has no author
         $result = $citeProc->render($data);
         $this->assertNotEmpty($result);
+    }
+
+    public function testBugfixGithubDate()
+    {
+        $this->_testRenderTestSuite("bugfix-github-date");
     }
 }
