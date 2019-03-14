@@ -186,16 +186,15 @@ class Date
                     $delim = $this->dateParts->get($this->form . "-day")->getRangeDelimiter();
                 }
                 if ($toRender === self::DATE_RANGE_STATE_NONE) {
-                  foreach ($this->dateParts as $key => $datePart) {
-                    /** @noinspection PhpUnusedLocalVariableInspection */
-                    list($f, $p) = explode("-", $key);
-                    if (in_array($p, $dateParts)) {
-                      $ret .= $datePart->render($data_[0], $this);
+                    foreach ($this->dateParts as $key => $datePart) {
+                        /* @noinspection PhpUnusedLocalVariableInspection */
+                        list($f, $p) = explode("-", $key);
+                        if (in_array($p, $dateParts)) {
+                            $ret .= $datePart->render($data_[0], $this);
+                        }
                     }
-                  }
-                }
-                else {
-                  $ret = $this->renderDateRange($toRender, $from, $to, $delim);
+                } else {
+                      $ret = $this->renderDateRange($toRender, $from, $to, $delim);
                 }
             }
 
