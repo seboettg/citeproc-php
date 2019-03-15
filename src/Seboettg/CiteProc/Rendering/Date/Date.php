@@ -33,7 +33,7 @@ class Date
         FormattingTrait,
         TextCaseTrait;
 
-    // ymd
+    // bitmask: ymd
     const DATE_RANGE_STATE_NONE         = 0; // 000
     const DATE_RANGE_STATE_DAY          = 1; // 001
     const DATE_RANGE_STATE_MONTH        = 2; // 010
@@ -148,24 +148,13 @@ class Date
         locale-specific, are not allowed on these cs:date-part elements. */
 
         if ($this->dateParts->count() > 0) {
-
-            /* if (isset($var->raw) && !preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw) && $this->dateParts->count() > 0) {
-                //$var->{"date-parts"} = [];
-            } else*/
             if (!isset($var->{'date-parts'})) { // ignore empty date-parts
                 return "";
             }
 
             if (count($data->{$this->variable}->{'date-parts'}) === 1) {
                 $data_ = $this->createDateTime($data->{$this->variable}->{'date-parts'});
-                /** @var DatePart $datePart */
-                foreach ($this->dateParts as $key => $datePart) {
-                    /** @noinspection PhpUnusedLocalVariableInspection */
-                    list($f, $p) = explode("-", $key);
-                    if (in_array($p, $dateParts)) {
-                        $ret .= $datePart->render($data_[0], $this);
-                    }
-                }
+                $ret .= $this->iterateAndRenderDateParts($dateParts, $data_);
             } else if (count($var->{'date-parts'}) === 2) { //date range
                 $data_ = $this->createDateTime($var->{'date-parts'});
                 $from = $data_[0];
@@ -173,20 +162,23 @@ class Date
                 $interval = $to->diff($from);
                 $delim = "";
                 $toRender = 0;
-                if ($interval->y > 0) {
+                if ($interval->y > 0 && in_array('year', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_YEAR;
                     $delim = $this->dateParts->get($this->form . "-year")->getRangeDelimiter();
                 }
-                if ($interval->m > 0 && $from->getMonth() - $to->getMonth() !== 0) {
+                if ($interval->m > 0 && $from->getMonth() - $to->getMonth() !== 0 && in_array('month', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_MONTH;
                     $delim = $this->dateParts->get($this->form . "-month")->getRangeDelimiter();
                 }
-                if ($interval->d > 0 && $from->getDay() - $to->getDay() !== 0) {
+                if ($interval->d > 0 && $from->getDay() - $to->getDay() !== 0 && in_array('day', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_DAY;
                     $delim = $this->dateParts->get($this->form . "-day")->getRangeDelimiter();
                 }
-
-                $ret = $this->renderDateRange($toRender, $from, $to, $delim);
+                if ($toRender === self::DATE_RANGE_STATE_NONE) {
+                    $ret .= $this->iterateAndRenderDateParts($dateParts, $data_);
+                } else {
+                    $ret .= $this->renderDateRange($toRender, $from, $to, $delim);
+                }
             }
 
             if (isset($var->raw) && preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $var->raw, $matches)) {
@@ -524,6 +516,25 @@ class Date
         $ret = [];
         foreach ($date as $key => $datePart) {
             $ret[$key] = Util\NumberHelper::extractNumber(Util\StringHelper::removeBrackets($datePart));
+        }
+        return $ret;
+    }
+
+    /**
+     * @param array $dateParts
+     * @param array $data_
+     * @return string
+     */
+    private function iterateAndRenderDateParts(array $dateParts, array $data_)
+    {
+        $ret = "";
+        /** @var DatePart $datePart */
+        foreach ($this->dateParts as $key => $datePart) {
+            /** @noinspection PhpUnusedLocalVariableInspection */
+            list($f, $p) = explode("-", $key);
+            if (in_array($p, $dateParts)) {
+                $ret .= $datePart->render($data_[0], $this);
+            }
         }
         return $ret;
     }

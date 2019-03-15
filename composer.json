@@ -14,7 +14,14 @@
         "issues": "https://github.com/seboettg/citeproc-php/issues"
     },
     "autoload": {
-        "psr-4": {"": "src/"}
+        "psr-4": {
+            "Seboettg\\": "src/Seboettg/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Seboettg\\": "tests/src/Seboettg/"
+        }
     },
     "require": {
         "seboettg/collection": "^1.2",
