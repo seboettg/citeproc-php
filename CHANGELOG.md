@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.1.7 - 2019-03-24
+
+* bugfix of [PR 64](https://github.com/seboettg/citeproc-php/pull/64) Call to a member function getRangeDelimiter() on null
+* bugfix of [PR 63](https://github.com/seboettg/citeproc-php/pull/63) Don't show "et-al" text for citation witch don't reach et-al number
+
 ## 2.1.6 - 2018-10-13
 
 * bugfix of [issue 59](https://github.com/seboettg/citeproc-php/issues/59)
