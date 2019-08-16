@@ -163,6 +163,14 @@ class PageHelperTest extends TestCase
         );
 
         $this->assertEquals(
+            "42-55",
+            PageHelper::processPageRangeFormats(
+                explode("-","42-55"),
+                $this->minimal
+            )
+        );
+
+        $this->assertEquals(
             "321-8",
             PageHelper::processPageRangeFormats(
                 explode("-","321-328"),

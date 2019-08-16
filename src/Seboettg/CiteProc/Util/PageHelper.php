@@ -27,7 +27,7 @@ class PageHelper
 
             switch ($pageRangeFormat) {
                 case PageRangeFormats::MINIMAL:
-                    $resTo = self::renderMinimal($from, $to);
+                    $resTo = self::renderMinimal($from, $to, 0);
                     break;
                 case PageRangeFormats::MINIMAL_TWO:
                     if (strlen($to) > 2) {
