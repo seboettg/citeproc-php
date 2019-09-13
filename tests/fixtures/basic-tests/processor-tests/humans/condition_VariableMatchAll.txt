@@ -1,0 +1,64 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+[ITEM-1, online http://example.org/ITEM-1 (Accessed April 10, 2012); ITEM-2]
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0"
+      default-locale="de-DE">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout prefix="[" suffix="]" delimiter="; ">
+      <text variable="id" />
+      <choose>
+        <if variable="URL accessed" match="all">
+          <group prefix=", " delimiter=" ">
+            <text term="online" />
+            <text variable="URL"/>
+            <group prefix=" (" suffix=")" delimiter=" ">
+              <text term="accessed" text-case="capitalize-first"/>
+              <date variable="accessed" form="text"/>
+            </group>
+          </group>
+         </if>
+      </choose>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "URL": "http://example.org/ITEM-1", 
+        "accessed": {
+            "date-parts": [
+                [
+                    2012, 
+                    4, 
+                    10
+                ]
+            ]
+        }, 
+        "id": "ITEM-1"
+    }, 
+    {
+        "URL": "http://example.org/ITEM-2", 
+        "id": "ITEM-2"
+    }
+]
+<<===== INPUT =====<<

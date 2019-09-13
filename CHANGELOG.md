@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.8 - 2019-09-13
+* bugfix of [PR 66](https://github.com/seboettg/citeproc-php/pull/66)
+* bugfix for displaced delimiters that appear when in the name list more than one empty entry exists.
+
 ## 2.1.7 - 2019-03-24
 
 * bugfix of [PR 64](https://github.com/seboettg/citeproc-php/pull/64) Call to a member function getRangeDelimiter() on null
@@ -8,7 +12,7 @@
 ## 2.1.6 - 2018-10-13
 
 * bugfix of [issue 59](https://github.com/seboettg/citeproc-php/issues/59)
-* bugfix of [issue 58](https://github.com/seboettg/citeproc-php/issues/60)
+* bugfix of [issue 60](https://github.com/seboettg/citeproc-php/issues/60)
 
 ## 2.1.5 - 2018-09-23
 

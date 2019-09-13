@@ -10,7 +10,7 @@ date_default_timezone_set('Europe/Berlin');
 require_once realpath(__DIR__ . '/../vendor').'/autoload.php';
 
 define('PHPUNIT_FIXTURES', realpath(__DIR__ . '/fixtures/basic-tests/processor-tests/machines'));
-
+putenv('XDEBUG_CONFIG="PHPSTORM"');
 $loader = new Composer\Autoload\ClassLoader();
 $loader->add('Seboettg', realpath(__DIR__ . '/src'));
 $loader->register();

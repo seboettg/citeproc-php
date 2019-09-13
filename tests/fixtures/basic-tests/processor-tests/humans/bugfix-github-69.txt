@@ -1,0 +1,106 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">(Neuhausen-Stuttgart American Institute of Musicology, Hänssler-Verlag)</div>
+  <div class="csl-entry">(American Institute of Musicology, Hänssler-Verlag)</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" page-range-format="minimal">
+  <bibliography>
+    <layout>
+      <choose>
+        <if type="article-journal">
+          <choose>
+            <if variable="volume">
+              <text macro="issued" prefix=" (" suffix=")"/>
+            </if>
+            <else>
+              <text macro="issued" prefix=", "/>
+            </else>
+          </choose>
+        </if>
+        <else-if variable="publisher-place publisher" match="any">
+          <group prefix="(" suffix=")" delimiter=", ">
+            <group delimiter=" ">
+              <choose>
+                <if variable="title" match="none"/>
+                <else-if type="thesis speech" match="any">
+                  <text variable="genre" prefix="unpublished "/>
+                </else-if>
+              </choose>
+              <text variable="event"/>
+            </group>
+            <group delimiter=" ">
+              <text variable="publisher-place"/>
+              <text variable="publisher"/>
+            </group>
+          </group>
+        </else-if>
+        <else>
+          <text variable="issued" prefix=", "/>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+>>===== INPUT =====>>
+[
+    {
+        "collection-number": "95-2", 
+        "collection-title": "Corpus Mensurabilis Musicae", 
+        "editor": [
+            {
+                "family": "Josephson", 
+                "given": "Nors S."
+            }
+        ], 
+        "event-place": "Neuhausen-Stuttgart", 
+        "id": "7021352/UTSP92QZ", 
+        "issued": {
+            "date-parts": [
+                [
+                    1982
+                ]
+            ]
+        }, 
+        "language": "en", 
+        "publisher": "American Institute of Musicology, Hänssler-Verlag", 
+        "publisher-place": "Neuhausen-Stuttgart", 
+        "title": "Early Sixteenth-Century Sacred Music from the Papal Chapel", 
+        "type": "book", 
+        "volume": "II"
+    }, 
+    {
+        "collection-number": "95-2", 
+        "collection-title": "Corpus Mensurabilis Musicae", 
+        "editor": [
+            {
+                "family": "Josephson", 
+                "given": "Nors S."
+            }
+        ], 
+        "event-place": "Neuhausen-Stuttgart", 
+        "id": "7021352/UTSP92QZ", 
+        "issued": {
+            "date-parts": [
+                [
+                    1982
+                ]
+            ]
+        }, 
+        "language": "en", 
+        "publisher": "American Institute of Musicology, Hänssler-Verlag", 
+        "title": "Early Sixteenth-Century Sacred Music from the Papal Chapel", 
+        "type": "book", 
+        "volume": "II"
+    }
+]
+<<===== INPUT =====<<

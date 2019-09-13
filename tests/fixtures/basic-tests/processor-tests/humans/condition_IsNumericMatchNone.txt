@@ -5,7 +5,7 @@ citation
 
 
 >>===== RESULT =====>>
-Book One: (1) Locator true (2) Locator true; Book Two: (1) Locator false (2) Locator false
+ITEM-1: no numeric values; ITEM-2: numeric values; ITEM-3: numeric values
 <<===== RESULT =====<<
 
 
@@ -21,21 +21,13 @@ Book One: (1) Locator true (2) Locator true; Book Two: (1) Locator false (2) Loc
   </info>
   <citation>
     <layout delimiter="; ">
-	  <text variable="title" suffix=": "/>
+      <text variable="id" suffix=": "/>
       <choose>
-        <if variable="locator">
-          <text value="(1) Locator true"/>
+        <if is-numeric="volume page" match="none">
+          <text value="no numeric values"/>
         </if>
         <else>
-          <text value="(1) Locator false"/>
-        </else>
-      </choose>
-      <choose>
-        <if variable="locator" match="none">
-          <text value=" (2) Locator false"/>
-        </if>
-        <else>
-          <text value=" (2) Locator true"/>
+          <text value="numeric values"/>
         </else>
       </choose>
     </layout>
@@ -48,14 +40,18 @@ Book One: (1) Locator true (2) Locator true; Book Two: (1) Locator false (2) Loc
 [
     {
         "id": "ITEM-1", 
-        "locator": "1", 
-        "title": "Book One", 
-        "type": "book"
+        "page": "trf", 
+        "volume": "dsa"
     }, 
     {
         "id": "ITEM-2", 
-        "title": "Book Two", 
-        "type": "book"
+        "page": "5", 
+        "volume": "V"
+    }, 
+    {
+        "id": "ITEM-3", 
+        "page": "jdhal", 
+        "volume": "V"
     }
 ]
 <<===== INPUT =====<<

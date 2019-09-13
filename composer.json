@@ -15,12 +15,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Seboettg\\": "src/Seboettg/"
+            "Seboettg\\CiteProc\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Seboettg\\": "tests/src/Seboettg/"
+            "Seboettg\\CiteProc\\": "tests/src/"
         }
     },
     "require": {
