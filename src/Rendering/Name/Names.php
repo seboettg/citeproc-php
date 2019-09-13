@@ -26,10 +26,9 @@ use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 use stdClass;
 
-
 /**
- * Class Group
- * @package Seboettg\CiteProc\Rendering
+ * Class Names
+ * @package Seboettg\CiteProc\Rendering\Name
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
@@ -229,6 +228,7 @@ class Names implements Rendering, HasParent
                 }
             }
         }
+        $results = $this->filterEmpty($results);
         $str .= implode($this->delimiter, $results);
         return !empty($str) ? $this->addAffixes($str) : "";
     }
@@ -367,6 +367,13 @@ class Names implements Rendering, HasParent
     public function getParent()
     {
         return $this->parent;
+    }
+
+    private function filterEmpty(array $results)
+    {
+        return array_filter($results, function($item) {
+            return !empty($item);
+        });
     }
 
 }
