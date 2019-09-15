@@ -7,7 +7,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace src\Seboettg\CiteProc\Rendering\Name;
+namespace Seboettg\CiteProc\Rendering\Name;
 
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;

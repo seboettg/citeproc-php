@@ -7,7 +7,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace src\Seboettg\CiteProc;
+namespace Seboettg\CiteProc;
 
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\StyleSheet;
