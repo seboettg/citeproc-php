@@ -9,7 +9,6 @@
 
 namespace Seboettg\CiteProc\Constraint;
 
-
 /**
  * Class Position
  *
@@ -35,15 +34,15 @@ namespace Seboettg\CiteProc\Constraint;
  * Whenever position=”ibid-with-locator” tests true, position=”ibid” also tests true. And whenever position=”ibid” or
  * position=”near-note” test true, position=”subsequent” also tests true.
  *
- * @codeCoverageIgnore
- *
- * @package Seboettg\CiteProc\Choose\Constraint
+ * @package Seboettg\CiteProc\Constraint
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Position implements ConstraintInterface
+/** @noinspection PhpUnused */
+class Position implements Constraint
 {
     /**
+     * @codeCoverageIgnore
      * @param $value
      * @param int|null $citationNumber
      * @return bool

@@ -106,8 +106,6 @@ class NumberHelper
             $next = next($values);
             $next > $current ? $sum += $next - $current + 0 * next($values) : $sum += $current;
         }
-
-        // Return the value:
         return $sum;
     }
 

@@ -9,22 +9,22 @@
 
 namespace Seboettg\CiteProc\Constraint;
 
-
 /**
  * Class Disambiguate
  * When set to “true” (the only allowed value), the element content is only rendered if it disambiguates two otherwise
  * identical citations. This attempt at disambiguation is only made when all other disambiguation methods have failed
  * to uniquely identify the target source.
  *
- * @codeCoverageIgnore
- *
- * @package Seboettg\CiteProc\Choose\Constraint
+ * @package Seboettg\CiteProc\Constraint
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
+ *
  */
-class Disambiguate implements ConstraintInterface
+/** @noinspection PhpUnused */
+class Disambiguate implements Constraint
 {
     /**
+     * @codeCoverageIgnore
      * @param $value
      * @param int|null $citationNumber
      * @return bool

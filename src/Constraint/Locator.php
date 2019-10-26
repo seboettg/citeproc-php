@@ -18,13 +18,15 @@ namespace Seboettg\CiteProc\Constraint;
  *
  * @codeCoverageIgnore
  *
- * @package Seboettg\CiteProc\Choose\Constraint
+ * @package Seboettg\CiteProc\Constraint
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Locator implements ConstraintInterface
+/** @noinspection PhpUnused */
+class Locator implements Constraint
 {
     /**
+     * @codeCoverageIgnore
      * @param $value
      * @param int|null $citationNumber
      * @return bool

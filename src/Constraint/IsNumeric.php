@@ -12,7 +12,7 @@ namespace Seboettg\CiteProc\Constraint;
 use NumberFormatter;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Util\NumberHelper;
-
+use stdClass;
 
 /**
  * Class IsNumeric
@@ -20,27 +20,20 @@ use Seboettg\CiteProc\Util\NumberHelper;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class IsNumeric implements ConstraintInterface
+/** @noinspection PhpUnused */
+class IsNumeric extends AbstractConstraint
 {
 
-    private $isNumeric;
-
-    public function __construct($value)
-    {
-        $this->isNumeric = $value;
-    }
-
     /**
-     * @param $value
-     * @param int|null $citationNumber
+     * @param string $variable
+     * @param stdClass $data
      * @return bool
      */
-    public function validate($value, $citationNumber = null)
+    protected function matchForVariable($variable, $data)
     {
-        if (isset($value->{$this->isNumeric})) {
-            return $this->parseValue($value->{$this->isNumeric});
+        if (isset($data->{$variable})) {
+            return $this->parseValue($data->{$variable});
         }
-
         return false;
     }
 

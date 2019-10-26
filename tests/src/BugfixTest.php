@@ -23,7 +23,12 @@ class BugfixTest extends TestCase
 
     public function testBugfixGithub()
     {
-        $this->_testRenderTestSuite("bugfix-github", ["bugfix-github-58", "bugfix-github-date"]);
+        $this->_testRenderTestSuite("bugfix-github", ["bugfix-github-44", "bugfix-github-58", "bugfix-github-date", "bugfix-github-69"]);
+    }
+
+    public function testBugfixGithub69()
+    {
+        $this->_testRenderTestSuite("bugfix-github-69");
     }
 
     /**

@@ -9,15 +9,21 @@
 
 namespace Seboettg\CiteProc\Constraint;
 
-
 /**
  * Interface ConstraintInterface
- * @package Seboettg\CiteProc\Choose\Constraint
+ * @package Seboettg\CiteProc\Constraint
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-interface ConstraintInterface
+/** @noinspection PhpUnused */
+interface Constraint
 {
+    const MATCH_NONE = "none";
+
+    const MATCH_ANY = "any";
+
+    const MATCH_ALL = "all";
+
     /**
      * @param $value
      * @param null $citationNumber

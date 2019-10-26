@@ -4,7 +4,7 @@ bibliography
 
 >>===== RESULT =====>>
 <div class="csl-bib-body">
-  <div class="csl-entry"><div class="csl-left-margin">1. </div><div class="csl-right-inline">Corino C. Elit nulla ultrices amet iaculis lorem non morbi sed sapien. <i>publicknowledge</i>. December 2017;1(1). doi:10.1234/publicknowledge.v1i1.62.</div></div>
+  <div class="csl-entry"><div class="csl-left-margin">1. </div><div class="csl-right-inline">Corino C. Elit nulla ultrices amet iaculis lorem non morbi sed sapien. <i>publicknowledge</i>. 2017;1(1). doi:10.1234/publicknowledge.v1i1.62.</div></div>
 </div>
 <<===== RESULT =====<<
 

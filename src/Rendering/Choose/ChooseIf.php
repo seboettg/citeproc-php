@@ -9,7 +9,7 @@
 
 namespace Seboettg\CiteProc\Rendering\Choose;
 
-use Seboettg\CiteProc\Constraint\ConstraintInterface;
+use Seboettg\CiteProc\Constraint\Constraint;
 use Seboettg\CiteProc\Constraint\Factory;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Exception\ClassNotFoundException;
@@ -28,29 +28,25 @@ use SimpleXMLElement;
  */
 class ChooseIf implements Rendering, HasParent
 {
-
     /**
-     * @var ArrayList<ConstraintInterface>
+     * @var ArrayList<Constraint>
      */
     private $constraints;
-
-    /**
-     * @var ConstraintInterface
-     */
-    private $constraint;
 
     /**
      * @var ArrayList
      */
     protected $children;
 
+    /**
+     * @var string
+     */
     private $match;
 
     /**
      * @var
      */
     protected $parent;
-
     /**
      * @param SimpleXMLElement $node
      * @param Choose $parent
@@ -63,22 +59,18 @@ class ChooseIf implements Rendering, HasParent
         $this->constraints = new ArrayList();
         $this->children = new ArrayList();
         $this->match = (string) $node['match'];
-
         if (empty($this->match)) {
-            $this->match = "all";
+            $this->match = Constraint::MATCH_ALL;
         }
-
         foreach ($node->attributes() as $name => $value) {
             if ('match' !== $name) {
-                $this->constraints->append(Factory::createConstraint((string) $name, (string) $value));
+                $this->constraints->append(Factory::createConstraint((string) $name, (string) $value, $this->match));
             }
         }
-
         foreach ($node->children() as $child) {
             $this->children->append(Factory::create($child, $this));
         }
     }
-
     /**
      * @param array|DataList $data
      * @param null|int $citationNumber
@@ -93,7 +85,6 @@ class ChooseIf implements Rendering, HasParent
         }
         return implode("", $ret);
     }
-
     /**
      * @param $data
      * @param null|int $citationNumber
@@ -101,13 +92,11 @@ class ChooseIf implements Rendering, HasParent
      */
     public function match($data, $citationNumber = null)
     {
-        if (isset($this->constraint)) {
-            return $this->constraint->validate($data);
+        if ($this->constraints->count() === 1) {
+            return $this->constraints->current()->validate($data);
         }
-
         $result = true;
-
-        /** @var ConstraintInterface $constraint */
+        /** @var Constraint $constraint */
         foreach ($this->constraints as $constraint) {
             if ($this->match === "any") {
                 if ($constraint->validate($data, $citationNumber)) {
@@ -117,8 +106,7 @@ class ChooseIf implements Rendering, HasParent
                 $result &= $constraint->validate($data, $citationNumber);
             }
         }
-
-        if ($this->match === "all") {
+        if ($this->constraints->count() > 1 && $this->match === "all") {
             return (bool) $result;
         } else if ($this->match === "none") {
             return !$result;
@@ -126,12 +114,13 @@ class ChooseIf implements Rendering, HasParent
         return false;
     }
 
+
     /**
+     * @noinspection PhpUnused
      * @return Choose
      */
     public function getParent()
     {
         return $this->parent;
     }
-
 }

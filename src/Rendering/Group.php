@@ -42,8 +42,6 @@ class Group implements Rendering, HasParent
         FormattingTrait,
         ConsecutivePunctuationCharacterTrait;
 
-    const CLASS_PATH = 'Seboettg\CiteProc\Rendering';
-
     /**
      * @var ArrayList
      */

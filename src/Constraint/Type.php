@@ -10,43 +10,25 @@
 namespace Seboettg\CiteProc\Constraint;
 
 
+use stdClass;
+
 /**
  * Class Type
  * @package Seboettg\CiteProc\Choose\Constraint
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Type implements ConstraintInterface
+/** @noinspection PhpUnused */
+class Type extends AbstractConstraint
 {
 
     /**
-     * @var array
-     */
-    private $typeValue;
-
-    /**
-     * @var string
-     */
-    private $match;
-
-    /**
-     * Type constructor.
-     * @param string $value
-     * @param $match
-     */
-    public function __construct($value, $match = "any")
-    {
-        $this->typeValue = explode(" ", $value);
-        $this->match = $match;
-    }
-
-    /**
-     * @param $value
-     * @param int|null $citationNumber
+     * @param string $variable
+     * @param stdClass $data ;
      * @return bool
      */
-    public function validate($value, $citationNumber = null)
+    protected function matchForVariable($variable, $data)
     {
-        return in_array($value->type, $this->typeValue);
+        return in_array($data->type, $this->conditionVariables);
     }
 }

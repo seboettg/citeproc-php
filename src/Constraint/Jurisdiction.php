@@ -14,13 +14,13 @@ namespace Seboettg\CiteProc\Constraint;
  * Class Jurisdiction
  * @package Seboettg\CiteProc\Constraint
  *
- * @codeCoverageIgnore
- *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-class Jurisdiction implements ConstraintInterface
+/** @noinspection PhpUnused */
+class Jurisdiction implements Constraint
 {
     /**
+     * @codeCoverageIgnore
      * @param $value
      * @param int|null $citationNumber
      * @return bool
