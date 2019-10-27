@@ -1,0 +1,73 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">Corpus Mensurabilis Musicae, 95-2</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <macro name="collection-title">
+    <group delimiter=", ">
+      <choose>
+        <if type="article-journal">
+          <text variable="collection-title"/>
+          <text variable="collection-number"/>
+        </if>
+        <else>
+          <text variable="collection-title" text-case="title"/>
+          <text variable="collection-number"/>
+        </else>
+      </choose>
+    </group>
+  </macro>
+  <bibliography>
+    <layout>
+      <text macro="collection-title" />
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "collection-number": "95-2", 
+        "collection-title": "Corpus Mensurabilis Musicae", 
+        "editor": [
+            {
+                "family": "Josephson", 
+                "given": "Nors S."
+            }
+        ], 
+        "event-place": "Neuhausen-Stuttgart", 
+        "id": "7021352/UTSP92QZ", 
+        "issued": {
+            "date-parts": [
+                [
+                    1982
+                ]
+            ]
+        }, 
+        "language": "en", 
+        "publisher": "American Institute of Musicology, Hänssler-Verlag", 
+        "publisher-place": "Neuhausen-Stuttgart", 
+        "title": "Early Sixteenth-Century Sacred Music from the Papal Chapel", 
+        "type": "book", 
+        "volume": "II"
+    }
+]
+<<===== INPUT =====<<

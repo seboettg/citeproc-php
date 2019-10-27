@@ -31,6 +31,11 @@ class BugfixTest extends TestCase
         $this->_testRenderTestSuite("bugfix-github-69");
     }
 
+    public function testBugfixGithub70()
+    {
+        $this->_testRenderTestSuite("bugfix-github-70");
+    }
+
     /**
      * @throws Exception\CiteProcException
      */

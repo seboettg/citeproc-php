@@ -61,23 +61,28 @@ class GroupTest extends TestCase
         $this->_testRenderTestSuite("group_ShortOutputOnly");
     }
 
-    /*
+    public function testGroupDelimiter()
+    {
+        $this->_testRenderTestSuite("group_Delimiter");
+    }
+
     public function testSuppressTermWhenNoOutputFromPartialDate()
     {
         //TODO: implement
-        //$this->_testRenderTestSuite("group_SuppressTermWhenNoOutputFromPartialDate");
+        $this->_testRenderTestSuite("group_SuppressTermWhenNoOutputFromPartialDate");
     }
 
     public function testGroupSuppressValueWithEmptySubgroup()
     {
         //TODO: implement
-        //$this->_testRenderTestSuite("group_SuppressValueWithEmptySubgroup");
+        $this->_testRenderTestSuite("group_SuppressValueWithEmptySubgroup");
     }
 
+    /*
     public function testGroupSuppressWithEmptyNestedDateNode()
     {
         //TODO: implement
-        //$this->_testRenderTestSuite("group_SuppressWithEmptyNestedDateNode");
-    }*/
-
+        $this->_testRenderTestSuite("group_SuppressWithEmptyNestedDateNode");
+    }
+    */
 }

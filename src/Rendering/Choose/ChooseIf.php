@@ -14,6 +14,7 @@ use Seboettg\CiteProc\Constraint\Factory;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Exception\ClassNotFoundException;
 use Seboettg\CiteProc\Exception\InvalidStylesheetException;
+use Seboettg\CiteProc\Rendering\Group;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\Collection\ArrayList;
@@ -83,7 +84,12 @@ class ChooseIf implements Rendering, HasParent
         foreach ($this->children as $child) {
             $ret[] = $child->render($data, $citationNumber);
         }
-        return implode("", $ret);
+        $glue = "";
+        $parent = $this->parent->getParent();
+        if ($parent instanceof Group && $parent->hasDelimiter()) {
+            $glue = $parent->getDelimiter();
+        }
+        return implode($glue, $ret);
     }
     /**
      * @param $data

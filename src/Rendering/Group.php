@@ -175,4 +175,14 @@ class Group implements Rendering, HasParent
 
         return "";
     }
+
+    public function hasDelimiter()
+    {
+        return !empty($this->delimiter);
+    }
+
+    public function getDelimiter()
+    {
+        return $this->delimiter;
+    }
 }
