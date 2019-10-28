@@ -24,6 +24,8 @@ class NumberHelper
 
     const PATTERN_ROMAN = "/^[ivxlcdm]+\.?$/i";
 
+    const PATTERN_ROMAN_RANGE = "/^([ivxlcdm]+\.*\s*[*\–\-&+,;]\s*){1,}[ivxlcdm]+\.?$/i";
+
     const PATTERN_AFFIXES = "/^[a-z]?\d+[a-z]?$/i";
 
     const PATTERN_COMMA_AMPERSAND_RANGE = "/\d*([\s?\-&+,;\s])+\d+/";
@@ -71,7 +73,6 @@ class NumberHelper
     {
         $ret = "";
         if ($num < 6000) {
-
             $numStr = strrev($num);
             $len = strlen($numStr);
             for ($pos = 0; $pos < $len; $pos++) {
@@ -192,14 +193,6 @@ class NumberHelper
      */
     public static function isRomanRange($number)
     {
-        $rangeParts = array_map("trim", self::splitByRangeDelimiter($number));
-        $isRange = false;
-        if (count($rangeParts) > 1) {
-            $isRange = true;
-            foreach ($rangeParts as $part) {
-                $isRange = $isRange && NumberHelper::isRomanNumber($part);
-            }
-        }
-        return $isRange;
+        return preg_match(self::PATTERN_ROMAN_RANGE, $number);
     }
 }
