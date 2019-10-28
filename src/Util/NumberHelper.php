@@ -24,6 +24,8 @@ class NumberHelper
 
     const PATTERN_ROMAN = "/^[ivxlcdm]+\.?$/i";
 
+    const PATTERN_ROMAN_RANGE = "/^([ivxlcdm]+\.*\s*[*\–\-&+,;]\s*){1,}[ivxlcdm]+\.?$/i";
+
     const PATTERN_AFFIXES = "/^[a-z]?\d+[a-z]?$/i";
 
     const PATTERN_COMMA_AMPERSAND_RANGE = "/\d*([\s?\-&+,;\s])+\d+/";
@@ -50,7 +52,7 @@ class NumberHelper
      */
     public static function getCompareNumber()
     {
-        return function($numA, $numB, $order) {
+        return function ($numA, $numB, $order) {
             if (is_numeric($numA) && is_numeric($numB)) {
                 $ret = $numA - $numB;
             } else {
@@ -71,7 +73,6 @@ class NumberHelper
     {
         $ret = "";
         if ($num < 6000) {
-
             $numStr = strrev($num);
             $len = strlen($numStr);
             for ($pos = 0; $pos < $len; $pos++) {
@@ -88,6 +89,7 @@ class NumberHelper
      */
     public static function roman2Dec($romanNumber)
     {
+        $romanNumber = trim($romanNumber);
         if (is_numeric($romanNumber)) {
             return 0;
         }
@@ -109,10 +111,15 @@ class NumberHelper
         return $sum;
     }
 
+    /**
+     * @param $str
+     * @return bool
+     */
     public static function isRomanNumber($str)
     {
-        for ($i = 0; $i < strlen($str); ++$i) {
-            $char = strtoupper($str{$i});
+        $number = trim($str);
+        for ($i = 0; $i < strlen($number); ++$i) {
+            $char = strtoupper($number{$i});
             if (!in_array($char, array_keys(self::ROMAN_DIGITS))) {
                 return false;
             }
@@ -128,18 +135,9 @@ class NumberHelper
     {
         $plural = 'single';
         if (!empty($str)) {
-            $ranges = preg_split("/[-–&,]/", $str);
-            if (count($ranges) > 1) {
-
-                $isRange = 1;
-                foreach ($ranges as $range) {
-                    if (NumberHelper::isRomanNumber(trim($range)) || is_numeric(trim($range))) {
-                        $isRange &= 1;
-                    }
-                }
-                if ($isRange == 1) {
-                    return 'multiple';
-                }
+            $isRange = self::isRange($str);
+            if ($isRange) {
+                return 'multiple';
             } else {
                 if (is_numeric($str) || NumberHelper::isRomanNumber($str)) {
                     return 'single';
@@ -149,11 +147,52 @@ class NumberHelper
         return $plural;
     }
 
+    /**
+     * @param $string
+     * @return mixed
+     */
     public static function extractNumber($string)
     {
         if (preg_match("/(\d+)[^\d]*$/", $string, $match)) {
             return $match[1];
         }
         return $string;
+    }
+
+    /**
+     * @param $str
+     * @return array[]|false|string[]
+     */
+    public static function splitByRangeDelimiter($str)
+    {
+        return preg_split("/[-–&,]/", $str);
+    }
+
+    /**
+     * @param string $str
+     * @return bool
+     */
+    private static function isRange($str)
+    {
+        $rangeParts = self::splitByRangeDelimiter($str);
+        $isRange = false;
+        if (count($rangeParts) > 1) {
+            $isRange = true;
+            foreach ($rangeParts as $range) {
+                if (NumberHelper::isRomanNumber(trim($range)) || is_numeric(trim($range))) {
+                    $isRange = $isRange && true;
+                }
+            }
+        }
+        return $isRange;
+    }
+
+    /**
+     * @param int|string $number
+     * @return bool
+     */
+    public static function isRomanRange($number)
+    {
+        return preg_match(self::PATTERN_ROMAN_RANGE, $number);
     }
 }
