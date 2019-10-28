@@ -118,4 +118,26 @@ class NumberTest extends TestCase
     {
         $this->_testRenderTestSuite("number_SimpleNumberRoman");
     }
+
+    public function testRomanInputSingleNumber()
+    {
+        $number = new Number(new \SimpleXMLElement('<number variable="edition" form="ordinal"/>'));
+        $data = json_decode("{\"title\": \"Ein Buch\", \"edition\": \"IV\"}");
+        $this->assertEquals("4th", $number->render($data));
+
+        $number = new Number(new \SimpleXMLElement('<number variable="edition" form="ordinal"/>'));
+        $data = json_decode("{\"title\": \"Ein Buch\", \"edition\": \"ii\"}");
+        $this->assertEquals("2nd", $number->render($data));
+    }
+
+    public function testRomanInputRangeNumber()
+    {
+        $number = new Number(new \SimpleXMLElement('<number variable="edition" form="ordinal"/>'));
+        $data = json_decode("{\"title\": \"Ein Buch\", \"edition\": \"IV-VI\"}");
+        $this->assertEquals("4th-6th", $number->render($data));
+
+        $number = new Number(new \SimpleXMLElement('<number variable="edition" form="ordinal"/>'));
+        $data = json_decode("{\"title\": \"Ein Buch\", \"edition\": \"ii-x\"}");
+        $this->assertEquals("2nd-10th", $number->render($data));
+    }
 }

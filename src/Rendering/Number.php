@@ -79,20 +79,20 @@ class Number implements Rendering
         if (empty($this->variable) || empty($data->{$this->variable})) {
             return "";
         }
+        $number = $data->{$this->variable};
+        $decimalNumber = $this->toDecimalNumber($number);
         switch ($this->form) {
             case 'ordinal':
-                $var = $data->{$this->variable};
-                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $var, $matches)) {
+                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
                     $num1 = self::ordinal($matches[1]);
                     $num2 = self::ordinal($matches[3]);
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
                 } else {
-                    $text = self::ordinal($var);
+                    $text = self::ordinal($decimalNumber);
                 }
                 break;
             case 'long-ordinal':
-                $var = $data->{$this->variable};
-                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $var, $matches)) {
+                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
                     if ($this->textCase === "capitalize-first" || $this->textCase === "sentence") {
                         $num1 = self::longOrdinal($matches[1]);
                         $num2 = self::longOrdinal($matches[3]);
@@ -102,17 +102,16 @@ class Number implements Rendering
                     }
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
                 } else {
-                    $text = self::longOrdinal($var);
+                    $text = self::longOrdinal($decimalNumber);
                 }
                 break;
             case 'roman':
-                $var = $data->{$this->variable};
-                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $var, $matches)) {
+                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
                     $num1 = Util\NumberHelper::dec2roman($matches[1]);
                     $num2 = Util\NumberHelper::dec2roman($matches[3]);
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
                 } else {
-                    $text = Util\NumberHelper::dec2roman($var);
+                    $text = Util\NumberHelper::dec2roman($decimalNumber);
                 }
                 break;
             case 'numeric':
@@ -123,11 +122,11 @@ class Number implements Rendering
                  become “2, 3”), while numbers separated by an ampersand receive one space before and one after the
                  ampersand (“2&3” becomes “2 & 3”).
                  */
-                $var = $data->{$this->variable};
-                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $var, $matches)) {
+                $decimalNumber = $data->{$this->variable};
+                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
                     $text = $this->buildNumberRangeString($matches[1], $matches[3], $matches[2]);
                 } else {
-                    $text = $var;
+                    $text = $decimalNumber;
                 }
                 break;
         }
@@ -185,5 +184,24 @@ class Number implements Rendering
             $numRange = $num1 . self::RANGE_DELIMITER_HYPHEN . $num2;
         }
         return $numRange;
+    }
+
+    /**
+     * @param string $number
+     * @return string
+     */
+    private function toDecimalNumber($number)
+    {
+        $decimalNumber = $number;
+        if (Util\NumberHelper::isRomanNumber($number) || Util\NumberHelper::isRomanRange($number)) {
+            if (preg_match("/\s*([^\-\-&,]+)\s*([\-\-&,])\s*([^\-\-&,]+)\s*/", $number, $matches)) {
+                $num1 = Util\NumberHelper::roman2Dec($matches[1]);
+                $num2 = Util\NumberHelper::roman2Dec($matches[3]);
+                $decimalNumber = $num1 . $matches[2] . $num2;
+            } else {
+                $decimalNumber = Util\NumberHelper::roman2Dec($number);
+            }
+        }
+        return $decimalNumber;
     }
 }

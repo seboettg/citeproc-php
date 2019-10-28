@@ -20,7 +20,6 @@ use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 use stdClass;
 
-
 /**
  * Class Group
  * The cs:group rendering element must contain one or more rendering elements (with the exception of cs:layout).
