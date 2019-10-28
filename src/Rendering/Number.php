@@ -8,12 +8,13 @@
  */
 
 namespace Seboettg\CiteProc\Rendering;
+
 use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Util;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
+use Seboettg\CiteProc\Util;
 use SimpleXMLElement;
 use stdClass;
 
@@ -48,6 +49,10 @@ class Number implements Rendering
      */
     private $form;
 
+    /**
+     * Number constructor.
+     * @param SimpleXMLElement $node
+     */
     public function __construct(SimpleXMLElement $node)
     {
         //<number variable="edition" form="ordinal"/>
@@ -55,10 +60,10 @@ class Number implements Rendering
         foreach ($node->attributes() as $attribute) {
             switch ($attribute->getName()) {
                 case 'variable':
-                    $this->variable = (string) $attribute;
+                    $this->variable = (string)$attribute;
                     break;
                 case 'form':
-                    $this->form = (string) $attribute;
+                    $this->form = (string)$attribute;
             }
         }
 
@@ -137,7 +142,8 @@ class Number implements Rendering
      * @param $num
      * @return string
      */
-    public static function ordinal($num) {
+    public static function ordinal($num)
+    {
         if (($num / 10) % 10 == 1) {
             $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal')->single;
         } elseif ($num % 10 == 1) {
@@ -159,7 +165,8 @@ class Number implements Rendering
      * @param $num
      * @return string
      */
-    public static function longOrdinal($num) {
+    public static function longOrdinal($num)
+    {
         $num = sprintf("%02d", $num);
         $ret = CiteProc::getContext()->getLocale()->filter('terms', 'long-ordinal-' . $num)->single;
         if (!$ret) {
@@ -174,14 +181,17 @@ class Number implements Rendering
      * @param string $delim
      * @return string
      */
-    public function buildNumberRangeString($num1, $num2, $delim) {
+    public function buildNumberRangeString($num1, $num2, $delim)
+    {
 
         if (self::RANGE_DELIMITER_AMPERSAND === $delim) {
             $numRange = "$num1 " . htmlentities(self::RANGE_DELIMITER_AMPERSAND) . " $num2";
-        } else if (self::RANGE_DELIMITER_COMMA === $delim) {
-            $numRange = $num1 . htmlentities(self::RANGE_DELIMITER_COMMA) . " $num2";
         } else {
-            $numRange = $num1 . self::RANGE_DELIMITER_HYPHEN . $num2;
+            if (self::RANGE_DELIMITER_COMMA === $delim) {
+                $numRange = $num1 . htmlentities(self::RANGE_DELIMITER_COMMA) . " $num2";
+            } else {
+                $numRange = $num1 . self::RANGE_DELIMITER_HYPHEN . $num2;
+            }
         }
         return $numRange;
     }

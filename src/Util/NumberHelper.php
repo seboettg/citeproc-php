@@ -50,7 +50,7 @@ class NumberHelper
      */
     public static function getCompareNumber()
     {
-        return function($numA, $numB, $order) {
+        return function ($numA, $numB, $order) {
             if (is_numeric($numA) && is_numeric($numB)) {
                 $ret = $numA - $numB;
             } else {
@@ -110,6 +110,10 @@ class NumberHelper
         return $sum;
     }
 
+    /**
+     * @param $str
+     * @return bool
+     */
     public static function isRomanNumber($str)
     {
         $number = trim($str);
@@ -142,6 +146,10 @@ class NumberHelper
         return $plural;
     }
 
+    /**
+     * @param $string
+     * @return mixed
+     */
     public static function extractNumber($string)
     {
         if (preg_match("/(\d+)[^\d]*$/", $string, $match)) {
