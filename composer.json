@@ -28,8 +28,7 @@
         "myclabs/php-enum": "^1.5",
         "symfony/polyfill-mbstring": "v1.10.*",
         "ext-simplexml": "*",
-        "ext-json": "*",
-        "ext-intl": "*"
+        "ext-json": "*"
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1",
