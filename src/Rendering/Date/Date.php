@@ -13,6 +13,7 @@ use Exception;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Exception\InvalidStylesheetException;
+use Seboettg\CiteProc\Rendering\Date\DateRange\DatePartRenderer;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
@@ -126,8 +127,13 @@ class Date
         try {
             $this->prepareDatePartsInVariable($data, $var);
         } catch (CiteProcException $e) {
-            if (!preg_match("/(\p{L}+)\s?([\-\-&,])\s?(\p{L}+)/u", $data->{$this->variable}->raw)) {
-                return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->raw)));
+            if (isset($data->{$this->variable}->{'raw'}) &&
+                !preg_match("/(\p{L}+)\s?([\-\-&,])\s?(\p{L}+)/u", $data->{$this->variable}->{'raw'})) {
+                return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->{'raw'})));
+            } else {
+                if (isset($data->{$this->variable}->{'string-literal'})) {
+                    return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->{'string-literal'})));
+                }
             }
         }
 
@@ -163,24 +169,24 @@ class Date
                 $from = $data_[0];
                 $to = $data_[1];
                 $interval = $to->diff($from);
-                $delim = "";
+                $delimiter = "";
                 $toRender = 0;
                 if ($interval->y > 0 && in_array('year', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_YEAR;
-                    $delim = $this->dateParts->get($this->form . "-year")->getRangeDelimiter();
+                    $delimiter = $this->dateParts->get($this->form . "-year")->getRangeDelimiter();
                 }
                 if ($interval->m > 0 && $from->getMonth() - $to->getMonth() !== 0 && in_array('month', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_MONTH;
-                    $delim = $this->dateParts->get($this->form . "-month")->getRangeDelimiter();
+                    $delimiter = $this->dateParts->get($this->form . "-month")->getRangeDelimiter();
                 }
                 if ($interval->d > 0 && $from->getDay() - $to->getDay() !== 0 && in_array('day', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_DAY;
-                    $delim = $this->dateParts->get($this->form . "-day")->getRangeDelimiter();
+                    $delimiter = $this->dateParts->get($this->form . "-day")->getRangeDelimiter();
                 }
                 if ($toRender === self::DATE_RANGE_STATE_NONE) {
                     $ret .= $this->iterateAndRenderDateParts($dateParts, $data_);
                 } else {
-                    $ret .= $this->renderDateRange($toRender, $from, $to, $delim);
+                    $ret .= $this->renderDateRange($toRender, $from, $to, $delimiter);
                 }
             }
 
@@ -228,168 +234,16 @@ class Date
     }
 
     /**
-     * @param integer $differentParts
+     * @param int $toRender
      * @param DateTime $from
      * @param DateTime $to
-     * @param $delim
+     * @param $delimiter
      * @return string
      */
-    private function renderDateRange($differentParts, DateTime $from, DateTime $to, $delim)
+    private function renderDateRange($toRender, DateTime $from, DateTime $to, $delimiter)
     {
-        $ret = "";
-        $dateParts_ = [];
-        switch ($differentParts) {
-            case self::DATE_RANGE_STATE_YEAR:
-                foreach ($this->dateParts as $key => $datePart) {
-                    if (strpos($key, "year") !== false) {
-                        $ret .= $this->renderOneRangePart($datePart, $from, $to, $delim);
-                    }
-                    if (strpos($key, "month") !== false) {
-                        $day = !empty($d = $from->getMonth()) ? $d : "";
-                        $ret .= $day;
-                    }
-                    if (strpos($key, "day") !== false) {
-                        $day = !empty($d = $from->getDay()) ? $datePart->render($from, $this) : "";
-                        $ret .= $day;
-                    }
-                }
-                break;
-            case self::DATE_RANGE_STATE_MONTH:
-                /**
-                 * @var string $key
-                 * @var DatePart $datePart
-                 */
-                foreach ($this->dateParts as $key => $datePart) {
-                    if (strpos($key, "year") !== false) {
-                        $ret .= $datePart->render($from, $this);
-                    }
-                    if (strpos($key, "month")) {
-                        $ret .= $this->renderOneRangePart($datePart, $from, $to, $delim);
-                    }
-                    if (strpos($key, "day") !== false) {
-                        $day = !empty($d = $from->getDay()) ? $datePart->render($from, $this) : "";
-                        $ret .= $day;
-                    }
-                }
-                break;
-            case self::DATE_RANGE_STATE_DAY:
-                /**
-                 * @var string $key
-                 * @var DatePart $datePart
-                 */
-                foreach ($this->dateParts as $key => $datePart) {
-                    if (strpos($key, "year") !== false) {
-                        $ret .= $datePart->render($from, $this);
-                    }
-                    if (strpos($key, "month") !== false) {
-                        $ret .= $datePart->render($from, $this);
-                    }
-                    if (strpos($key, "day")) {
-                        $ret .= $this->renderOneRangePart($datePart, $from, $to, $delim);
-                    }
-                }
-                break;
-            case self::DATE_RANGE_STATE_YEARMONTHDAY:
-                $i = 0;
-                foreach ($this->dateParts as $datePart) {
-                    if ($i === $this->dateParts->count() - 1) {
-                        $ret .= $datePart->renderPrefix();
-                        $ret .= $datePart->renderWithoutAffixes($from, $this);
-                    } else {
-                        $ret .= $datePart->render($from, $this);
-                    }
-                    ++$i;
-                }
-                $ret .= $delim;
-                $i = 0;
-                foreach ($this->dateParts as $datePart) {
-                    if ($i == 0) {
-                        $ret .= $datePart->renderWithoutAffixes($to, $this);
-                        $ret .= $datePart->renderSuffix();
-                    } else {
-                        $ret .= $datePart->render($to, $this);
-                    }
-                    ++$i;
-                }
-                break;
-            case self::DATE_RANGE_STATE_YEARMONTH:
-                $dp = $this->dateParts->toArray();
-                $dateParts_ = [];
-                array_walk($dp, function($datePart, $key) use (&$dateParts_, $differentParts) {
-                    if (strpos($key, "year") !== false || strpos($key, "month") !== false) {
-                        $dateParts_["yearmonth"][] = $datePart;
-                    }
-                    if (strpos($key, "day") !== false) {
-                        $dateParts_["day"] = $datePart;
-                    }
-                });
-                break;
-            case self::DATE_RANGE_STATE_YEARDAY:
-                $dp = $this->dateParts->toArray();
-                $dateParts_ = [];
-                array_walk($dp, function($datePart, $key) use (&$dateParts_, $differentParts) {
-                    if (strpos($key, "year") !== false || strpos($key, "day") !== false) {
-                        $dateParts_["yearday"][] = $datePart;
-                    }
-                    if (strpos($key, "month") !== false) {
-                        $dateParts_["month"] = $datePart;
-                    }
-                });
-                break;
-            case self::DATE_RANGE_STATE_MONTHDAY:
-                $dp = $this->dateParts->toArray();
-                $dateParts_ = [];
-                array_walk($dp, function($datePart, $key) use (&$dateParts_, $differentParts) {
-                    //$bit = sprintf("%03d", decbin($differentParts));
-                    if (strpos($key, "month") !== false || strpos($key, "day") !== false) {
-                        $dateParts_["monthday"][] = $datePart;
-                    }
-                    if (strpos($key, "year") !== false) {
-                        $dateParts_["year"] = $datePart;
-                    }
-                });
-                break;
-        }
-        switch ($differentParts) {
-            case self::DATE_RANGE_STATE_YEARMONTH:
-            case self::DATE_RANGE_STATE_YEARDAY:
-            case self::DATE_RANGE_STATE_MONTHDAY:
-                /**
-                 * @var $key
-                 * @var DatePart $datePart */
-                foreach ($dateParts_ as $key => $datePart) {
-                    if (is_array($datePart)) {
-
-                        $renderedFrom  = $datePart[0]->render($from, $this);
-                        $renderedFrom .= $datePart[1]->renderPrefix();
-                        $renderedFrom .= $datePart[1]->renderWithoutAffixes($from, $this);
-                        $renderedTo  = $datePart[0]->renderWithoutAffixes($to, $this);
-                        $renderedTo .= $datePart[0]->renderSuffix();
-                        $renderedTo .= $datePart[1]->render($to, $this);
-                        $ret .= $renderedFrom . $delim . $renderedTo;
-                    } else {
-                        $ret .= $datePart->render($from, $this);
-                    }
-                }
-                break;
-        }
-        return $ret;
-    }
-
-    /**
-     * @param $datePart
-     * @param DateTime $from
-     * @param DateTime $to
-     * @param $delim
-     * @return string
-     */
-    protected function renderOneRangePart(DatePart $datePart, $from, $to, $delim)
-    {
-        $prefix = $datePart->renderPrefix();
-        $from = $datePart->renderWithoutAffixes($from, $this);
-        $to = $datePart->renderWithoutAffixes($to, $this);
-        $suffix = !empty($to) ? $datePart->renderSuffix() : "";
-        return $prefix . $from . $delim . $to . $suffix;
+        $datePartRenderer = DatePartRenderer::factory($this, $toRender);
+        return $datePartRenderer->parseDateRange($this->dateParts, $from, $to, $delimiter);
     }
 
     /**
@@ -451,17 +305,10 @@ class Date
     {
         if (!isset($data->{$this->variable}->{'date-parts'}) || empty($data->{$this->variable}->{'date-parts'})) {
             if (isset($data->{$this->variable}->raw) && !empty($data->{$this->variable}->raw)) {
-                //try {
                 // try to parse date parts from "raw" attribute
                 $var->{'date-parts'} = Util\DateHelper::parseDateParts($data->{$this->variable});
-                //} catch (CiteProcException $e) {
-                //    if (!preg_match("/(\p{L}+)\s?([\-\-\&,])\s?(\p{L}+)/u", $data->{$this->variable}->raw)) {
-                //        return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->raw)));
-                //    }
-                //}
             } else {
                 throw new CiteProcException("No valid date format");
-                //return "";
             }
         }
     }

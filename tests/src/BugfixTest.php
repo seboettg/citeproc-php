@@ -21,19 +21,39 @@ class BugfixTest extends TestCase
 
     use TestSuiteTestCaseTrait;
 
-    public function testBugfixGithub()
+    public function testBugfixGithub36()
     {
-        $this->_testRenderTestSuite("bugfix-github", ["bugfix-github-44", "bugfix-github-58", "bugfix-github-date", "bugfix-github-69"]);
+        $this->_testRenderTestSuite("bugfix-github-36");
     }
 
-    public function testBugfixGithub69()
+    public function testBugfixGithub37()
     {
-        $this->_testRenderTestSuite("bugfix-github-69");
+        $this->_testRenderTestSuite("bugfix-github-37");
     }
 
-    public function testBugfixGithub70()
+    public function testBugfixGithub44()
     {
-        $this->_testRenderTestSuite("bugfix-github-70");
+        $this->_testRenderTestSuite("bugfix-github-44");
+    }
+
+    public function testBugfixGithub46()
+    {
+        $this->_testRenderTestSuite("bugfix-github-46");
+    }
+
+    public function testBugfixGithub47()
+    {
+        $this->_testRenderTestSuite("bugfix-github-47");
+    }
+
+    public function testBugfixGithub49()
+    {
+        $this->_testRenderTestSuite("bugfix-github-49");
+    }
+
+    public function testBugfixGithub50()
+    {
+        $this->_testRenderTestSuite("bugfix-github-50");
     }
 
     /**
@@ -54,7 +74,7 @@ class BugfixTest extends TestCase
     /**
      * @throws Exception\CiteProcException
      */
-    public function testBugfixGitub59()
+    public function testBugfixGithub59()
     {
         $style = "modern-language-association";
         $input = '[{"type": "book","accessed": {"date-parts": [["2016","01","01"]]},"publisher": "lol2","title": "lol"},{"type": "book","author": [{"given": "Daniel","suffix": "H.","family": "Nexon"},{"given": "Iver","suffix": "B.","family": "Neumann"}],"accessed": {"date-parts": [["2006","01","01"]]},"publisher": "Rowman & Littlefield","title": "Harry Potter and International Relations"}]';
@@ -64,6 +84,26 @@ class BugfixTest extends TestCase
         $this->assertNotTrue(isset($datum->author)); //first entry has no author
         $result = $citeProc->render($data);
         $this->assertNotEmpty($result);
+    }
+
+    public function testBugfixGithub60()
+    {
+        $this->_testRenderTestSuite("bugfix-github-60");
+    }
+
+    public function testBugfixGithub68()
+    {
+        $this->_testRenderTestSuite("bugfix-github-68");
+    }
+
+    public function testBugfixGithub69()
+    {
+        $this->_testRenderTestSuite("bugfix-github-69");
+    }
+
+    public function testBugfixGithub70()
+    {
+        $this->_testRenderTestSuite("bugfix-github-70");
     }
 
     public function testBugfixGithubDate()

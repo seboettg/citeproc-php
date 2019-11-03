@@ -18,7 +18,6 @@ use Seboettg\CiteProc\Util;
 use SimpleXMLElement;
 use stdClass;
 
-
 /**
  * Class Number
  * @package Seboettg\CiteProc\Rendering
