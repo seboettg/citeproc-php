@@ -15,7 +15,7 @@ use Seboettg\Collection\ArrayList;
  * Class MonthDayRenderer
  * @package Seboettg\CiteProc\Rendering\Date\DateRange
  */
-class MonthDayRenderer extends DatePartRenderer
+class MonthDayRenderer extends DateRangeRenderer
 {
     /**
      * @param ArrayList<DatePart> $dateParts

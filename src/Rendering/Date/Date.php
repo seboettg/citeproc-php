@@ -13,7 +13,7 @@ use Exception;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Exception\InvalidStylesheetException;
-use Seboettg\CiteProc\Rendering\Date\DateRange\DatePartRenderer;
+use Seboettg\CiteProc\Rendering\Date\DateRange\DateRangeRenderer;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
@@ -242,7 +242,7 @@ class Date
      */
     private function renderDateRange($toRender, DateTime $from, DateTime $to, $delimiter)
     {
-        $datePartRenderer = DatePartRenderer::factory($this, $toRender);
+        $datePartRenderer = DateRangeRenderer::factory($this, $toRender);
         return $datePartRenderer->parseDateRange($this->dateParts, $from, $to, $delimiter);
     }
 

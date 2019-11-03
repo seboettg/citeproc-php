@@ -71,7 +71,7 @@ trait TestSuiteTestCaseTrait
             }
         }
         if (!empty($success)) {
-            print count($success)." assertions have succeeded:\n\t".implode("\n\t", $success);
+            print count($success)." assertions were succeeded:\n\t".implode("\n\t", $success);
         }
 
         if (!empty($failures)) {

@@ -16,7 +16,7 @@ use Seboettg\Collection\ArrayList;
  * Class DatePartRenderer
  * @package Seboettg\CiteProc\Rendering\Date\DateRange
  */
-abstract class DatePartRenderer {
+abstract class DateRangeRenderer {
 
     /**
      * @var Date
@@ -26,7 +26,7 @@ abstract class DatePartRenderer {
     /**
      * @param Date $dateObject
      * @param int $toRender
-     * @return DatePartRenderer
+     * @return DateRangeRenderer
      */
     public static function factory(Date $dateObject, $toRender)
     {

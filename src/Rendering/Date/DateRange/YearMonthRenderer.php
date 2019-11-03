@@ -15,7 +15,7 @@ use Seboettg\Collection\ArrayList;
  * Class YearMonthRenderer
  * @package Seboettg\CiteProc\Rendering\Date\DateRange
  */
-class YearMonthRenderer extends DatePartRenderer
+class YearMonthRenderer extends DateRangeRenderer
 {
 
     /**

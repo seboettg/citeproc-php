@@ -15,7 +15,7 @@ use Seboettg\Collection\ArrayList;
  * Class DayRenderer
  * @package Seboettg\CiteProc\Rendering\Date\DateRange
  */
-class DayRenderer extends DatePartRenderer
+class DayRenderer extends DateRangeRenderer
 {
 
     /**
