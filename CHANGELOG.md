@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2.1.9 2019-11-04
+* bugfix for [issue 68](https://github.com/seboettg/citeproc-php/issues/68)
+* bugfix for [issue 69](https://github.com/seboettg/citeproc-php/issues/69)
+* bugfix for [issue 70](https://github.com/seboettg/citeproc-php/issues/70)
+* feature/enhancement for [issue 71](https://github.com/seboettg/citeproc-php/issues/71)
+* refactoring of the code parts for rendering date ranges
+* redesign/refactoring of constraints (condition handling for choose elements)
+
 ## 2.1.8 - 2019-09-13
 * bugfix of [PR 66](https://github.com/seboettg/citeproc-php/pull/66)
 * bugfix for displaced delimiters that appear when in the name list more than one empty entry exists.
