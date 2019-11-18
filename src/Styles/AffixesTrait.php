@@ -68,9 +68,7 @@ trait AffixesTrait
         $prefix = $this->prefix;
         $suffix = $this->suffix;
 
-        if (!empty($suffix)) { 
-            $no_tags = strip_tags($text);
-
+        if (!empty($suffix)) {
             // punctuation in quote?
             $piq = CiteProc::getContext()
                 ->getLocale()
