@@ -151,7 +151,7 @@ class Layout implements Rendering
             return $res;
         } else if (!empty($inMargin)) {
             $res = $this->format(implode("", $inMargin));
-            return $this->htmlentities($this->removeConsecutiveChars($res));
+            return $this->htmlentities($res);
         }
         return "";
     }
