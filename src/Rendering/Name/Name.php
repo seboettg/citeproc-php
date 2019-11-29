@@ -584,7 +584,7 @@ class Name implements HasParent
                 $text = !empty($given) ? $given . " " . $family : $family;
             }
         } else {
-            $text = $this->form === "long" ? $data->family.$data->given : $data->family;
+            $text = $this->form === "long" ? $data->family . " " . $data->given : $data->family;
         }
 
         return $text;
