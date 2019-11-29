@@ -583,10 +583,11 @@ class Name implements HasParent
                 list($family, $given) = $this->renderNameParts($data);
                 $text = !empty($given) ? $given . " " . $family : $family;
             }
+        } else if (StringHelper::isAsianString(NameHelper::normalizeName($data))) {
+            $text = $this->form === "long" ? $data->family . $data->given : $data->family;
         } else {
             $text = $this->form === "long" ? $data->family . " " . $data->given : $data->family;
         }
-
         return $text;
     }
 
