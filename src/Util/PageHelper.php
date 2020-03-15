@@ -60,9 +60,9 @@ class PageHelper
         $resTo = "";
         if (strlen($from) == strlen($to)) {
             for ($i = strlen($to) - 1; $i >= $limit; --$i) {
-                $digitTo = $to{$i};
+                $digitTo = $to[$i];
 
-                $digitFrom = $from{$i};
+                $digitFrom = $from[$i];
                 if ($digitTo !== $digitFrom) {
                     $resTo = $digitTo . $resTo;
                 }

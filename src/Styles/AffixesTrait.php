@@ -70,7 +70,7 @@ trait AffixesTrait
 
         if (!empty($suffix)) { // guard against repeated suffixes...
             $no_tags = strip_tags($text);
-            if (strlen($no_tags) && ($no_tags{(strlen($no_tags) - 1)} == $suffix{0})) {
+            if (strlen($no_tags) && ($no_tags[(strlen($no_tags) - 1)] == $suffix[0])) {
                 $suffix = substr($suffix, 1);
             }
 

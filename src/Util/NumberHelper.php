@@ -119,7 +119,7 @@ class NumberHelper
     {
         $number = trim($str);
         for ($i = 0; $i < strlen($number); ++$i) {
-            $char = strtoupper($number{$i});
+            $char = strtoupper($number[$i]);
             if (!in_array($char, array_keys(self::ROMAN_DIGITS))) {
                 return false;
             }
