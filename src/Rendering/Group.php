@@ -16,9 +16,9 @@ use Seboettg\CiteProc\Styles\DelimiterTrait;
 use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Util\Factory;
+use Seboettg\CiteProc\Util\StringHelper;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
-use stdClass;
 
 /**
  * Class Group
@@ -48,6 +48,7 @@ class Group implements Rendering, HasParent
 
     /**
      * cs:group may carry the delimiter attribute to separate its child elements
+     *
      * @var
      */
     private $delimiter = "";
@@ -62,8 +63,9 @@ class Group implements Rendering, HasParent
 
     /**
      * Group constructor.
-     * @param SimpleXMLElement $node
-     * @param $parent
+     *
+     * @param  SimpleXMLElement $node
+     * @param  $parent
      * @throws InvalidStylesheetException
      */
     public function __construct(SimpleXMLElement $node, $parent)
@@ -80,34 +82,34 @@ class Group implements Rendering, HasParent
     }
 
     /**
-     * @param $data
-     * @param int|null $citationNumber
+     * @param  $data
+     * @param  int|null $citationNumber
      * @return string
      */
     public function render($data, $citationNumber = null)
     {
-        $textParts = array();
+        $textParts = [];
         $terms = $variables = $haveVariables = $elementCount = 0;
         foreach ($this->children as $child) {
             $elementCount++;
 
-            if (($child instanceof Text) &&
-                ($child->getSource() == 'term' ||
-                    $child->getSource() == 'value')) {
+            if (($child instanceof Text)
+                && ($child->getSource() == 'term'
+                || $child->getSource() == 'value')
+            ) {
                 ++$terms;
             }
 
             if (($child instanceof Label)) {
                 ++$terms;
             }
-            if (method_exists($child, "getSource") && $child->getSource() == 'variable' &&
-                !empty($child->getVariable()) && $child->getVariable() != "date" &&
-                !empty($data->{$child->getVariable()})
+            if (method_exists($child, "getSource") && $child->getSource() == 'variable'
+                && !empty($child->getVariable()) && $child->getVariable() != "date"
+                && !empty($data->{$child->getVariable()})
             ) {
                 ++$variables;
             }
 
-            /** @var stdClass $data */
             $text = $child->render($data, $citationNumber);
             $delimiter = $this->delimiter;
             if (!empty($text)) {
@@ -123,10 +125,12 @@ class Group implements Rendering, HasParent
                 }
                 $textParts[] = $text;
 
-                if (method_exists($child, "getSource") && $child->getSource() == 'variable' ||
-                    (method_exists($child,
-                            "getVariable") && $child->getVariable() != "date" && !empty($child->getVariable()))) {
-
+                if (method_exists($child, "getSource") && $child->getSource() == 'variable'
+                    || (method_exists(
+                        $child,
+                        "getVariable"
+                    ) && $child->getVariable() != "date" && !empty($child->getVariable()))
+                ) {
                     $haveVariables++;
                 }
 
@@ -147,10 +151,10 @@ class Group implements Rendering, HasParent
     }
 
     /**
-     * @param $textParts
-     * @param $variables
-     * @param $haveVariables
-     * @param $terms
+     * @param  $textParts
+     * @param  $variables
+     * @param  $haveVariables
+     * @param  $terms
      * @return string
      */
     protected function formatting($textParts, $variables, $haveVariables, $terms)
@@ -167,7 +171,8 @@ class Group implements Rendering, HasParent
             return ""; // there has to be at least one other none empty value before the term is output
         }
 
-        $text = implode($this->delimiter, $textParts); // insert the delimiter if supplied.
+        $text = StringHelper::implodeAndPreventConsecutiveChars($this->delimiter, $textParts);
+
         if (!empty($text)) {
             return $this->wrapDisplayBlock($this->addAffixes($this->format(($text))));
         }

@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc;
+
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\Root\Info;
@@ -21,7 +22,6 @@ use Seboettg\CiteProc\Style\Sort\Sort;
 use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Styles\Css\CssStyle;
 use Seboettg\Collection\ArrayList;
-
 
 /**
  * Class Context

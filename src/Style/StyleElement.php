@@ -8,13 +8,13 @@
  */
 
 namespace Seboettg\CiteProc\Style;
+
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use Seboettg\CiteProc\Rendering\Layout;
 use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Style\Sort\Sort;
 use SimpleXMLElement;
-
 
 /**
  * Class StyleElement
@@ -57,7 +57,6 @@ abstract class StyleElement
         /** @var SimpleXMLElement $child */
         foreach ($node->children() as $child) {
             switch ($child->getName()) {
-
                 /* The cs:layout rendering element is a required child element of cs:citation and cs:bibliography. It
                  * must contain one or more of the other rendering elements described below, and may carry affixes and
                  * formatting attributes.
@@ -85,5 +84,4 @@ abstract class StyleElement
     {
         return $this->parent;
     }
-
 }

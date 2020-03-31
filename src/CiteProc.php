@@ -23,7 +23,6 @@ use Seboettg\CiteProc\Util\CiteProcHelper;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 
-
 /**
  * Class CiteProc
  * @package Seboettg\CiteProc
@@ -172,7 +171,7 @@ class CiteProc
 
         if (is_array($data)) {
             $data = new DataList($data);
-        } else if (!($data instanceof DataList)) {
+        } elseif (!($data instanceof DataList)) {
             throw new CiteProcException('No valid format for variable data. Either DataList or array expected');
         }
 
@@ -186,7 +185,7 @@ class CiteProc
             case 'citation':
                 if (is_array($citationItems)) {
                     $citationItems = new ArrayList($citationItems);
-                } else if (!($citationItems instanceof ArrayList)) {
+                } elseif (!($citationItems instanceof ArrayList)) {
                     throw new CiteProcException('No valid format for variable `citationItems`, ArrayList expected.');
                 }
                 self::$context->setMode($mode);

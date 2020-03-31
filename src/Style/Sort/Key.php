@@ -8,10 +8,10 @@
  */
 
 namespace Seboettg\CiteProc\Style\Sort;
+
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Util\Variables;
 use SimpleXMLElement;
-
 
 /**
  * Class Key

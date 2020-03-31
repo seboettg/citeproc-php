@@ -8,11 +8,13 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Name;
+
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use SimpleXMLElement;
-
+use stdClass;
 
 /**
  * Class EtAl
@@ -33,7 +35,9 @@ class EtAl implements Rendering
 
     public function __construct(SimpleXMLElement $node)
     {
-        /** @var SimpleXMLElement $attribute */
+        /**
+         * @var SimpleXMLElement $attribute
+         */
         foreach ($node->attributes() as $attribute) {
             switch ($attribute->getName()) {
                 case 'term':
@@ -44,7 +48,13 @@ class EtAl implements Rendering
         $this->initFormattingAttributes($node);
     }
 
-    public function render($data, $citationNumber = null) {
+    /**
+     * @param  array|DataList|stdClass $data
+     * @param  null $citationNumber
+     * @return string
+     */
+    public function render($data, $citationNumber = null)
+    {
         return $this->format(CiteProc::getContext()->getLocale()->filter('terms', $this->term)->single);
     }
 }

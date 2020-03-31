@@ -12,7 +12,6 @@ namespace Seboettg\CiteProc\Util;
 use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use SimpleXMLElement;
 
-
 /**
  * Class Factory
  * @package Seboettg\CiteProc\Util
@@ -26,7 +25,7 @@ class Factory
     /**
      * @var array
      */
-    static $nodes = [
+    private static $nodes = [
 
         'layout'        => "\\Layout",
         'text'          => "\\Text",
@@ -57,7 +56,9 @@ class Factory
     {
         $nodeClass = self::CITE_PROC_NODE_NAMESPACE . self::$nodes[$node->getName()];
         if (!class_exists($nodeClass)) {
-            throw new InvalidStylesheetException("For node {$node->getName()} does not exist any counterpart class \"" . $nodeClass . "\". The given stylesheet seems to be invalid.");
+            throw new InvalidStylesheetException("For node {$node->getName()} " .
+                "does not exist any counterpart class \"" . $nodeClass .
+                "\". The given stylesheet seems to be invalid.");
         }
         if ($param != null) {
             return new $nodeClass($node, $param);

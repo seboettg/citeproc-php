@@ -23,8 +23,8 @@ class StringHelper
 {
 
     const PREPOSITIONS = [
-        'on', 'in', 'at', 'since', 'for', 'ago', 'before', 'to', 'past', 'till', 'until', 'by', 'under', 'below', 'over',
-        'above', 'across', 'through', 'into', 'towards', 'onto', 'from', 'of', 'off', 'about', 'via'
+        'on', 'in', 'at', 'since', 'for', 'ago', 'before', 'to', 'past', 'till', 'until', 'by', 'under', 'below',
+        'over', 'above', 'across', 'through', 'into', 'towards', 'onto', 'from', 'of', 'off', 'about', 'via'
     ];
 
     const ARTICLES = [
@@ -79,7 +79,7 @@ class StringHelper
     {
         $wordArray = explode(" ", $text);
 
-        array_walk($wordArray, function(&$word) {
+        array_walk($wordArray, function (&$word) {
             $word = ucfirst($word);
         });
 
@@ -98,11 +98,11 @@ class StringHelper
 
         $wordArray = explode(" ", $titleString);
 
-        array_walk($wordArray, function(&$word) {
+        array_walk($wordArray, function (&$word) {
 
             $words = explode("-", $word);
             if (count($words) > 1) {
-                array_walk($words, function(&$w) {
+                array_walk($words, function (&$w) {
                     $w = StringHelper::keepLowerCase($w) ? $w : StringHelper::mb_ucfirst($w);
                 });
                 $word = implode("-", $words);
@@ -119,13 +119,12 @@ class StringHelper
      */
     public static function keepLowerCase($word)
     {
-        $lowerCase = in_array($word, self::PREPOSITIONS) ||
+        // keep lower case if the first char is not an utf-8 letter
+        return in_array($word, self::PREPOSITIONS) ||
             in_array($word, self::ARTICLES) ||
             in_array($word, self::CONJUNCTIONS) ||
             in_array($word, self::ADJECTIVES) ||
-            (bool) preg_match("/[^\p{L}].+/", $word); // keep lower case if the first char is not an utf-8 letter
-        return $lowerCase;
-
+            (bool) preg_match("/[^\p{L}].+/", $word);
     }
 
     /**
@@ -141,7 +140,38 @@ class StringHelper
 
         /** @noinspection PhpInternalEntityUsedInspection */
         $encoding = Mbstring::mb_detect_encoding($firstChar, self::ISO_ENCODINGS, true);
-        return in_array($encoding, self::ISO_ENCODINGS) ? Mbstring::mb_strtoupper($firstChar, $encoding) . $then : $firstChar . $then;
+        return in_array($encoding, self::ISO_ENCODINGS) ?
+            Mbstring::mb_strtoupper($firstChar, $encoding) . $then : $firstChar . $then;
+    }
+
+    public static function mb_strrev($string)
+    {
+        $result = '';
+        for ($i = mb_strlen($string); $i >= 0; --$i) {
+            $result .= mb_substr($string, $i, 1);
+        }
+        return $result;
+    }
+
+    /**
+     * @param string $delimiter
+     * @param string[] $arrayOfStrings
+     * @return string;
+     */
+    public static function implodeAndPreventConsecutiveChars($delimiter, $arrayOfStrings)
+    {
+        $delim = trim($delimiter);
+        if (!empty($delim)) {
+            foreach ($arrayOfStrings as $key => $textPart) {
+                $pos = mb_strpos(StringHelper::mb_strrev($textPart), StringHelper::mb_strrev($delim));
+                if ($pos === 0) {
+                    $length = mb_strlen($textPart) - mb_strlen($delim);
+                    $textPart = mb_substr($textPart, 0, $length);
+                    $arrayOfStrings[$key] = $textPart;
+                }
+            }
+        }
+        return implode($delimiter, $arrayOfStrings);
     }
 
     /**
@@ -221,8 +251,13 @@ class StringHelper
      * @param $innerCloseQuote
      * @return string
      */
-    public static function replaceOuterQuotes($text, $outerOpenQuote, $outerCloseQuote, $innerOpenQuote, $innerCloseQuote)
-    {
+    public static function replaceOuterQuotes(
+        $text,
+        $outerOpenQuote,
+        $outerCloseQuote,
+        $innerOpenQuote,
+        $innerCloseQuote
+    ) {
         if (preg_match("/(.*)$outerOpenQuote(.+)$outerCloseQuote(.*)/u", $text, $match)) {
             return $match[1] . $innerOpenQuote . $match[2] . $innerCloseQuote . $match[3];
         }
@@ -235,7 +270,7 @@ class StringHelper
      */
     public static function isLatinString($string)
     {
-        return boolval(preg_match_all("/^[\p{Latin}\s\p{P}]*$/u", $string));
+        return boolval(preg_match_all("/^[\p{Latin}\p{Common}]+$/u", $string));
         //return !$noLatin;
     }
 
@@ -245,7 +280,7 @@ class StringHelper
      */
     public static function isCyrillicString($string)
     {
-        return boolval(preg_match("/^[\p{Cyrillic}\s\p{P}]*$/u", $string));
+        return boolval(preg_match("/^[\p{Cyrillic}\p{Common}]+$/u", $string));
     }
 
     /**
@@ -253,7 +288,8 @@ class StringHelper
      * @param $datePart
      * @return mixed
      */
-    public static function removeBrackets($datePart) {
+    public static function removeBrackets($datePart)
+    {
         return str_replace(["[","]", "(", ")", "{", "}"], "", $datePart);
     }
 }

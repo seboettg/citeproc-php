@@ -8,13 +8,13 @@
  */
 
 namespace Seboettg\CiteProc\Rendering;
+
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Styles\AffixesTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
 use SimpleXMLElement;
 use stdClass;
-
 
 /**
  * Class Label
@@ -106,7 +106,6 @@ class Label implements Rendering
             }
         } else {
             foreach ($variables as $variable) {
-
                 if (isset($data->{$variable})) {
                     $plural = $this->getPlural($data, $plural, $variable);
                     $term = CiteProc::getContext()->getLocale()->filter('terms', $variable, $form);
@@ -187,7 +186,6 @@ class Label implements Rendering
             } else {
                 return $this->evaluateStringPluralism($data, $variable);
             }
-
         } else {
             if ($this->plural != "always") {
                 $plural = $this->evaluateStringPluralism($data, $variable);

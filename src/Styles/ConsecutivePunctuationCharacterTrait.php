@@ -44,8 +44,7 @@ trait ConsecutivePunctuationCharacterTrait
         }
         $pattern = '/' . preg_quote(trim($punctuationSign)) . '{2,}/';
         if (preg_match($pattern, $subject)) {
-            $res = preg_replace($pattern, $punctuationSign, $subject);
-            return $res;
+            return preg_replace($pattern, $punctuationSign, $subject);
         }
         return $subject;
     }

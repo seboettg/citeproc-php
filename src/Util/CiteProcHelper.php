@@ -31,7 +31,7 @@ class CiteProcHelper
             if (is_callable($function)) {
                 $renderedText = $function($dataItem, $renderedText);
             }
-        } else if (array_key_exists($mode = CiteProc::getContext()->getMode(), $markupExtension)) {
+        } elseif (array_key_exists($mode = CiteProc::getContext()->getMode(), $markupExtension)) {
             if (array_key_exists($valueToRender, $markupExtension[$mode])) {
                 $function = CiteProc::getContext()->getMarkupExtension()[$mode][$valueToRender];
                 if (is_callable($function)) {

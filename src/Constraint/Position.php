@@ -18,7 +18,8 @@ namespace Seboettg\CiteProc\Constraint;
  *   - “first”: position of cites that are the first to reference an item
  *   - “ibid”/”ibid-with-locator”/”subsequent”: cites referencing previously cited items have the “subsequent” position.
  *     Such cites may also have the “ibid” or “ibid-with-locator” position when:
- *     a) the current cite immediately follows on another cite, within the same citation, that references the same item, or
+ *     a) the current cite immediately follows on another cite, within the same citation, that references the
+ *        same item, or
  *     b) the current cite is the first cite in the citation, and the previous citation consists of a single cite
  *        referencing the same item
  *     If either requirement is met, the presence of locators determines which position is assigned:

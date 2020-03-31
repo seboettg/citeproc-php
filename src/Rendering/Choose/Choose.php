@@ -17,9 +17,9 @@ use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 
-
 /**
  * Class Choose
+ *
  * @package Seboettg\CiteProc\Node
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
@@ -36,12 +36,13 @@ class Choose implements Rendering, HasParent
 
     /**
      * Choose constructor.
-     * @param SimpleXMLElement $node
-     * @param $parent
+     *
+     * @param  SimpleXMLElement $node
+     * @param  $parent
      * @throws ClassNotFoundException
      * @throws InvalidStylesheetException
      */
-    public  function __construct(SimpleXMLElement $node, $parent)
+    public function __construct(SimpleXMLElement $node, $parent)
     {
         $this->parent = $parent;
         $this->children = new ArrayList();
@@ -65,8 +66,8 @@ class Choose implements Rendering, HasParent
     }
 
     /**
-     * @param array|DataList $data
-     * @param null|int $citationNumber
+     * @param  array|DataList $data
+     * @param  null|int       $citationNumber
      * @return string
      */
     public function render($data, $citationNumber = null)
@@ -76,9 +77,10 @@ class Choose implements Rendering, HasParent
         // IF
         if ($prevCondition = $this->children->get("if")->match($data)) {
             $arr[] = $this->children->get("if")->render($data);
-
-        } else if (!$prevCondition && $this->children->hasKey("elseif")) { // ELSEIF
-            /** @var ChooseElseIf $child */
+        } elseif (!$prevCondition && $this->children->hasKey("elseif")) { // ELSEIF
+            /**
+             * @var ChooseElseIf $child
+             */
             foreach ($this->children->get("elseif") as $child) {
                 $condition = $child->match($data);
                 if ($condition && !$prevCondition) {
@@ -93,11 +95,9 @@ class Choose implements Rendering, HasParent
         //ELSE
         if (!$prevCondition && $this->children->hasKey("else")) {
             $arr[] = $this->children->get("else")->render($data);
-
         }
         return implode("", $arr);
     }
-
 
     /**
      * @return mixed
@@ -107,4 +107,3 @@ class Choose implements Rendering, HasParent
         return $this->parent;
     }
 }
-

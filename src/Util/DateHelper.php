@@ -8,11 +8,11 @@
  */
 
 namespace Seboettg\CiteProc\Util;
+
 use DateTime;
 use Exception;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Style\Sort\Key;
-
 
 /**
  * Class Date
@@ -85,7 +85,6 @@ class DateHelper
                 $sortKey .= "-";
             }
         } else {
-
             if (!isset($dataItem->{$variable}->{'date-parts'})) {
                 $dateParts = self::parseDateParts($dataItem->{$variable});
             } else {
@@ -109,12 +108,12 @@ class DateHelper
             $dateParts = $item->{$variable}->{"date-parts"};
             if ($match === "all" && count($dateParts) !== 2) {
                 return false;
-            } else if ($match === "any" && count($dateParts) === 2) {
+            } elseif ($match === "any" && count($dateParts) === 2) {
                 return true;
             } else {
                 $ret = ($match === "all") ? $ret & true : $ret | true;
             }
         }
-        return boolval($ret);
+        return (bool)$ret;
     }
 }

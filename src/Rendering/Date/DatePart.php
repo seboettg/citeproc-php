@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Date;
+
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Rendering\Layout;
 use Seboettg\CiteProc\Rendering\Number;
@@ -16,7 +17,6 @@ use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\RangeDelimiterTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
 use SimpleXMLElement;
-
 
 /**
  * Class DatePart
@@ -204,7 +204,8 @@ class DatePart
                 $text = sprintf("%02d", $text);
                 break;
             case 'ordinal':
-                $limitDayOrdinals = CiteProc::getContext()->getLocale()->filter("options", "limit-day-ordinals-to-day-1");
+                $limitDayOrdinals =
+                    CiteProc::getContext()->getLocale()->filter("options", "limit-day-ordinals-to-day-1");
                 if (!$limitDayOrdinals || Layout::getNumberOfCitedItems() <= 1) {
                     $text = Number::ordinal($text);
                 }
@@ -226,5 +227,4 @@ class DatePart
         $text = CiteProc::getContext()->getLocale()->filter('terms', $month, $form)->single;
         return $text;
     }
-
 }

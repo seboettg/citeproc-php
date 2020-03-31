@@ -9,7 +9,6 @@
 
 namespace Seboettg\CiteProc\Style\Sort;
 
-
 interface SortKey
 {
     public function getVariable();

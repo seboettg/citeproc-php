@@ -25,9 +25,9 @@ use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 use stdClass;
 
-
 /**
  * Class Layout
+ *
  * @package Seboettg\CiteProc\Rendering
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
@@ -50,6 +50,7 @@ class Layout implements Rendering
     /**
      * When used within cs:citation, the delimiter attribute may be used to specify a delimiter for cites within a
      * citation.
+     *
      * @var string
      */
     private $delimiter = "";
@@ -58,8 +59,8 @@ class Layout implements Rendering
     private $parent;
 
     /**
-     * @param SimpleXMLElement $node
-     * @param StyleElement $parent
+     * @param  SimpleXMLElement $node
+     * @param  StyleElement     $parent
      * @throws InvalidStylesheetException
      */
     public function __construct($node, $parent)
@@ -76,8 +77,8 @@ class Layout implements Rendering
     }
 
     /**
-     * @param array|DataList $data
-     * @param array|ArrayList $citationItems
+     * @param  array|DataList  $data
+     * @param  array|ArrayList $citationItems
      * @return string|array
      */
     public function render($data, $citationItems = [])
@@ -93,13 +94,14 @@ class Layout implements Rendering
         if (CiteProc::getContext()->isModeBibliography()) {
             foreach ($data as $citationNumber => $item) {
                 ++self::$numberOfCitedItems;
-                CiteProc::getContext()->getResults()->append($this->wrapBibEntry($item, $this->renderSingle($item, $citationNumber)));
+                CiteProc::getContext()->getResults()->append(
+                    $this->wrapBibEntry($item, $this->renderSingle($item, $citationNumber))
+                );
             }
             $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
             $ret = StringHelper::clearApostrophes($ret);
             return "<div class=\"csl-bib-body\">" . $ret . "\n</div>";
-
-        } else if (CiteProc::getContext()->isModeCitation()) {
+        } elseif (CiteProc::getContext()->isModeCitation()) {
             if ($citationItems->count() > 0) { //is there a filter for specific citations?
                 if ($this->isGroupedCitations($citationItems)) { //if citation items grouped?
                     return $this->renderGroupedCitations($data, $citationItems);
@@ -107,7 +109,6 @@ class Layout implements Rendering
                     $data = $this->filterCitationItems($data, $citationItems);
                     $ret = $this->renderCitations($data, $ret);
                 }
-
             } else {
                 $ret = $this->renderCitations($data, $ret);
             }
@@ -117,8 +118,8 @@ class Layout implements Rendering
     }
 
     /**
-     * @param $data
-     * @param int|null $citationNumber
+     * @param  $data
+     * @param  int|null $citationNumber
      * @return string
      */
     private function renderSingle($data, $citationNumber = null)
@@ -130,8 +131,9 @@ class Layout implements Rendering
         foreach ($this->children as $key => $child) {
             $rendered = $child->render($data, $citationNumber);
             $this->getChildsAffixesAndDelimiter($child);
-            if (CiteProc::getContext()->isModeBibliography() && $bibliographyOptions->getSecondFieldAlign() === "flush") {
-
+            if (CiteProc::getContext()->isModeBibliography()
+                && $bibliographyOptions->getSecondFieldAlign() === "flush"
+            ) {
                 if ($key === 0 && !empty($rendered)) {
                     $inMargin[] = $rendered;
                 } else {
@@ -145,11 +147,14 @@ class Layout implements Rendering
 
         if (!empty($inMargin) && !empty($margin) && CiteProc::getContext()->isModeBibliography()) {
             $leftMargin = $this->removeConsecutiveChars($this->htmlentities($this->format(implode("", $inMargin))));
-            $rightInline = $this->removeConsecutiveChars($this->htmlentities($this->format(implode("", $margin))) . $this->suffix);
+            $rightInline = $this->removeConsecutiveChars(
+                $this->htmlentities($this->format(implode("", $margin))) .
+                $this->suffix
+            );
             $res  = '<div class="csl-left-margin">' . $leftMargin . '</div>';
             $res .= '<div class="csl-right-inline">' . $rightInline . '</div>';
             return $res;
-        } else if (!empty($inMargin)) {
+        } elseif (!empty($inMargin)) {
             $res = $this->format(implode("", $inMargin));
             return $this->htmlentities($this->removeConsecutiveChars($res));
         }
@@ -165,8 +170,8 @@ class Layout implements Rendering
     }
 
     /**
-     * @param stdClass $dataItem
-     * @param string $value
+     * @param  stdClass $dataItem
+     * @param  string   $value
      * @return string
      */
     private function wrapBibEntry($dataItem, $value)
@@ -179,18 +184,18 @@ class Layout implements Rendering
     }
 
     /**
-     * @param string $text
+     * @param  string $text
      * @return string
      */
     private function htmlentities($text)
     {
-        $text = preg_replace("/(.*)&([^#38;|amp;].*)/u", "$1&#38;$2", $text);
+        $text = preg_replace("/(.*)&([^#38|amp];.*)/u", "$1&#38;$2", $text);
         return $text;
     }
 
     /**
-     * @param $data
-     * @param $ret
+     * @param  $data
+     * @param  $ret
      * @return string
      */
     private function renderCitations($data, $ret)
@@ -206,15 +211,15 @@ class Layout implements Rendering
     }
 
     /**
-     * @param DataList $data
-     * @param ArrayList $citationItems
+     * @param  DataList  $data
+     * @param  ArrayList $citationItems
      * @return mixed
      */
     private function filterCitationItems($data, $citationItems)
     {
         $arr = $data->toArray();
 
-        $arr_ = array_filter($arr, function($dataItem) use ($citationItems) {
+        $arr_ = array_filter($arr, function ($dataItem) use ($citationItems) {
             foreach ($citationItems as $citationItem) {
                 if ($dataItem->id === $citationItem->id) {
                     return true;
@@ -227,7 +232,7 @@ class Layout implements Rendering
     }
 
     /**
-     * @param ArrayList $citationItems
+     * @param  ArrayList $citationItems
      * @return bool
      */
     private function isGroupedCitations(ArrayList $citationItems)
@@ -240,8 +245,8 @@ class Layout implements Rendering
     }
 
     /**
-     * @param DataList $data
-     * @param ArrayList $citationItems
+     * @param  DataList  $data
+     * @param  ArrayList $citationItems
      * @return array|string
      */
     private function renderGroupedCitations($data, $citationItems)
@@ -257,5 +262,4 @@ class Layout implements Rendering
         }
         return implode("\n", $group);
     }
-
 }

@@ -50,12 +50,15 @@ class IsNumeric extends AbstractConstraint
     {
         if (is_numeric($evalValue)) {
             return true;
-        } else if (preg_match(NumberHelper::PATTERN_ORDINAL, $evalValue)) {
-            $numberFormatter = new NumberFormatter(CiteProc::getContext()->getLocale()->getLanguage(), NumberFormatter::ORDINAL);
+        } elseif (preg_match(NumberHelper::PATTERN_ORDINAL, $evalValue)) {
+            $numberFormatter = new NumberFormatter(
+                CiteProc::getContext()->getLocale()->getLanguage(),
+                NumberFormatter::ORDINAL
+            );
             return $numberFormatter->parse($evalValue) !== false;
-        } else if (preg_match(NumberHelper::PATTERN_ROMAN, $evalValue)) {
+        } elseif (preg_match(NumberHelper::PATTERN_ROMAN, $evalValue)) {
             return NumberHelper::roman2Dec($evalValue) !== false;
-        } else if (preg_match(NumberHelper::PATTERN_COMMA_AMPERSAND_RANGE, $evalValue)) {
+        } elseif (preg_match(NumberHelper::PATTERN_COMMA_AMPERSAND_RANGE, $evalValue)) {
             return true;
         }
         return false;

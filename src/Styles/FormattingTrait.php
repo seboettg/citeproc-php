@@ -9,7 +9,6 @@
 
 namespace Seboettg\CiteProc\Styles;
 
-
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 
@@ -24,7 +23,14 @@ trait FormattingTrait
     /**
      * @var array
      */
-    static $formattingAttributes = ['font-style', 'font-family', 'font-weight', 'font-variant', 'text-decoration', 'vertical-align'];
+    private static $formattingAttributes = [
+        'font-style',
+        'font-family',
+        'font-weight',
+        'font-variant',
+        'text-decoration',
+        'vertical-align'
+    ];
 
     /**
      * @var ArrayList
@@ -74,18 +80,18 @@ trait FormattingTrait
             foreach ($this->formattingOptions as $option => $optionValue) {
                 if ($optionValue === "italic") {
                     $text = "<i>$text</i>";
-                } else if ($optionValue === "bold") {
+                } elseif ($optionValue === "bold") {
                     $text = "<b>$text</b>";
-                } else if ($optionValue === "normal") {
-                    //$text = $text;
-                } else if ($option === "vertical-align") {
+                } elseif ($optionValue === "normal") {
+                    $text = "$text";
+                } elseif ($option === "vertical-align") {
                     if ($optionValue === "sub") {
                         $text = "<sub>$text</sub>";
-                    } else if ($optionValue === "sup") {
+                    } elseif ($optionValue === "sup") {
                         $text = "<sup>$text</sup>";
                     }
-                } else if ($option === "text-decoration" && $optionValue === "none") {
-
+                } elseif ($option === "text-decoration" && $optionValue === "none") {
+                    $format .= "";
                 } else {
                     $format .= "$option: $optionValue;";
                 }

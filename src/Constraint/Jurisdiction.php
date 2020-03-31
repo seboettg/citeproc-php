@@ -9,7 +9,6 @@
 
 namespace Seboettg\CiteProc\Constraint;
 
-
 /**
  * Class Jurisdiction
  * @package Seboettg\CiteProc\Constraint

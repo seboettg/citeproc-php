@@ -18,13 +18,16 @@ use Seboettg\CiteProc\Style\Options\PageRangeFormats;
  */
 class PageHelper
 {
-
+    /**
+     * @param array $ranges
+     * @param string $pageRangeFormat
+     * @return string
+     */
     public static function processPageRangeFormats($ranges, $pageRangeFormat)
     {
         list($from, $to) = $ranges;
 
         if (!empty($pageRangeFormat)) {
-
             switch ($pageRangeFormat) {
                 case PageRangeFormats::MINIMAL:
                     $resTo = self::renderMinimal($from, $to, 0);
@@ -70,15 +73,13 @@ class PageHelper
             return $resTo;
         }
         return $to;
-
     }
 
     private static function renderChicago($from, $to)
     {
-
         if ($from > 100 && ($from % 100 > 0) && intval(($from / 100), 10) === intval(($to / 100), 10)) {
             return "" . ($to % 100);
-        } else if ($from >= 10000) {
+        } elseif ($from >= 10000) {
             return "" . ($to % 1000);
         }
         return $to;

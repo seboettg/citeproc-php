@@ -28,6 +28,7 @@ use stdClass;
 
 /**
  * Class Names
+ *
  * @package Seboettg\CiteProc\Rendering\Name
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
@@ -111,17 +112,19 @@ class Names implements Rendering, HasParent
 
     /**
      * Names constructor.
-     * @param SimpleXMLElement $node
-     * @param $parent
+     *
+     * @param  SimpleXMLElement $node
+     * @param  $parent
      * @throws InvalidStylesheetException
      */
     public function __construct(SimpleXMLElement $node, $parent)
     {
         $this->initInheritableNameAttributes($node);
         $this->parent = $parent;
-        /** @var SimpleXMLElement $child */
+        /**
+         * @var SimpleXMLElement $child
+        */
         foreach ($node->children() as $child) {
-
             switch ($child->getName()) {
                 case "name":
                     $this->name = Factory::create($child, $this);
@@ -137,7 +140,9 @@ class Names implements Rendering, HasParent
             }
         }
 
-        /** @var SimpleXMLElement $attribute */
+        /**
+         * @var SimpleXMLElement $attribute
+         */
         foreach ($node->attributes() as $attribute) {
             if ("variable" === $attribute->getName()) {
                 $this->variables = new ArrayList(explode(" ", (string) $attribute));
@@ -159,8 +164,8 @@ class Names implements Rendering, HasParent
      * addition, the “editortranslator” term is used if the Names element contains a Label element, replacing the
      * default “editor” and “translator” terms (e.g. resulting in “Doe (editor & translator)”).
      *
-     * @param stdClass $data
-     * @param int|null $citationNumber
+     * @param  stdClass $data
+     * @param  int|null $citationNumber
      * @return string
      * @throws CiteProcException
      */
@@ -173,7 +178,9 @@ class Names implements Rendering, HasParent
         term is used if the cs:names element contains a cs:label element, replacing the default “editor” and
         “translator” terms (e.g. resulting in “Doe (editor & translator)”) */
         if ($this->variables->hasValue("editor") && $this->variables->hasValue("translator")) {
-            if (isset($data->editor) && isset($data->translator) && NameHelper::sameNames($data->editor, $data->translator)) {
+            if (isset($data->editor)
+                && isset($data->translator) && NameHelper::sameNames($data->editor, $data->translator)
+            ) {
                 if (isset($this->name)) {
                     $str .= $this->name->render($data, 'editor');
                 } else {
@@ -189,7 +196,7 @@ class Names implements Rendering, HasParent
                     $str .= $this->label->render($data);
                 }
                 $vars = $this->variables->toArray();
-                $vars = array_filter($vars, function($value) {
+                $vars = array_filter($vars, function ($value) {
                     return !($value === "editor" || $value === "translator");
                 });
                 $this->variables->setArray($vars);
@@ -198,7 +205,6 @@ class Names implements Rendering, HasParent
 
         $results = [];
         foreach ($this->variables as $var) {
-
             if (!empty($data->{$var})) {
                 if (!empty($this->name)) {
                     $res = $this->name->render($data, $var, $citationNumber);
@@ -235,9 +241,9 @@ class Names implements Rendering, HasParent
 
 
     /**
-     * @param $data
-     * @param $var
-     * @param $name
+     * @param  $data
+     * @param  $var
+     * @param  $name
      * @return string
      */
     private function appendLabel($data, $var, $name)
@@ -252,8 +258,8 @@ class Names implements Rendering, HasParent
     }
 
     /**
-     * @param $res
-     * @param $results
+     * @param  $res
+     * @param  $results
      * @return array
      */
     private function addCountValues($res, $results)
@@ -286,7 +292,7 @@ class Names implements Rendering, HasParent
     }
 
     /**
-     * @param EtAl $etAl
+     * @param  EtAl $etAl
      * @return $this
      */
     public function setEtAl(EtAl $etAl)
@@ -312,7 +318,7 @@ class Names implements Rendering, HasParent
     }
 
     /**
-     * @param Name $name
+     * @param  Name $name
      * @return $this
      */
     public function setName(Name $name)
@@ -371,9 +377,8 @@ class Names implements Rendering, HasParent
 
     private function filterEmpty(array $results)
     {
-        return array_filter($results, function($item) {
+        return array_filter($results, function ($item) {
             return !empty($item);
         });
     }
-
 }

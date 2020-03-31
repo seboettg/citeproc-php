@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Styles;
+
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Util\StringHelper;
 use SimpleXMLElement;
@@ -60,12 +61,28 @@ trait QuotesTrait
      */
     private function replaceOuterQuotes($text, $outerOpenQuote, $outerCloseQuote)
     {
-
-        $innerOpenQuote = CiteProc::getContext()->getLocale()->filter("terms", "open-inner-quote")->single;
-        $innerCloseQuote = CiteProc::getContext()->getLocale()->filter("terms", "close-inner-quote")->single;
-
-        $text = StringHelper::replaceOuterQuotes($text, "\"", "\"", $innerOpenQuote, $innerCloseQuote);
-        $text = StringHelper::replaceOuterQuotes($text, $outerOpenQuote, $outerCloseQuote, $innerOpenQuote, $innerCloseQuote);
+        $innerOpenQuote = CiteProc::getContext()
+            ->getLocale()
+            ->filter("terms", "open-inner-quote")
+            ->single;
+        $innerCloseQuote = CiteProc::getContext()
+            ->getLocale()
+            ->filter("terms", "close-inner-quote")
+            ->single;
+        $text = StringHelper::replaceOuterQuotes(
+            $text,
+            "\"",
+            "\"",
+            $innerOpenQuote,
+            $innerCloseQuote
+        );
+        $text = StringHelper::replaceOuterQuotes(
+            $text,
+            $outerOpenQuote,
+            $outerCloseQuote,
+            $innerOpenQuote,
+            $innerCloseQuote
+        );
         return $text;
     }
 }

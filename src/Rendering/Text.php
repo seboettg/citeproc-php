@@ -27,6 +27,7 @@ use stdClass;
 
 /**
  * Class Term
+ *
  * @package Seboettg\CiteProc\Node\Style
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
@@ -57,6 +58,7 @@ class Text implements Rendering
 
     /**
      * Text constructor.
+     *
      * @param SimpleXMLElement $node
      */
     public function __construct(SimpleXMLElement $node)
@@ -79,8 +81,8 @@ class Text implements Rendering
     }
 
     /**
-     * @param stdClass $data
-     * @param int|null $citationNumber
+     * @param  stdClass $data
+     * @param  int|null $citationNumber
      * @return string
      */
     public function render($data, $citationNumber = null)
@@ -96,7 +98,7 @@ class Text implements Rendering
                 if ($this->toRenderTypeValue === "citation-number") {
                     $renderedText = $this->renderCitationNumber($data, $citationNumber);
                     break;
-                } else if ($this->toRenderTypeValue === "page") {
+                } elseif ($this->toRenderTypeValue === "page") {
                     $renderedText = $this->renderPage($data);
                     // for test sort_BibliographyCitationNumberDescending.json
                 } else {
@@ -111,7 +113,10 @@ class Text implements Rendering
                 $renderedText = $this->renderMacro($data);
                 break;
             case 'term':
-                $term = CiteProc::getContext()->getLocale()->filter("terms", $this->toRenderTypeValue, $this->form)->single;
+                $term = CiteProc::getContext()
+                    ->getLocale()
+                    ->filter("terms", $this->toRenderTypeValue, $this->form)
+                    ->single;
                 $renderedText = !empty($term) ? $this->applyTextCase($term, $lang) : "";
         }
         if (!empty($renderedText)) {
@@ -146,8 +151,13 @@ class Text implements Rendering
             $data->page = $this->normalizeDateRange($data->page);
             $ranges = preg_split("/[-–]/", trim($data->page));
             if (count($ranges) > 1) {
-                if (!empty(CiteProc::getContext()->getGlobalOptions()) && !empty(CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat())) {
-                    return PageHelper::processPageRangeFormats($ranges, CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat());
+                if (!empty(CiteProc::getContext()->getGlobalOptions())
+                    && !empty(CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat())
+                ) {
+                    return PageHelper::processPageRangeFormats(
+                        $ranges,
+                        CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat()
+                    );
                 }
                 list($from, $to) = $ranges;
                 return "$from-$to";
@@ -165,8 +175,8 @@ class Text implements Rendering
     }
 
     /**
-     * @param $data
-     * @param $renderedText
+     * @param  $data
+     * @param  $renderedText
      * @return mixed
      */
     private function applyAdditionalMarkupFunction($data, $renderedText)
@@ -175,8 +185,8 @@ class Text implements Rendering
     }
 
     /**
-     * @param $data
-     * @param $lang
+     * @param  $data
+     * @param  $lang
      * @return string
      */
     private function renderVariable($data, $lang)
@@ -188,30 +198,46 @@ class Text implements Rendering
             $attrWithPrefix = $this->form . ucfirst($this->toRenderTypeValue);
             $attrWithSuffix = $this->toRenderTypeValue . "-" . $this->form;
             if (isset($data->{$attrWithPrefix}) && !empty($data->{$attrWithPrefix})) {
-                $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$attrWithPrefix}), $lang);
+                $renderedText = $this->applyTextCase(
+                    StringHelper::clearApostrophes(
+                        str_replace(" & ", " &#38; ", $data->{$attrWithPrefix})
+                    ),
+                    $lang
+                );
             } else {
                 if (isset($data->{$attrWithSuffix}) && !empty($data->{$attrWithSuffix})) {
-                    $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$attrWithSuffix}),
-                        $lang);
+                    $renderedText = $this->applyTextCase(
+                        StringHelper::clearApostrophes(
+                            str_replace(" & ", " &#38; ", $data->{$attrWithSuffix})
+                        ),
+                        $lang
+                    );
                 } else {
                     if (isset($data->{$this->toRenderTypeValue})) {
-                        $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}),
-                            $lang);
+                        $renderedText = $this->applyTextCase(
+                            StringHelper::clearApostrophes(
+                                str_replace(" & ", " &#38; ", $data->{$this->toRenderTypeValue})
+                            ),
+                            $lang
+                        );
                     }
-
                 }
             }
         } else {
             if (!empty($data->{$this->toRenderTypeValue})) {
-                $renderedText = $this->applyTextCase(StringHelper::clearApostrophes($data->{$this->toRenderTypeValue}),
-                    $lang);
+                $renderedText = $this->applyTextCase(
+                    StringHelper::clearApostrophes(
+                        str_replace(" & ", " &#38; ", $data->{$this->toRenderTypeValue})
+                    ),
+                    $lang
+                );
             }
         }
         return $renderedText;
     }
 
     /**
-     * @param $renderedText
+     * @param  $renderedText
      * @return string
      */
     private function formatRenderedText($renderedText)
@@ -226,8 +252,8 @@ class Text implements Rendering
     }
 
     /**
-     * @param $data
-     * @param $citationNumber
+     * @param  $data
+     * @param  $citationNumber
      * @return int|mixed
      */
     private function renderCitationNumber($data, $citationNumber)
@@ -238,7 +264,7 @@ class Text implements Rendering
     }
 
     /**
-     * @param $data
+     * @param  $data
      * @return string
      */
     private function renderMacro($data)

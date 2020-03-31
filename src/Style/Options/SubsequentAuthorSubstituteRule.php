@@ -48,5 +48,4 @@ class SubsequentAuthorSubstituteRule extends Enum
      * “partial-first” - as “partial-each”, but substitution is limited to the first name of the name variable.
      */
     const PARTIAL_FIRST = "partial-first";
-
 }

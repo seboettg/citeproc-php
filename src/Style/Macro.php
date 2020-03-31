@@ -19,7 +19,6 @@ use Seboettg\CiteProc\Util\Factory;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 
-
 /**
  * Class Macro
  *
@@ -112,5 +111,4 @@ class Macro implements Rendering, HasParent
     {
         return $this->parent;
     }
-
 }

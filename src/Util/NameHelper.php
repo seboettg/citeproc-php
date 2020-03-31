@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Util;
+
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use stdClass;
@@ -101,7 +102,7 @@ class NameHelper
             return false;
         }
 
-        array_walk($persons1, function($name, $key) use ($persons2, &$same) {
+        array_walk($persons1, function ($name, $key) use ($persons2, &$same) {
             $family1 = $name->family;
             $family2 = $persons2[$key]->family;
             $same = $same && ($family1 === $family2);
@@ -131,7 +132,7 @@ class NameHelper
             if (is_callable($function)) {
                 return $function($nameItem, $formattedName);
             }
-        } else if (array_key_exists($mode = CiteProc::getContext()->getMode(), $markupExtension)) {
+        } elseif (array_key_exists($mode = CiteProc::getContext()->getMode(), $markupExtension)) {
             if (array_key_exists($nameVar, $markupExtension[$mode])) {
                 $function = $markupExtension[$mode][$nameVar];
                 if (is_callable($function)) {

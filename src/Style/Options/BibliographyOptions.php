@@ -190,6 +190,4 @@ class BibliographyOptions
     {
         $this->entrySpacing = $entrySpacing;
     }
-
-
 }

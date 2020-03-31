@@ -22,7 +22,6 @@ use Seboettg\CiteProc\Util;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 
-
 /**
  * Class Date
  * @package Seboettg\CiteProc\Rendering
@@ -128,11 +127,13 @@ class Date
             $this->prepareDatePartsInVariable($data, $var);
         } catch (CiteProcException $e) {
             if (isset($data->{$this->variable}->{'raw'}) &&
-                !preg_match("/(\p{L}+)\s?([\-\-&,])\s?(\p{L}+)/u", $data->{$this->variable}->{'raw'})) {
+                !preg_match("/(\p{L}+)\s?([\-\–&,])\s?(\p{L}+)/u", $data->{$this->variable}->{'raw'})) {
                 return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->{'raw'})));
             } else {
                 if (isset($data->{$this->variable}->{'string-literal'})) {
-                    return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->{'string-literal'})));
+                    return $this->addAffixes(
+                        $this->format($this->applyTextCase($data->{$this->variable}->{'string-literal'}))
+                    );
                 }
             }
         }
@@ -141,8 +142,8 @@ class Date
         $dateParts = !empty($this->datePartsAttribute) ? explode("-", $this->datePartsAttribute) : [];
         $this->prepareDatePartsChildren($dateParts, $form);
 
-
-        // No date-parts in date-part attribute defined, take into account that the defined date-part children will be used.
+        // No date-parts in date-part attribute defined, take into account that the defined date-part children will
+        // be used.
         if (empty($this->datePartsAttribute) && $this->dateParts->count() > 0) {
             /** @var DatePart $part */
             foreach ($this->dateParts as $part) {
@@ -164,7 +165,7 @@ class Date
             if (count($data->{$this->variable}->{'date-parts'}) === 1) {
                 $data_ = $this->createDateTime($data->{$this->variable}->{'date-parts'});
                 $ret .= $this->iterateAndRenderDateParts($dateParts, $data_);
-            } else if (count($var->{'date-parts'}) === 2) { //date range
+            } elseif (count($var->{'date-parts'}) === 2) { //date range
                 $data_ = $this->createDateTime($var->{'date-parts'});
                 $from = $data_[0];
                 $to = $data_[1];
@@ -190,14 +191,13 @@ class Date
                 }
             }
 
-            if (isset($var->raw) && preg_match("/(\p{L}+)\s?([\-\-&,])\s?(\p{L}+)/u", $var->raw, $matches)) {
+            if (isset($var->raw) && preg_match("/(\p{L}+)\s?([\-\–&,])\s?(\p{L}+)/u", $var->raw, $matches)) {
                 return $matches[1] . $matches[2] . $matches[3];
             }
-        }
-        // fallback:
-        // When there are no dateParts children, but date-parts attribute in date
-        // render numeric
-        else if (!empty($this->datePartsAttribute)) {
+        } elseif (!empty($this->datePartsAttribute)) {
+            // fallback:
+            // When there are no dateParts children, but date-parts attribute in date
+            // render numeric
             $data = $this->createDateTime($var->{'date-parts'});
             $ret = $this->renderNumeric($data[0]);
         }
@@ -220,7 +220,11 @@ class Date
                 $dateTime->setDay(0)->setMonth(0)->setYear(0);
                 $data[] = $dateTime;
             }
-            $dateTime = new DateTime($date[0], array_key_exists(1, $date) ? $date[1] : 1, array_key_exists(2, $date) ? $date[2] : 1);
+            $dateTime = new DateTime(
+                $date[0],
+                array_key_exists(1, $date) ? $date[1] : 1,
+                array_key_exists(2, $date) ? $date[2] : 1
+            );
             if (!array_key_exists(1, $date)) {
                 $dateTime->setMonth(0);
             }
@@ -269,12 +273,14 @@ class Date
 
         // no custom date parts within the date element (this)?
         if (!empty($dateFromLocale)) {
-
-            $dateForm = array_filter(is_array($dateFromLocale) ? $dateFromLocale : [$dateFromLocale], function($element) use ($format) {
-                /** @var SimpleXMLElement $element */
-                $dateForm = (string) $element->attributes()["form"];
-                return $dateForm === $format;
-            });
+            $dateForm = array_filter(
+                is_array($dateFromLocale) ? $dateFromLocale : [$dateFromLocale],
+                function ($element) use ($format) {
+                    /** @var SimpleXMLElement $element */
+                    $dateForm = (string) $element->attributes()["form"];
+                    return $dateForm === $format;
+                }
+            );
 
             //has dateForm from locale children (date-part elements)?
             $localeDate = array_pop($dateForm);
@@ -331,7 +337,7 @@ class Date
         if ($this->dateParts->count() < 1 && in_array($form, self::$localizedDateFormats)) {
             if ($this->hasDatePartsFromLocales($form)) {
                 $datePartsFromLocales = $this->getDatePartsFromLocales($form);
-                array_filter($datePartsFromLocales, function(SimpleXMLElement $item) use ($dateParts) {
+                array_filter($datePartsFromLocales, function (SimpleXMLElement $item) use ($dateParts) {
                     return in_array($item["name"], $dateParts);
                 });
 
@@ -341,7 +347,12 @@ class Date
                 }
             } else { //otherwise create default date parts
                 foreach ($dateParts as $datePart) {
-                    $this->dateParts->add("$form-$datePart", new DatePart(new SimpleXMLElement('<date-part name="' . $datePart . '" form="' . $form . '" />')));
+                    $this->dateParts->add(
+                        "$form-$datePart",
+                        new DatePart(
+                            new SimpleXMLElement('<date-part name="' . $datePart . '" form="' . $form . '" />')
+                        )
+                    );
                 }
             }
         }

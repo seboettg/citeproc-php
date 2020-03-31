@@ -20,7 +20,6 @@ use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 
-
 /**
  * Class ChooseIf
  * @package Seboettg\CiteProc\Node\Choose
@@ -113,9 +112,9 @@ class ChooseIf implements Rendering, HasParent
             }
         }
         if ($this->constraints->count() > 1 && $this->match === "all") {
-            return (bool) $result;
-        } else if ($this->match === "none") {
-            return !$result;
+            return (bool)$result;
+        } elseif ($this->match === "none") {
+            return !((bool)$result);
         }
         return false;
     }

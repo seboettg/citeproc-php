@@ -9,7 +9,6 @@
 
 namespace Seboettg\CiteProc\Rendering\Choose;
 
-
 /**
  * Class ChooseElseIf
  * @package Seboettg\CiteProc\Node\Choose

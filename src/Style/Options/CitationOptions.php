@@ -9,7 +9,6 @@
 
 namespace Seboettg\CiteProc\Style\Options;
 
-
 use SimpleXMLElement;
 
 /**
@@ -23,6 +22,4 @@ class CitationOptions
     {
         //TODO: implement
     }
-
-
 }

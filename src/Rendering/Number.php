@@ -87,7 +87,7 @@ class Number implements Rendering
         $decimalNumber = $this->toDecimalNumber($number);
         switch ($this->form) {
             case 'ordinal':
-                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
+                if (preg_match("/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
                     $num1 = self::ordinal($matches[1]);
                     $num2 = self::ordinal($matches[3]);
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
@@ -96,7 +96,7 @@ class Number implements Rendering
                 }
                 break;
             case 'long-ordinal':
-                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
+                if (preg_match("/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
                     if ($this->textCase === "capitalize-first" || $this->textCase === "sentence") {
                         $num1 = self::longOrdinal($matches[1]);
                         $num2 = self::longOrdinal($matches[3]);
@@ -110,7 +110,7 @@ class Number implements Rendering
                 }
                 break;
             case 'roman':
-                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
+                if (preg_match("/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
                     $num1 = Util\NumberHelper::dec2roman($matches[1]);
                     $num2 = Util\NumberHelper::dec2roman($matches[3]);
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
@@ -127,7 +127,7 @@ class Number implements Rendering
                  ampersand (“2&3” becomes “2 & 3”).
                  */
                 $decimalNumber = $data->{$this->variable};
-                if (preg_match("/\s*(\d+)\s*([\-\-&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
+                if (preg_match("/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
                     $text = $this->buildNumberRangeString($matches[1], $matches[3], $matches[2]);
                 } else {
                     $text = $decimalNumber;
@@ -203,7 +203,7 @@ class Number implements Rendering
     {
         $decimalNumber = $number;
         if (Util\NumberHelper::isRomanNumber($number) || Util\NumberHelper::isRomanRange($number)) {
-            if (preg_match("/\s*([^\-\-&,]+)\s*([\-\-&,])\s*([^\-\-&,]+)\s*/", $number, $matches)) {
+            if (preg_match("/\s*([^\-\–&,]+)\s*([\-\–&,])\s*([^\-\–&,]+)\s*/", $number, $matches)) {
                 $num1 = Util\NumberHelper::roman2Dec($matches[1]);
                 $num2 = Util\NumberHelper::roman2Dec($matches[3]);
                 $decimalNumber = $num1 . $matches[2] . $num2;

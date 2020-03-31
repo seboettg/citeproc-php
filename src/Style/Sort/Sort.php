@@ -17,7 +17,6 @@ use Seboettg\CiteProc\Util\Variables;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 
-
 /**
  * Class Sort
  *
@@ -113,13 +112,15 @@ class Sort
         foreach ($dataToSort as $citationNumber => $dataItem) {
             if ($key->isNameVariable()) {
                 $sortKey = Variables::nameHash($dataItem, $variable);
-            } else if ($key->isNumberVariable()) {
+            } elseif ($key->isNumberVariable()) {
                 $sortKey = $dataItem->{$variable};
-            } else if ($key->isDateVariable()) {
+            } elseif ($key->isDateVariable()) {
                 $sortKey = DateHelper::getSortKeyDate($dataItem, $key);
-            } else if ($key->isMacro()) {
-                $sortKey = mb_strtolower(strip_tags(CiteProc::getContext()->getMacro($key->getMacro())->render($dataItem, $citationNumber)));
-            } else if ($variable === "citation-number") {
+            } elseif ($key->isMacro()) {
+                $sortKey = mb_strtolower(strip_tags(CiteProc::getContext()->getMacro(
+                    $key->getMacro()
+                )->render($dataItem, $citationNumber)));
+            } elseif ($variable === "citation-number") {
                 $sortKey = $citationNumber + 1;
             } else {
                 $sortKey = mb_strtolower(strip_tags($dataItem->{$variable}));
@@ -147,9 +148,12 @@ class Sort
         return $this->flatten($sortedDataGroups);
     }
 
-    public function flatten($array) {
+    public function flatten($array)
+    {
         $returnArray = [];
-        array_walk_recursive($array, function($a) use (&$returnArray) { $returnArray[] = $a; });
+        array_walk_recursive($array, function ($a) use (&$returnArray) {
+            $returnArray[] = $a;
+        });
         return $returnArray;
     }
 

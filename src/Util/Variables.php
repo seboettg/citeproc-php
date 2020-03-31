@@ -8,13 +8,13 @@
  */
 
 namespace Seboettg\CiteProc\Util;
+
 use InvalidArgumentException;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use Seboettg\CiteProc\Rendering\Name\Names;
 use SimpleXMLElement;
 use stdClass;
-
 
 /**
  * Class Variables
@@ -26,40 +26,40 @@ class Variables
 {
 
     const NAME_VARIABLES = [
-        'author',               //author
-        'collection-editor',    //editor of the collection holding the item (e.g. the series editor for a book)
-        'composer',             //composer (e.g. of a musical score)
-        'container-author',     //author of the container holding the item (e.g. the book author for a book chapter)
-        'director',             //director (e.g. of a film)
-        'editor',               //editor
-        'editorial-director',   //managing editor (“Directeur de la Publication” in French)
-        'illustrator',          //illustrator (e.g. of a children’s book)
-        'interviewer',          //interviewer (e.g. of an interview)
+        'author',               // author
+        'collection-editor',    // editor of the collection holding the item (e.g. the series editor for a book)
+        'composer',             // composer (e.g. of a musical score)
+        'container-author',     // author of the container holding the item (e.g. the book author for a book chapter)
+        'director',             // director (e.g. of a film)
+        'editor',               // editor
+        'editorial-director',   // managing editor (“Directeur de la Publication” in French)
+        'illustrator',          // illustrator (e.g. of a children’s book)
+        'interviewer',          // interviewer (e.g. of an interview)
         'original-author',      //
-        'recipient',            //recipient (e.g. of a letter)
-        'reviewed-author'       //author of the item reviewed by the current item
+        'recipient',            // recipient (e.g. of a letter)
+        'reviewed-author'       // author of the item reviewed by the current item
     ];
 
     const NUMBER_VARIABLES = [
-        'chapter-number',       //chapter number
-        'collection-number',    //number identifying the collection holding the item (e.g. the series number for a book)
-        'edition',              //(container) edition holding the item (e.g. “3” when citing a chapter in the third
-                                //edition of a book)
-        'issue',                //(container) issue holding the item (e.g. “5” when citing a journal article from
-                                //journal volume 2, issue 5)
-        'number',               //number identifying the item (e.g. a report number)
-        'number-of-pages',      //total number of pages of the cited item
-        'number-of-volumes',    //total number of volumes, usable for citing multi-volume books and such
-        'volume'                //(container) volume holding the item (e.g. “2” when citing a chapter from book volume 2)
+        'chapter-number',     // chapter number
+        'collection-number',  // number identifying the collection holding the item (e.g. the series number for a book)
+        'edition',            // (container) edition holding the item (e.g. “3” when citing a chapter in the third
+                              // edition of a book)
+        'issue',              // (container) issue holding the item (e.g. “5” when citing a journal article from
+                              // journal volume 2, issue 5)
+        'number',             // number identifying the item (e.g. a report number)
+        'number-of-pages',    // total number of pages of the cited item
+        'number-of-volumes',  // total number of volumes, usable for citing multi-volume books and such
+        'volume'              // (container) volume holding the item (e.g. “2” when citing a chapter from book volume 2)
     ];
 
     const DATE_VARIABLES = [
-        'accessed',             //date the item has been accessed
+        'accessed',             // date the item has been accessed
         'container',
-        'event-date',           //date the related event took place
-        'issued',               //date the item was issued/published
-        'original-date',        //(issue) date of the original version
-        'submitted'             //date the item (e.g. a manuscript) has been submitted for publication
+        'event-date',           // date the related event took place
+        'issued',               // date the item was issued/published
+        'original-date',        // (issue) date of the original version
+        'submitted'             // date the item (e.g. a manuscript) has been submitted for publication
     ];
 
     const STANDARD_VARIABLE = [
@@ -98,7 +98,7 @@ class Variables
                                 //indicating the locator type (see the Locators term list), which determines which term
                                 //is rendered by cs:label when the “locator” variable is selected.
         'medium',               //medium description (e.g. “CD”, “DVD”, etc.)
-        'note',                 //(short) inline note giving additional item details (e.g. a concise summary or commentary)
+        'note',              //(short) inline note giving additional item details (e.g. a concise summary or commentary)
         'original-publisher',   //original publisher, for items that have been republished by a different publisher
         'original-publisher-place', //geographic location of the original publisher (e.g. “London, UK”)
         'original-title',       //title of the original version (e.g. “Война и мир”, the untranslated Russian title of
@@ -166,8 +166,14 @@ class Variables
         if (!self::isNameVariable($variable)) {
             throw new InvalidArgumentException("\"$variable\" is not a valid name variable.");
         }
-
-        $names = new Names(new SimpleXMLElement("<names variable=\"$variable\" delimiter=\"-\"><name form=\"long\" sort-separator=\",\" name-as-sort-order=\"all\"/></names>"), null);
+        $parent = null;
+        $names = new Names(
+            new SimpleXMLElement(
+                "<names variable=\"$variable\" delimiter=\"-\">" .
+                "<name form=\"long\" sort-separator=\",\" name-as-sort-order=\"all\"/></names>"
+            ),
+            $parent
+        );
         return $names->render($data);
     }
 }

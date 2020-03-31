@@ -14,9 +14,11 @@ use Seboettg\Collection\ArrayList;
 
 /**
  * Class DatePartRenderer
+ *
  * @package Seboettg\CiteProc\Rendering\Date\DateRange
  */
-abstract class DateRangeRenderer {
+abstract class DateRangeRenderer
+{
 
     /**
      * @var Date
@@ -24,8 +26,8 @@ abstract class DateRangeRenderer {
     protected $parentDateObject;
 
     /**
-     * @param Date $dateObject
-     * @param int $toRender
+     * @param  Date $dateObject
+     * @param  int  $toRender
      * @return DateRangeRenderer
      */
     public static function factory(Date $dateObject, $toRender)
@@ -36,6 +38,7 @@ abstract class DateRangeRenderer {
 
     /**
      * DatePartRenderer constructor.
+     *
      * @param Date $parentDateObject
      */
     public function __construct(Date $parentDateObject)
@@ -73,19 +76,19 @@ abstract class DateRangeRenderer {
     }
 
     /**
-     * @param ArrayList<DatePart> $dateParts
-     * @param DateTime $from
-     * @param DateTime $to
-     * @param $delimiter
+     * @param  ArrayList<DatePart> $dateParts
+     * @param  DateTime            $from
+     * @param  DateTime            $to
+     * @param  $delimiter
      * @return string
      */
-    public abstract function parseDateRange(ArrayList $dateParts, DateTime $from, DateTime $to, $delimiter);
+    abstract public function parseDateRange(ArrayList $dateParts, DateTime $from, DateTime $to, $delimiter);
 
     /**
-     * @param DatePart $datePart
-     * @param DateTime $from
-     * @param DateTime $to
-     * @param $delimiter
+     * @param  DatePart $datePart
+     * @param  DateTime $from
+     * @param  DateTime $to
+     * @param  $delimiter
      * @return string
      */
     protected function renderOneRangePart(DatePart $datePart, DateTime $from, DateTime $to, $delimiter)
@@ -102,7 +105,6 @@ abstract class DateRangeRenderer {
         $ret = "";
         foreach ($dateParts as $datePart) {
             if (is_array($datePart)) {
-
                 $renderedFrom  = $datePart[0]->render($from, $this->parentDateObject);
                 $renderedFrom .= $datePart[1]->renderPrefix();
                 $renderedFrom .= $datePart[1]->renderWithoutAffixes($from, $this->parentDateObject);

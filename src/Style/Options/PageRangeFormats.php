@@ -24,23 +24,22 @@ use MyCLabs\Enum\Enum;
  */
 class PageRangeFormats extends Enum
 {
-
     /**
      * Page ranges are abbreviated according to the Chicago Manual of Style-rules:
      *
-     * First number	                            Second number	                                Examples
+     * First number                             Second number                                   Examples
      * =================================================================================================================
-     * Less than 100	                        Use all digits	                                3–10; 71–72
+     * Less than 100                            Use all digits                                  3–10; 71–72
      * -----------------------------------------------------------------------------------------------------------------
-     * 100 or multiple of 100	                Use all digits	                                100–104; 600–613;
+     * 100 or multiple of 100                   Use all digits                                  100–104; 600–613;
      *                                                                                          1100–1123
      * -----------------------------------------------------------------------------------------------------------------
-     * 101 through 109 (in multiples of 100)	Use changed part only, omitting unneeded zeros	107–8; 505–17; 1002–6
+     * 101 through 109 (in multiples of 100)    Use changed part only, omitting unneeded zeros  107–8; 505–17; 1002–6
      * -----------------------------------------------------------------------------------------------------------------
-     * 110 through 199 (in multiples of 100)	Use two digits, or more as needed	            321–25; 415–532;
+     * 110 through 199 (in multiples of 100)    Use two digits, or more as needed               321–25; 415–532;
      *                                                                                          11564–68; 13792–803
      * -----------------------------------------------------------------------------------------------------------------
-     * 4 digits	                                If numbers are four digits long and three
+     * 4 digits                                 If numbers are four digits long and three
      *                                          digits change, use all digits
      */
     const CHICAGO = "chicago";

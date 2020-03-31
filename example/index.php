@@ -1,11 +1,11 @@
 <?php
 
-include __DIR__ . "/../vendor/autoload.php";
+include "../vendor/autoload.php";
 use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\CiteProc;
 
 $dataString = file_get_contents("data.json");
-$style = StyleSheet::loadStyleSheet("elsevier-vancouver");
+$style = StyleSheet::loadStyleSheet("ieee");
 $citeProc = new CiteProc($style, "en-US");
 $data = json_decode($dataString);
 $bibliography = $citeProc->render($data, "bibliography");
@@ -82,7 +82,7 @@ $cssStyles = $citeProc->renderCssStyles();
 
 <?php
 $dataString = file_get_contents("data.json");
-$style = StyleSheet::loadStyleSheet("elsevier-vancouver");
+$style = StyleSheet::loadStyleSheet("ieee");
 $citeProc = new CiteProc($style, "en-US", [
     "bibliography" => [
         "author" => function($authorItem, $renderedText) {

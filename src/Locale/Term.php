@@ -64,5 +64,4 @@ class Term
     {
         return $this->name;
     }
-
 }

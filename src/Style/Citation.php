@@ -16,7 +16,6 @@ use Seboettg\CiteProc\Style\Options\CitationOptions;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 
-
 /**
  * Class Citation
  *
@@ -60,5 +59,4 @@ class Citation extends StyleElement
         }
         return $this->layout->render($data, $citationItems);
     }
-
 }

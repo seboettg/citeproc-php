@@ -28,11 +28,14 @@
         "myclabs/php-enum": "^1.5",
         "symfony/polyfill-mbstring": "v1.10.*",
         "ext-simplexml": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-intl": "*"
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1",
-        "phpunit/phpunit": "6.0.13"
+        "phpunit/phpunit": "^7.5",
+        "squizlabs/php_codesniffer": "^3.5",
+        "phpmd/phpmd": "^2.8"
     },
 
     "scripts": {
@@ -48,6 +51,12 @@
             "cd ./tests/fixtures/basic-tests/; ./processor.py -g",
             "chmod +x vendor/bin/phpunit"
         ],
-        "test": "vendor/bin/phpunit"
+        "test": "vendor/bin/phpunit",
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf"
     }
 }

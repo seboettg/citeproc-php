@@ -1,19 +1,20 @@
 <?php
-/**
+/*
  * citeproc-php
  *
- * @link        http://github.com/seboettg/citeproc-php for the source repository
- * @copyright   Copyright (c) 2016 Sebastian Böttger.
- * @license     https://opensource.org/licenses/MIT
+ * @link      http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright Copyright (c) 2016 Sebastian Böttger.
+ * @license   https://opensource.org/licenses/MIT
  */
 
 namespace Seboettg\CiteProc\Styles;
+
 use Seboettg\CiteProc\Util\StringHelper;
 use SimpleXMLElement;
 
-
 /**
  * Trait TextCase
+ *
  * @package Seboettg\CiteProc\Styles
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
@@ -26,7 +27,9 @@ trait TextCaseTrait
     protected function initTextCaseAttributes(SimpleXMLElement $node)
     {
         foreach ($node->attributes() as $attribute) {
-            /** @var string $name */
+            /**
+             * @var string $name
+             */
             $name = $attribute->getName();
             $value = (string) $attribute;
 
@@ -39,8 +42,8 @@ trait TextCaseTrait
     }
 
     /**
-     * @param string $text
-     * @param string $lang
+     * @param  string $text
+     * @param  string $lang
      * @return string
      */
     public function applyTextCase($text, $lang = "en")
@@ -73,7 +76,7 @@ trait TextCaseTrait
                 $text = $this->keepNoCase(StringHelper::mb_ucfirst($text), $text);
                 break;
             default:
-
+                break;
         }
 
         return $text;
@@ -81,8 +84,8 @@ trait TextCaseTrait
 
 
     /**
-     * @param string $render
-     * @param string $original
+     * @param  string $render
+     * @param  string $original
      * @return string|string[]|null
      */
     private function keepNoCase($render, $original)

@@ -1,5 +1,4 @@
 <?php /** @noinspection PhpUnused */
-
 /*
  * citeproc-php: AbstractConstraint.php
  * User: Sebastian Böttger <sebastian.boettger@thomascook.de>
@@ -33,7 +32,7 @@ abstract class AbstractConstraint implements Constraint
      * @param stdClass $data;
      * @return bool
      */
-    protected abstract function matchForVariable($variable, $data);
+    abstract protected function matchForVariable($variable, $data);
 
     /**
      * Variable constructor.

@@ -26,7 +26,6 @@ class RenderingState extends Enum
 
     const __default = self::RENDERING;
 
-
     const RENDERING = "rendering";
 
     const SORTING = "sorting";

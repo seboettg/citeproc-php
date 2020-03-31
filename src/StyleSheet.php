@@ -55,7 +55,9 @@ class StyleSheet
         } else {
             $metadata = self::loadLocalesMetadata();
             if (!empty($metadata->{'primary-dialects'}->{$langKey})) {
-                $data = file_get_contents($localesPath . "locales-" . $metadata->{'primary-dialects'}->{$langKey} . '.xml');
+                $data = file_get_contents(
+                    $localesPath . "locales-" . $metadata->{'primary-dialects'}->{$langKey} . '.xml'
+                );
             }
         }
 

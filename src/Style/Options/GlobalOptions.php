@@ -9,7 +9,6 @@
 
 namespace Seboettg\CiteProc\Style\Options;
 
-
 use SimpleXMLElement;
 
 /**
@@ -19,7 +18,6 @@ use SimpleXMLElement;
  */
 class GlobalOptions
 {
-
     /**
      * @var bool
      */
@@ -86,5 +84,4 @@ class GlobalOptions
     {
         return $this->demoteNonDroppingParticles;
     }
-
 }

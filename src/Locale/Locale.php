@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Locale;
+
 use InvalidArgumentException;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\StyleSheet;
@@ -90,8 +91,8 @@ class Locale
      * @param string $form
      * @return stdClass
      */
-    public function filter($type, $name, $form = "long") {
-
+    public function filter($type, $name, $form = "long")
+    {
         if (!isset($this->{$type})) {
             throw new InvalidArgumentException("There is no locale of type \"$type\".");
         }
@@ -115,10 +116,9 @@ class Locale
         }
 
         //filter by form
-
         if ($type !== "options") {
             /** @var Term $value */
-            $array = array_filter($array, function($term) use($form) {
+            $array = array_filter($array, function ($term) use ($form) {
                 return $term->form === $form;
             });
         }

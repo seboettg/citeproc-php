@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -7,15 +7,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/**
- * Created by PhpStorm.
- * User: sebastian
- * Date: 05.05.17
- * Time: 08:28
- */
-
 namespace Seboettg\CiteProc\Root;
-
 
 use SimpleXMLElement;
 use stdClass;

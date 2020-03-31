@@ -73,6 +73,4 @@ class DataList extends ArrayList
     {
         $this->subsequentAuthorSubstituteRule = $subsequentAuthorSubstituteRule;
     }
-
-
 }

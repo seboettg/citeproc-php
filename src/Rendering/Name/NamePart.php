@@ -83,7 +83,6 @@ class NamePart
         }
 
         switch ($this->name) {
-
             /* If set to “given”, formatting and text-case attributes on cs:name-part affect the “given” and
             “dropping-particle” name-parts. affixes surround the “given” name-part, enclosing any demoted name particles
             for inverted names.*/
@@ -95,7 +94,6 @@ class NamePart
             particles, as well as the “suffix” name-part for non-inverted names.*/
             case 'family':
                 return $this->addAffixes($this->format($this->applyTextCase($data->family)));
-
         }
         throw new CiteProcException("This shouldn't happen.");
     }
@@ -107,5 +105,4 @@ class NamePart
     {
         return $this->name;
     }
-
 }

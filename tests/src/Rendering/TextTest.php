@@ -175,7 +175,7 @@ EOT;
         $actual = $citeproc->render(json_decode($cslJson), "bibliography");
 
         $expected = '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, J., &#38; Müller, A. (2001). My Anonymous Heritage. In <i>Heritages and taxes. How to avoid responsibility.</i> (pp. 123-127). Retrieved from <a href="https://example.org/publication/item-1">https://example.org/publication/item-1</a></div>
+  <div class="csl-entry">Doe, J., &#38; Müller, A. (2001). My Anonymous Heritage. In <i>Heritages and taxes. How to avoid responsibility.</i> (pp. 123-127). Initiative Neue Soziale Marktwirtschaft (INSM). <a href="https://example.org/publication/item-1">https://example.org/publication/item-1</a></div>
 </div>';
         $this->assertEquals($expected, $actual);
     }

@@ -7,7 +7,6 @@
 
 namespace Seboettg\CiteProc\Exception;
 
-
 class InvalidDateTimeException extends CiteProcException
 {
 

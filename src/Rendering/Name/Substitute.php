@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Rendering\Name;
+
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use Seboettg\CiteProc\Rendering\Rendering;
@@ -17,12 +18,12 @@ use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 use stdClass;
 
-
 /**
  * Class Substitute
  * The optional cs:substitute element, which must be included as the last child element of cs:names, adds substitution
  * in case the name variables specified in the parent cs:names element are empty. The substitutions are specified as
- * child elements of cs:substitute, and must consist of one or more rendering elements (with the exception of cs:layout).
+ * child elements of cs:substitute, and must consist of one or more rendering elements (with the exception of
+ * cs:layout).
  *
  * A shorthand version of cs:names without child elements, which inherits the attributes values set on the cs:name and
  * cs:et-al child elements of the original cs:names element, may also be used.
@@ -31,7 +32,6 @@ use stdClass;
  * substitution. Substituted variables are suppressed in the rest of the output to prevent duplication. An example,
  * where an empty “author” name variable is substituted by the “editor” name variable, or, when no editors exist, by
  * the “title” macro:
- * <pre>
  *   <macro name="author">
  *      <names variable="author">
  *        <substitute>
@@ -40,7 +40,6 @@ use stdClass;
  *        </substitute>
  *      </names>
  *   </macro>
- * </pre>
  * @package Seboettg\CiteProc\Rendering\Name
  *
  * @author Sebastian Böttger <seboettg@gmail.com>

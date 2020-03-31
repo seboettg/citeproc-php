@@ -9,7 +9,6 @@
 
 namespace Seboettg\CiteProc\Rendering\Date;
 
-
 use DateTimeZone;
 use Exception;
 use Seboettg\CiteProc\Exception\InvalidDateTimeException;

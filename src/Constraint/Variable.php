@@ -9,7 +9,6 @@
 
 namespace Seboettg\CiteProc\Constraint;
 
-
 use stdClass;
 
 /**

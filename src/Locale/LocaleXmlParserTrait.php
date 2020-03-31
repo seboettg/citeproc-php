@@ -62,7 +62,6 @@ trait LocaleXmlParserTrait
         $this->dateXml = new ArrayList();
         $this->terms = new ArrayList();
         $this->termsXml = new ArrayList();
-
     }
 
     /**
@@ -76,7 +75,6 @@ trait LocaleXmlParserTrait
                 case 'style-options':
                     $this->optionsXml->add('options', $node);
                     foreach ($node->attributes() as $name => $value) {
-
                         if ((string) $value == 'true') {
                             $this->options->add($name, [true]);
                         } else {
