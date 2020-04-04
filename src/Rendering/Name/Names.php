@@ -196,7 +196,7 @@ class Names implements Rendering, HasParent
                     $str .= $this->label->render($data);
                 }
                 $vars = $this->variables->toArray();
-                $vars = array_filter($vars, function($value) {
+                $vars = array_filter($vars, function ($value) {
                     return !($value === "editor" || $value === "translator");
                 });
                 $this->variables->setArray($vars);
@@ -377,7 +377,7 @@ class Names implements Rendering, HasParent
 
     private function filterEmpty(array $results)
     {
-        return array_filter($results, function($item) {
+        return array_filter($results, function ($item) {
             return !empty($item);
         });
     }

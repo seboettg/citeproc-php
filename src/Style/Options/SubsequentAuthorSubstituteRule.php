@@ -22,7 +22,6 @@ use MyCLabs\Enum\Enum;
  */
 class SubsequentAuthorSubstituteRule extends Enum
 {
-    const __default = self::COMPLETE_ALL;
 
     /**
      * “complete-all” - (default), when all rendered names of the name variable match those in the preceding

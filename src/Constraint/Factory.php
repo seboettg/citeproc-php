@@ -19,7 +19,6 @@ use Seboettg\CiteProc\Exception\ClassNotFoundException;
  */
 class Factory extends \Seboettg\CiteProc\Util\Factory
 {
-
     const NAMESPACE_CONSTRAINTS = "Seboettg\\CiteProc\\Constraint\\";
 
     /**
@@ -33,10 +32,10 @@ class Factory extends \Seboettg\CiteProc\Util\Factory
     {
         $className = "";
         $parts = explode("-", $name);
-        array_walk($parts, function($part) use (&$className) {
+        array_walk($parts, function ($part) use (&$className) {
             $className .= ucfirst($part);
         });
-        $className = self::NAMESPACE_CONSTRAINTS.$className;
+        $className = self::NAMESPACE_CONSTRAINTS . $className;
 
         if (!class_exists($className)) {
             throw new ClassNotFoundException($className);

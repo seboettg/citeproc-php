@@ -20,12 +20,12 @@ use MyCLabs\Enum\Enum;
  *
  * @package Seboettg\CiteProc
  * @author Sebastian Böttger <seboettg@gmail.com>
+ * @method static RENDERING()
+ * @method static SORTING()
+ * @method static SUBSTITUTION()
  */
 class RenderingState extends Enum
 {
-
-    const __default = self::RENDERING;
-
     const RENDERING = "rendering";
 
     const SORTING = "sorting";

@@ -30,7 +30,6 @@ use SimpleXMLElement;
  */
 class Date
 {
-
     use AffixesTrait,
         DisplayTrait,
         FormattingTrait,
@@ -275,7 +274,7 @@ class Date
         if (!empty($dateFromLocale)) {
             $dateForm = array_filter(
                 is_array($dateFromLocale) ? $dateFromLocale : [$dateFromLocale],
-                function($element) use ($format) {
+                function ($element) use ($format) {
                     /** @var SimpleXMLElement $element */
                     $dateForm = (string) $element->attributes()["form"];
                     return $dateForm === $format;
@@ -337,7 +336,7 @@ class Date
         if ($this->dateParts->count() < 1 && in_array($form, self::$localizedDateFormats)) {
             if ($this->hasDatePartsFromLocales($form)) {
                 $datePartsFromLocales = $this->getDatePartsFromLocales($form);
-                array_filter($datePartsFromLocales, function(SimpleXMLElement $item) use ($dateParts) {
+                array_filter($datePartsFromLocales, function (SimpleXMLElement $item) use ($dateParts) {
                     return in_array($item["name"], $dateParts);
                 });
 

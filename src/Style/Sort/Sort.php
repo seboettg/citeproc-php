@@ -151,7 +151,7 @@ class Sort
     public function flatten($array)
     {
         $returnArray = [];
-        array_walk_recursive($array, function($a) use (&$returnArray) {
+        array_walk_recursive($array, function ($a) use (&$returnArray) {
             $returnArray[] = $a;
         });
         return $returnArray;

@@ -21,7 +21,6 @@ use Symfony\Polyfill\Mbstring\Mbstring;
  */
 class StringHelper
 {
-
     const PREPOSITIONS = [
         'on', 'in', 'at', 'since', 'for', 'ago', 'before', 'to', 'past', 'till', 'until', 'by', 'under', 'below',
         'over', 'above', 'across', 'through', 'into', 'towards', 'onto', 'from', 'of', 'off', 'about', 'via'
@@ -79,7 +78,7 @@ class StringHelper
     {
         $wordArray = explode(" ", $text);
 
-        array_walk($wordArray, function(&$word) {
+        array_walk($wordArray, function (&$word) {
             $word = ucfirst($word);
         });
 
@@ -98,11 +97,10 @@ class StringHelper
 
         $wordArray = explode(" ", $titleString);
 
-        array_walk($wordArray, function(&$word) {
-
+        array_walk($wordArray, function (&$word) {
             $words = explode("-", $word);
             if (count($words) > 1) {
-                array_walk($words, function(&$w) {
+                array_walk($words, function (&$w) {
                     $w = StringHelper::keepLowerCase($w) ? $w : StringHelper::mb_ucfirst($w);
                 });
                 $word = implode("-", $words);

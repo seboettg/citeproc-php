@@ -7,9 +7,10 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/seboettg/citeproc-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/seboettg/citeproc-php/code-structure/master/code-coverage/src/)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/seboettg/citeproc-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/seboettg/citeproc-php/?branch=master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/seboettg/citeproc-php/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
-![PHP](https://img.shields.io/badge/PHP-5.6-green.svg?style=flat)
-![PHP](https://img.shields.io/badge/PHP-7.0-green.svg?style=flat)
 ![PHP](https://img.shields.io/badge/PHP-7.1-green.svg?style=flat)
+![PHP](https://img.shields.io/badge/PHP-7.2-green.svg?style=flat)
+![PHP](https://img.shields.io/badge/PHP-7.3-green.svg?style=flat)
+![PHP](https://img.shields.io/badge/PHP-7.4-green.svg?style=flat)
 
 citeproc-php is a full-featured CSL 1.0.1 processor that renders bibliographic metadata into html formatted citations or bibliographies using CSL stylesheets. citeproc-php renders bibliographies as well as citations (except of [Citation-specific Options](http://docs.citationstyles.org/en/stable/specification.html#citation-specific-options)).
 
@@ -26,14 +27,6 @@ The Citation Style Language (CSL) is an XML-based format to describe the formatt
 
 For additional documentation of CSL visit [http://citationstyles.org](http://citationstyles.org).
 
-## Version 1.x ##
-
-The old version 1.x (established by Ron Jerome) has been moved to [this Repository](https://github.com/seboettg/citeproc-php-old). 
-
-## Version 2.x ##
-
-Version 2.x is a completely new written version of citeproc-php. In this connection, the license of version 2.x has been changed from GPLv3 to MIT.
-
 ## Installing citeproc-php ##
 
 The recommended way to install citeproc-php is through
@@ -44,7 +37,7 @@ $ curl -sS https://getcomposer.org/installer | php
 ```
 Add the following lines to your `composer.json` file in order to add required program libraries as well as CSL styles and locales:
 
-```javascript
+```json
 {
     "name": "vendor-name/program-name",
     "repositories": [

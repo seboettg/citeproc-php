@@ -125,7 +125,7 @@ class Context
         $this->macros = new ArrayList();
         $this->citationItems = new DataList();
         $this->results = new ArrayList();
-        $this->renderingState = new RenderingState(RenderingState::__default);
+        $this->renderingState = RenderingState::RENDERING();
     }
 
     public function addMacro($key, $macro)

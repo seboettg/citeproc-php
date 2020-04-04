@@ -29,7 +29,7 @@ class YearDayRenderer extends DateRangeRenderer
     {
         $dp = $dateParts->toArray();
         $dateParts_ = [];
-        array_walk($dp, function($datePart, $key) use (&$dateParts_) {
+        array_walk($dp, function ($datePart, $key) use (&$dateParts_) {
             if (strpos($key, "year") !== false || strpos($key, "day") !== false) {
                 $dateParts_["yearday"][] = $datePart;
             }

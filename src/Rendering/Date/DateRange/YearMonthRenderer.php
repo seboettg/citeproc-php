@@ -29,7 +29,7 @@ class YearMonthRenderer extends DateRangeRenderer
     {
         $dp = $dateParts->toArray();
         $dateParts_ = [];
-        array_walk($dp, function($datePart, $key) use (&$dateParts_) {
+        array_walk($dp, function ($datePart, $key) use (&$dateParts_) {
             if (strpos($key, "year") !== false || strpos($key, "month") !== false) {
                 $dateParts_["yearmonth"][] = $datePart;
             }

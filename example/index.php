@@ -4,12 +4,18 @@ include "../vendor/autoload.php";
 use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\CiteProc;
 
-$dataString = file_get_contents("data.json");
-$style = StyleSheet::loadStyleSheet("ieee");
-$citeProc = new CiteProc($style, "en-US");
-$data = json_decode($dataString);
-$bibliography = $citeProc->render($data, "bibliography");
-$cssStyles = $citeProc->renderCssStyles();
+try {
+    $dataString = file_get_contents("data.json");
+    $style = StyleSheet::loadStyleSheet("ieee");
+    $citeProc = new CiteProc($style, "en-US");
+    $data = json_decode($dataString);
+    $bibliography = $citeProc->render($data, "bibliography");
+    $cssStyles = $citeProc->renderCssStyles();
+} catch (Exception $e) {
+    echo $e->getMessage();
+    die;
+}
+
 ?>
 <html>
 <head>
@@ -85,21 +91,21 @@ $dataString = file_get_contents("data.json");
 $style = StyleSheet::loadStyleSheet("ieee");
 $citeProc = new CiteProc($style, "en-US", [
     "bibliography" => [
-        "author" => function($authorItem, $renderedText) {
+        "author" => function ($authorItem, $renderedText) {
             if (isset($authorItem->id)) {
                 return '<a href="https://example.org/author/'.$authorItem->id.'">'.$renderedText.'</a>';
             }
             return $renderedText;
         },
-        "title" => function($cslItem, $renderedText) {
+        "title" => function ($cslItem, $renderedText) {
             return '<a href="https://example.org/publication/'.$cslItem->id.'">'.$renderedText.'</a>';
         },
-        "csl-entry" => function($cslItem, $renderedText) {
+        "csl-entry" => function ($cslItem, $renderedText) {
             return '<a id="'.$cslItem->id.'" href="#'.$cslItem->id.'"></a>'.$renderedText;
         }
     ],
     "citation" => [
-        "citation-number" => function($cslItem, $renderedText) {
+        "citation-number" => function ($cslItem, $renderedText) {
             return '<a href="#'.$cslItem->id.'">'.$renderedText.'</a>';
         }
     ]

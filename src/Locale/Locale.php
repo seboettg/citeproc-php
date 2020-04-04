@@ -118,7 +118,7 @@ class Locale
         //filter by form
         if ($type !== "options") {
             /** @var Term $value */
-            $array = array_filter($array, function($term) use ($form) {
+            $array = array_filter($array, function ($term) use ($form) {
                 return $term->form === $form;
             });
         }
