@@ -64,7 +64,7 @@ class CssRule
      */
     public function __toString()
     {
-        $directives = "\t" . implode("\n\t", $this->directives->toArray());
-        return $this->selectorType . $this->selector . " {\n" . $directives . "\n}\n";
+        $directives = "\t".implode("\n\t", $this->directives->toArray());
+        return $this->selectorType.$this->selector." {\n".$directives."\n}\n";
     }
 }

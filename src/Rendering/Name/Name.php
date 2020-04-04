@@ -90,13 +90,13 @@ class Name implements HasParent
         $this->nameParts = [];
 
         /**
- * @var SimpleXMLElement $child 
+         * @var SimpleXMLElement $child 
 */
         foreach ($node->children() as $child) {
             switch ($child->getName()) {
             case "name-part":
                 /**
- * @var NamePart $namePart 
+                 * @var NamePart $namePart 
 */
                 $namePart = Factory::create($child, $this);
                 $this->nameParts[$namePart->getName()] = $namePart;
@@ -106,7 +106,7 @@ class Name implements HasParent
         foreach ($node->attributes() as $attribute) {
             switch ($attribute->getName()) {
             case 'form':
-                $this->form = (string)$attribute;
+                $this->form = (string) $attribute;
                 break;
             }
         }
@@ -169,7 +169,7 @@ class Name implements HasParent
         cs:names element (taking into account the effects of et-al abbreviation and editor/translator collapsing),
         which allows for advanced sorting. */
         if ($this->form == 'count') {
-            return (int)count($resultNames);
+            return (int) count($resultNames);
         }
 
         return $text;
@@ -268,19 +268,19 @@ class Name implements HasParent
             delimiter-precedes-et-al attribute. */
 
             switch ($this->delimiterPrecedesEtAl) {
-            case 'never':
-                $text = $text . " " . $this->etAl;
-                break;
-            case 'always':
-                $text = $text . $this->delimiter . $this->etAl;
-                break;
-            case 'contextual':
-            default:
-                if (count($resultNames) === 1) {
-                    $text .= " " . $this->etAl;
-                } else {
-                    $text .= $this->delimiter . $this->etAl;
-                }
+             case 'never':
+                 $text = $text . " " . $this->etAl;
+                 break;
+             case 'always':
+                 $text = $text . $this->delimiter . $this->etAl;
+                 break;
+             case 'contextual':
+             default:
+                 if (count($resultNames) === 1) {
+                     $text .= " " . $this->etAl;
+                 } else {
+                     $text .= $this->delimiter . $this->etAl;
+                 }
             }
         }
         return $text;
@@ -352,40 +352,40 @@ class Name implements HasParent
                 /* “partial-each” - when one or more rendered names in the name variable match those in the preceding
                 bibliographic entry, the value of subsequent-author-substitute substitutes for each matching name.
                 Matching starts with the first name, and continues up to the first mismatch. */
-            case SubsequentAuthorSubstituteRule::PARTIAL_EACH:
-                if (NameHelper::precedingHasAuthor($preceding, $name)) {
-                    $resultNames[] = $subsequentSubstitution;
-                } else {
-                    $resultNames[] = $this->formatName($name, $rank);
-                }
-                break;
-                /* “partial-first” - as “partial-each”, but substitution is limited to the first name of the name
+             case SubsequentAuthorSubstituteRule::PARTIAL_EACH:
+                 if (NameHelper::precedingHasAuthor($preceding, $name)) {
+                     $resultNames[] = $subsequentSubstitution;
+                 } else {
+                     $resultNames[] = $this->formatName($name, $rank);
+                 }
+                 break;
+                 /* “partial-first” - as “partial-each”, but substitution is limited to the first name of the name
                 variable. */
-            case SubsequentAuthorSubstituteRule::PARTIAL_FIRST:
-                if ($rank === 0) {
-                    if ($preceding->author[0]->family === $name->family) {
-                        $resultNames[] = $subsequentSubstitution;
-                    } else {
-                        $resultNames[] = $this->formatName($name, $rank);
-                    }
-                } else {
-                    $resultNames[] = $this->formatName($name, $rank);
-                }
-                break;
+             case SubsequentAuthorSubstituteRule::PARTIAL_FIRST:
+                 if ($rank === 0) {
+                     if ($preceding->author[0]->family === $name->family) {
+                         $resultNames[] = $subsequentSubstitution;
+                     } else {
+                         $resultNames[] = $this->formatName($name, $rank);
+                     }
+                 } else {
+                     $resultNames[] = $this->formatName($name, $rank);
+                 }
+                 break;
 
-                /* “complete-each” - requires a complete match like “complete-all”, but now the value of
+                 /* “complete-each” - requires a complete match like “complete-all”, but now the value of
                 subsequent-author-substitute substitutes for each rendered name. */
-            case SubsequentAuthorSubstituteRule::COMPLETE_EACH:
-                try {
-                    if (NameHelper::identicalAuthors($preceding, $data)) {
-                        $resultNames[] = $subsequentSubstitution;
-                    } else {
-                        $resultNames[] = $this->formatName($name, $rank);
-                    }
-                } catch (CiteProcException $e) {
-                    $resultNames[] = $this->formatName($name, $rank);
-                }
-                break;
+             case SubsequentAuthorSubstituteRule::COMPLETE_EACH:
+                 try {
+                     if (NameHelper::identicalAuthors($preceding, $data)) {
+                         $resultNames[] = $subsequentSubstitution;
+                     } else {
+                         $resultNames[] = $this->formatName($name, $rank);
+                     }
+                 } catch (CiteProcException $e) {
+                     $resultNames[] = $this->formatName($name, $rank);
+                 }
+                 break;
             }
         }
         return $resultNames;
@@ -458,7 +458,7 @@ class Name implements HasParent
                 $text = implode(" ", $resultNames);
             } else { // >2
                 $lastName = array_pop($resultNames);
-                $text = implode($this->delimiter, $resultNames) . " " . $lastName;
+                $text = implode($this->delimiter, $resultNames)." ".$lastName;
             }
         }
         return $text;
@@ -487,7 +487,7 @@ class Name implements HasParent
     {
         $count = count($resultNames);
         if (!empty($this->and) && $count > 1 && empty($this->etAl)) {
-            $new = $this->and . ' ' . end($resultNames); // add and-prefix of the last name if "and" is defined
+            $new = $this->and.' '.end($resultNames); // add and-prefix of the last name if "and" is defined
             // set prefixed last name at the last position of $resultNames array
             $resultNames[count($resultNames) - 1] = $new;
         }
@@ -502,18 +502,18 @@ class Name implements HasParent
         $text = "";
         if (!empty($this->and) && empty($this->etAl)) {
             switch ($this->delimiterPrecedesLast) {
-            case 'after-inverted-name':
-                //TODO: implement
-                break;
-            case 'always':
-                $text = implode($this->delimiter, $resultNames);
-                break;
-            case 'never':
-                $text = $this->renderDelimiterPrecedesLastNever($resultNames);
-                break;
-            case 'contextual':
-            default:
-                $text = $this->renderDelimiterPrecedesLastContextual($resultNames);
+             case 'after-inverted-name':
+                 //TODO: implement
+                 break;
+             case 'always':
+                 $text = implode($this->delimiter, $resultNames);
+                 break;
+             case 'never':
+                 $text = $this->renderDelimiterPrecedesLastNever($resultNames);
+                 break;
+             case 'contextual':
+             default:
+                 $text = $this->renderDelimiterPrecedesLastContextual($resultNames);
             }
         }
         return $text;
@@ -535,8 +535,8 @@ class Name implements HasParent
         if (StringHelper::isLatinString($normalizedName) || StringHelper::isCyrillicString($normalizedName)) {
             if ($this->form === "long"
                 && $nameAsSortOrder
-                && ((string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::NEVER
-                || (string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::SORT_ONLY)
+                && ((string) $demoteNonDroppingParticle === DemoteNonDroppingParticle::NEVER
+                || (string) $demoteNonDroppingParticle === DemoteNonDroppingParticle::SORT_ONLY)
             ) {
                 // [La] [Fontaine], [Jean] [de], [III]
                 NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
@@ -544,25 +544,25 @@ class Name implements HasParent
 
                 list($family, $given) = $this->renderNameParts($data);
 
-                $text = $family . (!empty($given) ? $this->sortSeparator . $given : "");
-                $text .= !empty($data->suffix) ? $this->sortSeparator . $data->suffix : "";
+                $text = $family.(!empty($given) ? $this->sortSeparator.$given : "");
+                $text .= !empty($data->suffix) ? $this->sortSeparator.$data->suffix : "";
             } elseif ($this->form === "long"
                 && $nameAsSortOrder
                 && (is_null($demoteNonDroppingParticle)
-                || (string)$demoteNonDroppingParticle === DemoteNonDroppingParticle::DISPLAY_AND_SORT)
+                || (string) $demoteNonDroppingParticle === DemoteNonDroppingParticle::DISPLAY_AND_SORT)
             ) {
                 // [Fontaine], [Jean] [de] [La], [III]
                 NameHelper::appendParticleTo($data, "given", "dropping-particle");
                 NameHelper::appendParticleTo($data, "given", "non-dropping-particle");
                 list($family, $given) = $this->renderNameParts($data);
                 $text = $family;
-                $text .= !empty($given) ? $this->sortSeparator . $given : "";
-                $text .= !empty($data->suffix) ? $this->sortSeparator . $data->suffix : "";
+                $text .= !empty($given) ? $this->sortSeparator.$given : "";
+                $text .= !empty($data->suffix) ? $this->sortSeparator.$data->suffix : "";
             } elseif ($this->form === "long" && $nameAsSortOrder && empty($demoteNonDroppingParticle)) {
                 list($family, $given) = $this->renderNameParts($data);
                 $text = $family;
-                $text .= !empty($given) ? $this->delimiter . $given : "";
-                $text .= !empty($data->suffix) ? $this->sortSeparator . $data->suffix : "";
+                $text .= !empty($given) ? $this->delimiter.$given : "";
+                $text .= !empty($data->suffix) ? $this->sortSeparator.$data->suffix : "";
             } elseif ($this->form === "short") {
                 // [La] [Fontaine]
                 NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
@@ -573,7 +573,7 @@ class Name implements HasParent
                 NameHelper::prependParticleTo($data, "family", "dropping-particle");
                 NameHelper::appendParticleTo($data, "family", "suffix");
                 list($family, $given) = $this->renderNameParts($data);
-                $text = !empty($given) ? $given . " " . $family : $family;
+                $text = !empty($given) ? $given." ".$family : $family;
             }
         } else if (StringHelper::isAsianString(NameHelper::normalizeName($data))) {
             $text = $this->form === "long" ? $data->family . $data->given : $data->family;

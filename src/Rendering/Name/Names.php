@@ -123,7 +123,7 @@ class Names implements Rendering, HasParent
         $this->parent = $parent;
         /**
          * @var SimpleXMLElement $child
-        */
+         */
         foreach ($node->children() as $child) {
             switch ($child->getName()) {
                 case "name":
@@ -186,7 +186,7 @@ class Names implements Rendering, HasParent
                 } else {
                     $arr = [];
                     foreach ($data->editor as $editor) {
-                        $edt = $this->format($editor->family . ", " . $editor->given);
+                        $edt = $this->format($editor->family.", ".$editor->given);
                         $results[] = NameHelper::addExtendedMarkup('editor', $editor, $edt);
                     }
                     $str .= implode($this->delimiter, $arr);
@@ -196,7 +196,7 @@ class Names implements Rendering, HasParent
                     $str .= $this->label->render($data);
                 }
                 $vars = $this->variables->toArray();
-                $vars = array_filter($vars, function ($value) {
+                $vars = array_filter($vars, function($value) {
                     return !($value === "editor" || $value === "translator");
                 });
                 $this->variables->setArray($vars);
@@ -220,7 +220,7 @@ class Names implements Rendering, HasParent
                     }
                 } else {
                     foreach ($data->{$var} as $name) {
-                        $formatted = $this->format($name->given . " " . $name->family);
+                        $formatted = $this->format($name->given." ".$name->family);
                         $results[] = NameHelper::addExtendedMarkup($var, $name, $formatted);
                     }
                 }
@@ -250,7 +250,7 @@ class Names implements Rendering, HasParent
     {
         $this->label->setVariable($var);
         if (in_array($this->label->getForm(), ["verb", "verb-short"])) {
-            $name = $this->label->render($data) . $name;
+            $name = $this->label->render($data).$name;
         } else {
             $name .= $this->label->render($data);
         }
@@ -377,7 +377,7 @@ class Names implements Rendering, HasParent
 
     private function filterEmpty(array $results)
     {
-        return array_filter($results, function ($item) {
+        return array_filter($results, function($item) {
             return !empty($item);
         });
     }

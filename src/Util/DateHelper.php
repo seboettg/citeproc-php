@@ -59,7 +59,7 @@ class DateHelper
             $dateTime = new DateTime($date->{'raw'});
             $arr = [[$dateTime->format("Y"), $dateTime->format("m"), $dateTime->format("d")]];
         } catch (Exception $e) {
-            throw new CiteProcException("Could not parse date \"" . $date->{'raw'} . "\".", 0, $e);
+            throw new CiteProcException("Could not parse date \"".$date->{'raw'}."\".", 0, $e);
         }
 
         return $arr;
@@ -111,9 +111,9 @@ class DateHelper
             } elseif ($match === "any" && count($dateParts) === 2) {
                 return true;
             } else {
-                $ret = ($match === "all") ? $ret & true : $ret | true;
+                $ret = ($match === "all") ? $ret&true : $ret|true;
             }
         }
-        return (bool)$ret;
+        return (bool) $ret;
     }
 }

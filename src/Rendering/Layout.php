@@ -92,15 +92,14 @@ class Layout implements Rendering
         }
 
         if (CiteProc::getContext()->isModeBibliography()) {
-            foreach ($data as $citationNumber => $item) {
-                ++self::$numberOfCitedItems;
+            foreach ($data as $citationNumber => $item) {++self::$numberOfCitedItems;
                 CiteProc::getContext()->getResults()->append(
                     $this->wrapBibEntry($item, $this->renderSingle($item, $citationNumber))
                 );
             }
             $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
             $ret = StringHelper::clearApostrophes($ret);
-            return "<div class=\"csl-bib-body\">" . $ret . "\n</div>";
+            return "<div class=\"csl-bib-body\">".$ret."\n</div>";
         } elseif (CiteProc::getContext()->isModeCitation()) {
             if ($citationItems->count() > 0) { //is there a filter for specific citations?
                 if ($this->isGroupedCitations($citationItems)) { //if citation items grouped?
@@ -148,11 +147,11 @@ class Layout implements Rendering
         if (!empty($inMargin) && !empty($margin) && CiteProc::getContext()->isModeBibliography()) {
             $leftMargin = $this->removeConsecutiveChars($this->htmlentities($this->format(implode("", $inMargin))));
             $rightInline = $this->removeConsecutiveChars(
-                $this->htmlentities($this->format(implode("", $margin))) .
+                $this->htmlentities($this->format(implode("", $margin))).
                 $this->suffix
             );
-            $res  = '<div class="csl-left-margin">' . $leftMargin . '</div>';
-            $res .= '<div class="csl-right-inline">' . $rightInline . '</div>';
+            $res  = '<div class="csl-left-margin">'.$leftMargin.'</div>';
+            $res .= '<div class="csl-right-inline">'.$rightInline.'</div>';
             return $res;
         } elseif (!empty($inMargin)) {
             $res = $this->format(implode("", $inMargin));
@@ -177,9 +176,9 @@ class Layout implements Rendering
     private function wrapBibEntry($dataItem, $value)
     {
         $value = $this->addAffixes($value);
-        return "\n  " .
-            "<div class=\"csl-entry\">" .
-            $renderedItem = CiteProcHelper::applyAdditionMarkupFunction($dataItem, "csl-entry", $value) .
+        return "\n  ".
+            "<div class=\"csl-entry\">".
+            $renderedItem = CiteProcHelper::applyAdditionMarkupFunction($dataItem, "csl-entry", $value).
             "</div>";
     }
 
@@ -219,7 +218,7 @@ class Layout implements Rendering
     {
         $arr = $data->toArray();
 
-        $arr_ = array_filter($arr, function ($dataItem) use ($citationItems) {
+        $arr_ = array_filter($arr, function($dataItem) use ($citationItems) {
             foreach ($citationItems as $citationItem) {
                 if ($dataItem->id === $citationItem->id) {
                     return true;

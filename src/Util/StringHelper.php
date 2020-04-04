@@ -79,7 +79,7 @@ class StringHelper
     {
         $wordArray = explode(" ", $text);
 
-        array_walk($wordArray, function (&$word) {
+        array_walk($wordArray, function(&$word) {
             $word = ucfirst($word);
         });
 
@@ -93,16 +93,16 @@ class StringHelper
     public static function capitalizeForTitle($titleString)
     {
         if (preg_match('/(.+[^\<\>][\.:\/;\?\!]\s?)([a-z])(.+)/', $titleString, $match)) {
-            $titleString = $match[1] . StringHelper::mb_ucfirst($match[2]) . $match[3];
+            $titleString = $match[1].StringHelper::mb_ucfirst($match[2]).$match[3];
         }
 
         $wordArray = explode(" ", $titleString);
 
-        array_walk($wordArray, function (&$word) {
+        array_walk($wordArray, function(&$word) {
 
             $words = explode("-", $word);
             if (count($words) > 1) {
-                array_walk($words, function (&$w) {
+                array_walk($words, function(&$w) {
                     $w = StringHelper::keepLowerCase($w) ? $w : StringHelper::mb_ucfirst($w);
                 });
                 $word = implode("-", $words);
@@ -141,7 +141,7 @@ class StringHelper
         /** @noinspection PhpInternalEntityUsedInspection */
         $encoding = Mbstring::mb_detect_encoding($firstChar, self::ISO_ENCODINGS, true);
         return in_array($encoding, self::ISO_ENCODINGS) ?
-            Mbstring::mb_strtoupper($firstChar, $encoding) . $then : $firstChar . $then;
+            Mbstring::mb_strtoupper($firstChar, $encoding).$then : $firstChar.$then;
     }
 
     public static function mb_strrev($string)
@@ -190,13 +190,13 @@ class StringHelper
             foreach ($spaceExploded as $givenPart) {
                 $firstLetter = mb_substr($givenPart, 0, 1, "UTF-8");
                 if (StringHelper::isLatinString($firstLetter)) {
-                    $res .= ctype_upper($firstLetter) ? $firstLetter . $initializeSign : " " . $givenPart . " ";
+                    $res .= ctype_upper($firstLetter) ? $firstLetter.$initializeSign : " ".$givenPart." ";
                 } else {
-                    $res .= $firstLetter . $initializeSign;
+                    $res .= $firstLetter.$initializeSign;
                 }
             }
             if ($i < count($exploded) - 1 && $initializeWithHyphen) {
-                $res = rtrim($res) . "-";
+                $res = rtrim($res)."-";
             }
             ++$i;
         }
@@ -259,7 +259,7 @@ class StringHelper
         $innerCloseQuote
     ) {
         if (preg_match("/(.*)$outerOpenQuote(.+)$outerCloseQuote(.*)/u", $text, $match)) {
-            return $match[1] . $innerOpenQuote . $match[2] . $innerCloseQuote . $match[3];
+            return $match[1].$innerOpenQuote.$match[2].$innerCloseQuote.$match[3];
         }
         return $text;
     }
@@ -299,6 +299,6 @@ class StringHelper
      */
     public static function removeBrackets($datePart)
     {
-        return str_replace(["[","]", "(", ")", "{", "}"], "", $datePart);
+        return str_replace(["[", "]", "(", ")", "{", "}"], "", $datePart);
     }
 }
