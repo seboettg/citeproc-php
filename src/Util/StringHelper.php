@@ -284,6 +284,15 @@ class StringHelper
     }
 
     /**
+     * @param $string
+     * @return bool
+     */
+    public static function isAsianString($string)
+    {
+        return boolval(preg_match("/^[\p{Han}\s\p{P}]*$/u", $string));
+    }
+
+    /**
      * removes all kind of brackets from a given string
      * @param $datePart
      * @return mixed
