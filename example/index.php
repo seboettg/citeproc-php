@@ -31,7 +31,7 @@ $cssStyles = $citeProc->renderCssStyles();
             margin: 0.5em 0;
         }
 
-        <?php echo "\n" . $cssStyles; ?>
+        <?php echo "\n".$cssStyles; ?>
     </style>
 </head>
 <body>
@@ -87,20 +87,20 @@ $citeProc = new CiteProc($style, "en-US", [
     "bibliography" => [
         "author" => function($authorItem, $renderedText) {
             if (isset($authorItem->id)) {
-                return '<a href="https://example.org/author/' . $authorItem->id . '">' . $renderedText . '</a>';
+                return '<a href="https://example.org/author/'.$authorItem->id.'">'.$renderedText.'</a>';
             }
             return $renderedText;
         },
         "title" => function($cslItem, $renderedText) {
-            return '<a href="https://example.org/publication/' . $cslItem->id . '">' . $renderedText . '</a>';
+            return '<a href="https://example.org/publication/'.$cslItem->id.'">'.$renderedText.'</a>';
         },
         "csl-entry" => function($cslItem, $renderedText) {
-            return '<a id="' . $cslItem->id .'" href="#' . $cslItem->id .'"></a>' . $renderedText;
+            return '<a id="'.$cslItem->id.'" href="#'.$cslItem->id.'"></a>'.$renderedText;
         }
     ],
     "citation" => [
         "citation-number" => function($cslItem, $renderedText) {
-            return '<a href="#' . $cslItem->id .'">'.$renderedText.'</a>';
+            return '<a href="#'.$cslItem->id.'">'.$renderedText.'</a>';
         }
     ]
 ]);

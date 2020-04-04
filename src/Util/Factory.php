@@ -54,10 +54,10 @@ class Factory
      */
     public static function create($node, $param = null)
     {
-        $nodeClass = self::CITE_PROC_NODE_NAMESPACE . self::$nodes[$node->getName()];
+        $nodeClass = self::CITE_PROC_NODE_NAMESPACE.self::$nodes[$node->getName()];
         if (!class_exists($nodeClass)) {
-            throw new InvalidStylesheetException("For node {$node->getName()} " .
-                "does not exist any counterpart class \"" . $nodeClass .
+            throw new InvalidStylesheetException("For node {$node->getName()} ".
+                "does not exist any counterpart class \"".$nodeClass.
                 "\". The given stylesheet seems to be invalid.");
         }
         if ($param != null) {

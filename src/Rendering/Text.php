@@ -195,8 +195,8 @@ class Text implements Rendering
         // test case group_ShortOutputOnly.json
         $renderedText = "";
         if (in_array($this->form, ["short", "long"])) {
-            $attrWithPrefix = $this->form . ucfirst($this->toRenderTypeValue);
-            $attrWithSuffix = $this->toRenderTypeValue . "-" . $this->form;
+            $attrWithPrefix = $this->form.ucfirst($this->toRenderTypeValue);
+            $attrWithSuffix = $this->toRenderTypeValue."-".$this->form;
             if (isset($data->{$attrWithPrefix}) && !empty($data->{$attrWithPrefix})) {
                 $renderedText = $this->applyTextCase(
                     StringHelper::clearApostrophes(
@@ -272,7 +272,7 @@ class Text implements Rendering
         $macro = CiteProc::getContext()->getMacro($this->toRenderTypeValue);
         if (is_null($macro)) {
             try {
-                throw new CiteProcException("Macro \"" . $this->toRenderTypeValue . "\" does not exist.");
+                throw new CiteProcException("Macro \"".$this->toRenderTypeValue."\" does not exist.");
             } catch (CiteProcException $e) {
                 $renderedText = "";
             }

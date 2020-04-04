@@ -34,8 +34,8 @@ class StyleSheet
      */
     public static function loadStyleSheet($styleName)
     {
-        $stylesPath = self::vendorPath() . "/citation-style-language/styles-distribution/";
-        return file_get_contents($stylesPath . $styleName . '.csl');
+        $stylesPath = self::vendorPath()."/citation-style-language/styles-distribution/";
+        return file_get_contents($stylesPath.$styleName.'.csl');
     }
 
     /**
@@ -48,15 +48,15 @@ class StyleSheet
     public static function loadLocales($langKey)
     {
         $data = null;
-        $localesPath = self::vendorPath() . "/citation-style-language/locales/";
-        $localeFile = $localesPath . "locales-" . $langKey . '.xml';
+        $localesPath = self::vendorPath()."/citation-style-language/locales/";
+        $localeFile = $localesPath."locales-".$langKey.'.xml';
         if (file_exists($localeFile)) {
             $data = file_get_contents($localeFile);
         } else {
             $metadata = self::loadLocalesMetadata();
             if (!empty($metadata->{'primary-dialects'}->{$langKey})) {
                 $data = file_get_contents(
-                    $localesPath . "locales-" . $metadata->{'primary-dialects'}->{$langKey} . '.xml'
+                    $localesPath."locales-".$metadata->{'primary-dialects'}->{$langKey}.'.xml'
                 );
             }
         }
@@ -70,7 +70,7 @@ class StyleSheet
      */
     public static function loadLocalesMetadata()
     {
-        $localesMetadataPath = self::vendorPath() . "/citation-style-language/locales/locales.json";
+        $localesMetadataPath = self::vendorPath()."/citation-style-language/locales/locales.json";
         return json_decode(file_get_contents($localesMetadataPath));
     }
 
@@ -80,7 +80,7 @@ class StyleSheet
      */
     private static function vendorPath()
     {
-        include_once realpath(__DIR__ . '/../') . '/vendorPath.php';
+        include_once realpath(__DIR__.'/../').'/vendorPath.php';
         if (!($vendorPath = vendorPath())) {
             // @codeCoverageIgnoreStart
             throw new CiteProcException('vendor path not found. Use composer to initialize your project');

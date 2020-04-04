@@ -97,7 +97,7 @@ class Date
         foreach ($node->children() as $child) {
             if ($child->getName() === "date-part") {
                 $datePartName = (string) $child->attributes()["name"];
-                $this->dateParts->set($this->form . "-" . $datePartName, Util\Factory::create($child));
+                $this->dateParts->set($this->form."-".$datePartName, Util\Factory::create($child));
             }
         }
 
@@ -174,15 +174,15 @@ class Date
                 $toRender = 0;
                 if ($interval->y > 0 && in_array('year', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_YEAR;
-                    $delimiter = $this->dateParts->get($this->form . "-year")->getRangeDelimiter();
+                    $delimiter = $this->dateParts->get($this->form."-year")->getRangeDelimiter();
                 }
                 if ($interval->m > 0 && $from->getMonth() - $to->getMonth() !== 0 && in_array('month', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_MONTH;
-                    $delimiter = $this->dateParts->get($this->form . "-month")->getRangeDelimiter();
+                    $delimiter = $this->dateParts->get($this->form."-month")->getRangeDelimiter();
                 }
                 if ($interval->d > 0 && $from->getDay() - $to->getDay() !== 0 && in_array('day', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_DAY;
-                    $delimiter = $this->dateParts->get($this->form . "-day")->getRangeDelimiter();
+                    $delimiter = $this->dateParts->get($this->form."-day")->getRangeDelimiter();
                 }
                 if ($toRender === self::DATE_RANGE_STATE_NONE) {
                     $ret .= $this->iterateAndRenderDateParts($dateParts, $data_);
@@ -192,7 +192,7 @@ class Date
             }
 
             if (isset($var->raw) && preg_match("/(\p{L}+)\s?([\-\–&,])\s?(\p{L}+)/u", $var->raw, $matches)) {
-                return $matches[1] . $matches[2] . $matches[3];
+                return $matches[1].$matches[2].$matches[3];
             }
         } elseif (!empty($this->datePartsAttribute)) {
             // fallback:
@@ -275,7 +275,7 @@ class Date
         if (!empty($dateFromLocale)) {
             $dateForm = array_filter(
                 is_array($dateFromLocale) ? $dateFromLocale : [$dateFromLocale],
-                function ($element) use ($format) {
+                function($element) use ($format) {
                     /** @var SimpleXMLElement $element */
                     $dateForm = (string) $element->attributes()["form"];
                     return $dateForm === $format;
@@ -337,7 +337,7 @@ class Date
         if ($this->dateParts->count() < 1 && in_array($form, self::$localizedDateFormats)) {
             if ($this->hasDatePartsFromLocales($form)) {
                 $datePartsFromLocales = $this->getDatePartsFromLocales($form);
-                array_filter($datePartsFromLocales, function (SimpleXMLElement $item) use ($dateParts) {
+                array_filter($datePartsFromLocales, function(SimpleXMLElement $item) use ($dateParts) {
                     return in_array($item["name"], $dateParts);
                 });
 
@@ -350,7 +350,7 @@ class Date
                     $this->dateParts->add(
                         "$form-$datePart",
                         new DatePart(
-                            new SimpleXMLElement('<date-part name="' . $datePart . '" form="' . $form . '" />')
+                            new SimpleXMLElement('<date-part name="'.$datePart.'" form="'.$form.'" />')
                         )
                     );
                 }

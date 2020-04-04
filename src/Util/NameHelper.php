@@ -70,7 +70,7 @@ class NameHelper
     public static function appendParticleTo(&$data, $namePart, $particle)
     {
         if (isset($data->{$particle}) && isset($data->{$namePart})) {
-            $data->{$namePart} = $data->{$namePart} . " " . $data->{$particle}; // append $particle to $namePart
+            $data->{$namePart} = $data->{$namePart}." ".$data->{$particle}; // append $particle to $namePart
             unset($data->{$particle}); //remove particle from $data
         }
     }
@@ -84,7 +84,7 @@ class NameHelper
     public static function prependParticleTo(&$data, $namePart, $particle)
     {
         if (isset($data->{$particle}) && isset($data->{$namePart})) {
-            $data->{$namePart} = $data->{$particle} . " " . $data->{$namePart}; //prepend $particle to $namePart
+            $data->{$namePart} = $data->{$particle}." ".$data->{$namePart}; //prepend $particle to $namePart
             unset($data->{$particle}); //remove particle from $data
         }
     }
@@ -102,7 +102,7 @@ class NameHelper
             return false;
         }
 
-        array_walk($persons1, function ($name, $key) use ($persons2, &$same) {
+        array_walk($persons1, function($name, $key) use ($persons2, &$same) {
             $family1 = $name->family;
             $family2 = $persons2[$key]->family;
             $same = $same && ($family1 === $family2);
@@ -121,7 +121,7 @@ class NameHelper
         if (empty($data->family)) {
             throw new CiteProcException("Illegal argument. Name has no family name.");
         }
-        return $data->family . (isset($data->given) ? $data->given : "");
+        return $data->family.(isset($data->given) ? $data->given : "");
     }
 
     public static function addExtendedMarkup($nameVar, $nameItem, $formattedName)

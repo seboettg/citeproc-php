@@ -28,7 +28,7 @@ class MonthDayRenderer extends DateRangeRenderer
     {
         $dp = $dateParts->toArray();
         $dateParts_ = [];
-        array_walk($dp, function ($datePart, $key) use (&$dateParts_) {
+        array_walk($dp, function($datePart, $key) use (&$dateParts_) {
             //$bit = sprintf("%03d", decbin($differentParts));
             if (strpos($key, "month") !== false || strpos($key, "day") !== false) {
                 $dateParts_["monthday"][] = $datePart;

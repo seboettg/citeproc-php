@@ -112,9 +112,9 @@ class ChooseIf implements Rendering, HasParent
             }
         }
         if ($this->constraints->count() > 1 && $this->match === "all") {
-            return (bool)$result;
+            return (bool) $result;
         } elseif ($this->match === "none") {
-            return !((bool)$result);
+            return !((bool) $result);
         }
         return false;
     }

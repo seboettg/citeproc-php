@@ -67,7 +67,7 @@ class PageHelper
 
                 $digitFrom = $from[$i];
                 if ($digitTo !== $digitFrom) {
-                    $resTo = $digitTo . $resTo;
+                    $resTo = $digitTo.$resTo;
                 }
             }
             return $resTo;
@@ -78,9 +78,9 @@ class PageHelper
     private static function renderChicago($from, $to)
     {
         if ($from > 100 && ($from % 100 > 0) && intval(($from / 100), 10) === intval(($to / 100), 10)) {
-            return "" . ($to % 100);
+            return "".($to % 100);
         } elseif ($from >= 10000) {
-            return "" . ($to % 1000);
+            return "".($to % 1000);
         }
         return $to;
     }

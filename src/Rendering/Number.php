@@ -59,10 +59,10 @@ class Number implements Rendering
         foreach ($node->attributes() as $attribute) {
             switch ($attribute->getName()) {
                 case 'variable':
-                    $this->variable = (string)$attribute;
+                    $this->variable = (string) $attribute;
                     break;
                 case 'form':
-                    $this->form = (string)$attribute;
+                    $this->form = (string) $attribute;
             }
         }
 
@@ -157,7 +157,7 @@ class Number implements Rendering
         if (empty($ordinalSuffix)) {
             $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal')->single;
         }
-        return $num . $ordinalSuffix;
+        return $num.$ordinalSuffix;
     }
 
     /**
@@ -167,7 +167,7 @@ class Number implements Rendering
     public static function longOrdinal($num)
     {
         $num = sprintf("%02d", $num);
-        $ret = CiteProc::getContext()->getLocale()->filter('terms', 'long-ordinal-' . $num)->single;
+        $ret = CiteProc::getContext()->getLocale()->filter('terms', 'long-ordinal-'.$num)->single;
         if (!$ret) {
             return self::ordinal($num);
         }
@@ -184,12 +184,12 @@ class Number implements Rendering
     {
 
         if (self::RANGE_DELIMITER_AMPERSAND === $delim) {
-            $numRange = "$num1 " . htmlentities(self::RANGE_DELIMITER_AMPERSAND) . " $num2";
+            $numRange = "$num1 ".htmlentities(self::RANGE_DELIMITER_AMPERSAND)." $num2";
         } else {
             if (self::RANGE_DELIMITER_COMMA === $delim) {
-                $numRange = $num1 . htmlentities(self::RANGE_DELIMITER_COMMA) . " $num2";
+                $numRange = $num1.htmlentities(self::RANGE_DELIMITER_COMMA)." $num2";
             } else {
-                $numRange = $num1 . self::RANGE_DELIMITER_HYPHEN . $num2;
+                $numRange = $num1.self::RANGE_DELIMITER_HYPHEN.$num2;
             }
         }
         return $numRange;
@@ -206,7 +206,7 @@ class Number implements Rendering
             if (preg_match("/\s*([^\-\–&,]+)\s*([\-\–&,])\s*([^\-\–&,]+)\s*/", $number, $matches)) {
                 $num1 = Util\NumberHelper::roman2Dec($matches[1]);
                 $num2 = Util\NumberHelper::roman2Dec($matches[3]);
-                $decimalNumber = $num1 . $matches[2] . $num2;
+                $decimalNumber = $num1.$matches[2].$num2;
             } else {
                 $decimalNumber = Util\NumberHelper::roman2Dec($number);
             }
