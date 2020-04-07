@@ -130,8 +130,9 @@ class StringHelper
      * @param string $encoding
      * @return string
      */
+    // phpcs:disable
     public static function mb_ucfirst($string, $encoding = 'UTF-8')
-    {
+    {// phpcs:enable
         $strlen = mb_strlen($string, $encoding);
         $firstChar = mb_substr($string, 0, 1, $encoding);
         $then = mb_substr($string, 1, $strlen - 1, $encoding);
@@ -141,9 +142,9 @@ class StringHelper
         return in_array($encoding, self::ISO_ENCODINGS) ?
             Mbstring::mb_strtoupper($firstChar, $encoding).$then : $firstChar.$then;
     }
-
+    // phpcs:disable
     public static function mb_strrev($string)
-    {
+    {// phpcs:enable
         $result = '';
         for ($i = mb_strlen($string); $i >= 0; --$i) {
             $result .= mb_substr($string, $i, 1);

@@ -34,7 +34,6 @@ use stdClass;
  */
 class Layout implements Rendering
 {
-
     private static $numberOfCitedItems = 0;
 
     use AffixesTrait,
@@ -92,7 +91,8 @@ class Layout implements Rendering
         }
 
         if (CiteProc::getContext()->isModeBibliography()) {
-            foreach ($data as $citationNumber => $item) {++self::$numberOfCitedItems;
+            foreach ($data as $citationNumber => $item) {
+                ++self::$numberOfCitedItems;
                 CiteProc::getContext()->getResults()->append(
                     $this->wrapBibEntry($item, $this->renderSingle($item, $citationNumber))
                 );
@@ -123,7 +123,6 @@ class Layout implements Rendering
      */
     private function renderSingle($data, $citationNumber = null)
     {
-
         $bibliographyOptions = CiteProc::getContext()->getBibliographySpecificOptions();
         $inMargin = [];
         $margin = [];
@@ -218,7 +217,7 @@ class Layout implements Rendering
     {
         $arr = $data->toArray();
 
-        $arr_ = array_filter($arr, function($dataItem) use ($citationItems) {
+        $arr_ = array_filter($arr, function ($dataItem) use ($citationItems) {
             foreach ($citationItems as $citationItem) {
                 if ($dataItem->id === $citationItem->id) {
                     return true;

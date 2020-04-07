@@ -102,7 +102,7 @@ class NameHelper
             return false;
         }
 
-        array_walk($persons1, function($name, $key) use ($persons2, &$same) {
+        array_walk($persons1, function ($name, $key) use ($persons2, &$same) {
             $family1 = $name->family;
             $family2 = $persons2[$key]->family;
             $same = $same && ($family1 === $family2);
