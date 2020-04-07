@@ -42,21 +42,22 @@
         "post-install-cmd": [
             "./install.sh styles-distribution",
             "./install.sh locales",
-            "cd ./tests/fixtures/basic-tests/; ./processor.py -g",
+            "@compile-test-cases",
             "chmod +x vendor/bin/phpunit"
         ],
         "post-update-cmd": [
             "./install.sh styles-distribution",
             "./install.sh locales",
-            "cd ./tests/fixtures/basic-tests/; ./processor.py -g",
+            "@compile-test-cases",
             "chmod +x vendor/bin/phpunit"
         ],
-        "test": "vendor/bin/phpunit",
+        "test": "vendor/bin/phpunit -c phpunit.xml",
         "check": [
             "@cs-check",
             "@test"
         ],
         "cs-check": "phpcs",
-        "cs-fix": "phpcbf"
+        "cs-fix": "phpcbf",
+        "compile-test-cases": "cd ./tests/fixtures/basic-tests/; ./processor.py -g"
     }
 }

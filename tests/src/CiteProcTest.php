@@ -11,7 +11,6 @@ namespace Seboettg\CiteProc;
 
 use PHPUnit\Framework\TestCase;
 
-
 class CiteProcTest extends TestCase
 {
 
