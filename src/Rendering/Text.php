@@ -18,8 +18,8 @@ use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\QuotesTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
+use Seboettg\CiteProc\Terms\Locator;
 use Seboettg\CiteProc\Util\CiteProcHelper;
-use Seboettg\CiteProc\Util\LocatorHelper;
 use Seboettg\CiteProc\Util\NumberHelper;
 use Seboettg\CiteProc\Util\PageHelper;
 use Seboettg\CiteProc\Util\StringHelper;
@@ -102,8 +102,9 @@ class Text implements Rendering
                 } elseif ($this->toRenderTypeValue === "citation-number") {
                     $renderedText = $this->renderCitationNumber($data, $citationNumber);
                     break;
-                } elseif ($this->toRenderTypeValue === "page" || $this->toRenderTypeValue === "chapter-number") {
-                    $renderedText = !empty($data->{$this->toRenderTypeValue}) ? $this->renderPage($data->{$this->toRenderTypeValue}) : '';
+                } elseif (in_array($this->toRenderTypeValue, ["page", "chapter-number", "folio"])) {
+                    $renderedText = !empty($data->{$this->toRenderTypeValue}) ?
+                        $this->renderPage($data->{$this->toRenderTypeValue}) : '';
                 } else {
                     $renderedText = $this->renderVariable($data, $lang);
                 }
@@ -170,15 +171,15 @@ class Text implements Rendering
         $citationItem = CiteProc::getContext()->getCitationItemById($data->id);
         if (!empty($citationItem->label)) {
             $locatorData = new stdClass();
-            $propertyName = LocatorHelper::mapLocatorLabelToRenderVariable($citationItem->label);
-            $locatorData->{$propertyName} = $citationItem->locator;
+            $propertyName = Locator::mapLocatorLabelToRenderVariable($citationItem->label);
+            $locatorData->{$propertyName} = trim($citationItem->locator);
             $renderTypeValueTemp = $this->toRenderTypeValue;
             $this->toRenderTypeValue = $propertyName;
             $result = $this->render($locatorData, $citationNumber);
             $this->toRenderTypeValue = $renderTypeValueTemp;
             return $result;
         }
-        return $citationItem->locator ?? '';
+        return $citationItem->locator ? trim($citationItem->locator) : '';
     }
 
     private function normalizeDateRange($page)

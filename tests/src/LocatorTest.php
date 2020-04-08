@@ -22,4 +22,19 @@ class LocatorTest extends TestCase
     {
         $this->_testRenderTestSuite("locator_LocatorConditionConstraint");
     }
+
+    public function testLocatorTermSelection()
+    {
+        $this->_testRenderTestSuite("locator_TermSelection");
+    }
+
+    public function testLocatorWithLeadingSpace()
+    {
+        $this->_testRenderTestSuite("locator_WithLeadingSpace");
+    }
+
+    public function testLocatorDelimiterAndCitationNumber()
+    {
+        $this->_testRenderTestSuite("locator_DelimiterAndCitationNumber");
+    }
 }

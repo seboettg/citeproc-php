@@ -143,6 +143,7 @@ class Label implements Rendering
             switch ($variable) {
                 case 'page':
                 case 'chapter':
+                case 'folio':
                     $pageRegex = "/([a-zA-Z]*)([0-9]+)\s*(?:–|-)\s*([a-zA-Z]*)([0-9]+)/";
                     $err = preg_match($pageRegex, $str, $m);
                     if ($err !== false && count($m) == 0) {
