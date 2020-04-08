@@ -179,7 +179,7 @@ class Text implements Rendering
             $this->toRenderTypeValue = $renderTypeValueTemp;
             return $result;
         }
-        return $citationItem->locator ? trim($citationItem->locator) : '';
+        return isset($citationItem->locator) ? trim($citationItem->locator) : '';
     }
 
     private function normalizeDateRange($page)
