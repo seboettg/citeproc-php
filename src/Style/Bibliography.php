@@ -67,10 +67,10 @@ class Bibliography extends StyleElement
 
         if ($subsequentAuthorSubstitute !== null && !empty($subsequentAuthorSubstituteRule)) {
             CiteProc::getContext()
-                ->getCitationItems()
+                ->getCitationData()
                 ->setSubsequentAuthorSubstitute($subsequentAuthorSubstitute);
             CiteProc::getContext()
-                ->getCitationItems()
+                ->getCitationData()
                 ->setSubsequentAuthorSubstituteRule($subsequentAuthorSubstituteRule);
         }
         return $this->layout->render($data, $citationNumber);

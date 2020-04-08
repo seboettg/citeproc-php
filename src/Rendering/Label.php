@@ -104,6 +104,16 @@ class Label implements Rendering
                     $text = $pluralForm;
                 }
             }
+        } elseif ($this->variable === "locator") {
+            $citationItem = CiteProc::getContext()->getCitationItemById($data->id);
+            if (!empty($citationItem->label)) {
+                $plural = $this->evaluateStringPluralism($citationItem->locator, $citationItem->label);
+                $term = CiteProc::getContext()->getLocale()->filter('terms', $citationItem->label, $form);
+                $pluralForm = $term->{$plural};
+                if (!empty($citationItem->locator) && !empty($pluralForm)) {
+                    $text = $pluralForm;
+                }
+            }
         } else {
             foreach ($variables as $variable) {
                 if (isset($data->{$variable})) {
@@ -122,17 +132,17 @@ class Label implements Rendering
     }
 
     /**
-     * @param $data
-     * @param $variable
+     * @param string $str
+     * @param string $variable
      * @return string
      */
-    private function evaluateStringPluralism($data, $variable)
+    private function evaluateStringPluralism($str, $variable)
     {
-        $str = isset($data->{$variable}) ? $data->{$variable} : '';
         $plural = 'single';
         if (!empty($str)) {
             switch ($variable) {
                 case 'page':
+                case 'chapter':
                     $pageRegex = "/([a-zA-Z]*)([0-9]+)\s*(?:–|-)\s*([a-zA-Z]*)([0-9]+)/";
                     $err = preg_match($pageRegex, $str, $m);
                     if ($err !== false && count($m) == 0) {
@@ -184,11 +194,11 @@ class Label implements Rendering
                 }
                 return $plural;
             } else {
-                return $this->evaluateStringPluralism($data, $variable);
+                return $this->evaluateStringPluralism($data->{$variable}, $variable);
             }
         } else {
             if ($this->plural != "always") {
-                $plural = $this->evaluateStringPluralism($data, $variable);
+                $plural = $this->evaluateStringPluralism($data->{$variable}, $variable);
                 return $plural;
             }
             return $plural;

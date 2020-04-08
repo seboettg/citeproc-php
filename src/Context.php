@@ -64,6 +64,11 @@ class Context
     /**
      * @var DataList
      */
+    private $citationData;
+
+    /**
+     * @var ArrayList
+     */
     private $citationItems;
 
     /**
@@ -123,7 +128,7 @@ class Context
         }
 
         $this->macros = new ArrayList();
-        $this->citationItems = new DataList();
+        $this->citationData = new DataList();
         $this->results = new ArrayList();
         $this->renderingState = RenderingState::RENDERING();
     }
@@ -251,22 +256,38 @@ class Context
     /**
      * @return DataList
      */
-    public function getCitationItems()
+    public function getCitationData()
+    {
+        return $this->citationData;
+    }
+
+    /**
+     * @param ArrayList|DataList $citationData
+     */
+    public function setCitationData($citationData)
+    {
+        $this->citationData = $citationData;
+    }
+
+    /**
+     * @return ArrayList
+     */
+    public function getCitationItems(): ArrayList
     {
         return $this->citationItems;
     }
 
     /**
-     * @param DataList $citationItems
+     * @param ArrayList $citationItems
      */
-    public function setCitationItems(&$citationItems)
+    public function setCitationItems(ArrayList $citationItems): void
     {
         $this->citationItems = $citationItems;
     }
 
     public function hasCitationItems()
     {
-        return ($this->citationItems->count() > 0);
+        return ($this->citationData->count() > 0);
     }
 
     /**
@@ -405,5 +426,12 @@ class Context
     public function setMarkupExtension($markupExtension)
     {
         $this->markupExtension = $markupExtension;
+    }
+
+    public function getCitationItemById($id)
+    {
+        return $this->citationItems->filter(function ($item) use ($id) {
+            return $item->id === $id;
+        })->current();
     }
 }

@@ -19,6 +19,7 @@ use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\QuotesTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
 use Seboettg\CiteProc\Util\CiteProcHelper;
+use Seboettg\CiteProc\Util\LocatorHelper;
 use Seboettg\CiteProc\Util\NumberHelper;
 use Seboettg\CiteProc\Util\PageHelper;
 use Seboettg\CiteProc\Util\StringHelper;
@@ -95,12 +96,14 @@ class Text implements Rendering
                 $renderedText = $this->applyTextCase($this->toRenderTypeValue, $lang);
                 break;
             case 'variable':
-                if ($this->toRenderTypeValue === "citation-number") {
+                if ($this->toRenderTypeValue === "locator" && CiteProc::getContext()->isModeCitation()) {
+                    $renderedText = $this->renderLocator($data, $citationNumber);
+                // for test sort_BibliographyCitationNumberDescending.json
+                } elseif ($this->toRenderTypeValue === "citation-number") {
                     $renderedText = $this->renderCitationNumber($data, $citationNumber);
                     break;
-                } elseif ($this->toRenderTypeValue === "page") {
-                    $renderedText = $this->renderPage($data);
-                    // for test sort_BibliographyCitationNumberDescending.json
+                } elseif ($this->toRenderTypeValue === "page" || $this->toRenderTypeValue === "chapter-number") {
+                    $renderedText = !empty($data->{$this->toRenderTypeValue}) ? $this->renderPage($data->{$this->toRenderTypeValue}) : '';
                 } else {
                     $renderedText = $this->renderVariable($data, $lang);
                 }
@@ -141,15 +144,11 @@ class Text implements Rendering
         return $this->toRenderTypeValue;
     }
 
-    private function renderPage($data)
+    private function renderPage($page)
     {
-        if (empty($data->page)) {
-            return "";
-        }
-
-        if (preg_match(NumberHelper::PATTERN_COMMA_AMPERSAND_RANGE, $data->page)) {
-            $data->page = $this->normalizeDateRange($data->page);
-            $ranges = preg_split("/[-–]/", trim($data->page));
+        if (preg_match(NumberHelper::PATTERN_COMMA_AMPERSAND_RANGE, $page)) {
+            $page = $this->normalizeDateRange($page);
+            $ranges = preg_split("/[-–]/", trim($page));
             if (count($ranges) > 1) {
                 if (!empty(CiteProc::getContext()->getGlobalOptions())
                     && !empty(CiteProc::getContext()->getGlobalOptions()->getPageRangeFormat())
@@ -160,15 +159,31 @@ class Text implements Rendering
                     );
                 }
                 list($from, $to) = $ranges;
-                return "$from-$to";
+                return $from . "–" . $to;
             }
         }
-        return $data->page;
+        return $page;
+    }
+
+    private function renderLocator($data, $citationNumber)
+    {
+        $citationItem = CiteProc::getContext()->getCitationItemById($data->id);
+        if (!empty($citationItem->label)) {
+            $locatorData = new stdClass();
+            $propertyName = LocatorHelper::mapLocatorLabelToRenderVariable($citationItem->label);
+            $locatorData->{$propertyName} = $citationItem->locator;
+            $renderTypeValueTemp = $this->toRenderTypeValue;
+            $this->toRenderTypeValue = $propertyName;
+            $result = $this->render($locatorData, $citationNumber);
+            $this->toRenderTypeValue = $renderTypeValueTemp;
+            return $result;
+        }
+        return $citationItem->locator ?? '';
     }
 
     private function normalizeDateRange($page)
     {
-        if (preg_match("/^(\d+)--(\d+)$/", trim($page), $matches)) {
+        if (preg_match("/^(\d+)\s?--?\s?(\d+)$/", trim($page), $matches)) {
             return $matches[1]."-".$matches[2];
         }
         return $page;

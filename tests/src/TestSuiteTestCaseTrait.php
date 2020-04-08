@@ -17,10 +17,14 @@ trait TestSuiteTestCaseTrait
 {
 
     /** @var array $FILTER */
-    static $FILTER = [
+    private static $FILTER = [
     ];
 
 
+    /**
+     * @param $filterTests
+     * @param null $ignore
+     */
     public function _testRenderTestSuite($filterTests, $ignore = null)
     {
         $testFiles = loadFixtures($filterTests, $ignore);
@@ -29,7 +33,6 @@ trait TestSuiteTestCaseTrait
         $success = [];
         $exceptions = [];
         foreach ($testFiles as $testFile) {
-
             if (in_array($testFile, self::$FILTER)) {
                 continue; //stop testing filtered tests
             }
@@ -47,7 +50,12 @@ trait TestSuiteTestCaseTrait
             try {
                 $citationItems = [];
                 if (!empty($testData->citation_items)) {
-                    $citationItems = $testData->citation_items;
+                    if (array_key_exists(0, $testData->citation_items) && is_array($testData->citation_items[0])) {
+                        // use only the first array
+                        $citationItems =  $testData->citation_items[0];
+                    } else {
+                        $citationItems = $testData->citation_items;
+                    }
                 }
                 $actual = $citeProc->render($testData->input, $mode, $citationItems);
                 $this->assertEquals($expected, $actual, "Test case \"$testFile\" ($i) has failed.");

@@ -32,17 +32,6 @@ class DataList extends ArrayList
     private $subsequentAuthorSubstituteRule = "complete-all";
 
     /**
-     * @var Citation
-     */
-    private $citation;
-
-    public function __construct(array $data = [], $citation = null)
-    {
-        parent::__construct($data);
-        $this->citation = $citation;
-    }
-
-    /**
      * @return string
      */
     public function getSubsequentAuthorSubstitute()

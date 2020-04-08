@@ -252,7 +252,7 @@ class Layout implements Rendering
         $group = [];
         foreach ($citationItems as $citationItemGroup) {
             $data_ = $this->filterCitationItems(clone $data, $citationItemGroup);
-            CiteProc::getContext()->setCitationItems($data_);
+            CiteProc::getContext()->setCitationData($data_);
             $group[] = $this->addAffixes(StringHelper::clearApostrophes($this->renderCitations($data_, "")));
         }
         if (CiteProc::getContext()->isCitationsAsArray()) {

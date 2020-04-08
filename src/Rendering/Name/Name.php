@@ -137,7 +137,7 @@ class Name implements HasParent
         $resultNames = $this->handleSubsequentAuthorSubstitution($name, $citationNumber);
 
         if (empty($resultNames)) {
-            return CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
+            return CiteProc::getContext()->getCitationData()->getSubsequentAuthorSubstitute();
         }
 
         $resultNames = $this->prepareAbbreviation($resultNames);
@@ -338,8 +338,8 @@ class Name implements HasParent
     protected function renderSubsequentSubstitution($data, $preceding)
     {
         $resultNames = [];
-        $subsequentSubstitution = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
-        $subsequentSubstitutionRule = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstituteRule();
+        $subsequentSubstitution = CiteProc::getContext()->getCitationData()->getSubsequentAuthorSubstitute();
+        $subsequentSubstitutionRule = CiteProc::getContext()->getCitationData()->getSubsequentAuthorSubstituteRule();
 
         /**
          * @var string $type
@@ -397,10 +397,10 @@ class Name implements HasParent
      */
     private function handleSubsequentAuthorSubstitution($data, $citationNumber)
     {
-        $hasPreceding = CiteProc::getContext()->getCitationItems()->hasKey($citationNumber - 1);
-        $subsequentSubstitution = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstitute();
-        $subsequentSubstitutionRule = CiteProc::getContext()->getCitationItems()->getSubsequentAuthorSubstituteRule();
-        $preceding = CiteProc::getContext()->getCitationItems()->get($citationNumber - 1);
+        $hasPreceding = CiteProc::getContext()->getCitationData()->hasKey($citationNumber - 1);
+        $subsequentSubstitution = CiteProc::getContext()->getCitationData()->getSubsequentAuthorSubstitute();
+        $subsequentSubstitutionRule = CiteProc::getContext()->getCitationData()->getSubsequentAuthorSubstituteRule();
+        $preceding = CiteProc::getContext()->getCitationData()->get($citationNumber - 1);
 
 
         if ($hasPreceding && !is_null($subsequentSubstitution) && !empty($subsequentSubstitutionRule)) {

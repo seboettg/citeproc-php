@@ -34,8 +34,8 @@ class ContextTest extends TestCase
         $this->citeProc->init();
         $this->context = $this->citeProc->getContext();
         $this->context->setMode("bibliography");
-        $dataList = new DataList(json_decode($this->data));
-        $this->context->setCitationItems($dataList);
+        $dataList = new DataList(...json_decode($this->data));
+        $this->context->setCitationData($dataList);
     }
 
 
@@ -73,7 +73,7 @@ class ContextTest extends TestCase
      */
     public function testGetCitationItems()
     {
-        foreach ($this->citeProc->getContext()->getCitationItems() as $item) {
+        foreach ($this->citeProc->getContext()->getCitationData() as $item) {
             $this->assertNotNull($item->{'author'});
             $this->assertTrue(is_array($item->{'author'}));
             $this->assertNotEmpty($item->{'author'});

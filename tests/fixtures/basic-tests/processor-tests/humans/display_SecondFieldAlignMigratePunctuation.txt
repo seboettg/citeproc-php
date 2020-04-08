@@ -7,7 +7,7 @@ bibliography
 >>===== RESULT =====>>
 <div class="csl-bib-body">
   <div class="csl-entry">[1] B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
-  <div class="csl-entry">[2] F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts”, <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463-509.</div>
+  <div class="csl-entry">[2] F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts”, <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
 </div>
 <<===== RESULT =====<<
 

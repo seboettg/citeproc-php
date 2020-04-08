@@ -145,7 +145,7 @@ class Names implements Rendering, HasParent
          */
         foreach ($node->attributes() as $attribute) {
             if ("variable" === $attribute->getName()) {
-                $this->variables = new ArrayList(explode(" ", (string) $attribute));
+                $this->variables = new ArrayList(...explode(" ", (string) $attribute));
                 break;
             }
         }
@@ -177,7 +177,7 @@ class Names implements Rendering, HasParent
         is identical, then the contents of only one name variable is rendered. In addition, the “editortranslator”
         term is used if the cs:names element contains a cs:label element, replacing the default “editor” and
         “translator” terms (e.g. resulting in “Doe (editor & translator)”) */
-        if ($this->variables->hasValue("editor") && $this->variables->hasValue("translator")) {
+        if ($this->variables->hasElement("editor") && $this->variables->hasElement("translator")) {
             if (isset($data->editor)
                 && isset($data->translator) && NameHelper::sameNames($data->editor, $data->translator)
             ) {

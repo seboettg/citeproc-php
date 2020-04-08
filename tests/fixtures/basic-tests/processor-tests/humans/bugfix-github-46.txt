@@ -4,7 +4,7 @@ bibliography
 
 >>===== RESULT =====>>
 <div class="csl-bib-body">
-  <div class="csl-entry"><div class="csl-left-margin">[1]</div><div class="csl-right-inline">С. В. Месяц, “Proclus’ metaphysics: between worldview and language game. Reflections on the book of Radek Chlup”, <i>PhJ</i>, vol. 8, no. 1, pp. 7-22, Mar. 2015.</div></div>
+  <div class="csl-entry"><div class="csl-left-margin">[1]</div><div class="csl-right-inline">С. В. Месяц, “Proclus’ metaphysics: between worldview and language game. Reflections on the book of Radek Chlup”, <i>PhJ</i>, vol. 8, no. 1, pp. 7–22, Mar. 2015.</div></div>
 </div>
 <<===== RESULT =====<<
 

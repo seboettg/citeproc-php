@@ -67,7 +67,7 @@ class Sort
     public function sort(&$data)
     {
         if (is_array($data)) {
-            $data = new DataList($data);
+            $data = new DataList(...$data);
         }
         $dataToSort = $data->toArray();
         try {

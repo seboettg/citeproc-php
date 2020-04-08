@@ -170,7 +170,7 @@ class CiteProc
         $res = "";
 
         if (is_array($data)) {
-            $data = new DataList($data);
+            $data = new DataList(...$data);
         } elseif (!($data instanceof DataList)) {
             throw new CiteProcException('No valid format for variable data. Either DataList or array expected');
         }
@@ -179,18 +179,18 @@ class CiteProc
             case 'bibliography':
                 self::$context->setMode($mode);
                 // set CitationItems to Context
-                self::getContext()->setCitationItems($data);
+                self::getContext()->setCitationData($data);
                 $res = $this->bibliography($data);
                 break;
             case 'citation':
                 if (is_array($citationItems)) {
-                    $citationItems = new ArrayList($citationItems);
+                    $citationItems = new ArrayList(...$citationItems);
                 } elseif (!($citationItems instanceof ArrayList)) {
                     throw new CiteProcException('No valid format for variable `citationItems`, ArrayList expected.');
                 }
                 self::$context->setMode($mode);
                 // set CitationItems to Context
-                //self::getContext()->setCitationItems($data); will now set in Layout
+                self::getContext()->setCitationItems($citationItems);
                 $res = $this->citation($data, $citationItems);
         }
         self::setContext(null);

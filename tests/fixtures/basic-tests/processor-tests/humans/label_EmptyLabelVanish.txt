@@ -5,7 +5,7 @@ citation
 
 
 >>===== RESULT =====>>
-[start](pages : 22-45)[end]
+[start](pages : 22–45)[end]
 <<===== RESULT =====<<
 
 

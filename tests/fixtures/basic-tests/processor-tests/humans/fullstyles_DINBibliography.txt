@@ -11,7 +11,7 @@ and followup thread:
 
 >>===== RESULT =====>>
 <div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-variant: small-caps;">Hotho, Andreas</span> ; <span style="font-variant: small-caps;">Benz, Dominik</span> ; <span style="font-variant: small-caps;">Eisterlehner, Folke</span> ; <span style="font-variant: small-caps;">Jäschke, Robert</span> ; <span style="font-variant: small-caps;">Krause, Beate</span> ; <span style="font-variant: small-caps;">Schmitz, Christoph</span> ; <span style="font-variant: small-caps;">Stumme, Gerd</span>: Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler. In: <span style="font-variant: small-caps;">Hengartner, U.</span> ; <span style="font-variant: small-caps;">Meier, A.</span> (eds.) <i>HMD - Praxis der Wirtschaftsinformatik</i> vol. 271, dpunkt.verlag (2010), p. 47-58</div>
+  <div class="csl-entry"><span style="font-variant: small-caps;">Hotho, Andreas</span> ; <span style="font-variant: small-caps;">Benz, Dominik</span> ; <span style="font-variant: small-caps;">Eisterlehner, Folke</span> ; <span style="font-variant: small-caps;">Jäschke, Robert</span> ; <span style="font-variant: small-caps;">Krause, Beate</span> ; <span style="font-variant: small-caps;">Schmitz, Christoph</span> ; <span style="font-variant: small-caps;">Stumme, Gerd</span>: Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler. In: <span style="font-variant: small-caps;">Hengartner, U.</span> ; <span style="font-variant: small-caps;">Meier, A.</span> (eds.) <i>HMD - Praxis der Wirtschaftsinformatik</i> vol. 271, dpunkt.verlag (2010), p. 47–58</div>
 </div>
 <<===== RESULT =====<<
 
