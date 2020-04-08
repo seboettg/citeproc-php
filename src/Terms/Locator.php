@@ -1,7 +1,7 @@
 <?php
 /*
  * citeproc-php: Locator.php
- * User: Sebastian Böttger <sebastian.boettger@galeria-reisen.de>
+ * User: Sebastian Böttger <seboettg@gmail.com>
  * created at 08.04.20, 15:21
  */
 
