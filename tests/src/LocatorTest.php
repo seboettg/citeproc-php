@@ -17,4 +17,9 @@ class LocatorTest extends TestCase
     {
         $this->_testRenderTestSuite("locator_SimpleLocators");
     }
+
+    public function testLocatorConditionConstraints()
+    {
+        $this->_testRenderTestSuite("locator_LocatorConditionConstraint");
+    }
 }

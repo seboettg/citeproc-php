@@ -9,6 +9,9 @@
 
 namespace Seboettg\CiteProc\Constraint;
 
+use Seboettg\CiteProc\CiteProc;
+use stdClass;
+
 /**
  * Class Locator
  *
@@ -22,16 +25,17 @@ namespace Seboettg\CiteProc\Constraint;
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
 /** @noinspection PhpUnused */
-class Locator implements Constraint
+class Locator extends AbstractConstraint
 {
     /**
-     * @codeCoverageIgnore
-     * @param $value
-     * @param int|null $citationNumber
-     * @return bool
+     * @inheritDoc
      */
-    public function validate($value, $citationNumber = null)
+    protected function matchForVariable($variable, $data)
     {
+        if (!empty($data->id)) {
+            $citationItem = CiteProc::getContext()->getCitationItemById($data->id);
+            return !empty($citationItem) && !empty($citationItem->label) && $citationItem->label === $variable;
+        }
         return false;
     }
 }
