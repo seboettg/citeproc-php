@@ -203,6 +203,7 @@ class Layout implements Rendering
             $renderedItem = $this->renderSingle($item, $citationNumber);
             $renderedItem = CiteProcHelper::applyAdditionMarkupFunction($item, "csl-entry", $renderedItem);
             CiteProc::getContext()->getResults()->append($renderedItem);
+            CiteProc::getContext()->appendCitedItem($item);
         }
         $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
         return $ret;

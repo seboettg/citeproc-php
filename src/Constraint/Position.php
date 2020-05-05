@@ -9,6 +9,10 @@
 
 namespace Seboettg\CiteProc\Constraint;
 
+use Seboettg\CiteProc\CiteProc;
+use Seboettg\Collection\ArrayList;
+use stdClass;
+
 /**
  * Class Position
  *
@@ -39,17 +43,63 @@ namespace Seboettg\CiteProc\Constraint;
  *
  * @author Sebastian Böttger <seboettg@gmail.com>
  */
-/** @noinspection PhpUnused */
 class Position implements Constraint
 {
+    const FIRST = "first";
+    const IBID = "ibid";
+    const IBID_WITH_LOCATOR = "ibid-with-locator";
+    const SUBSEQUENT = "subsequent";
+    const NEAR_NOTE = "near-note";
+
+    private $value;
+
+    private $match;
+
+    public function __construct($value, $match = "all")
+    {
+        $this->value = $value;
+        $this->match = $match;
+    }
+
     /**
      * @codeCoverageIgnore
-     * @param $value
+     * @param stdClass $object
      * @param int|null $citationNumber
      * @return bool
      */
-    public function validate($value, $citationNumber = null)
+    public function validate($object, $citationNumber = null)
     {
-        return false;
+        if (CiteProc::getContext()->isModeBibliography()) {
+            return false;
+        }
+        switch ($this->value) {
+            case self::FIRST:
+                return $this->getPosition($object) === 0;
+            case self::IBID:
+            case self::IBID_WITH_LOCATOR:
+            case self::SUBSEQUENT:
+                return $this->isOnLastPosition($object);
+        }
+        return true;
+    }
+
+    private function getPosition($object)
+    {
+        foreach (CiteProc::getContext()->getCitedItems() as $key => $value) {
+            if (!empty($value->{'id'}) && $value->{'id'} === $object->{'id'}) {
+                return $key;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param stdClass $object
+     * @return bool
+     */
+    private function isOnLastPosition($object): bool
+    {
+        $lastCitedItem = CiteProc::getContext()->getCitedItems()->last();
+        return !empty($lastCitedItem) ? $lastCitedItem->{'id'} === $object->{'id'} : false;
     }
 }

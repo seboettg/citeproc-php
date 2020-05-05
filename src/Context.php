@@ -121,6 +121,11 @@ class Context
      */
     private $citationsAsArray = false;
 
+    /**
+     * @var ArrayList
+     */
+    private $citedItems;
+
     public function __construct($locale = null)
     {
         if (!empty($locale)) {
@@ -131,6 +136,7 @@ class Context
         $this->citationData = new DataList();
         $this->results = new ArrayList();
         $this->renderingState = RenderingState::RENDERING();
+        $this->citedItems = new ArrayList();
     }
 
     public function addMacro($key, $macro)
@@ -433,5 +439,27 @@ class Context
         return $this->citationItems->filter(function ($item) use ($id) {
             return $item->id === $id;
         })->current();
+    }
+
+    /**
+     * @return ArrayList
+     */
+    public function getCitedItems(): ArrayList
+    {
+        return $this->citedItems;
+    }
+
+    /**
+     * @param ArrayList $citedItems
+     */
+    public function setCitedItems(ArrayList $citedItems): void
+    {
+        $this->citedItems = $citedItems;
+    }
+
+    public function appendCitedItem($citedItem)
+    {
+        $this->citedItems->append($citedItem);
+        return $this;
     }
 }
