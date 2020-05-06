@@ -45,8 +45,8 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1",
-        "title": "His Anonymous Life",
+        "id": "ITEM-1", 
+        "title": "His Anonymous Life", 
         "type": "book"
     }
 ]
