@@ -74,7 +74,7 @@ class Position implements Constraint
         }
         switch ($this->value) {
             case self::FIRST:
-                return $this->getPosition($object) === 0;
+                return $this->getPosition($object) === null;
             case self::IBID:
             case self::IBID_WITH_LOCATOR:
             case self::SUBSEQUENT:

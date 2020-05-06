@@ -1,0 +1,142 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+>>===== RESULT =====>>
+(An often-cited paper, article-journal, 244–252; A widely read book, book, 3–4; Unknown (magazine), entry-encyclopedia, section Influence, 1st occurrence)
+<<===== RESULT =====<<
+
+
+>>===== CITATION-ITEMS =====>>
+[
+    [
+        {
+            "id": "ITEM-1", 
+            "label": "page", 
+            "locator": "244-252"
+        }, 
+        {
+            "id": "ITEM-2", 
+            "label": "chapter", 
+            "locator": "3 - 4"
+        }, 
+        {
+            "id": "ITEM-3", 
+            "label": "section", 
+            "locator": "Influence"
+        }
+    ]
+]
+<<===== CITATION-ITEMS =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <choose>
+        <if variable="locator" match="none">
+          <text value="no locator" />
+        </if>
+        <else-if type="article-journal">
+          <text variable="title" suffix=", " />
+          <text variable="type" suffix=", " />
+          <text variable="locator" />
+        </else-if>
+        <else-if type="entry-dictionary entry-encyclopedia" match="any">
+          <choose>
+            <if position="first" match="all">
+              <text variable="title" suffix=", " />
+              <text variable="type" suffix=", " />
+              <label variable="locator" suffix=" "/>
+              <text variable="locator"/>
+              <text prefix=", " value="1st occurrence"/>
+            </if>
+            <else>
+              <text value="subsequent occurrence" />
+              <label value="ibid" />
+            </else>
+          </choose>
+        </else-if>
+        <else>
+          <text variable="title" suffix=", " />
+          <text variable="type" suffix=", " />
+          <text variable="locator"/>
+        </else>
+      </choose>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Doe",
+                "given": "John"
+            }
+        ],
+        "id": "ITEM-1",
+        "issued": {
+            "date-parts": [
+                [
+                    2004,
+                    10,
+                    21
+                ]
+            ]
+        },
+        "title": "An often-cited paper",
+        "type": "article-journal"
+    },
+    {
+        "author": [
+            {
+                "family": "Mustermann",
+                "given": "Erika"
+            }
+        ],
+        "id": "ITEM-2",
+        "issued": {
+            "date-parts": [
+                [
+                    2002,
+                    12,
+                    1
+                ]
+            ]
+        },
+        "title": "A widely read book",
+        "type": "book"
+    },
+    {
+        "publisher": "Wikipedia, The Free Encyclopedia.",
+        "container-title": "Wikipedia",
+        "id": "ITEM-3",
+        "accessed": {
+            "date-parts": [
+                [
+                    2020,
+                    5,
+                    6
+                ]
+            ]
+        },
+        "title": "Unknown (magazine)",
+        "type": "entry-encyclopedia",
+        "URL": "https://en.wikipedia.org/w/index.php?title=Unknown_(magazine)&oldid=955179260"
+    }
+]
+<<===== INPUT =====<<

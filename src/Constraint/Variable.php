@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc\Constraint;
 
+use Seboettg\CiteProc\CiteProc;
 use stdClass;
 
 /**
@@ -27,6 +28,13 @@ class Variable extends AbstractConstraint
      */
     protected function matchForVariable($variable, $data)
     {
-        return !empty($data->{$variable});
+        $variableExistInCitationItem = false;
+        if (CiteProc::getContext()->isModeCitation() && isset($data->id)) {
+            $citationItem = CiteProc::getContext()->getCitationItemById($data->id);
+            if (!empty($citationItem)) {
+                $variableExistInCitationItem = !empty($citationItem->{$variable});
+            }
+        }
+        return !empty($data->{$variable}) || $variableExistInCitationItem;
     }
 }

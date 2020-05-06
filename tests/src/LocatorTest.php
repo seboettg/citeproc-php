@@ -37,4 +37,9 @@ class LocatorTest extends TestCase
     {
         $this->_testRenderTestSuite("locator_DelimiterAndCitationNumber");
     }
+
+    public function testVariableLocatorCondition()
+    {
+        $this->_testRenderTestSuite("locator_VariableLocatorCondition");
+    }
 }
