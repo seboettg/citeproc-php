@@ -86,8 +86,8 @@ class CiteProcTest extends TestCase
         $citeProc = new CiteProc($style);
         $cssStyles = $citeProc->renderCssStyles();
         $this->assertTrue(strpos($cssStyles, "csl-entry") !== false);
-        $this->assertTrue(strpos($cssStyles, "line-height: 1em") !== false);
-        $this->assertTrue(strpos($cssStyles, "margin-bottom: 2em") !== false);
+        $this->assertTrue(strpos($cssStyles, "text-indent: -2em") !== false);
+        $this->assertTrue(strpos($cssStyles, "padding-left: 2em") !== false);
     }
 
     public function testGetInfo()
@@ -96,7 +96,7 @@ class CiteProcTest extends TestCase
         $citeProc = new CiteProc($style);
         $citeProc->init();
         $info = CiteProc::getContext()->getInfo();
-        $this->assertEquals("Hermien Wolff", $info->getAuthors()[0]->name);
+        $this->assertEquals("Albi Odendaal", $info->getAuthors()[0]->name);
         $this->assertEquals("North-West University - Harvard", $info->getTitle());
     }
 
