@@ -88,7 +88,7 @@ class ChooseIf implements Rendering, HasParent
         if ($parent instanceof Group && $parent->hasDelimiter()) {
             $glue = $parent->getDelimiter();
         }
-        return implode($glue, $ret);
+        return implode($glue, array_filter($ret));
     }
     /**
      * @param $data
