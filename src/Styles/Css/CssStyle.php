@@ -45,7 +45,7 @@ class CssStyle
      */
     public function render()
     {
-        return implode("\n", $this->cssRules->toArray());
+        return implode("\n", array_filter($this->cssRules->toArray()));
     }
 
     /**

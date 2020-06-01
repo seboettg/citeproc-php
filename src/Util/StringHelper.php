@@ -82,7 +82,7 @@ class StringHelper
             $word = ucfirst($word);
         });
 
-        return implode(" ", $wordArray);
+        return implode(" ", array_filter($wordArray));
     }
 
     /**
@@ -108,7 +108,7 @@ class StringHelper
             $word = StringHelper::keepLowerCase($word) ? $word : StringHelper::mb_ucfirst($word);
         });
 
-        return implode(" ", $wordArray);
+        return implode(" ", array_filter($wordArray));
     }
 
     /**
@@ -170,7 +170,7 @@ class StringHelper
                 }
             }
         }
-        return implode($delimiter, $arrayOfStrings);
+        return implode($delimiter, array_filter($arrayOfStrings));
     }
 
     /**
