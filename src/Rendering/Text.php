@@ -209,47 +209,32 @@ class Text implements Rendering
     {
         // check if there is an attribute with prefix short or long e.g. shortTitle or longAbstract
         // test case group_ShortOutputOnly.json
-        $renderedText = "";
+        $value = "";
         if (in_array($this->form, ["short", "long"])) {
-            $attrWithPrefix = $this->form.ucfirst($this->toRenderTypeValue);
-            $attrWithSuffix = $this->toRenderTypeValue."-".$this->form;
+            $attrWithPrefix = $this->form . ucfirst($this->toRenderTypeValue);
+            $attrWithSuffix = $this->toRenderTypeValue . "-" . $this->form;
             if (isset($data->{$attrWithPrefix}) && !empty($data->{$attrWithPrefix})) {
-                $renderedText = $this->applyTextCase(
-                    StringHelper::clearApostrophes(
-                        str_replace(" & ", " &#38; ", $data->{$attrWithPrefix})
-                    ),
-                    $lang
-                );
+                $value = $data->{$attrWithPrefix};
             } else {
                 if (isset($data->{$attrWithSuffix}) && !empty($data->{$attrWithSuffix})) {
-                    $renderedText = $this->applyTextCase(
-                        StringHelper::clearApostrophes(
-                            str_replace(" & ", " &#38; ", $data->{$attrWithSuffix})
-                        ),
-                        $lang
-                    );
+                    $value = $data->{$attrWithSuffix};
                 } else {
                     if (isset($data->{$this->toRenderTypeValue})) {
-                        $renderedText = $this->applyTextCase(
-                            StringHelper::clearApostrophes(
-                                str_replace(" & ", " &#38; ", $data->{$this->toRenderTypeValue})
-                            ),
-                            $lang
-                        );
+                        $value = $data->{$this->toRenderTypeValue};
                     }
                 }
             }
         } else {
             if (!empty($data->{$this->toRenderTypeValue})) {
-                $renderedText = $this->applyTextCase(
-                    StringHelper::clearApostrophes(
-                        str_replace(" & ", " &#38; ", $data->{$this->toRenderTypeValue})
-                    ),
-                    $lang
-                );
+                $value = $data->{$this->toRenderTypeValue};
             }
         }
-        return $renderedText;
+        return $this->applyTextCase(
+            StringHelper::clearApostrophes(
+                htmlspecialchars($value, ENT_HTML5)
+            ),
+            $lang
+        );
     }
 
     /**
