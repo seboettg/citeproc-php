@@ -48,27 +48,27 @@ class ChooseTest extends TestCase
 
     public function testBugfix_github_44()
     {
-        $this->_testRenderTestSuite("bugfix-github-44");
-        $this->_testRenderTestSuite("bugfix-choose-github-44");
+        $this->runTestSuite("bugfix-github-44");
+        $this->runTestSuite("bugfix-choose-github-44");
     }
 
     public function testConditionEmptyIsUncertainDateFalse()
     {
-        $this->_testRenderTestSuite("condition_EmptyIsUncertainDateFalse");
+        $this->runTestSuite("condition_EmptyIsUncertainDateFalse");
     }
 
     public function testConditionIsNumericMatchNone()
     {
-        $this->_testRenderTestSuite("condition_IsNumericMatchNone");
+        $this->runTestSuite("condition_IsNumericMatchNone");
     }
 
     public function testConditionLocatorIsFalse()
     {
-        $this->_testRenderTestSuite("condition_LocatorIsFalse");
+        $this->runTestSuite("condition_LocatorIsFalse");
     }
 
     public function testConditionVariableMatchAll()
     {
-        $this->_testRenderTestSuite("condition_VariableMatchAll");
+        $this->runTestSuite("condition_VariableMatchAll");
     }
 }

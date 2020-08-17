@@ -24,31 +24,31 @@ class LabelTest extends TestCase
 
     public function testNameCollapseRoleLables()
     {
-        $this->_testRenderTestSuite("name_CollapseRoleLabels");
+        $this->runTestSuite("name_CollapseRoleLabels");
     }
 
     public function testLabelEmptyLabelVanish()
     {
-        $this->_testRenderTestSuite("label_EmptyLabelVanish");
+        $this->runTestSuite("label_EmptyLabelVanish");
     }
 
     public function testLabelImplicitForm()
     {
-        $this->_testRenderTestSuite("label_Implicit");
+        $this->runTestSuite("label_Implicit");
     }
 
     public function testLabelNoFirstCharCap()
     {
-        $this->_testRenderTestSuite("label_NoFirstCharCap");
+        $this->runTestSuite("label_NoFirstCharCap");
     }
 
     public function testLabelNonexistentNameVariableLabel()
     {
-        $this->_testRenderTestSuite("label_NonexistentNameVariableLabel");
+        $this->runTestSuite("label_NonexistentNameVariableLabel");
     }
 
     public function testLabelPluralPagesWithAlphaPrefix()
     {
-        $this->_testRenderTestSuite("label_PluralPagesWithAlphaPrefix");
+        $this->runTestSuite("label_PluralPagesWithAlphaPrefix");
     }
 }

@@ -23,37 +23,37 @@ class BugfixTest extends TestCase
 
     public function testBugfixGithub36()
     {
-        $this->_testRenderTestSuite("bugfix-github-36");
+        $this->runTestSuite("bugfix-github-36");
     }
 
     public function testBugfixGithub37()
     {
-        $this->_testRenderTestSuite("bugfix-github-37");
+        $this->runTestSuite("bugfix-github-37");
     }
 
     public function testBugfixGithub44()
     {
-        $this->_testRenderTestSuite("bugfix-github-44");
+        $this->runTestSuite("bugfix-github-44");
     }
 
     public function testBugfixGithub46()
     {
-        $this->_testRenderTestSuite("bugfix-github-46");
+        $this->runTestSuite("bugfix-github-46");
     }
 
     public function testBugfixGithub47()
     {
-        $this->_testRenderTestSuite("bugfix-github-47");
+        $this->runTestSuite("bugfix-github-47");
     }
 
     public function testBugfixGithub49()
     {
-        $this->_testRenderTestSuite("bugfix-github-49");
+        $this->runTestSuite("bugfix-github-49");
     }
 
     public function testBugfixGithub50()
     {
-        $this->_testRenderTestSuite("bugfix-github-50");
+        $this->runTestSuite("bugfix-github-50");
     }
 
     /**
@@ -88,31 +88,36 @@ class BugfixTest extends TestCase
 
     public function testBugfixGithub60()
     {
-        $this->_testRenderTestSuite("bugfix-github-60");
+        $this->runTestSuite("bugfix-github-60");
     }
 
     public function testBugfixGithub68()
     {
-        $this->_testRenderTestSuite("bugfix-github-68");
+        $this->runTestSuite("bugfix-github-68");
     }
 
     public function testBugfixGithub69()
     {
-        $this->_testRenderTestSuite("bugfix-github-69");
+        $this->runTestSuite("bugfix-github-69");
     }
 
     public function testBugfixGithub70()
     {
-        $this->_testRenderTestSuite("bugfix-github-70");
+        $this->runTestSuite("bugfix-github-70");
     }
 
     public function testBugfixGithubDate()
     {
-        $this->_testRenderTestSuite("bugfix-github-date");
+        $this->runTestSuite("bugfix-github-date");
     }
 
     public function testBugfixGithub80()
     {
-        $this->_testRenderTestSuite("bugfix-github-80");
+        $this->runTestSuite("bugfix-github-80");
+    }
+
+    public function testBugfixGithub88()
+    {
+        $this->runTestSuite("bugfix-github-88");
     }
 }

@@ -15,31 +15,31 @@ class LocatorTest extends TestCase
 
     public function testSimpleLocators()
     {
-        $this->_testRenderTestSuite("locator_SimpleLocators");
+        $this->runTestSuite("locator_SimpleLocators");
     }
 
     public function testLocatorConditionConstraints()
     {
-        $this->_testRenderTestSuite("locator_LocatorConditionConstraint");
+        $this->runTestSuite("locator_LocatorConditionConstraint");
     }
 
     public function testLocatorTermSelection()
     {
-        $this->_testRenderTestSuite("locator_TermSelection");
+        $this->runTestSuite("locator_TermSelection");
     }
 
     public function testLocatorWithLeadingSpace()
     {
-        $this->_testRenderTestSuite("locator_WithLeadingSpace");
+        $this->runTestSuite("locator_WithLeadingSpace");
     }
 
     public function testLocatorDelimiterAndCitationNumber()
     {
-        $this->_testRenderTestSuite("locator_DelimiterAndCitationNumber");
+        $this->runTestSuite("locator_DelimiterAndCitationNumber");
     }
 
     public function testVariableLocatorCondition()
     {
-        $this->_testRenderTestSuite("locator_VariableLocatorCondition");
+        $this->runTestSuite("locator_VariableLocatorCondition");
     }
 }

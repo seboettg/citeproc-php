@@ -18,31 +18,31 @@ class AffixesTest extends TestCase
 
     public function testAffixNumber()
     {
-        $this->_testRenderTestSuite("number_affixes");
+        $this->runTestSuite("number_affixes");
     }
 
     public function testAffixBrackets()
     {
-        $this->_testRenderTestSuite('affix_Brackets');
+        $this->runTestSuite('affix_Brackets');
     }
 
     public function testAffixInterveningEmpty()
     {
-        $this->_testRenderTestSuite('affix_InterveningEmpty');
+        $this->runTestSuite('affix_InterveningEmpty');
     }
 
     public function testAffixPrefixFullCitationTextOnly()
     {
-        $this->_testRenderTestSuite('affix_PrefixFullCitationTextOnly');
+        $this->runTestSuite('affix_PrefixFullCitationTextOnly');
     }
 
     public function testAffixPrefixWithDecorations()
     {
-        $this->_testRenderTestSuite('affix_PrefixWithDecorations');
+        $this->runTestSuite('affix_PrefixWithDecorations');
     }
 
     public function testAffixTextNodeWithMacro()
     {
-        $this->_testRenderTestSuite('affix_TextNodeWithMacro');
+        $this->runTestSuite('affix_TextNodeWithMacro');
     }
 }

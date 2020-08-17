@@ -143,27 +143,27 @@ class SortTest extends TestCase
 
     public function testSortCaseInsensitiveBibliography()
     {
-        $this->_testRenderTestSuite("sort_CaseInsensitiveBibliography");
+        $this->runTestSuite("sort_CaseInsensitiveBibliography");
     }
 
     public function testSortBibliographyCitationNumberDescending()
     {
-        $this->_testRenderTestSuite("sort_BibliographyCitationNumberDescending.json");
+        $this->runTestSuite("sort_BibliographyCitationNumberDescending.json");
     }
 
     public function testSortBibliographyCitationNumberDescendingViaMacro()
     {
-        $this->_testRenderTestSuite("sort_BibliographyCitationNumberDescendingViaMacro");
+        $this->runTestSuite("sort_BibliographyCitationNumberDescendingViaMacro");
     }
 
     public function testSortCaseInsensitiveCitation()
     {
-        $this->_testRenderTestSuite("sort_CaseInsensitiveCitation");
+        $this->runTestSuite("sort_CaseInsensitiveCitation");
     }
 
     public function testSortCitation()
     {
-        $this->_testRenderTestSuite("sort_Citation.json");
+        $this->runTestSuite("sort_Citation.json");
     }
 
     /*
@@ -175,59 +175,59 @@ class SortTest extends TestCase
 
     public function testSortDateVariable()
     {
-        $this->_testRenderTestSuite("sort_DateVariable.json");
+        $this->runTestSuite("sort_DateVariable.json");
     }
 
     public function testSortDateVariableMixedElements()
     {
-        $this->_testRenderTestSuite("sort_DateVariableMixedElements");
+        $this->runTestSuite("sort_DateVariableMixedElements");
     }
 
     public function testSortDateVariableRange()
     {
-        $this->_testRenderTestSuite("sort_DateVariableRange.json");
+        $this->runTestSuite("sort_DateVariableRange.json");
     }
 
 
     public function testSortDateVariableRangeMixed()
     {
-        $this->_testRenderTestSuite("sort_DateVariableRangeMixed");
+        $this->runTestSuite("sort_DateVariableRangeMixed");
     }
 
 
     public function testSortEtAlUseLast()
     {
-        $this->_testRenderTestSuite("sort_EtAlUseLast");
+        $this->runTestSuite("sort_EtAlUseLast");
     }
 
 
     public function testSortStripMarkup()
     {
-        $this->_testRenderTestSuite("sort_StripMarkup");
+        $this->runTestSuite("sort_StripMarkup");
     }
 
     public function testSortSubstituteTitle()
     {
-        $this->_testRenderTestSuite("sort_SubstituteTitle");
+        $this->runTestSuite("sort_SubstituteTitle");
     }
 
     public function testSortVariousNameMacros1()
     {
-        $this->_testRenderTestSuite("sort_VariousNameMacros1");
+        $this->runTestSuite("sort_VariousNameMacros1");
     }
 
     public function testSortVariousNameMacros2()
     {
-        $this->_testRenderTestSuite("sort_VariousNameMacros2");
+        $this->runTestSuite("sort_VariousNameMacros2");
     }
 
     public function testSortVariousNameMacros3()
     {
-        $this->_testRenderTestSuite("sort_VariousNameMacros3");
+        $this->runTestSuite("sort_VariousNameMacros3");
     }
 
     public function testSortDateMacroSortWithSecondFieldAlign()
     {
-        $this->_testRenderTestSuite("sort_DateMacroSortWithSecondFieldAlign");
+        $this->runTestSuite("sort_DateMacroSortWithSecondFieldAlign");
     }
 }

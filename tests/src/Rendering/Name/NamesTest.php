@@ -24,17 +24,17 @@ class NamesTest extends TestCase
 
     public function testRenderSubstitute()
     {
-        $this->_testRenderTestSuite("names_substitute");
+        $this->runTestSuite("names_substitute");
     }
 
     public function testEditorTranslator()
     {
-        $this->_testRenderTestSuite("name_EditorTranslatorBoth");
+        $this->runTestSuite("name_EditorTranslatorBoth");
     }
 
     public function testEtAlUseLast()
     {
-        $this->_testRenderTestSuite("name_EtAlUseLast");
+        $this->runTestSuite("name_EtAlUseLast");
     }
     /*
     public function testEtAlWithCombined()

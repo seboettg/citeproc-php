@@ -15,7 +15,8 @@ use Seboettg\CiteProc\Data\DataList;
 class ContextTest extends TestCase
 {
 
-    private $data = "[{\"author\": [{\"family\": \"Hotho\", \"given\": \"Andreas\"}, {\"family\": \"Benz\", \"given\": \"Dominik\"}], \"title\":\"Book\", \"type\":\"book\"}]";
+    private $data = "[{\"author\": [{\"family\": \"Hotho\", \"given\": \"Andreas\"}, {\"family\": \"Benz\", " .
+        "\"given\": \"Dominik\"}], \"title\":\"Book\", \"type\":\"book\"}]";
 
     /**
      * @var CiteProc
@@ -45,11 +46,10 @@ class ContextTest extends TestCase
     public function testGetMacros()
     {
         $macros = $this->citeProc->getContext()->getMacros();
-        $this->assertTrue(count($macros) > 0);
+        static::assertTrue(count($macros) > 0);
         foreach ($macros as $macro) {
-            $this->assertInstanceOf("Seboettg\\CiteProc\\Style\\Macro", $macro);
+            static::assertInstanceOf("Seboettg\\CiteProc\\Style\\Macro", $macro);
         }
-
     }
 
     /**
@@ -57,7 +57,7 @@ class ContextTest extends TestCase
      */
     public function testGetMode()
     {
-        $this->assertEquals("bibliography", $this->context->getMode());
+        static::assertEquals("bibliography", $this->context->getMode());
     }
 
     /**
@@ -65,7 +65,7 @@ class ContextTest extends TestCase
      */
     public function testHasCitationItems()
     {
-        $this->assertTrue($this->citeProc->getContext()->hasCitationItems());
+        static::assertTrue($this->citeProc::getContext()->hasCitationItems());
     }
 
     /**
@@ -74,9 +74,9 @@ class ContextTest extends TestCase
     public function testGetCitationItems()
     {
         foreach ($this->citeProc->getContext()->getCitationData() as $item) {
-            $this->assertNotNull($item->{'author'});
-            $this->assertTrue(is_array($item->{'author'}));
-            $this->assertNotEmpty($item->{'author'});
+            static::assertNotNull($item->{'author'});
+            static::assertTrue(is_array($item->{'author'}));
+            static::assertNotEmpty($item->{'author'});
         }
     }
 }

@@ -9,7 +9,6 @@
 
 namespace Seboettg\CiteProc\Styles;
 
-
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
@@ -19,21 +18,21 @@ class DisplayTest extends TestCase
 
     public function testDisplayAuthorAsHeading()
     {
-        $this->_testRenderTestSuite("display_AuthorAsHeading");
+        $this->runTestSuite("display_AuthorAsHeading");
     }
 
     public function testDisplayBlock()
     {
-        $this->_testRenderTestSuite("display_DisplayBlock");
+        $this->runTestSuite("display_DisplayBlock");
     }
 
     public function testDisplaySecondFieldAlignClone()
     {
-        $this->_testRenderTestSuite("display_SecondFieldAlignClone");
+        $this->runTestSuite("display_SecondFieldAlignClone");
     }
 
     public function testDisplayFieldAlignMigratePunctuation()
     {
-        $this->_testRenderTestSuite("display_SecondFieldAlignMigratePunctuation");
+        $this->runTestSuite("display_SecondFieldAlignMigratePunctuation");
     }
 }

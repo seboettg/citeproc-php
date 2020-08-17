@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Util;
+
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,58 +19,57 @@ use PHPUnit\Framework\TestCase;
  */
 class StringHelperTest extends TestCase
 {
-
     public function testCamelCase2Hyphen()
     {
-        $this->assertEquals("lower-camel-case", StringHelper::camelCase2Hyphen("lowerCamelCase"));
-        $this->assertEquals("upper-camel-case", StringHelper::camelCase2Hyphen("UpperCamelCase"));
-        $this->assertEquals("up-per-cam-el-ca-se", StringHelper::camelCase2Hyphen("Up-perCam-elCa-se"));
+        static::assertEquals("lower-camel-case", StringHelper::camelCase2Hyphen("lowerCamelCase"));
+        static::assertEquals("upper-camel-case", StringHelper::camelCase2Hyphen("UpperCamelCase"));
+        static::assertEquals("up-per-cam-el-ca-se", StringHelper::camelCase2Hyphen("Up-perCam-elCa-se"));
     }
 
     public function testCheckUpperCase()
     {
-        $this->assertTrue(StringHelper::checkUpperCaseString("HALLO WELT"));
-        $this->assertFalse(StringHelper::checkUpperCaseString("hallo welt"));
-        $this->assertTrue(StringHelper::checkUpperCaseString("ÄTHIOPIEN"));
-        $this->assertFalse(StringHelper::checkUpperCaseString("äTHIOPIEN"));
+        static::assertTrue(StringHelper::checkUpperCaseString("HALLO WELT"));
+        static::assertFalse(StringHelper::checkUpperCaseString("hallo welt"));
+        static::assertTrue(StringHelper::checkUpperCaseString("ÄTHIOPIEN"));
+        static::assertFalse(StringHelper::checkUpperCaseString("äTHIOPIEN"));
     }
 
     public function testCheckLowerCase()
     {
-        $this->assertFalse(StringHelper::checkLowerCaseString("HALLO WELT"));
-        $this->assertTrue(StringHelper::checkLowerCaseString("hallo welt"));
-        $this->assertFalse(StringHelper::checkLowerCaseString("Äthiopien"));
-        $this->assertTrue(StringHelper::checkLowerCaseString("äthiopien"));
+        static::assertFalse(StringHelper::checkLowerCaseString("HALLO WELT"));
+        static::assertTrue(StringHelper::checkLowerCaseString("hallo welt"));
+        static::assertFalse(StringHelper::checkLowerCaseString("Äthiopien"));
+        static::assertTrue(StringHelper::checkLowerCaseString("äthiopien"));
     }
 
     public function testReplaceOuterQuotes()
     {
         $string = "Getting Property Right: “Informal” Mortgages in the Japanese Courts";
         $actual = StringHelper::replaceOuterQuotes($string, "“", "”", "‘", "’");
-        $this->assertEquals("Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts", $actual);
+        static::assertEquals("Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts", $actual);
 
         $string = "Getting Property Right: \"Informal\" Mortgages in the Japanese Courts";
         $actual = StringHelper::replaceOuterQuotes($string, "\"", "\"", "‘", "’");
-        $this->assertEquals("Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts", $actual);
+        static::assertEquals("Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts", $actual);
     }
 
     public function testIsLatinString()
     {
-        $this->assertFalse(StringHelper::isLatinString("栄我妻"));
-        $this->assertFalse(StringHelper::isLatinString("栄我 妻"));
-        $this->assertFalse(StringHelper::isLatinString("栄我妻 Hello World.!¡"));
-        $this->assertTrue(StringHelper::isLatinString("Hello World"));
-        $this->assertFalse(StringHelper::isLatinString("АаБбВвГг"));
-        $this->assertFalse(StringHelper::isLatinString("HАllo"));
+        static::assertFalse(StringHelper::isLatinString("栄我妻"));
+        static::assertFalse(StringHelper::isLatinString("栄我 妻"));
+        static::assertFalse(StringHelper::isLatinString("栄我妻 Hello World.!¡"));
+        static::assertTrue(StringHelper::isLatinString("Hello World"));
+        static::assertFalse(StringHelper::isLatinString("АаБбВвГг"));
+        static::assertFalse(StringHelper::isLatinString("HАllo"));
     }
 
     public function testIsCyrillicString()
     {
-        $this->assertFalse(StringHelper::isCyrillicString("栄我妻"));
-        $this->assertFalse(StringHelper::isCyrillicString("栄我 妻"));
-        $this->assertFalse(StringHelper::isCyrillicString("Hallo Welt оформления"));
-        $this->assertTrue(StringHelper::isCyrillicString("Пример чиком. : чиком!"));
-        $this->assertFalse(StringHelper::isCyrillicString("Nicht"));
-        $this->assertFalse(StringHelper::isCyrillicString("пеpеводчиком"));
+        static::assertFalse(StringHelper::isCyrillicString("栄我妻"));
+        static::assertFalse(StringHelper::isCyrillicString("栄我 妻"));
+        static::assertFalse(StringHelper::isCyrillicString("Hallo Welt оформления"));
+        static::assertTrue(StringHelper::isCyrillicString("Пример чиком. : чиком!"));
+        static::assertFalse(StringHelper::isCyrillicString("Nicht"));
+        static::assertFalse(StringHelper::isCyrillicString("пеpеводчиком"));
     }
 }

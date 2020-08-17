@@ -19,37 +19,37 @@ class SubstituteTest extends TestCase
 
     public function testNameSubstituteInheritLabel()
     {
-        $this->_testRenderTestSuite("name_SubstituteInheritLabel");
+        $this->runTestSuite("name_SubstituteInheritLabel");
     }
 
     public function testNameSubstituteMacro()
     {
-        $this->_testRenderTestSuite("name_SubstituteMacro");
+        $this->runTestSuite("name_SubstituteMacro");
     }
 
     public function testNameSubstituteName()
     {
-        $this->_testRenderTestSuite("name_SubstituteName");
+        $this->runTestSuite("name_SubstituteName");
     }
 
     public function testRenderSubstituteSuppressMultipleValues()
     {
-        $this->_testRenderTestSuite("names_substituteSuppressSubstitution");
+        $this->runTestSuite("names_substituteSuppressSubstitution");
     }
 
     public function testNameSubstituteSuppressOrdinaryVariable()
     {
-        $this->_testRenderTestSuite("name_substitute_SuppressOrdinaryVariable");
+        $this->runTestSuite("name_substitute_SuppressOrdinaryVariable");
     }
 
     public function testNameSubstituteOnElementFail()
     {
-        $this->_testRenderTestSuite("name_SubstituteOnDateGroupSpanFail");
-        $this->_testRenderTestSuite("name_SubstituteOnGroupSpanGroupSpanFail");
-        $this->_testRenderTestSuite("name_SubstituteOnMacroGroupSpanFail");
-        $this->_testRenderTestSuite("name_SubstituteOnNamesSingletonGroupSpanFail.json");
-        $this->_testRenderTestSuite("name_SubstituteOnNamesSpanNamesSpanFail.json");
-        $this->_testRenderTestSuite("name_SubstituteOnNumberGroupSpanFail");
+        $this->runTestSuite("name_SubstituteOnDateGroupSpanFail");
+        $this->runTestSuite("name_SubstituteOnGroupSpanGroupSpanFail");
+        $this->runTestSuite("name_SubstituteOnMacroGroupSpanFail");
+        $this->runTestSuite("name_SubstituteOnNamesSingletonGroupSpanFail.json");
+        $this->runTestSuite("name_SubstituteOnNamesSpanNamesSpanFail.json");
+        $this->runTestSuite("name_SubstituteOnNumberGroupSpanFail");
     }
 
 }

@@ -24,31 +24,31 @@ class NameorderTest extends TestCase
 
     public function testNameorderLong()
     {
-        $this->_testRenderTestSuite("nameorder_Long.json");
+        $this->runTestSuite("nameorder_Long.json");
     }
 
     public function testNameorderLongNameAsSortDemoteDisplayAndSort()
     {
-        $this->_testRenderTestSuite("nameorder_LongNameAsSortDemoteDisplayAndSort");
+        $this->runTestSuite("nameorder_LongNameAsSortDemoteDisplayAndSort");
     }
 
     public function testNameorderLongNameAsSortDemoteNever()
     {
-        $this->_testRenderTestSuite("nameorder_LongNameAsSortDemoteNever");
+        $this->runTestSuite("nameorder_LongNameAsSortDemoteNever");
     }
 
     public function testNameorderShort()
     {
-        $this->_testRenderTestSuite("nameorder_Short.json");
+        $this->runTestSuite("nameorder_Short.json");
     }
 
     public function testNameorder_ShortDemoteDisplayAndSort()
     {
-        $this->_testRenderTestSuite("nameorder_ShortDemoteDisplayAndSort");
+        $this->runTestSuite("nameorder_ShortDemoteDisplayAndSort");
     }
 
     public function testNameorderShortNameAsSortDemoteNever()
     {
-        $this->_testRenderTestSuite("nameorder_ShortNameAsSortDemoteNever");
+        $this->runTestSuite("nameorder_ShortNameAsSortDemoteNever");
     }
 }

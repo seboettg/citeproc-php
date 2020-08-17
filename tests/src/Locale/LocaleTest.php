@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Locale;
+
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,14 +25,12 @@ class LocaleTest extends TestCase
     {
         $a1 = $this->object->filter("terms", "no date");
         $a2 = $this->object->filter("terms", "no date", "short");
-        $this->assertEquals("ohne Datum", $a1->{'single'});
-        $this->assertEquals("o. J.", $a2->{'single'});
+        static::assertEquals("ohne Datum", $a1->{'single'});
+        static::assertEquals("o. J.", $a2->{'single'});
     }
 
     protected function setUp()
     {
         $this->object = new Locale("de-DE");
     }
-
-
 }

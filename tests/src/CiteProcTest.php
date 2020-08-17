@@ -33,32 +33,32 @@ class CiteProcTest extends TestCase
 
     public function testFullStyleBibliography1()
     {
-        $this->_testRenderTestSuite("fullstyles_APABibliography");
+        $this->runTestSuite("fullstyles_APABibliography");
     }
 
     public function testFullStyleMultipleAuthors()
     {
-        $this->_testRenderTestSuite("fullstyles_APA_MultipleAuthors");
+        $this->runTestSuite("fullstyles_APA_MultipleAuthors");
     }
 
     public function testFullStyleDINBibliography()
     {
-        $this->_testRenderTestSuite("fullstyles_DINBibliography");
+        $this->runTestSuite("fullstyles_DINBibliography");
     }
 
     public function testFullStyleInternationalJournalOfHumanoidRobotics()
     {
-        $this->_testRenderTestSuite("fullstyles_InternationalJournalOfHumanoid");
+        $this->runTestSuite("fullstyles_InternationalJournalOfHumanoid");
     }
 
     public function testFullStyleNorthWestUniversityHarvard()
     {
-        $this->_testRenderTestSuite("fullstyles_NorthWestUniversityHarvard");
+        $this->runTestSuite("fullstyles_NorthWestUniversityHarvard");
     }
 
     public function testRenderCitationNumber()
     {
-        $this->_testRenderTestSuite("text_renderCitationNumber");
+        $this->runTestSuite("text_renderCitationNumber");
     }
 
     public function testRenderCssStyle()
@@ -213,6 +213,6 @@ class CiteProcTest extends TestCase
 
     public function testOverrideOnlyCurrentLang()
     {
-        $this->_testRenderTestSuite("locale_OverrideOnlyCurrentLang");
+        $this->runTestSuite("locale_OverrideOnlyCurrentLang");
     }
 }

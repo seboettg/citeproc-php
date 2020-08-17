@@ -8,6 +8,7 @@
  */
 
 namespace Seboettg\CiteProc\Util;
+
 use PHPUnit\Framework\TestCase;
 
 class NumberHelperTest extends TestCase
@@ -31,28 +32,27 @@ class NumberHelperTest extends TestCase
         ];
 
         foreach ($test as $roman => $dec) {
-            $this->assertEquals($dec, NumberHelper::roman2Dec($roman));
+            static::assertEquals($dec, NumberHelper::roman2Dec($roman));
         }
     }
 
     public function testIsRomanNumber()
     {
-        $this->assertTrue(NumberHelper::isRomanNumber("xiv"));
-        $this->assertTrue(NumberHelper::isRomanNumber("XIV"));
-        $this->assertFalse(NumberHelper::isRomanNumber("ash"));
-        $this->assertFalse(NumberHelper::isRomanNumber("ASH"));
-        $this->assertFalse(NumberHelper::isRomanNumber("asd"));
-        $this->assertFalse(NumberHelper::isRomanNumber("MAD"));
+        static::assertTrue(NumberHelper::isRomanNumber("xiv"));
+        static::assertTrue(NumberHelper::isRomanNumber("XIV"));
+        static::assertFalse(NumberHelper::isRomanNumber("ash"));
+        static::assertFalse(NumberHelper::isRomanNumber("ASH"));
+        static::assertFalse(NumberHelper::isRomanNumber("asd"));
+        static::assertFalse(NumberHelper::isRomanNumber("MAD"));
     }
 
     public function testEvaluateStringPluralism()
     {
-        $this->assertEquals("single", NumberHelper::evaluateStringPluralism("999"));
-        $this->assertEquals("single", NumberHelper::evaluateStringPluralism("MMXVI"));
-        $this->assertEquals("multiple", NumberHelper::evaluateStringPluralism("3-9"));
-        $this->assertEquals("multiple", NumberHelper::evaluateStringPluralism("iii-ix"));
-        $this->assertEquals("multiple", NumberHelper::evaluateStringPluralism("iii & ix"));
+        static::assertEquals("single", NumberHelper::evaluateStringPluralism("999"));
+        static::assertEquals("single", NumberHelper::evaluateStringPluralism("MMXVI"));
+        static::assertEquals("multiple", NumberHelper::evaluateStringPluralism("3-9"));
+        static::assertEquals("multiple", NumberHelper::evaluateStringPluralism("iii-ix"));
+        static::assertEquals("multiple", NumberHelper::evaluateStringPluralism("iii & ix"));
         //$this->assertEquals("multiple", Number::evaluateStringPluralism("S123–S125"));
     }
-
 }

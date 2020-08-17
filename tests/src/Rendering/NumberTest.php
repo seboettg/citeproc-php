@@ -64,47 +64,47 @@ class NumberTest extends TestCase
 
     public function testNumberAffixes()
     {
-        $this->_testRenderTestSuite("number_affixes");
+        $this->runTestSuite("number_affixes");
     }
 
     public function testNumberFontStyle()
     {
-        $this->_testRenderTestSuite("number_font-style");
+        $this->runTestSuite("number_font-style");
     }
 
     public function testNumberFontWeight()
     {
-        $this->_testRenderTestSuite("number_font-weight");
+        $this->runTestSuite("number_font-weight");
     }
 
     public function testNumberFontVariant()
     {
-        $this->_testRenderTestSuite("number_font-variant");
+        $this->runTestSuite("number_font-variant");
     }
 
     public function testNumberFormat()
     {
-        $this->_testRenderTestSuite("number_format");
+        $this->runTestSuite("number_format");
     }
 
     public function testNumberSpacing()
     {
-        $this->_testRenderTestSuite("number_spacing");
+        $this->runTestSuite("number_spacing");
     }
 
     public function testNumberTextCase()
     {
-        $this->_testRenderTestSuite("number_text-case");
+        $this->runTestSuite("number_text-case");
     }
 
     public function testNumberTextDecoration()
     {
-        $this->_testRenderTestSuite("number_text-decoration");
+        $this->runTestSuite("number_text-decoration");
     }
 
     public function testNumberVerticalAlign()
     {
-        $this->_testRenderTestSuite("number_vertical-align");
+        $this->runTestSuite("number_vertical-align");
     }
 
     /*
@@ -116,7 +116,7 @@ class NumberTest extends TestCase
 
     public function testNumberSimpleRoman()
     {
-        $this->_testRenderTestSuite("number_SimpleNumberRoman");
+        $this->runTestSuite("number_SimpleNumberRoman");
     }
 
     public function testRomanInputSingleNumber()

@@ -21,187 +21,187 @@ class NameTest extends TestCase
 
     public function testNameArticularNameAsSortOrder()
     {
-        $this->_testRenderTestSuite("name_ArticularNameAsSortOrder");
+        $this->runTestSuite("name_ArticularNameAsSortOrder");
     }
 
     public function testNameArticularPlain()
     {
-        $this->_testRenderTestSuite("name_ArticularPlain");
+        $this->runTestSuite("name_ArticularPlain");
     }
 
     public function testNameArticularShortForm()
     {
-        $this->_testRenderTestSuite("name_ArticularShortForm.json");
+        $this->runTestSuite("name_ArticularShortForm.json");
     }
 
     public function testNameAsianGlyphs()
     {
-        $this->_testRenderTestSuite("name_AsianGlyphs");
+        $this->runTestSuite("name_AsianGlyphs");
     }
 
     public function testNameAuthorCount()
     {
-        $this->_testRenderTestSuite("name_AuthorCount.json");
+        $this->runTestSuite("name_AuthorCount.json");
     }
 
     public function testNameAuthorCountWithMultipleVariables()
     {
-        $this->_testRenderTestSuite("name_AuthorCountWithMultipleVariables");
+        $this->runTestSuite("name_AuthorCountWithMultipleVariables");
     }
 
     public function testNameAuthorCountWithSameVarContentAndCombinedTermFail()
     {
-        $this->_testRenderTestSuite("name_AuthorCountWithSameVarContentAndCombinedTermFail");
+        $this->runTestSuite("name_AuthorCountWithSameVarContentAndCombinedTermFail");
     }
 
     public function testNameAuthorCountWithSameVarContentAndCombinedTermSucceed()
     {
-        $this->_testRenderTestSuite("name_AuthorCountWithSameVarContentAndCombinedTermSucceed");
+        $this->runTestSuite("name_AuthorCountWithSameVarContentAndCombinedTermSucceed");
     }
 
     public function testNameAuthorEditorCount()
     {
-        $this->_testRenderTestSuite("name_AuthorEditorCount");
+        $this->runTestSuite("name_AuthorEditorCount");
     }
 
     public function testNameCelticClanName()
     {
-        $this->_testRenderTestSuite("name_CelticClanName");
+        $this->runTestSuite("name_CelticClanName");
     }
 
     public function testNameCeltsAndToffsCrowdedInitials()
     {
-        $this->_testRenderTestSuite("name_CeltsAndToffsCrowdedInitials");
+        $this->runTestSuite("name_CeltsAndToffsCrowdedInitials");
     }
 
     public function testNameCeltsAndToffsNoHyphens()
     {
-        $this->_testRenderTestSuite("name_CeltsAndToffsNoHyphens");
+        $this->runTestSuite("name_CeltsAndToffsNoHyphens");
     }
 
     public function testNameCeltsAndToffsSpacedInitials()
     {
-        $this->_testRenderTestSuite("name_CeltsAndToffsSpacedInitials");
+        $this->runTestSuite("name_CeltsAndToffsSpacedInitials");
     }
 
     public function testNameCeltsAndToffsWithHyphens()
     {
-        $this->_testRenderTestSuite("name_CeltsAndToffsWithHyphens");
+        $this->runTestSuite("name_CeltsAndToffsWithHyphens");
     }
 
     public function testNameAttrAnd()
     {
-        $this->_testRenderTestSuite("nameattr_And");
+        $this->runTestSuite("nameattr_And");
     }
 
     public function testNameAttrDelimiterPrecedesEtAl()
     {
-        $this->_testRenderTestSuite("nameattr_DelimiterPrecedesEtAl");
+        $this->runTestSuite("nameattr_DelimiterPrecedesEtAl");
     }
 
     public function testNameAttrDelimiterPrecedesLast()
     {
-        $this->_testRenderTestSuite("nameattr_DelimiterPrecedesLast");
+        $this->runTestSuite("nameattr_DelimiterPrecedesLast");
     }
 
     public function testNameAttrEtAlMin()
     {
-        $this->_testRenderTestSuite("nameattr_EtAlMin");
+        $this->runTestSuite("nameattr_EtAlMin");
     }
 
     public function testNameAttrEtAlUseFirst()
     {
-        $this->_testRenderTestSuite("nameattr_EtAlUseFirst");
+        $this->runTestSuite("nameattr_EtAlUseFirst");
     }
 
     public function testNameEtAlUseLast()
     {
-        $this->_testRenderTestSuite("name_EtAlUseLast");
+        $this->runTestSuite("name_EtAlUseLast");
     }
 
 
     public function testNameAttrNameDelimiter()
     {
-        $this->_testRenderTestSuite("nameattr_NameDelimiter");
+        $this->runTestSuite("nameattr_NameDelimiter");
     }
 
     public function testNameAttrNameForm()
     {
-        $this->_testRenderTestSuite("nameattr_NameForm");
+        $this->runTestSuite("nameattr_NameForm");
     }
 
     public function testNameAttrNameAsSortOrder()
     {
-        $this->_testRenderTestSuite("nameattr_NameAsSortOrder");
+        $this->runTestSuite("nameattr_NameAsSortOrder");
     }
 
     public function testNameAttrSortSeparator()
     {
-        $this->_testRenderTestSuite("nameattr_SortSeparator");
+        $this->runTestSuite("nameattr_SortSeparator");
     }
 
     public function testNameAttrInitializeWith()
     {
-        $this->_testRenderTestSuite("nameattr_InitializeWith");
+        $this->runTestSuite("nameattr_InitializeWith");
     }
 
     public function testNameAttrEtAlSubsequentMin()
     {
-        $this->_testRenderTestSuite("nameattr_EtAlSubsequentMin");
+        $this->runTestSuite("nameattr_EtAlSubsequentMin");
     }
 
     public function testNameAttrEtAlSubsequentUseFirst()
     {
-        $this->_testRenderTestSuite("nameattr_EtAlSubsequentUseFirst");
+        $this->runTestSuite("nameattr_EtAlSubsequentUseFirst");
     }
 
     public function testNameAttrEtAlSubsequentCompleteAll()
     {
-        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_complete-all");
+        $this->runTestSuite("nameattr_subsequent-author-substitute_complete-all");
     }
 
     public function testNameAttrEtAlSubsequentCompleteEach()
     {
-        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_complete-each");
+        $this->runTestSuite("nameattr_subsequent-author-substitute_complete-each");
     }
 
     public function testNameAttrEtAlSubsequentNone()
     {
-        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_none");
+        $this->runTestSuite("nameattr_subsequent-author-substitute_none");
     }
 
     public function testNameAttrEtAlSubsequentPartialEach()
     {
-        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_partial-each");
+        $this->runTestSuite("nameattr_subsequent-author-substitute_partial-each");
     }
 
     public function testNameAttrEtAlSubsequentPartialFirst()
     {
-        $this->_testRenderTestSuite("nameattr_subsequent-author-substitute_partial-first");
+        $this->runTestSuite("nameattr_subsequent-author-substitute_partial-first");
     }
 
     public function testFormatSmallCaps()
     {
-        $this->_testRenderTestSuite("name_FormatSmallCaps");
+        $this->runTestSuite("name_FormatSmallCaps");
     }
 
     public function testNameNamepartAffixes()
     {
-        $this->_testRenderTestSuite("name_namepartAffixes.json");
+        $this->runTestSuite("name_namepartAffixes.json");
     }
 
     public function testNameNamepartAffixesNameAsSortOrder()
     {
-        $this->_testRenderTestSuite("name_namepartAffixesNameAsSortOrder");
+        $this->runTestSuite("name_namepartAffixesNameAsSortOrder");
     }
 
     public function testNameCitationMacroNoInheritanceFromRoot() {
-        $this->_testRenderTestSuite("name_CitationMacroNoInheritanceFromRoot");
+        $this->runTestSuite("name_CitationMacroNoInheritanceFromRoot");
     }
 
     public function testInitializeCyrillicName()
     {
-        $this->_testRenderTestSuite("nameattr_initializeCyrillicName");
+        $this->runTestSuite("nameattr_initializeCyrillicName");
     }
 
     public function testEnrichMarkupNames()

@@ -53,29 +53,29 @@ class GroupTest extends TestCase
 
     public function testGroupComplexNesting()
     {
-        $this->_testRenderTestSuite("group_ComplexNesting");
+        $this->runTestSuite("group_ComplexNesting");
     }
 
     public function testGroupShortOutputOnly()
     {
-        $this->_testRenderTestSuite("group_ShortOutputOnly");
+        $this->runTestSuite("group_ShortOutputOnly");
     }
 
     public function testGroupDelimiter()
     {
-        $this->_testRenderTestSuite("group_Delimiter");
+        $this->runTestSuite("group_Delimiter");
     }
 
     public function testSuppressTermWhenNoOutputFromPartialDate()
     {
         //TODO: implement
-        $this->_testRenderTestSuite("group_SuppressTermWhenNoOutputFromPartialDate");
+        $this->runTestSuite("group_SuppressTermWhenNoOutputFromPartialDate");
     }
 
     public function testGroupSuppressValueWithEmptySubgroup()
     {
         //TODO: implement
-        $this->_testRenderTestSuite("group_SuppressValueWithEmptySubgroup");
+        $this->runTestSuite("group_SuppressValueWithEmptySubgroup");
     }
 
     /*

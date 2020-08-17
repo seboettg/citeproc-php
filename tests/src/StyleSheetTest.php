@@ -10,54 +10,54 @@
 namespace Seboettg\CiteProc;
 
 use PHPUnit\Framework\TestCase;
-use Seboettg\CiteProc\StyleSheet;
+use SimpleXMLElement;
 
 class StyleSheetTest extends TestCase
 {
 
     /**
      * @coversNothing
+     * @throws Exception\CiteProcException
      */
     public function testLoadStyleSheet()
     {
 
         $style = StyleSheet::loadStyleSheet("din-1505-2");
-        $xmlStyle = new \SimpleXMLElement($style);
+        $xmlStyle = new SimpleXMLElement($style);
         foreach ($xmlStyle as $child) {
             if ($child->getName() === "info") {
                 foreach ($child as $subChild) {
                     if ($subChild->getName() === "id") {
-                        $this->assertEquals("http://www.zotero.org/styles/din-1505-2", (string) $subChild);
+                        static::assertEquals("http://www.zotero.org/styles/din-1505-2", (string) $subChild);
                         break;
                     }
                 }
                 break;
             }
         }
-
     }
 
     /**
      * @coversNothing
+     * @throws Exception\CiteProcException
      */
     public function testLoadLocales()
     {
 
         $locales = StyleSheet::loadLocales("de-DE");
-        $xmlLocales = new \SimpleXMLElement($locales);
+        $xmlLocales = new SimpleXMLElement($locales);
         foreach ($xmlLocales as $child) {
             if ($child->getName() === "terms") {
                 foreach ($child as $term) {
                     echo $term["name"];
                     if ("and" === (string) $term["name"]) {
-                        $this->assertEquals("und", (string) $term);
+                        static::assertEquals("und", (string) $term);
                         break;
                     }
                 }
                 break;
             }
         }
-
     }
 
     /**
@@ -78,7 +78,7 @@ class StyleSheetTest extends TestCase
     {
 
         $locales = StyleSheet::loadLocales("de");
-        $xmlLocales = new \SimpleXMLElement($locales);
+        $xmlLocales = new SimpleXMLElement($locales);
         foreach ($xmlLocales as $child) {
             if ($child->getName() === "terms") {
                 foreach ($child as $term) {
@@ -91,6 +91,5 @@ class StyleSheetTest extends TestCase
                 break;
             }
         }
-
     }
 }

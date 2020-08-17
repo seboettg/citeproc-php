@@ -9,8 +9,9 @@
 
 namespace Seboettg\CiteProc;
 
+use Exception;
 use PHPUnit\Framework\ExpectationFailedException;
-use \PHPUnit_Framework_ExpectationFailedException;
+use RuntimeException;
 use Seboettg\CiteProc\Exception\CiteProcException;
 
 trait TestSuiteTestCaseTrait
@@ -25,7 +26,7 @@ trait TestSuiteTestCaseTrait
      * @param $filterTests
      * @param null $ignore
      */
-    public function _testRenderTestSuite($filterTests, $ignore = null)
+    public function runTestSuite($filterTests, $ignore = null)
     {
         $testFiles = loadFixtures($filterTests, $ignore);
         $i = 0;
@@ -70,12 +71,25 @@ trait TestSuiteTestCaseTrait
             } catch (CiteProcException $e) {
                 //$failures[] =
                 $exceptions[] = "$echo\nCiteProc Exception in $testFile\n".$e->getFile()."\n".$e->getMessage()."\n";
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 //$failures[] = $e->getMessage();
-                $exceptions[] = "$echo\nRuntime Exception in $testFile\n".$e->getFile()." on line ".$e->getLine()."\n".$e->getMessage()."\n";
-            } catch (\Exception $e) {
-                //$failures[] = $e->getMessage();
-                $exceptions[] = "$echo\nException in $testFile\n".$e->getFile()." on line ".$e->getLine()."\n".$e->getMessage()."\n";
+                $exceptions[] = sprintf(
+                    "%s\nRuntime Exception in %s\n%s on line %s\n%s\n",
+                    $echo,
+                    $testFile,
+                    $e->getFile(),
+                    $e->getLine(),
+                    $e->getMessage()
+                );
+            } catch (Exception $e) {
+                $exceptions[] = sprintf(
+                    "%s\nException in %s\n%s on line %s\n%s\n",
+                    $echo,
+                    $testFile,
+                    $e->getFile(),
+                    $e->getLine(),
+                    $e->getMessage()
+                );
             }
         }
         if (!empty($success)) {

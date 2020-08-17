@@ -19,22 +19,22 @@ class DateTest extends TestCase
 
     public function testDateString()
     {
-        $this->_testRenderTestSuite("date_String");
+        $this->runTestSuite("date_String");
     }
 
     public function testNoDate()
     {
-        $this->_testRenderTestSuite("date_NoDate");
+        $this->runTestSuite("date_NoDate");
     }
 
     public function testLocalizedNumericYear()
     {
-        $this->_testRenderTestSuite("date_LocalizedNumericYear");
+        $this->runTestSuite("date_LocalizedNumericYear");
     }
 
     public function testLocalizedNumericDefaultWithAffixes()
     {
-        $this->_testRenderTestSuite("date_LocalizedNumericDefaultWithAffixes");
+        $this->runTestSuite("date_LocalizedNumericDefaultWithAffixes");
     }
 
 //    public function testLocalizedNumericDefaultWithMissingDay()
@@ -44,42 +44,42 @@ class DateTest extends TestCase
 
     public function testLocalizedNumericDefault()
     {
-        $this->_testRenderTestSuite("date_LocalizedNumericDefault");
+        $this->runTestSuite("date_LocalizedNumericDefault");
     }
 
     public function testLocalizedDateFormats()
     {
-        $this->_testRenderTestSuite("date_LocalizedDateFormats-");
+        $this->runTestSuite("date_LocalizedDateFormats-");
     }
 
     public function testLongMonth()
     {
-        $this->_testRenderTestSuite("date_LongMonth");
+        $this->runTestSuite("date_LongMonth");
     }
 
     public function testDateRanges()
     {
-        $this->_testRenderTestSuite("date_ranges");
+        $this->runTestSuite("date_ranges");
     }
 
     public function testRawParseSimpleDate()
     {
-        $this->_testRenderTestSuite("date_RawParseSimpleDate");
+        $this->runTestSuite("date_RawParseSimpleDate");
     }
 
     public function testDateUncertain()
     {
-        $this->_testRenderTestSuite("date_Uncertain");
+        $this->runTestSuite("date_Uncertain");
     }
 
     public function testCondition_EmptyIsUncertainDate()
     {
-        $this->_testRenderTestSuite("condition_EmptyIsUncertain");
+        $this->runTestSuite("condition_EmptyIsUncertain");
     }
 
     public function testBugfixDateparts()
     {
-        $this->_testRenderTestSuite("bugfix-dateparts");
+        $this->runTestSuite("bugfix-dateparts");
     }
     /*
     public function testDateAD()
