@@ -26,7 +26,7 @@
     "require": {
         "seboettg/collection": "^2.1",
         "myclabs/php-enum": "^1.5",
-        "symfony/polyfill-mbstring": "v1.10.*",
+        "symfony/polyfill-mbstring": "^1.10",
         "ext-simplexml": "*",
         "ext-json": "*",
         "ext-intl": "*",
