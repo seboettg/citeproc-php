@@ -11,13 +11,13 @@ namespace Seboettg\CiteProc\Rendering;
 
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\Context;
-use Seboettg\CiteProc\Locale\Locale;
-use Seboettg\CiteProc\Style\Macro;
 use Seboettg\CiteProc\StyleSheet;
+use Seboettg\CiteProc\TestSuiteTestCaseTrait;
 
 class TextTest extends TestCase
 {
+
+    use TestSuiteTestCaseTrait;
 
     private $textXml = <<<EOT
 <?xml version="1.0" encoding="utf-8"?>
@@ -259,5 +259,25 @@ EOT;
         $expected = '[<a href="#item-1">1</a>,<a href="#ITEM-2">2</a>]';
 
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testQuotesPunctuationDefault()
+    {
+        $this->runTestSuite('quotes_PunctuationDefault');
+    }
+
+    public function testQuotesPunctuationInQuotes()
+    {
+        $this->runTestSuite('quotes_PunctuationInQuotes');
+    }
+
+    public function testQuotesPunctuationOutsideQuotes()
+    {
+        $this->runTestSuite('quotes_PunctuationOutsideQuotes');
+    }
+
+    public function testQuotesPunctuationMacro()
+    {
+        $this->runTestSuite('quotes_PunctuationMacro');
     }
 }

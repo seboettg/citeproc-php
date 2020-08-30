@@ -47,7 +47,7 @@ class Locale
     /**
      * Locale constructor.
      * @param string $lang
-     * @param string $xmlString
+     * @param ?string $xmlString
      * @throws CiteProcException
      */
     public function __construct($lang = "en-US", $xmlString = null)
@@ -93,6 +93,9 @@ class Locale
      */
     public function filter($type, $name, $form = "long")
     {
+        if ('options' === $type) {
+            return $this->option($name);
+        }
         if (!isset($this->{$type})) {
             throw new InvalidArgumentException("There is no locale of type \"$type\".");
         }
@@ -124,5 +127,20 @@ class Locale
         }
 
         return array_pop($array);
+    }
+
+    private function option($name)
+    {
+        $result = null;
+        foreach ($this->options as $key => $value) {
+            if ($key === $name) {
+                if (is_array($value) && isset($value[1]) && is_array($value[1])) {
+                    $result = reset($value[1]);
+                } else {
+                    $result = reset($value);
+                }
+            }
+        }
+        return $result;
     }
 }
