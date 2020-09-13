@@ -1,6 +1,5 @@
 # citeproc-php #
 [![Latest Stable Version](https://poser.pugx.org/seboettg/citeproc-php/v/stable)](https://packagist.org/packages/seboettg/citeproc-php) 
-[![Unstable Version](https://poser.pugx.org/seboettg/citeproc-php/v/unstable)](https://packagist.org/packages/seboettg/citeproc-php) 
 [![Total Downloads](https://poser.pugx.org/seboettg/citeproc-php/downloads)](https://packagist.org/packages/seboettg/citeproc-php/stats) 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![Build Status](https://scrutinizer-ci.com/g/seboettg/citeproc-php/badges/build.png?b=master)](https://scrutinizer-ci.com/g/seboettg/citeproc-php/build-status/master)
