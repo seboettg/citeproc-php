@@ -141,16 +141,16 @@ class Layout implements Rendering
                 $inMargin[] = $rendered;
             }
         }
-
-
+        $inMargin = array_filter($inMargin);
+        $margin = array_filter($margin);
         if (!empty($inMargin) && !empty($margin) && CiteProc::getContext()->isModeBibliography()) {
             $leftMargin = $this->removeConsecutiveChars($this->htmlentities($this->format(implode("", $inMargin))));
             $rightInline = $this->removeConsecutiveChars(
                 $this->htmlentities($this->format(implode("", $margin))).
                 $this->suffix
             );
-            $res  = '<div class="csl-left-margin">'.$leftMargin.'</div>';
-            $res .= '<div class="csl-right-inline">'.$rightInline.'</div>';
+            $res  = '<div class="csl-left-margin">' . trim($leftMargin) . '</div>';
+            $res .= '<div class="csl-right-inline">' . trim($rightInline) . '</div>';
             return $res;
         } elseif (!empty($inMargin)) {
             $res = $this->format(implode("", $inMargin));
@@ -176,8 +176,8 @@ class Layout implements Rendering
     {
         $value = $this->addAffixes($value);
         return "\n  ".
-            "<div class=\"csl-entry\">".
-            $renderedItem = CiteProcHelper::applyAdditionMarkupFunction($dataItem, "csl-entry", $value).
+            "<div class=\"csl-entry\">" .
+            $renderedItem = CiteProcHelper::applyAdditionMarkupFunction($dataItem, "csl-entry", $value) .
             "</div>";
     }
 
