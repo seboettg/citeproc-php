@@ -4,7 +4,7 @@ bibliography
 
 >>===== RESULT =====>>
 <div class="csl-bib-body">
-  <div class="csl-entry"><div class="csl-left-margin">1. </div><div class="csl-right-inline">My Article. JABC. 1(1):3-10. </div></div>
+  <div class="csl-entry"><div class="csl-left-margin">1.</div><div class="csl-right-inline">My Article. JABC. 1(1):3-10.</div></div>
 </div>
 <<===== RESULT =====<<
 
