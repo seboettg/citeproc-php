@@ -11,6 +11,7 @@
 namespace Seboettg\CiteProc\Locale;
 
 use InvalidArgumentException;
+use function Seboettg\CiteProc\ucfirst;
 
 /**
  * Class Term

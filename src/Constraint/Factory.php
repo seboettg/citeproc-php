@@ -10,6 +10,7 @@
 namespace Seboettg\CiteProc\Constraint;
 
 use Seboettg\CiteProc\Exception\ClassNotFoundException;
+use function Seboettg\CiteProc\ucfirst;
 
 /**
  * Class Factory
@@ -28,13 +29,12 @@ class Factory extends \Seboettg\CiteProc\Util\Factory
      * @return mixed
      * @throws ClassNotFoundException
      */
-    public static function createConstraint($name, $value, $match)
+    public static function createConstraint(string $name, string $value, string $match)
     {
-        $className = "";
         $parts = explode("-", $name);
-        array_walk($parts, function ($part) use (&$className) {
-            $className .= ucfirst($part);
-        });
+        $className = implode("", array_map(function ($part) {
+            return ucfirst($part);//overridden function
+        }, $parts));
         $className = self::NAMESPACE_CONSTRAINTS . $className;
 
         if (!class_exists($className)) {

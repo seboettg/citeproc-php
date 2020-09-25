@@ -25,6 +25,7 @@ use Seboettg\CiteProc\Util\PageHelper;
 use Seboettg\CiteProc\Util\StringHelper;
 use SimpleXMLElement;
 use stdClass;
+use function Seboettg\CiteProc\ucfirst;
 
 /**
  * Class Term
