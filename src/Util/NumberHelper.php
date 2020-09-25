@@ -118,8 +118,8 @@ class NumberHelper
     public static function isRomanNumber($str)
     {
         $number = trim($str);
-        for ($i = 0; $i < strlen($number); ++$i) {
-            $char = strtoupper($number[$i]);
+        for ($i = 0; $i < mb_strlen($number); ++$i) {
+            $char = mb_strtoupper($number[$i]);
             if (!in_array($char, array_keys(self::ROMAN_DIGITS))) {
                 return false;
             }
