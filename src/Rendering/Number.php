@@ -87,7 +87,6 @@ class Number implements Rendering
         $decimalNumber = $this->toDecimalNumber($number);
         switch ($this->form) {
             case 'ordinal':
-                echo "\n$decimalNumber\n";
                 if (preg_match("/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
                     $num1 = self::ordinal($matches[1]);
                     $num2 = self::ordinal($matches[3]);
