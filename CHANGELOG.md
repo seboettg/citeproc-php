@@ -1,11 +1,15 @@
 # CHANGELOG
+## 2.2.2 2020-09-26
+
+* Bugfix for [92](https://github.com/seboettg/citeproc-php/issues/92)
+* Bugfix for [93](https://github.com/seboettg/citeproc-php/issues/93)
+
 ## 2.2.1 2020-09-12
 
 * Bugfix for issue [82](https://github.com/seboettg/citeproc-php/issues/82)
 * Bugfix for [84](https://github.com/seboettg/citeproc-php/issues/84)
 * Merged PR [86](https://github.com/seboettg/citeproc-php/pull/86)
 * Bugfix for [89](https://github.com/seboettg/citeproc-php/issues/89)
-
 
 ## 2.2.0 2020-04-04
 * Compatibility for PHP 7.2, 7.3 and 7.4. This solves the issues [76](https://github.com/seboettg/citeproc-php/issues/76), [78](https://github.com/seboettg/citeproc-php/issues/75), [80](https://github.com/seboettg/citeproc-php/issues/80) and [81](https://github.com/seboettg/citeproc-php/issues/81).
