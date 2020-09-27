@@ -109,7 +109,7 @@ class Label implements Rendering
             if (!empty($citationItem->label)) {
                 $plural = $this->evaluateStringPluralism($citationItem->locator, $citationItem->label);
                 $term = CiteProc::getContext()->getLocale()->filter('terms', $citationItem->label, $form);
-                $pluralForm = $term->{$plural};
+                $pluralForm = $term->{$plural} ?? "";
                 if (!empty($citationItem->locator) && !empty($pluralForm)) {
                     $text = $pluralForm;
                 }
@@ -119,7 +119,7 @@ class Label implements Rendering
                 if (isset($data->{$variable})) {
                     $plural = $this->getPlural($data, $plural, $variable);
                     $term = CiteProc::getContext()->getLocale()->filter('terms', $variable, $form);
-                    $pluralForm = $term->{$plural};
+                    $pluralForm = $term->{$plural} ?? "";
                     if (!empty($data->{$variable}) && !empty($pluralForm)) {
                         $text = $pluralForm;
                         break;

@@ -380,3 +380,15 @@ You can also run test cases without IDE:
 ```bash
 $ composer test
 ```
+
+## Known projects that use citeproc-php
+
+* [Citation Style Language plugin for Open Journal Systems 3](https://github.com/pkp/citationStyleLanguage)
+* [Islandora Scholar](https://github.com/Islandora/islandora_scholar)
+* [Grav Bibliography Plugin](https://github.com/OleVik/grav-plugin-bibliography)
+* [Bibcite Wordpress Plugin](https://github.com/ShadyChars/Bibcite)
+* [DKAN Science Metadata](https://github.com/GetDKAN/dkan_sci_metadata)
+* [Stud.IP](https://github.com/studip/studip)
+* [bibliography Plugin for DokuWiki](https://github.com/gyger/dokuwiki-bibliography)
+* [ldbase_citations (Plugin for LDbase)](https://github.com/ldbase/ldbase_citations)
+* [Citations - (Drupal module)](https://github.com/fsulib/citations)
