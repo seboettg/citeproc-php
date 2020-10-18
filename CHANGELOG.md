@@ -1,4 +1,9 @@
 # CHANGELOG
+
+## 2.2.3 2020-10-18
+
+* Bugfix for an error that occurred when accessing a missing plural form for a label.
+
 ## 2.2.2 2020-09-26
 
 * Bugfix for [92](https://github.com/seboettg/citeproc-php/issues/92)
