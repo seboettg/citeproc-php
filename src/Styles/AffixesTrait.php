@@ -85,7 +85,7 @@ trait AffixesTrait
                 $lastChar = mb_substr($text, -1, 1);
                 if ($closeQuote === $lastChar) { // last char is closing quote?
                     $text = mb_substr($text, 0, mb_strlen($text) - 1); //set suffix before
-                    return $text . $suffix . $lastChar;
+                    return $prefix . $text . $suffix . $lastChar;
                 }
             }
         }
