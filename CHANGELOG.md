@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.2.4 2020-11-22
+
+* Bugfix for [95](https://github.com/seboettg/citeproc-php/issues/95) missing space between authors and chapter
+
 ## 2.2.3 2020-10-18
 
 * Bugfix for an error that occurred when accessing a missing plural form for a label.
