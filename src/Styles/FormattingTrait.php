@@ -75,7 +75,7 @@ trait FormattingTrait
             return $text;
         }
 
-        if (!empty($this->formattingOptions)) {
+        if ($this->formattingOptions->count() > 0) {
             $format = "";
             foreach ($this->formattingOptions as $option => $optionValue) {
                 if ($optionValue === "italic") {

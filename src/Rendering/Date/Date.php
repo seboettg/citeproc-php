@@ -96,7 +96,7 @@ class Date
         foreach ($node->children() as $child) {
             if ($child->getName() === "date-part") {
                 $datePartName = (string) $child->attributes()["name"];
-                $this->dateParts->set($this->form."-".$datePartName, Util\Factory::create($child));
+                $this->dateParts->set($this->form . "-" . $datePartName, Util\Factory::create($child));
             }
         }
 
@@ -384,15 +384,29 @@ class Date
      */
     private function iterateAndRenderDateParts(array $dateParts, array $data_)
     {
-        $ret = "";
+        $result = [];
         /** @var DatePart $datePart */
         foreach ($this->dateParts as $key => $datePart) {
             /** @noinspection PhpUnusedLocalVariableInspection */
             list($f, $p) = explode("-", $key);
             if (in_array($p, $dateParts)) {
-                $ret .= $datePart->render($data_[0], $this);
+                $result[] = $datePart->render($data_[0], $this);
             }
         }
-        return $ret;
+        $result = array_filter($result);
+        $glue = $this->datePartsHaveAffixes() ? "" : " ";
+        $return = implode($glue, $result);
+        return trim($return);
+    }
+
+    /**
+     * @return bool
+     */
+    private function datePartsHaveAffixes()
+    {
+        $result = $this->dateParts->filter(function (DatePart $datePart) {
+            return $datePart->renderSuffix() !== "" || $datePart->renderPrefix() !== "";
+        });
+        return $result->count() > 0;
     }
 }
