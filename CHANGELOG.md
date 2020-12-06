@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## 2.2.5 2020-12-06
+
+* Bugfix for [94](https://github.com/seboettg/citeproc-php/issues/95): Missing space between date parts, when date parts have no affixes
+
 ## 2.2.4 2020-11-22
 
-* Bugfix for [95](https://github.com/seboettg/citeproc-php/issues/95) missing space between authors and chapter
+* Bugfix for [95](https://github.com/seboettg/citeproc-php/issues/95): Missing space between authors and chapter
 
 ## 2.2.3 2020-10-18
 
