@@ -32,7 +32,6 @@
         "symfony/polyfill-mbstring": "^1.10",
         "ext-simplexml": "*",
         "ext-json": "*",
-        "ext-intl": "*",
         "php": ">=7.1"
     },
     "require-dev": {
