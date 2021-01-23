@@ -40,7 +40,7 @@
         "phpmd/phpmd": "^2.8"
     },
     "suggest": {
-        "ext-intl",
+        "ext-intl": "*",
         "ext-mbstring": "*",
         "symfony/polyfill-mbstring": "^1.10"
     },
