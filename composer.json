@@ -29,7 +29,6 @@
     "require": {
         "seboettg/collection": "^2.1",
         "myclabs/php-enum": "^1.5",
-        "symfony/polyfill-mbstring": "^1.10",
         "ext-simplexml": "*",
         "ext-json": "*",
         "php": ">=7.1"
@@ -40,7 +39,11 @@
         "squizlabs/php_codesniffer": "^3.5",
         "phpmd/phpmd": "^2.8"
     },
-
+    "suggest": {
+        "ext-intl",
+        "ext-mbstring": "*",
+        "symfony/polyfill-mbstring": "^1.10"
+    },
     "scripts": {
         "post-install-cmd": [
             "./install.sh styles-distribution",
