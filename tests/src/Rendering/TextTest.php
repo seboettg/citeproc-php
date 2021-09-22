@@ -261,6 +261,82 @@ EOT;
         $this->assertEquals($expected, $actual);
     }
 
+    public function testEnrichMarkupCitationNumberEmbraceAffixes()
+    {
+        $additionalMarkup = [
+            "title" => [
+                'function' => function ($cslItem, $renderedText) {
+                    return '<span class="cite-title">' . $renderedText . '</span>';
+                },
+                'affixes' => false
+            ],
+            "citation-number" => [
+                'function' => function ($cslItem, $renderedText) {
+                    return '<span class="cite-no">' . $renderedText . '</span>';
+                },
+                'affixes' => true
+            ]
+        ];
+
+        $lncsStylesheet = StyleSheet::loadStyleSheet("springer-lecture-notes-in-computer-science");
+        $cslJson = '[
+          {
+            "author": [
+              {
+                "family": "Doe",
+                "given": "James",
+                "suffix": "III"
+              }
+            ],
+            "id": "item-1",
+            "issued": {
+              "date-parts": [
+                [
+                  "2001"
+                ]
+              ]
+            },
+            "title": "My Anonymous Heritage",
+            "type": "book"
+          },
+          {
+            "author": [
+              {
+                "family": "Anderson",
+                "given": "John",
+                "id": "anderson.j"
+              },
+              {
+                "family": "Brown",
+                "given": "John",
+                "id": "brown.j"
+              }
+            ],
+            "issued": {
+              "date-parts": [
+                [
+                  "1998"
+                ]
+              ]
+            },
+            "id": "ITEM-2",
+            "type": "book",
+            "title": "Two authors writing a book"
+          }]';
+        $citeproc = new CiteProc(
+            $lncsStylesheet,
+            "en-US",
+            $additionalMarkup
+        );
+
+        $actual = $citeproc->render(json_decode($cslJson), "bibliography");
+        $expected = '<div class="csl-bib-body">
+  <div class="csl-entry"><div class="csl-left-margin"><span class="cite-no">1.</span></div><div class="csl-right-inline">Doe, J., III: <span class="cite-title">My Anonymous Heritage</span>. (2001).</div></div>
+  <div class="csl-entry"><div class="csl-left-margin"><span class="cite-no">2.</span></div><div class="csl-right-inline">Anderson, J., Brown, J.: <span class="cite-title">Two authors writing a book</span>. (1998).</div></div>
+</div>';
+        $this->assertEquals($expected, $actual);
+    }
+
     public function testQuotesPunctuationDefault()
     {
         $this->runTestSuite('quotes_PunctuationDefault');
