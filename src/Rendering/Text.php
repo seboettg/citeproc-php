@@ -267,7 +267,9 @@ class Text implements Rendering
     private function renderCitationNumber($data, $citationNumber)
     {
         $renderedText = $citationNumber + 1;
-        $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
+		if (!CiteProcHelper::isUsingAffixesByMarkupExtentsion($data, $this->toRenderTypeValue)) {
+			$renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
+		}
         return $renderedText;
     }
 

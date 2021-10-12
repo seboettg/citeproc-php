@@ -38,7 +38,7 @@ class CiteProcHelper
         } elseif (array_key_exists($mode = CiteProc::getContext()->getMode(), $markupExtension)) {
             if (array_key_exists($valueToRender, $markupExtension[$mode])) {
 				if (is_array($markupExtension[$mode][$valueToRender]) && array_key_exists('function', $markupExtension[$mode][$valueToRender])) {
-					$function = $function = CiteProc::getContext()->getMarkupExtension()[$mode][$valueToRender]['function'];
+					$function = CiteProc::getContext()->getMarkupExtension()[$mode][$valueToRender]['function'];
 				} else {
 					$function = CiteProc::getContext()->getMarkupExtension()[$mode][$valueToRender];
 				}
