@@ -38,14 +38,14 @@ citation
     {
         "author": [
             {
-                "dropping-particle": "de", 
-                "family": "Fontaine", 
-                "given": "Jean", 
-                "non-dropping-particle": "La", 
+                "dropping-particle": "de",
+                "family": "Fontaine",
+                "given": "Jean",
+                "non-dropping-particle": "La",
                 "suffix": "III"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

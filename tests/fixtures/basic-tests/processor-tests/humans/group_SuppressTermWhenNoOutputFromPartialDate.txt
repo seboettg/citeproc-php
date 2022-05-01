@@ -37,14 +37,14 @@ Only this
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
                     "1965"
                 ]
             ]
-        }, 
+        },
         "type": "book"
     }
 ]

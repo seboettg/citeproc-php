@@ -34,28 +34,28 @@ Book A; Book B
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
                     "2000"
                 ]
             ]
-        }, 
-        "title": "Book A", 
+        },
+        "title": "Book A",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-2", 
+        "id": "ITEM-2",
         "issued": {
             "date-parts": [
                 [
-                    "2000", 
+                    "2000",
                     "5"
                 ]
             ]
-        }, 
-        "title": "Book B", 
+        },
+        "title": "Book B",
         "type": "book"
     }
 ]

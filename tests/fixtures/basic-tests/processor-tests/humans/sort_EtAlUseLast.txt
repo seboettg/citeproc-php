@@ -54,82 +54,82 @@ bibliography
     {
         "author": [
             {
-                "family": "Roe", 
+                "family": "Roe",
                 "given": "Jane"
-            }, 
+            },
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Blow", 
+                "family": "Blow",
                 "given": "Joe"
-            }, 
+            },
             {
-                "family": "Snow", 
+                "family": "Snow",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Gogh", 
+                "family": "Gogh",
                 "given": "Vincent"
             }
-        ], 
-        "id": "ITEM-1", 
-        "title": "Book A", 
+        ],
+        "id": "ITEM-1",
+        "title": "Book A",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Roe", 
+                "family": "Roe",
                 "given": "Jane"
-            }, 
+            },
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Blow", 
+                "family": "Blow",
                 "given": "Joe"
-            }, 
+            },
             {
-                "family": "Snow", 
+                "family": "Snow",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Bogh", 
+                "family": "Bogh",
                 "given": "Vincent"
             }
-        ], 
-        "id": "ITEM-2", 
-        "title": "Book A", 
+        ],
+        "id": "ITEM-2",
+        "title": "Book A",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Roe", 
+                "family": "Roe",
                 "given": "Jane"
-            }, 
+            },
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Blow", 
+                "family": "Blow",
                 "given": "Joe"
-            }, 
+            },
             {
-                "family": "Snow", 
+                "family": "Snow",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Aogh", 
+                "family": "Aogh",
                 "given": "Vincent"
             }
-        ], 
-        "id": "ITEM-3", 
-        "title": "Book A", 
+        ],
+        "id": "ITEM-3",
+        "title": "Book A",
         "type": "book"
     }
 ]

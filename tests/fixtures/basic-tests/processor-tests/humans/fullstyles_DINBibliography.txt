@@ -366,116 +366,116 @@ and followup thread:
 >>===== INPUT =====>>
 [
     {
-        "DOI": "", 
-        "ISBN": "", 
-        "ISSN": "1436-3011", 
-        "URL": "http://hmd.dpunkt.de/271/05.php", 
-        "abstract": "Kooperative Verschlagwortungs- bzw. Social-Bookmarking-Systeme wie Delicious, Mister Wong oder auch unser eigenes System BibSonomy erfreuen sich immer größerer Beliebtheit und bilden einen zentralen Bestandteil des heutigen Web 2.0. In solchen Systemen erstellen Nutzer leichtgewichtige Begriffssysteme, sogenannte Folksonomies, die die Nutzerdaten strukturieren. Die einfache Bedienbarkeit, die Allgegenwärtigkeit, die ständige Verfügbarkeit, aber auch die Möglichkeit, Gleichgesinnte spontan in solchen Systemen zu entdecken oder sie schlicht als Informationsquelle zu nutzen, sind Gründe für ihren gegenwärtigen Erfolg. Der Artikel führt den Begriff Social Bookmarking ein und diskutiert zentrale Elemente wie Browsing und Suche am Beispiel von BibSonomy anhand typischer Arbeitsabläufe eines Wissenschaftlers. Wir beschreiben die Architektur von BibSonomy sowie Wege der Integration und Vernetzung von BibSonomy mit Content-Management-Systemen und Webauftritten. Der Artikel schließt mit Querbezügen zu aktuellen Forschungsfragen im Bereich Social Bookmarking.", 
-        "annote": "", 
+        "DOI": "",
+        "ISBN": "",
+        "ISSN": "1436-3011",
+        "URL": "http://hmd.dpunkt.de/271/05.php",
+        "abstract": "Kooperative Verschlagwortungs- bzw. Social-Bookmarking-Systeme wie Delicious, Mister Wong oder auch unser eigenes System BibSonomy erfreuen sich immer größerer Beliebtheit und bilden einen zentralen Bestandteil des heutigen Web 2.0. In solchen Systemen erstellen Nutzer leichtgewichtige Begriffssysteme, sogenannte Folksonomies, die die Nutzerdaten strukturieren. Die einfache Bedienbarkeit, die Allgegenwärtigkeit, die ständige Verfügbarkeit, aber auch die Möglichkeit, Gleichgesinnte spontan in solchen Systemen zu entdecken oder sie schlicht als Informationsquelle zu nutzen, sind Gründe für ihren gegenwärtigen Erfolg. Der Artikel führt den Begriff Social Bookmarking ein und diskutiert zentrale Elemente wie Browsing und Suche am Beispiel von BibSonomy anhand typischer Arbeitsabläufe eines Wissenschaftlers. Wir beschreiben die Architektur von BibSonomy sowie Wege der Integration und Vernetzung von BibSonomy mit Content-Management-Systemen und Webauftritten. Der Artikel schließt mit Querbezügen zu aktuellen Forschungsfragen im Bereich Social Bookmarking.",
+        "annote": "",
         "author": [
             {
-                "family": "Hotho", 
+                "family": "Hotho",
                 "given": "Andreas"
-            }, 
+            },
             {
-                "family": "Benz", 
+                "family": "Benz",
                 "given": "Dominik"
-            }, 
+            },
             {
-                "family": "Eisterlehner", 
+                "family": "Eisterlehner",
                 "given": "Folke"
-            }, 
+            },
             {
-                "family": "Jäschke", 
+                "family": "Jäschke",
                 "given": "Robert"
-            }, 
+            },
             {
-                "family": "Krause", 
+                "family": "Krause",
                 "given": "Beate"
-            }, 
+            },
             {
-                "family": "Schmitz", 
+                "family": "Schmitz",
                 "given": "Christoph"
-            }, 
+            },
             {
-                "family": "Stumme", 
+                "family": "Stumme",
                 "given": "Gerd"
             }
-        ], 
-        "citation-label": "hotho2010publikationsmanagement", 
+        ],
+        "citation-label": "hotho2010publikationsmanagement",
         "collection-editor": [
             {
-                "family": "Hengartner", 
+                "family": "Hengartner",
                 "given": "Urs"
-            }, 
+            },
             {
-                "family": "Meier", 
+                "family": "Meier",
                 "given": "Andreas"
             }
-        ], 
-        "collection-title": "", 
+        ],
+        "collection-title": "",
         "container-author": [
             {
-                "family": "Hengartner", 
+                "family": "Hengartner",
                 "given": "Urs"
-            }, 
+            },
             {
-                "family": "Meier", 
+                "family": "Meier",
                 "given": "Andreas"
             }
-        ], 
-        "container-title": "HMD - Praxis der Wirtschaftsinformatik", 
-        "documents": [], 
-        "edition": "", 
+        ],
+        "container-title": "HMD - Praxis der Wirtschaftsinformatik",
+        "documents": [],
+        "edition": "",
         "editor": [
             {
-                "family": "Hengartner", 
+                "family": "Hengartner",
                 "given": "Urs"
-            }, 
+            },
             {
-                "family": "Meier", 
+                "family": "Meier",
                 "given": "Andreas"
             }
-        ], 
+        ],
         "event-date": {
             "date-parts": [
                 [
-                    "2010", 
+                    "2010",
                     "feb"
                 ]
-            ], 
+            ],
             "literal": "2010"
-        }, 
-        "event-place": "", 
-        "id": "422096948d4de38a725b428be3222d60jaeschke", 
-        "interhash": "c19880489182c86e1573a2ac983c7cff", 
-        "intrahash": "422096948d4de38a725b428be3222d60", 
-        "issue": "", 
+        },
+        "event-place": "",
+        "id": "422096948d4de38a725b428be3222d60jaeschke",
+        "interhash": "c19880489182c86e1573a2ac983c7cff",
+        "intrahash": "422096948d4de38a725b428be3222d60",
+        "issue": "",
         "issued": {
             "date-parts": [
                 [
-                    "2010", 
+                    "2010",
                     "feb"
                 ]
-            ], 
+            ],
             "literal": "2010"
-        }, 
-        "keyword": "2010 bibsonomy bookmarking myown social", 
+        },
+        "keyword": "2010 bibsonomy bookmarking myown social",
         "misc": {
             "issn": "1436-3011"
-        }, 
-        "note": "", 
-        "number": "", 
-        "number-of-pages": "11", 
-        "page": "47--58", 
-        "page-first": "47", 
-        "publisher": "dpunkt.verlag", 
-        "publisher-place": "", 
-        "status": "", 
-        "title": "Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler", 
-        "type": "article-journal", 
-        "username": "jaeschke", 
-        "version": "", 
+        },
+        "note": "",
+        "number": "",
+        "number-of-pages": "11",
+        "page": "47--58",
+        "page-first": "47",
+        "publisher": "dpunkt.verlag",
+        "publisher-place": "",
+        "status": "",
+        "title": "Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler",
+        "type": "article-journal",
+        "username": "jaeschke",
+        "version": "",
         "volume": "271"
     }
 ]

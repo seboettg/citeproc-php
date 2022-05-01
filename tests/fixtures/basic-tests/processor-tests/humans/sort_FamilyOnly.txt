@@ -51,26 +51,26 @@ Test for issue described here:
             {
                 "family": "ANZ Group"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
                 "family": "Aardvaark"
             }
-        ], 
-        "id": "ITEM-2", 
+        ],
+        "id": "ITEM-2",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
                 "family": "Edelweis"
             }
-        ], 
-        "id": "ITEM-3", 
+        ],
+        "id": "ITEM-3",
         "type": "book"
     }
 ]

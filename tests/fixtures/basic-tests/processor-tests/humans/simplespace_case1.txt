@@ -198,22 +198,22 @@ bibliography
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "Jhon"
             }
-        ], 
-        "container-title": "Some title", 
-        "edition": "Vintage First edition", 
-        "id": "ITEM-1", 
+        ],
+        "container-title": "Some title",
+        "edition": "Vintage First edition",
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
                     1992
                 ]
             ]
-        }, 
-        "page": "250-300", 
-        "publisher": "Vintage", 
+        },
+        "page": "250-300",
+        "publisher": "Vintage",
         "type": "chapter"
     }
 ]

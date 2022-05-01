@@ -45,25 +45,25 @@ citation
     {
         "author": [
             {
-                "family": "Noakes", 
+                "family": "Noakes",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Stoakes", 
+                "family": "Stoakes",
                 "given": "Richard"
             }
-        ], 
+        ],
         "editor": [
             {
-                "family": "Noakes", 
+                "family": "Noakes",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Stoakes", 
+                "family": "Stoakes",
                 "given": "Richard"
             }
-        ], 
-        "id": "item-1", 
+        ],
+        "id": "item-1",
         "type": "book"
     }
 ]

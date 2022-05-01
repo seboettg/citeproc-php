@@ -59,37 +59,37 @@ bibliography
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John Aloysius"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
                     1999
                 ]
             ]
-        }, 
-        "title": "John's Book", 
+        },
+        "title": "John's Book",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Roe", 
+                "family": "Roe",
                 "given": "Jane Henrietta"
             }
-        ], 
-        "id": "ITEM-2", 
+        ],
+        "id": "ITEM-2",
         "issued": {
             "date-parts": [
                 [
                     2000
                 ]
             ]
-        }, 
-        "title": "Jane's Book", 
+        },
+        "title": "Jane's Book",
         "type": "book"
     }
 ]

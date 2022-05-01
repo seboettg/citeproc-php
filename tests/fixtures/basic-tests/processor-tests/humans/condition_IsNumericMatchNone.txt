@@ -39,18 +39,18 @@ ITEM-1: no numeric values; ITEM-2: numeric values; ITEM-3: numeric values
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
-        "page": "trf", 
+        "id": "ITEM-1",
+        "page": "trf",
         "volume": "dsa"
-    }, 
+    },
     {
-        "id": "ITEM-2", 
-        "page": "5", 
+        "id": "ITEM-2",
+        "page": "5",
         "volume": "V"
-    }, 
+    },
     {
-        "id": "ITEM-3", 
-        "page": "jdhal", 
+        "id": "ITEM-3",
+        "page": "jdhal",
         "volume": "V"
     }
 ]

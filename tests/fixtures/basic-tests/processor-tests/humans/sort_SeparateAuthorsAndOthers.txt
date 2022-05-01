@@ -133,45 +133,45 @@ mla-x.csl
     {
         "editor": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "ITEM-1", 
-        "title": "Hello 1", 
+        ],
+        "id": "ITEM-1",
+        "title": "Hello 1",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "ITEM-4", 
-        "title": "Hello 4", 
+        ],
+        "id": "ITEM-4",
+        "title": "Hello 4",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John Barbitol"
             }
-        ], 
-        "id": "ITEM-2", 
-        "title": "Hello 2", 
+        ],
+        "id": "ITEM-2",
+        "title": "Hello 2",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John Egbert"
             }
-        ], 
-        "id": "ITEM-3", 
-        "title": "Hello 3", 
+        ],
+        "id": "ITEM-3",
+        "title": "Hello 3",
         "type": "book"
     }
 ]

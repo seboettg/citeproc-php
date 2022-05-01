@@ -39,7 +39,7 @@ EOT;
      */
     private $citeproc;
 
-    public function setUp()
+    public function setUp(): void
     {
 
     }

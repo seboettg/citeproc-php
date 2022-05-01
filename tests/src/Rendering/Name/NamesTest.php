@@ -17,7 +17,7 @@ class NamesTest extends TestCase
 
     use TestSuiteTestCaseTrait;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }

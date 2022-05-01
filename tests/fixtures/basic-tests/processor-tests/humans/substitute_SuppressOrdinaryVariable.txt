@@ -77,33 +77,33 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
-        "publisher": "The Publisher", 
-        "title": "The Title", 
+        "id": "ITEM-1",
+        "publisher": "The Publisher",
+        "title": "The Title",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John-boy"
             }
-        ], 
-        "id": "ITEM-2", 
-        "publisher": "The Publisher", 
-        "title": "The Title", 
+        ],
+        "id": "ITEM-2",
+        "publisher": "The Publisher",
+        "title": "The Title",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "Jane-girl"
             }
-        ], 
-        "id": "ITEM-3", 
-        "publisher": "The Organization", 
-        "title": "The Title", 
+        ],
+        "id": "ITEM-3",
+        "publisher": "The Organization",
+        "title": "The Title",
         "type": "report"
     }
 ]

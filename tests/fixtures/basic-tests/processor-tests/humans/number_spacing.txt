@@ -35,9 +35,9 @@ citation
 >>===== INPUT =====>>
 [
     {
-        "issue": " 4  -  7 ", 
-        "number": " 4  &  7 ", 
-        "type": "book", 
+        "issue": " 4  -  7 ",
+        "number": " 4  &  7 ",
+        "type": "book",
         "volume": " 4  ,  7 "
     }
 ]

@@ -35,20 +35,20 @@ James Doe III
     {
         "author": [
             {
-                "family": "Doe", 
-                "given": "James", 
+                "family": "Doe",
+                "given": "James",
                 "suffix": "III"
             }
-        ], 
-        "id": "item-1", 
+        ],
+        "id": "item-1",
         "issued": {
             "date-parts": [
                 [
                     "2001"
                 ]
             ]
-        }, 
-        "title": "My Anonymous Heritage", 
+        },
+        "title": "My Anonymous Heritage",
         "type": "book"
     }
 ]

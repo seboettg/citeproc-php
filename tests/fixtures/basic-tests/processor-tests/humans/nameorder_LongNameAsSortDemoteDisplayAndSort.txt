@@ -36,14 +36,14 @@ Martinière, Gérard de la, III
     {
         "author": [
             {
-                "dropping-particle": "de", 
-                "family": "Martinière", 
-                "given": "Gérard", 
-                "non-dropping-particle": "la", 
+                "dropping-particle": "de",
+                "family": "Martinière",
+                "given": "Gérard",
+                "non-dropping-particle": "la",
                 "suffix": "III"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

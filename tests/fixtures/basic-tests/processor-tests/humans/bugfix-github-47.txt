@@ -262,29 +262,29 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "DOI": "10.1234/publicknowledge.v1i1.62", 
-        "URL": "http://localhost/ojs/publicknowledge/article/view/62", 
+        "DOI": "10.1234/publicknowledge.v1i1.62",
+        "URL": "http://localhost/ojs/publicknowledge/article/view/62",
         "accessed": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": "2018-02-07"
-        }, 
+        },
         "author": [
             {
-                "family": "Corino", 
+                "family": "Corino",
                 "given": "Carlo"
             }
-        ], 
-        "container-title": "Journal of Public Knowledge", 
-        "container-title-short": "publicknowledge", 
-        "id": 62, 
-        "issue": 1, 
+        ],
+        "container-title": "Journal of Public Knowledge",
+        "container-title-short": "publicknowledge",
+        "id": 62,
+        "issue": 1,
         "issued": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": "2017-12-05 16:04:07"
-        }, 
-        "section": "Articles", 
-        "title": "Elit nulla ultrices amet iaculis lorem non morbi sed sapien", 
-        "type": "article-journal", 
+        },
+        "section": "Articles",
+        "title": "Elit nulla ultrices amet iaculis lorem non morbi sed sapien",
+        "type": "article-journal",
         "volume": 1
     }
 ]

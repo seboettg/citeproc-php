@@ -68,67 +68,67 @@ bibliography
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "item-1", 
+        ],
+        "id": "item-1",
         "issued": {
             "date-parts": [
                 [
                     "2000"
                 ]
             ]
-        }, 
-        "title": "Book One", 
+        },
+        "title": "Book One",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "Jake"
-            }, 
+            },
             {
-                "family": "Jones", 
+                "family": "Jones",
                 "given": "Robert"
             }
-        ], 
-        "id": "item-2", 
+        ],
+        "id": "item-2",
         "issued": {
             "date-parts": [
                 [
                     "2000"
                 ]
             ]
-        }, 
-        "title": "Book Three", 
+        },
+        "title": "Book Three",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Roe", 
+                "family": "Roe",
                 "given": "Jane"
             }
-        ], 
-        "id": "item-3", 
+        ],
+        "id": "item-3",
         "issued": {
             "date-parts": [
                 [
                     "2000"
                 ]
             ]
-        }, 
-        "title": "Book Two", 
+        },
+        "title": "Book Two",
         "type": "book"
     }
 ]

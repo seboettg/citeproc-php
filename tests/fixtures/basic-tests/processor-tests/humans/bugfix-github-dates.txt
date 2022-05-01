@@ -483,32 +483,32 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "abstract": "Minimum tillage along with crop residue management on a double cropping system is recognized as practical choice of soil carbon management option in several crop production regions across the US. Here, seasonal estimates of net ecosystem exchange (NEE) and its components for soybean and winter wheat crops (double cropping systems) were studied at Winfred Thomas Agricultural Research Station (WTARS) in Hazel green Alabama for growing seasons of 2007, 2008 and 2009 using the eddy covariance technique. The site was a net annual source of carbon during the year 2007 and 2008 (cumulative NEE ca. 100 and 30 g C m⁻² y⁻¹), while 2009 was a slight C sink (-20 g C m⁻² y⁻¹). Here, differential soil and canopy respiratory looses have played significant role in the annual crop C status. The soybean-winter wheat double cropping system of northern Alabama studied here exhibited a contrasting LE, H and G flux patterns. driven by biophysical attributes, crop phenology and by management. Seasonally integrated evapo transpiration values for soybean were 220, 258 and 276 mm in 2007, 2008 and 2009, respectively reflective of precipitation driven canopy-atmosphere water cycling with corresponding precipitations of 260, 304, 753 mm. With the exception of winter growing season of 2007, which was smaller, ET of winter cover crop (winter wheat) was higher by 15% and 26% than soybean. For soybean, the percentage of water returned to the atmosphere via ET relative to growing season precipitation was the highest in 2007 (85%) received during growing cycle\"--page vi.", 
+        "abstract": "Minimum tillage along with crop residue management on a double cropping system is recognized as practical choice of soil carbon management option in several crop production regions across the US. Here, seasonal estimates of net ecosystem exchange (NEE) and its components for soybean and winter wheat crops (double cropping systems) were studied at Winfred Thomas Agricultural Research Station (WTARS) in Hazel green Alabama for growing seasons of 2007, 2008 and 2009 using the eddy covariance technique. The site was a net annual source of carbon during the year 2007 and 2008 (cumulative NEE ca. 100 and 30 g C m⁻² y⁻¹), while 2009 was a slight C sink (-20 g C m⁻² y⁻¹). Here, differential soil and canopy respiratory looses have played significant role in the annual crop C status. The soybean-winter wheat double cropping system of northern Alabama studied here exhibited a contrasting LE, H and G flux patterns. driven by biophysical attributes, crop phenology and by management. Seasonally integrated evapo transpiration values for soybean were 220, 258 and 276 mm in 2007, 2008 and 2009, respectively reflective of precipitation driven canopy-atmosphere water cycling with corresponding precipitations of 260, 304, 753 mm. With the exception of winter growing season of 2007, which was smaller, ET of winter cover crop (winter wheat) was higher by 15% and 26% than soybean. For soybean, the percentage of water returned to the atmosphere via ET relative to growing season precipitation was the highest in 2007 (85%) received during growing cycle\"--page vi.",
         "author": [
             {
-                "family": "Gebremedhin", 
+                "family": "Gebremedhin",
                 "given": "Maheteme T."
             }
-        ], 
-        "call-number": "S603.7 .G43 2010", 
+        ],
+        "call-number": "S603.7 .G43 2010",
         "issued": {
             "date-parts": [
                 [
-                    "2004", 
-                    "10", 
+                    "2004",
+                    "10",
                     21
-                ], 
+                ],
                 [
-                    "2004", 
-                    "10", 
+                    "2004",
+                    "10",
                     23
                 ]
             ]
-        }, 
-        "note": "1. Maheteme T. Gebremedhin.  2. Ph. D. Alabama A & M University 2010.  3. Includes bibliographical references (leaves 191-200).  ", 
-        "publisher": "Alabama A&M University", 
-        "publisher-place": "alu", 
-        "title": "Carbon dioxide and energy balance of a double cropping agroecosystem in northern Alabama climate", 
+        },
+        "note": "1. Maheteme T. Gebremedhin.  2. Ph. D. Alabama A & M University 2010.  3. Includes bibliographical references (leaves 191-200).  ",
+        "publisher": "Alabama A&M University",
+        "publisher-place": "alu",
+        "title": "Carbon dioxide and energy balance of a double cropping agroecosystem in northern Alabama climate",
         "type": "article-journal"
     }
 ]

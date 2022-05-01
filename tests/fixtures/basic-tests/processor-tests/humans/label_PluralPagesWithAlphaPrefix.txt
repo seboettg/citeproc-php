@@ -35,9 +35,9 @@ pages S213-S235
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
-        "page": "S213-S235", 
-        "title": "His Anonymous Life", 
+        "id": "ITEM-1",
+        "page": "S213-S235",
+        "title": "His Anonymous Life",
         "type": "book"
     }
 ]

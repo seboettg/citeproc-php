@@ -55,15 +55,15 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "URL": "http://example.com", 
+        "URL": "http://example.com",
         "author": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "John"
             }
-        ], 
-        "id": 276, 
-        "title": "Chapter Title", 
+        ],
+        "id": 276,
+        "title": "Chapter Title",
         "type": "chapter"
     }
 ]

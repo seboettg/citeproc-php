@@ -12,13 +12,13 @@ citation
 [
     [
         {
-            "id": "ITEM-1", 
-            "label": "page", 
+            "id": "ITEM-1",
+            "label": "page",
             "locator": "244-252"
-        }, 
+        },
         {
-            "id": "ITEM-2", 
-            "label": "chapter", 
+            "id": "ITEM-2",
+            "label": "chapter",
             "locator": "3 - 4"
         }
     ]

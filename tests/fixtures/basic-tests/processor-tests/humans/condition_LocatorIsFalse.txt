@@ -47,14 +47,14 @@ Book One: (1) Locator true (2) Locator true; Book Two: (1) Locator false (2) Loc
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
-        "locator": "1", 
-        "title": "Book One", 
+        "id": "ITEM-1",
+        "locator": "1",
+        "title": "Book One",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-2", 
-        "title": "Book Two", 
+        "id": "ITEM-2",
+        "title": "Book Two",
         "type": "book"
     }
 ]

@@ -26,7 +26,7 @@ class CiteProcTest extends TestCase
      */
     private $citeProc;
 
-    public function setUp()
+    public function setUp(): void
     {
         //parent::setU
     }

@@ -35,12 +35,12 @@ Doe
     {
         "author": [
             {
-                "family": "Doe", 
-                "given": "James", 
+                "family": "Doe",
+                "given": "James",
                 "suffix": "III"
             }
-        ], 
-        "id": "item-1", 
+        ],
+        "id": "item-1",
         "type": "book"
     }
 ]

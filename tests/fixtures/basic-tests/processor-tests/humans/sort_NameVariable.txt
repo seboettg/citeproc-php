@@ -47,31 +47,31 @@ bibliography
     {
         "author": [
             {
-                "family": "Roe", 
+                "family": "Roe",
                 "given": "Jane"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "ITEM-2", 
+        ],
+        "id": "ITEM-2",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "[F]linders", 
+                "family": "[F]linders",
                 "given": "Jacob"
             }
-        ], 
-        "id": "ITEM-3", 
+        ],
+        "id": "ITEM-3",
         "type": "book"
     }
 ]

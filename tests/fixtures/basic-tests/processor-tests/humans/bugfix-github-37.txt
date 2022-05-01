@@ -225,19 +225,19 @@ https://github.com/seboettg/citeproc-php/issues/37
     {
         "author": [
             {
-                "family": "Nachname", 
+                "family": "Nachname",
                 "given": "Vorname"
             }
-        ], 
+        ],
         "issued": {
             "date-parts": [
                 [
                     "2005"
                 ]
             ]
-        }, 
-        "page": ", S. 62", 
-        "title": "Titel", 
+        },
+        "page": ", S. 62",
+        "title": "Titel",
         "type": "article"
     }
 ]

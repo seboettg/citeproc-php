@@ -38,19 +38,19 @@ John Doe
     {
         "editor": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "item-1", 
+        ],
+        "id": "item-1",
         "issued": {
             "date-parts": [
                 [
                     "2000"
                 ]
             ]
-        }, 
-        "title": "His Anonymous Life", 
+        },
+        "title": "His Anonymous Life",
         "type": "book"
     }
 ]

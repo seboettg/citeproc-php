@@ -22,7 +22,7 @@ class PageHelperTest extends TestCase
     private $minimalTwo;
     private $expanded;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->chicago = new PageRangeFormats(PageRangeFormats::CHICAGO);

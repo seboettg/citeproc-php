@@ -104,7 +104,7 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "title": "Make racists afraid again", 
+        "title": "Make racists afraid again",
         "type": "book"
     }
 ]

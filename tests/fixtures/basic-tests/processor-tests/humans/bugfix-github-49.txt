@@ -825,37 +825,37 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "DOI": "10.1234/publicknowledge.v2i3.30", 
-        "URL": "http://localhost/ojs/publicknowledge/article/view/30", 
+        "DOI": "10.1234/publicknowledge.v2i3.30",
+        "URL": "http://localhost/ojs/publicknowledge/article/view/30",
         "accessed": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": "2018-04-11"
-        }, 
+        },
         "author": [
             {
-                "family": "Corino", 
+                "family": "Corino",
                 "given": "Carlo"
-            }, 
+            },
             {
-                "family": "Contributor", 
+                "family": "Contributor",
                 "given": "Test"
-            }, 
+            },
             {
-                "family": "Another", 
+                "family": "Another",
                 "given": "Test"
             }
-        ], 
-        "container-title": "Journal of Public Knowledge", 
-        "container-title-short": "publicknowledge", 
-        "id": "30", 
-        "issue": "3", 
+        ],
+        "container-title": "Journal of Public Knowledge",
+        "container-title-short": "publicknowledge",
+        "id": "30",
+        "issue": "3",
         "issued": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": "2017-10-17 00:00:00"
-        }, 
-        "section": "Articles", 
-        "title": "Est maximus eu donec congue “Nešto Između” Srđana Karanović“a", 
-        "type": "article-journal", 
+        },
+        "section": "Articles",
+        "title": "Est maximus eu donec congue “Nešto Između” Srđana Karanović“a",
+        "type": "article-journal",
         "volume": "2"
     }
 ]

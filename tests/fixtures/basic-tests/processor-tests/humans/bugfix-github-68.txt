@@ -1542,10 +1542,10 @@ bibliography
 [
     {
         "issued": {
-            "date-parts": [], 
+            "date-parts": [],
             "string-literal": ""
-        }, 
-        "title": "TEST: test", 
+        },
+        "title": "TEST: test",
         "type": "article-journal"
     }
 ]

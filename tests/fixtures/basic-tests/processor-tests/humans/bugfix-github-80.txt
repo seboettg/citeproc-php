@@ -67,7 +67,7 @@ bibliography
     {
         "author": [
             {
-                "family": "Gebremedhin", 
+                "family": "Gebremedhin",
                 "given": "Maheteme T."
             }
         ]

@@ -46,37 +46,37 @@ bibliography
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "item-1", 
+        ],
+        "id": "item-1",
         "issued": {
             "date-parts": [
                 [
                     "2000"
                 ]
             ]
-        }, 
-        "title": "The Book Title", 
+        },
+        "title": "The Book Title",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "item-1", 
+        ],
+        "id": "item-1",
         "issued": {
             "date-parts": [
                 [
                     "2000"
                 ]
             ]
-        }, 
-        "title": "The Book Title.", 
+        },
+        "title": "The Book Title.",
         "type": "book"
     }
 ]

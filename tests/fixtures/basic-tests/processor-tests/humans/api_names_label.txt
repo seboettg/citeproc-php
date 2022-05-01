@@ -45,33 +45,33 @@ Aalto+Blevins (editor); Colostomy (editor)+Dropsie (translator)
     {
         "author": [
             {
-                "family": "Aalto", 
+                "family": "Aalto",
                 "given": "Alan"
             }
-        ], 
+        ],
         "editor": [
             {
-                "family": "Blevins", 
+                "family": "Blevins",
                 "given": "Butthead"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Colostomy", 
+                "family": "Colostomy",
                 "given": "Colin"
             }
-        ], 
-        "id": "ITEM-2", 
+        ],
+        "id": "ITEM-2",
         "translator": [
             {
-                "family": "Dropsie", 
+                "family": "Dropsie",
                 "given": "David"
             }
-        ], 
+        ],
         "type": "book"
     }
 ]

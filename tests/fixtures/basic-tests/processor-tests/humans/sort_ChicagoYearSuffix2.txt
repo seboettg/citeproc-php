@@ -393,39 +393,39 @@ bibliography
             {
                 "literal": "Beijing Zoo"
             }
-        ], 
-        "container-title": "Acta Zoologica Sinica", 
-        "id": "ITEM-2", 
+        ],
+        "container-title": "Acta Zoologica Sinica",
+        "id": "ITEM-2",
         "issued": {
             "date-parts": [
                 [
                     "1974"
                 ]
             ]
-        }, 
-        "page": "139-147", 
-        "title": "On the diseases of the giant panda and their preventive and curative measures [in Chinese]", 
-        "type": "article-journal", 
+        },
+        "page": "139-147",
+        "title": "On the diseases of the giant panda and their preventive and curative measures [in Chinese]",
+        "type": "article-journal",
         "volume": "20"
-    }, 
+    },
     {
         "author": [
             {
                 "family": "Beijing Zoo"
             }
-        ], 
-        "container-title": "Acta Zoologica Sinica", 
-        "id": "ITEM-1", 
+        ],
+        "container-title": "Acta Zoologica Sinica",
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
                     "1974"
                 ]
             ]
-        }, 
-        "page": "154-161", 
-        "title": "Observations on the breeding of the giant panda and the raising of its young [in Chinese]", 
-        "type": "article-journal", 
+        },
+        "page": "154-161",
+        "title": "Observations on the breeding of the giant panda and the raising of its young [in Chinese]",
+        "type": "article-journal",
         "volume": "20"
     }
 ]
