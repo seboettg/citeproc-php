@@ -112,7 +112,9 @@ class Text implements Rendering
                 if (CiteProc::getContext()->getRenderingState()->getValue() === RenderingState::SUBSTITUTION) {
                     unset($data->{$this->toRenderTypeValue});
                 }
-                $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
+                if (!CiteProcHelper::isUsingAffixesByMarkupExtentsion($data, $this->toRenderTypeValue)) {
+					$renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
+				}
                 break;
             case 'macro':
                 $renderedText = $this->renderMacro($data);
@@ -125,7 +127,7 @@ class Text implements Rendering
                 $renderedText = !empty($term) ? $this->applyTextCase($term, $lang) : "";
         }
         if (!empty($renderedText)) {
-            $renderedText = $this->formatRenderedText($renderedText);
+            $renderedText = $this->formatRenderedText($data, $renderedText);
         }
         return $renderedText;
     }
@@ -239,13 +241,17 @@ class Text implements Rendering
     }
 
     /**
-     * @param  $renderedText
+	 * @param  $data
+	 * @param  $renderedText
      * @return string
      */
-    private function formatRenderedText($renderedText)
+    private function formatRenderedText($data, $renderedText)
     {
         $text = $this->format($renderedText);
         $res = $this->addAffixes($text);
+		if (CiteProcHelper::isUsingAffixesByMarkupExtentsion($data, $this->toRenderTypeValue)) {
+			$res = $this->applyAdditionalMarkupFunction($data, $res);
+		}
         if (!empty($res)) {
             $res = $this->removeConsecutiveChars($res);
         }
@@ -261,7 +267,9 @@ class Text implements Rendering
     private function renderCitationNumber($data, $citationNumber)
     {
         $renderedText = $citationNumber + 1;
-        $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
+		if (!CiteProcHelper::isUsingAffixesByMarkupExtentsion($data, $this->toRenderTypeValue)) {
+			$renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
+		}
         return $renderedText;
     }
 
