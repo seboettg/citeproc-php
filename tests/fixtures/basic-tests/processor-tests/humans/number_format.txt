@@ -37,7 +37,7 @@ iv-vii
 >>===== INPUT =====>>
 [
     {
-        "number": "4 - 7", 
+        "number": "4 - 7",
         "type": "book"
     }
 ]

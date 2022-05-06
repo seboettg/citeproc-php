@@ -14,41 +14,41 @@ citation
 [
     [
         {
-            "citationID": "CITATION-1", 
+            "citationID": "CITATION-1",
             "citationItems": [
                 {
                     "id": "ITEM-2"
-                }, 
+                },
                 {
                     "id": "ITEM-3"
-                }, 
+                },
                 {
                     "id": "ITEM-1"
                 }
-            ], 
+            ],
             "properties": {
                 "noteIndex": 1
             }
-        }, 
-        [], 
+        },
+        [],
         []
-    ], 
+    ],
     [
         {
-            "citationID": "CITATION-2", 
+            "citationID": "CITATION-2",
             "citationItems": [
                 {
                     "id": "ITEM-1"
                 }
-            ], 
+            ],
             "properties": {
                 "noteIndex": 1
             }
-        }, 
-        [], 
+        },
+        [],
         [
             [
-                "CITATION-1", 
+                "CITATION-1",
                 2
             ]
         ]

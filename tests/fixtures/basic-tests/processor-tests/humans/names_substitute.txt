@@ -42,38 +42,38 @@ xx
     {
         "author": [
             {
-                "family": "Mitchell", 
+                "family": "Mitchell",
                 "given": "Greg"
             }
-        ], 
+        ],
         "editor": [
             {
-                "family": "Johnson", 
+                "family": "Johnson",
                 "given": "David"
             }
-        ], 
-        "id": "ITEM-1", 
-        "title": "Ignore me", 
+        ],
+        "id": "ITEM-1",
+        "title": "Ignore me",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Johnson", 
+                "family": "Johnson",
                 "given": "David"
             }
-        ], 
-        "id": "ITEM-1", 
-        "title": "Ignore me", 
+        ],
+        "id": "ITEM-1",
+        "title": "Ignore me",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-1", 
-        "title": "Ignore me", 
+        "id": "ITEM-1",
+        "title": "Ignore me",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

@@ -36,11 +36,11 @@ Susan McMurphy Smith
     {
         "author": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "Susan McMurphy"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

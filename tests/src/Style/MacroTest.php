@@ -15,7 +15,7 @@ use Seboettg\CiteProc\CiteProc;
 class MacroTest extends TestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }

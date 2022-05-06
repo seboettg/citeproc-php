@@ -477,25 +477,25 @@ bibliography
     {
         "author": [
             {
-                "family": "Bloom", 
+                "family": "Bloom",
                 "given": "Harold"
             }
-        ], 
-        "container-title": "Shakespeare: The Invention of the Human", 
+        ],
+        "container-title": "Shakespeare: The Invention of the Human",
         "issued": {
             "date-parts": [
                 [
-                    "1998", 
-                    "07", 
+                    "1998",
+                    "07",
                     "02"
                 ]
             ]
-        }, 
-        "number-of-volumes": "", 
-        "page": "226-246", 
-        "publisher": "Forth Estate", 
-        "publisher-place": "London", 
-        "title": "Twelfth Night", 
+        },
+        "number-of-volumes": "",
+        "page": "226-246",
+        "publisher": "Forth Estate",
+        "publisher-place": "London",
+        "title": "Twelfth Night",
         "type": "chapter"
     }
 ]

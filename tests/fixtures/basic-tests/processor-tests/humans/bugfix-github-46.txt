@@ -356,29 +356,29 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "URL": "https://pj.iph.ras.ru/index.php/ph_j/article/view/31", 
+        "URL": "https://pj.iph.ras.ru/index.php/ph_j/article/view/31",
         "accessed": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": ""
-        }, 
+        },
         "author": [
             {
-                "family": "Месяц", 
+                "family": "Месяц",
                 "given": "Светлана Викторовна"
             }
-        ], 
-        "container-title": "Philosophy Journal", 
-        "container-title-short": "PhJ", 
-        "id": "31", 
-        "issue": "1", 
+        ],
+        "container-title": "Philosophy Journal",
+        "container-title-short": "PhJ",
+        "id": "31",
+        "issue": "1",
         "issued": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": "2015-03-05 00:00:00"
-        }, 
-        "page": "7-22", 
-        "section": "ACADEMIC DISCUSSIONS", 
-        "title": "Proclus’ metaphysics: between worldview and language game. Reflections on the book of Radek Chlup", 
-        "type": "article-journal", 
+        },
+        "page": "7-22",
+        "section": "ACADEMIC DISCUSSIONS",
+        "title": "Proclus’ metaphysics: between worldview and language game. Reflections on the book of Radek Chlup",
+        "type": "article-journal",
         "volume": "8"
     }
 ]

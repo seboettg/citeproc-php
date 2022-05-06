@@ -28,7 +28,7 @@ class ContextTest extends TestCase
      */
     private $context;
 
-    public function setUp()
+    public function setUp(): void
     {
         $style = StyleSheet::loadStyleSheet("din-1505-2");
         $this->citeProc = new CiteProc($style, "de-DE");

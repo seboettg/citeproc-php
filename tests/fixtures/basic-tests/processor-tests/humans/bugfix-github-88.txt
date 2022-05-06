@@ -1931,34 +1931,34 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "URL": "https://gradusjournal.com/index.php/gradus/article/view/133", 
+        "URL": "https://gradusjournal.com/index.php/gradus/article/view/133",
         "accessed": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": "2020-07-20"
-        }, 
+        },
         "author": [
             {
-                "family": "Martins", 
+                "family": "Martins",
                 "given": "Marcus Vinicius Moreira"
-            }, 
+            },
             {
-                "family": "Ferreira Netto", 
+                "family": "Ferreira Netto",
                 "given": "Waldemar"
             }
-        ], 
-        "container-title": "Gradus - Revista Brasileira de Fonologia de Laboratório", 
-        "container-title-short": "gradus", 
-        "id": 133, 
-        "issue": "2", 
+        ],
+        "container-title": "Gradus - Revista Brasileira de Fonologia de Laboratório",
+        "container-title-short": "gradus",
+        "id": 133,
+        "issue": "2",
         "issued": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": "2020-01-03"
-        }, 
-        "page": "11-31", 
-        "publisher-place": "Curitiba", 
-        "section": "", 
-        "title": "Retomada do tom médio após intervalos de sonoridade", 
-        "type": "article-journal", 
+        },
+        "page": "11-31",
+        "publisher-place": "Curitiba",
+        "section": "",
+        "title": "Retomada do tom médio após intervalos de sonoridade",
+        "type": "article-journal",
         "volume": "4"
     }
 ]

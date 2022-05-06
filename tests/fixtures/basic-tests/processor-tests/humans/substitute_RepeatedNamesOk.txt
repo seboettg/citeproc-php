@@ -52,17 +52,17 @@ Ma Ry, Ma Ry, Kwite Kontrari
     {
         "author": [
             {
-                "family": "Ry", 
+                "family": "Ry",
                 "given": "Ma"
             }
-        ], 
+        ],
         "editor": [
             {
-                "family": "Kontrari", 
+                "family": "Kontrari",
                 "given": "Kwite"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

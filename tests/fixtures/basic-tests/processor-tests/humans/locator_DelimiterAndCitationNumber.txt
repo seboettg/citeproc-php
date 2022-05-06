@@ -10,15 +10,15 @@ citation
 [
     [
         {
-            "id": "ITEM-1", 
+            "id": "ITEM-1",
             "locator": "32"
-        }, 
+        },
         {
-            "id": "ITEM-2", 
+            "id": "ITEM-2",
             "locator": "32"
-        }, 
+        },
         {
-            "id": "ITEM-3", 
+            "id": "ITEM-3",
             "locator": "32"
         }
     ]

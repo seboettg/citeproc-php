@@ -44,20 +44,20 @@ citation
 >>===== INPUT =====>>
 [
     {
-        "URL": "http://example.org/ITEM-1", 
+        "URL": "http://example.org/ITEM-1",
         "accessed": {
             "date-parts": [
                 [
-                    2012, 
-                    4, 
+                    2012,
+                    4,
                     10
                 ]
             ]
-        }, 
+        },
         "id": "ITEM-1"
-    }, 
+    },
     {
-        "URL": "http://example.org/ITEM-2", 
+        "URL": "http://example.org/ITEM-2",
         "id": "ITEM-2"
     }
 ]

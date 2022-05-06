@@ -187,29 +187,29 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "ISSN": "2076-8214", 
-        "abstract": "The wars in Bosnia (1992–1995) and Kosovo (1998–1999) caused Germany to seriously consider military intervention abroad for the first time since the Second World War. The political stance taken by the then-recently reunited Germany towards the so-called Balkan wars was largely negotiated by the national public press. In The War in Our Backyard Margit V. Wunsch Gaarmann analyses how these two wars—and the political debates they triggered—were portrayed by the German press. Her study can be seen as a part of a larger field of research dealing with the connection between media and war. In her book Gaarmann presents a differentiated image of the German media, demonstrating that reports were far more controversial than suggested by the academic literature to date.", 
+        "ISSN": "2076-8214",
+        "abstract": "The wars in Bosnia (1992–1995) and Kosovo (1998–1999) caused Germany to seriously consider military intervention abroad for the first time since the Second World War. The political stance taken by the then-recently reunited Germany towards the so-called Balkan wars was largely negotiated by the national public press. In The War in Our Backyard Margit V. Wunsch Gaarmann analyses how these two wars—and the political debates they triggered—were portrayed by the German press. Her study can be seen as a part of a larger field of research dealing with the connection between media and war. In her book Gaarmann presents a differentiated image of the German media, demonstrating that reports were far more controversial than suggested by the academic literature to date.",
         "author": [
             {
-                "family": "Freiermuth Samardzic", 
+                "family": "Freiermuth Samardzic",
                 "given": "Nadine"
             }
-        ], 
-        "container-title": "Laboratorium 2015", 
-        "editor": [], 
-        "issue": 2, 
+        ],
+        "container-title": "Laboratorium 2015",
+        "editor": [],
+        "issue": 2,
         "issued": {
             "date-parts": [
                 [
                     "2015"
                 ]
             ]
-        }, 
-        "note": "Publication type according to Uni Basel Research Database: Journal article", 
-        "page": "206-209", 
-        "publisher": "CNSI", 
-        "title": "[Book Review on] Margit V. Wunsch Gaarmann: The War in Our Backyard: The Bosnia and Kosovo Wars through the Lens of the German Print Media. Berlin 2015", 
-        "type": "article-journal", 
+        },
+        "note": "Publication type according to Uni Basel Research Database: Journal article",
+        "page": "206-209",
+        "publisher": "CNSI",
+        "title": "[Book Review on] Margit V. Wunsch Gaarmann: The War in Our Backyard: The Bosnia and Kosovo Wars through the Lens of the German Print Media. Berlin 2015",
+        "type": "article-journal",
         "volume": 7
     }
 ]

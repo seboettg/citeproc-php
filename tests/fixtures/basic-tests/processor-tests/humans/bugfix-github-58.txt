@@ -790,18 +790,18 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "URL": "www.starwars.com/", 
+        "URL": "www.starwars.com/",
         "accessed": {
             "date-parts": [
                 [
-                    "2018", 
-                    "09", 
+                    "2018",
+                    "09",
                     "19"
                 ]
             ]
-        }, 
-        "id": "item-1", 
-        "title": "StarWars.com | The Official Star Wars Website", 
+        },
+        "id": "item-1",
+        "title": "StarWars.com | The Official Star Wars Website",
         "type": "webpage"
     }
 ]

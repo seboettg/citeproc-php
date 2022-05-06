@@ -36,7 +36,7 @@ n.d.
 >>===== INPUT =====>>
 [
     {
-        "title": "His Anonymous Life", 
+        "title": "His Anonymous Life",
         "type": "book"
     }
 ]

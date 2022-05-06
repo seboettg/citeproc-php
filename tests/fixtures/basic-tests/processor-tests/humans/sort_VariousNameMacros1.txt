@@ -287,91 +287,91 @@ bibliography
     {
         "author": [
             {
-                "family": "Doe", 
-                "given": "Jane B.", 
+                "family": "Doe",
+                "given": "Jane B.",
                 "isInstitution": ""
-            }, 
+            },
             {
-                "family": "Doe", 
-                "given": "John A.", 
+                "family": "Doe",
+                "given": "John A.",
                 "isInstitution": ""
             }
-        ], 
-        "container-title": "Test", 
-        "id": 19, 
+        ],
+        "container-title": "Test",
+        "id": 19,
         "issued": {
             "date-parts": [
                 [
                     2009
                 ]
             ]
-        }, 
+        },
         "multi": {
             "_keys": {}
-        }, 
-        "page": "1-2", 
-        "title": "Title 1", 
-        "type": "article-journal", 
+        },
+        "page": "1-2",
+        "title": "Title 1",
+        "type": "article-journal",
         "volume": "1"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
-                "given": "John A.", 
+                "family": "Doe",
+                "given": "John A.",
                 "isInstitution": ""
-            }, 
+            },
             {
-                "family": "Smith", 
-                "given": "John A.", 
+                "family": "Smith",
+                "given": "John A.",
                 "isInstitution": ""
             }
-        ], 
-        "container-title": "Test", 
-        "id": 25, 
+        ],
+        "container-title": "Test",
+        "id": 25,
         "issued": {
             "date-parts": [
                 [
                     2010
                 ]
             ]
-        }, 
+        },
         "multi": {
             "_keys": {}
-        }, 
-        "page": "1-2", 
-        "title": "Title 2", 
-        "type": "article-journal", 
+        },
+        "page": "1-2",
+        "title": "Title 2",
+        "type": "article-journal",
         "volume": "2"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
-                "given": "John A.", 
+                "family": "Doe",
+                "given": "John A.",
                 "isInstitution": ""
-            }, 
+            },
             {
-                "family": "Bloggs", 
-                "given": "Joe A.", 
+                "family": "Bloggs",
+                "given": "Joe A.",
                 "isInstitution": ""
             }
-        ], 
-        "container-title": "Test", 
-        "id": 27, 
+        ],
+        "container-title": "Test",
+        "id": 27,
         "issued": {
             "date-parts": [
                 [
                     2011
                 ]
             ]
-        }, 
+        },
         "multi": {
             "_keys": {}
-        }, 
-        "page": "3-4", 
-        "title": "Title 3", 
-        "type": "article-journal", 
+        },
+        "page": "3-4",
+        "title": "Title 3",
+        "type": "article-journal",
         "volume": "3"
     }
 ]

@@ -40,7 +40,7 @@ This is a Random TITLE.
 >>===== INPUT =====>>
 [
     {
-        "title": "this is a Random TITLE.", 
+        "title": "this is a Random TITLE.",
         "type": "book"
     }
 ]

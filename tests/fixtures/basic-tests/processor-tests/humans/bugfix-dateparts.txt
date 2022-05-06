@@ -708,24 +708,24 @@ bibliography
     {
         "author": [
             {
-                "family": "Navarr", 
+                "family": "Navarr",
                 "given": "Joe"
             }
-        ], 
-        "container-title": "FBI Law Enforcement Bulletin", 
-        "issue": "8", 
+        ],
+        "container-title": "FBI Law Enforcement Bulletin",
+        "issue": "8",
         "issued": {
             "date-parts": [
                 [
-                    "2012", 
-                    "01", 
+                    "2012",
+                    "01",
                     "01"
                 ]
             ]
-        }, 
-        "page": "7-7", 
-        "title": "Detecting Deception null [article]", 
-        "type": "article", 
+        },
+        "page": "7-7",
+        "title": "Detecting Deception null [article]",
+        "type": "article",
         "volume": "81"
     }
 ]

@@ -55,38 +55,38 @@ citation
     {
         "author": [
             {
-                "family": "Manstein", 
+                "family": "Manstein",
                 "given": "Erich Von"
             }
-        ], 
-        "id": "ITEM-0", 
+        ],
+        "id": "ITEM-0",
         "issued": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": " 1982 Sep "
-        }, 
-        "page": "1002-1006", 
-        "publisher": "Presidio Pr", 
-        "title": "Lost Victories", 
+        },
+        "page": "1002-1006",
+        "publisher": "Presidio Pr",
+        "title": "Lost Victories",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Friedrich", 
+                "family": "Friedrich",
                 "given": "Walter"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
                     1984
                 ]
             ]
-        }, 
-        "page": "711-719", 
-        "publisher": "Presidio Pr", 
-        "title": "Another title", 
+        },
+        "page": "711-719",
+        "publisher": "Presidio Pr",
+        "title": "Another title",
         "type": "book"
     }
 ]

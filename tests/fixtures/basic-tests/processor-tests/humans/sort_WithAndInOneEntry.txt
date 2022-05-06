@@ -10,60 +10,60 @@ citation
 [
     [
         {
-            "citationID": "29lcbr8ict", 
+            "citationID": "29lcbr8ict",
             "citationItems": [
                 {
-                    "id": "315", 
+                    "id": "315",
                     "label": "page"
-                }, 
+                },
                 {
-                    "id": "313", 
+                    "id": "313",
                     "label": "page"
-                }, 
+                },
                 {
-                    "id": "328", 
+                    "id": "328",
                     "label": "page"
-                }, 
+                },
                 {
-                    "id": "317", 
+                    "id": "317",
                     "label": "page"
-                }, 
+                },
                 {
-                    "id": "327", 
+                    "id": "327",
                     "label": "page"
-                }, 
+                },
                 {
-                    "id": "311", 
+                    "id": "311",
                     "label": "page"
-                }, 
+                },
                 {
-                    "id": "320", 
+                    "id": "320",
                     "label": "page"
-                }, 
+                },
                 {
-                    "id": "318", 
+                    "id": "318",
                     "label": "page"
-                }, 
+                },
                 {
-                    "id": "323", 
+                    "id": "323",
                     "label": "page"
-                }, 
+                },
                 {
-                    "id": "324", 
+                    "id": "324",
                     "label": "page"
-                }, 
+                },
                 {
-                    "id": "325", 
+                    "id": "325",
                     "label": "page"
                 }
-            ], 
+            ],
             "properties": {
-                "index": 0, 
+                "index": 0,
                 "noteIndex": 0
-            }, 
+            },
             "schema": "https://github.com/citation-style-language/schema/raw/master/csl-citation.json"
-        }, 
-        [], 
+        },
+        [],
         []
     ]
 ]

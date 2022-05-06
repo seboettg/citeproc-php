@@ -42,13 +42,13 @@ volume 1; volumes 2
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
-        "number-of-volumes": 1, 
+        "id": "ITEM-1",
+        "number-of-volumes": 1,
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-2", 
-        "number-of-volumes": 2, 
+        "id": "ITEM-2",
+        "number-of-volumes": 2,
         "type": "book"
     }
 ]

@@ -36,12 +36,12 @@ citation
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": "Oct 28, 1958"
-        }, 
-        "title": "Ignore me", 
+        },
+        "title": "Ignore me",
         "type": "book"
     }
 ]

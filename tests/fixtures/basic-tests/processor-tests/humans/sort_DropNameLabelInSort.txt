@@ -122,45 +122,45 @@ mla-x.csl
     {
         "editor": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "ITEM-1", 
-        "title": "Hello", 
+        ],
+        "id": "ITEM-1",
+        "title": "Hello",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "ITEM-4", 
-        "title": "Hello", 
+        ],
+        "id": "ITEM-4",
+        "title": "Hello",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John Eamon"
             }
-        ], 
-        "id": "ITEM-2", 
-        "title": "Hello", 
+        ],
+        "id": "ITEM-2",
+        "title": "Hello",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John Egbert"
             }
-        ], 
-        "id": "ITEM-3", 
-        "title": "Hello", 
+        ],
+        "id": "ITEM-3",
+        "title": "Hello",
         "type": "book"
     }
 ]

@@ -64,53 +64,53 @@ bibliography
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Anderson", 
+                "family": "Anderson",
                 "given": "Alvin"
-            }, 
+            },
             {
-                "family": "Zotero", 
+                "family": "Zotero",
                 "given": "Zoe"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
                     "1999"
                 ]
             ]
-        }, 
-        "title": "Book Two", 
+        },
+        "title": "Book Two",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Xerxes", 
+                "family": "Xerxes",
                 "given": "Xavier"
-            }, 
+            },
             {
-                "family": "Boop", 
+                "family": "Boop",
                 "given": "Betty"
             }
-        ], 
-        "id": "ITEM-2", 
+        ],
+        "id": "ITEM-2",
         "issued": {
             "date-parts": [
                 [
                     "2000"
                 ]
             ]
-        }, 
-        "title": "Book One", 
+        },
+        "title": "Book One",
         "type": "book"
     }
 ]

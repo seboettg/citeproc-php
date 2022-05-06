@@ -395,23 +395,23 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "URL": "http://example.com/", 
+        "URL": "http://example.com/",
         "accessed": {
             "date-parts": [
                 [
-                    "1965", 
-                    "6", 
+                    "1965",
+                    "6",
                     "1"
                 ]
             ]
-        }, 
+        },
         "author": [
             {
-                "family": "Doe Inc.", 
+                "family": "Doe Inc.",
                 "isInstitution": true
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "webpage"
     }
 ]
