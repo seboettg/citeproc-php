@@ -29,7 +29,7 @@ class LocaleTest extends TestCase
         static::assertEquals("o. J.", $a2->{'single'});
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new Locale("de-DE");
     }
