@@ -19,7 +19,7 @@ class NumberTest extends TestCase
 {
     use TestSuiteTestCaseTrait;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $context = new Context();
