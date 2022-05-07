@@ -38,15 +38,15 @@ citation
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "issued": {
-            "date-parts": [], 
+            "date-parts": [],
             "literal": "(in press)"
-        }, 
+        },
         "type": "book"
     }
 ]

@@ -13,20 +13,20 @@ citation
 [
     [
         {
-            "citationID": "CITATION-1", 
+            "citationID": "CITATION-1",
             "citationItems": [
                 {
                     "id": "ITEM-1"
-                }, 
+                },
                 {
                     "id": "ITEM-2"
                 }
-            ], 
+            ],
             "properties": {
                 "noteIndex": 1
             }
-        }, 
-        [], 
+        },
+        [],
         []
     ]
 ]

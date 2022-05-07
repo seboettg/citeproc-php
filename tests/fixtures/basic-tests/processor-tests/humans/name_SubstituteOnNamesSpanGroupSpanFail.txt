@@ -44,20 +44,20 @@ citation
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "edition": "5", 
-        "id": "item-1", 
+        ],
+        "edition": "5",
+        "id": "item-1",
         "issued": {
             "date-parts": [
                 [
                     "2000"
                 ]
             ]
-        }, 
-        "title": "His Anonymous Life", 
+        },
+        "title": "His Anonymous Life",
         "type": "book"
     }
 ]

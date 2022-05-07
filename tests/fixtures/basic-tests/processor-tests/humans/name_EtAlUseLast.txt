@@ -47,39 +47,39 @@ bibliography
     {
         "author": [
             {
-                "family": "Anderson", 
+                "family": "Anderson",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Brown", 
+                "family": "Brown",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Catharsis", 
+                "family": "Catharsis",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Doldrums", 
+                "family": "Doldrums",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Evergreen", 
+                "family": "Evergreen",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Fugedaboutit", 
+                "family": "Fugedaboutit",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Gargoyle", 
+                "family": "Gargoyle",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Houynym", 
+                "family": "Houynym",
                 "given": "John"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

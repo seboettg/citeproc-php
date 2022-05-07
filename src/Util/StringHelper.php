@@ -11,7 +11,6 @@
 namespace Seboettg\CiteProc\Util;
 
 use Seboettg\CiteProc\CiteProc;
-use Symfony\Polyfill\Mbstring\Mbstring;
 
 /**
  * Class StringHelper
@@ -53,7 +52,6 @@ class StringHelper
         'ISO-8859-8',
         'ISO-8859-9',
         'ISO-8859-10',
-        'ISO-8859-11',
         'ISO-8859-13',
         'ISO-8859-14',
         'ISO-8859-15',
@@ -138,9 +136,9 @@ class StringHelper
         $then = mb_substr($string, 1, $strlen - 1, $encoding);
 
         /** @noinspection PhpInternalEntityUsedInspection */
-        $encoding = Mbstring::mb_detect_encoding($firstChar, self::ISO_ENCODINGS, true);
+        $encoding = mb_detect_encoding($firstChar, self::ISO_ENCODINGS, true);
         return in_array($encoding, self::ISO_ENCODINGS) ?
-            Mbstring::mb_strtoupper($firstChar, $encoding).$then : $firstChar.$then;
+            mb_strtoupper($firstChar, $encoding).$then : $firstChar.$then;
     }
     // phpcs:disable
     public static function mb_strrev($string)

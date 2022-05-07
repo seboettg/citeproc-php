@@ -35,19 +35,19 @@ citation
     {
         "author": [
             {
-                "family": "我妻", 
+                "family": "我妻",
                 "given": "栄"
             }
-        ], 
-        "id": "item-1", 
+        ],
+        "id": "item-1",
         "issued": {
             "date-parts": [
                 [
                     "1960"
                 ]
             ]
-        }, 
-        "title": "民法", 
+        },
+        "title": "民法",
         "type": "book"
     }
 ]

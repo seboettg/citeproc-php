@@ -10,8 +10,8 @@ Book A, fol. 101
 [
     [
         {
-            "id": "ITEM-1", 
-            "label": "folio", 
+            "id": "ITEM-1",
+            "label": "folio",
             "locator": "101"
         }
     ]

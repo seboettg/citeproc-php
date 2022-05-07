@@ -11,7 +11,7 @@ citation
     [
         {
             "id": "ITEM-1"
-        }, 
+        },
         {
             "id": "ITEM-3"
         }

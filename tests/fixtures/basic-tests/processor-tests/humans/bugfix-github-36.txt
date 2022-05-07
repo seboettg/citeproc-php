@@ -46,26 +46,26 @@ https://github.com/seboettg/citeproc-php/issues/37
     {
         "author": [
             {
-                "family": "Beethoven", 
+                "family": "Beethoven",
                 "given": "Ludwig van"
-            }, 
+            },
             {
-                "family": "Backhaus", 
+                "family": "Backhaus",
                 "given": "Wilhelm"
             }
-        ], 
+        ],
         "issued": {
             "date-parts": [
                 [
                     "[ca. 1970]"
                 ]
-            ], 
+            ],
             "literal": "[ca. 1970]"
-        }, 
-        "number-of-pages": "1 Schallpl.", 
-        "publisher": "Decca", 
-        "publisher-place": "[Hamburg]", 
-        "title": "Wilhelm Backhaus spielt Ludwig van Beethoven", 
+        },
+        "number-of-pages": "1 Schallpl.",
+        "publisher": "Decca",
+        "publisher-place": "[Hamburg]",
+        "title": "Wilhelm Backhaus spielt Ludwig van Beethoven",
         "type": "book"
     }
 ]

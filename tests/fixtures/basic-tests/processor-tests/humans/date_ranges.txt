@@ -67,124 +67,124 @@ citation
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
-                    2003, 
-                    8, 
+                    2003,
+                    8,
                     10
-                ], 
+                ],
                 [
-                    2003, 
-                    8, 
+                    2003,
+                    8,
                     23
                 ]
             ]
-        }, 
-        "title": "Ignore me", 
+        },
+        "title": "Ignore me",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
-                    2003, 
-                    8, 
+                    2003,
+                    8,
                     3
-                ], 
+                ],
                 [
-                    2003, 
-                    10, 
+                    2003,
+                    10,
                     23
                 ]
             ]
-        }, 
-        "title": "Ignore me", 
+        },
+        "title": "Ignore me",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
-                    1987, 
-                    8, 
+                    1987,
+                    8,
                     3
-                ], 
+                ],
                 [
-                    2003, 
-                    10, 
+                    2003,
+                    10,
                     23
                 ]
             ]
-        }, 
-        "title": "Ignore me", 
+        },
+        "title": "Ignore me",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
-                    2003, 
+                    2003,
                     8
-                ], 
+                ],
                 [
-                    2003, 
+                    2003,
                     10
                 ]
             ]
-        }, 
-        "title": "Ignore me", 
+        },
+        "title": "Ignore me",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
-                    1987, 
+                    1987,
                     8
-                ], 
+                ],
                 [
-                    2003, 
+                    2003,
                     10
                 ]
             ]
-        }, 
-        "title": "Ignore me", 
+        },
+        "title": "Ignore me",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
                     1987
-                ], 
+                ],
                 [
                     2003
                 ]
             ]
-        }, 
-        "title": "Ignore me", 
+        },
+        "title": "Ignore me",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
                     1987
-                ], 
+                ],
                 [
                     0
                 ]
             ]
-        }, 
-        "title": "Ignore me", 
+        },
+        "title": "Ignore me",
         "type": "book"
     }
 ]

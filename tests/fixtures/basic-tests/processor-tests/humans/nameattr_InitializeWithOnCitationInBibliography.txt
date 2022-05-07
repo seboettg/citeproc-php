@@ -44,11 +44,11 @@ bibliography
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John-Lee"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

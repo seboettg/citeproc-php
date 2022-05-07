@@ -231,7 +231,7 @@ ENDING IN COMMA
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

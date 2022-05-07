@@ -43,19 +43,19 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
-        "title": "Book A", 
+        "id": "ITEM-1",
+        "title": "Book A",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-2", 
-        "status": "forthcoming", 
-        "title": "Book B", 
+        "id": "ITEM-2",
+        "status": "forthcoming",
+        "title": "Book B",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-3", 
-        "title": "Book C", 
+        "id": "ITEM-3",
+        "title": "Book C",
         "type": "book"
     }
 ]

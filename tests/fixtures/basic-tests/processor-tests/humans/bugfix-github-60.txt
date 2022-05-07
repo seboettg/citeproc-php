@@ -365,14 +365,14 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "container-title": "Journal of ABCs", 
-        "container-title-short": "JABC", 
-        "id": 123, 
-        "issue": 1, 
-        "page": "3-10", 
-        "section": "Section Title", 
-        "title": "My Article", 
-        "type": "article-journal", 
+        "container-title": "Journal of ABCs",
+        "container-title-short": "JABC",
+        "id": 123,
+        "issue": 1,
+        "page": "3-10",
+        "section": "Section Title",
+        "title": "My Article",
+        "type": "article-journal",
         "volume": 1
     }
 ]

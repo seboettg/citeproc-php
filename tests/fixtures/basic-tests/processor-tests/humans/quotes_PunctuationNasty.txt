@@ -975,23 +975,23 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "archive": "Bancroft Library, University of California at Berkeley", 
-        "archive_location": "MSS C-E 191", 
+        "archive": "Bancroft Library, University of California at Berkeley",
+        "archive_location": "MSS C-E 191",
         "author": [
             {
-                "family": "Savage", 
+                "family": "Savage",
                 "given": "Thomas"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
                     "1879"
                 ]
             ]
-        }, 
-        "title": "Report of Labors in Archives and Procuring Material for History of California: And Related Material", 
+        },
+        "title": "Report of Labors in Archives and Procuring Material for History of California: And Related Material",
         "type": "manuscript"
     }
 ]

@@ -31,7 +31,8 @@
         "myclabs/php-enum": "^1.5",
         "ext-simplexml": "*",
         "ext-json": "*",
-        "php": ">=7.1"
+        "php": ">=7.1",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "php-coveralls/php-coveralls": "^1",
@@ -41,7 +42,6 @@
     },
     "suggest": {
         "ext-intl": "*",
-        "ext-mbstring": "*",
         "symfony/polyfill-mbstring": "^1.10"
     },
     "scripts": {

@@ -33,9 +33,9 @@ something
 >>===== INPUT =====>>
 [
     {
-        "container-title": "my container title", 
-        "id": "ITEM-1", 
-        "shortTitle": "something", 
+        "container-title": "my container title",
+        "id": "ITEM-1",
+        "shortTitle": "something",
         "type": "manuscript"
     }
 ]

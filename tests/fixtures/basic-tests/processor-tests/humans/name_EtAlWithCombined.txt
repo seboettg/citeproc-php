@@ -330,25 +330,25 @@ bibliography
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
+        ],
         "collection-editor": [
             {
-                "family": "Zither", 
+                "family": "Zither",
                 "given": "Ziggy"
-            }, 
+            },
             {
-                "family": "Yoda", 
+                "family": "Yoda",
                 "given": "Yossarian"
-            }, 
+            },
             {
-                "family": "Xylophone", 
+                "family": "Xylophone",
                 "given": "Xerxes"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

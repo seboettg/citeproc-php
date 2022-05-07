@@ -54,52 +54,52 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "collection-number": "95-2", 
-        "collection-title": "Corpus Mensurabilis Musicae", 
+        "collection-number": "95-2",
+        "collection-title": "Corpus Mensurabilis Musicae",
         "editor": [
             {
-                "family": "Josephson", 
+                "family": "Josephson",
                 "given": "Nors S."
             }
-        ], 
-        "event-place": "Neuhausen-Stuttgart", 
-        "id": "7021352/UTSP92QZ", 
+        ],
+        "event-place": "Neuhausen-Stuttgart",
+        "id": "7021352/UTSP92QZ",
         "issued": {
             "date-parts": [
                 [
                     1982
                 ]
             ]
-        }, 
-        "language": "en", 
-        "publisher": "American Institute of Musicology, Hänssler-Verlag", 
-        "publisher-place": "Neuhausen-Stuttgart", 
-        "title": "Early Sixteenth-Century Sacred Music from the Papal Chapel", 
-        "type": "book", 
+        },
+        "language": "en",
+        "publisher": "American Institute of Musicology, Hänssler-Verlag",
+        "publisher-place": "Neuhausen-Stuttgart",
+        "title": "Early Sixteenth-Century Sacred Music from the Papal Chapel",
+        "type": "book",
         "volume": "II"
-    }, 
+    },
     {
-        "collection-number": "95-2", 
-        "collection-title": "Corpus Mensurabilis Musicae", 
+        "collection-number": "95-2",
+        "collection-title": "Corpus Mensurabilis Musicae",
         "editor": [
             {
-                "family": "Josephson", 
+                "family": "Josephson",
                 "given": "Nors S."
             }
-        ], 
-        "event-place": "Neuhausen-Stuttgart", 
-        "id": "7021352/UTSP92QZ", 
+        ],
+        "event-place": "Neuhausen-Stuttgart",
+        "id": "7021352/UTSP92QZ",
         "issued": {
             "date-parts": [
                 [
                     1982
                 ]
             ]
-        }, 
-        "language": "en", 
-        "publisher": "American Institute of Musicology, Hänssler-Verlag", 
-        "title": "Early Sixteenth-Century Sacred Music from the Papal Chapel", 
-        "type": "book", 
+        },
+        "language": "en",
+        "publisher": "American Institute of Musicology, Hänssler-Verlag",
+        "title": "Early Sixteenth-Century Sacred Music from the Papal Chapel",
+        "type": "book",
         "volume": "II"
     }
 ]

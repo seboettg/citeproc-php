@@ -10,7 +10,7 @@ Hello Title:666
 [
     [
         {
-            "id": "ITEM-1", 
+            "id": "ITEM-1",
             "locator": " 666"
         }
     ]

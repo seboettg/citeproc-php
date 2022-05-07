@@ -17,84 +17,84 @@ bibliography
 [
     [
         {
-            "citationID": "CITATION-1", 
+            "citationID": "CITATION-1",
             "citationItems": [
                 {
                     "id": "ITEM-1"
                 }
-            ], 
+            ],
             "properties": {
                 "noteIndex": 1
             }
-        }, 
-        [], 
+        },
+        [],
         []
-    ], 
+    ],
     [
         {
-            "citationID": "CITATION-2", 
+            "citationID": "CITATION-2",
             "citationItems": [
                 {
                     "id": "ITEM-2"
                 }
-            ], 
+            ],
             "properties": {
                 "noteIndex": 2
             }
-        }, 
+        },
         [
             [
-                "CITATION-1", 
+                "CITATION-1",
                 1
             ]
-        ], 
+        ],
         []
-    ], 
+    ],
     [
         {
-            "citationID": "CITATION-3", 
+            "citationID": "CITATION-3",
             "citationItems": [
                 {
                     "id": "ITEM-3"
                 }
-            ], 
+            ],
             "properties": {
                 "noteIndex": 3
             }
-        }, 
+        },
         [
             [
-                "CITATION-1", 
+                "CITATION-1",
                 1
-            ], 
+            ],
             [
-                "CITATION-3", 
+                "CITATION-3",
                 3
             ]
-        ], 
+        ],
         []
-    ], 
+    ],
     [
         {
-            "citationID": "CITATION-2", 
+            "citationID": "CITATION-2",
             "citationItems": [
                 {
                     "id": "ITEM-2"
                 }
-            ], 
+            ],
             "properties": {
                 "noteIndex": 2
             }
-        }, 
+        },
         [
             [
-                "CITATION-1", 
+                "CITATION-1",
                 1
             ]
-        ], 
+        ],
         [
             [
-                "CITATION-3", 
+                "CITATION-3",
                 3
             ]
         ]

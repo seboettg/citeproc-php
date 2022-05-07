@@ -49,43 +49,43 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "id": "item-1", 
-        "title": "Book One", 
+        "id": "item-1",
+        "title": "Book One",
         "type": "book"
-    }, 
+    },
     {
-        "id": "item-3", 
-        "title": "Book Three", 
+        "id": "item-3",
+        "title": "Book Three",
         "type": "book"
-    }, 
+    },
     {
-        "id": "item-4", 
-        "title": "Book Four", 
+        "id": "item-4",
+        "title": "Book Four",
         "type": "book"
-    }, 
+    },
     {
-        "id": "item-6", 
-        "title": "Book Six", 
+        "id": "item-6",
+        "title": "Book Six",
         "type": "book"
-    }, 
+    },
     {
-        "id": "item-2", 
-        "title": "Book Two", 
+        "id": "item-2",
+        "title": "Book Two",
         "type": "book"
-    }, 
+    },
     {
-        "id": "item-5", 
-        "title": "Book Five", 
+        "id": "item-5",
+        "title": "Book Five",
         "type": "book"
-    }, 
+    },
     {
-        "id": "item-7", 
-        "title": "Book Seven", 
+        "id": "item-7",
+        "title": "Book Seven",
         "type": "book"
-    }, 
+    },
     {
-        "id": "item-8", 
-        "title": "Book Eight", 
+        "id": "item-8",
+        "title": "Book Eight",
         "type": "book"
     }
 ]

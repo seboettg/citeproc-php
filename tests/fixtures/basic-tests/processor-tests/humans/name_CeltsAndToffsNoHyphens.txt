@@ -34,21 +34,21 @@ Chen, H.L.
 >>===== INPUT =====>>
 [
     {
-        "id": "item-1", 
+        "id": "item-1",
         "issued": {
             "date-parts": [
                 [
                     "1933"
                 ]
             ]
-        }, 
-        "title": "Book A", 
+        },
+        "title": "Book A",
         "translator": [
             {
-                "family": "Chen", 
+                "family": "Chen",
                 "given": "Hsien-Li"
             }
-        ], 
+        ],
         "type": "book"
     }
 ]

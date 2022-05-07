@@ -40,10 +40,10 @@ citation
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
-        "publisher": "My Publisher", 
-        "publisher-place": "New York", 
-        "title": "My Title", 
+        "id": "ITEM-1",
+        "publisher": "My Publisher",
+        "publisher-place": "New York",
+        "title": "My Title",
         "type": "book"
     }
 ]

@@ -44,33 +44,33 @@ His Anonymous Life (1) pages 1-2 (cs:text) vs His Anonymous Life (1) pages 1-2 (
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
-        "page": "1-2", 
-        "title": "His Anonymous Life (1)", 
+        "id": "ITEM-1",
+        "page": "1-2",
+        "title": "His Anonymous Life (1)",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-2", 
-        "page": "i-ix", 
-        "title": "His Anonymous Life (2)", 
+        "id": "ITEM-2",
+        "page": "i-ix",
+        "title": "His Anonymous Life (2)",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-3", 
-        "page": "3-B", 
-        "title": "His Anonymous Life (3)", 
+        "id": "ITEM-3",
+        "page": "3-B",
+        "title": "His Anonymous Life (3)",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-4", 
-        "page": "4–6", 
-        "title": "His Anonymous Life (4)", 
+        "id": "ITEM-4",
+        "page": "4–6",
+        "title": "His Anonymous Life (4)",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-4", 
-        "page": "Michaelson-Morely", 
-        "title": "His Anonymous Life (4)", 
+        "id": "ITEM-4",
+        "page": "Michaelson-Morely",
+        "title": "His Anonymous Life (4)",
         "type": "book"
     }
 ]

@@ -94,173 +94,173 @@ bibliography
     {
         "author": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "Al"
             }
-        ], 
-        "id": "item-1", 
+        ],
+        "id": "item-1",
         "issued": {
             "date-parts": [
                 [
                     "1989"
                 ]
             ]
-        }, 
-        "title": "Book One", 
+        },
+        "title": "Book One",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "Al"
             }
-        ], 
-        "id": "item-3", 
+        ],
+        "id": "item-3",
         "issued": {
             "date-parts": [
                 [
                     "1991"
                 ]
             ]
-        }, 
-        "title": "Book Three", 
+        },
+        "title": "Book Three",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "Al"
-            }, 
+            },
             {
-                "family": "Allen", 
+                "family": "Allen",
                 "given": "Carl"
             }
-        ], 
-        "id": "item-4", 
+        ],
+        "id": "item-4",
         "issued": {
             "date-parts": [
                 [
                     "1992"
                 ]
             ]
-        }, 
-        "title": "Book Four", 
+        },
+        "title": "Book Four",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "Al"
-            }, 
+            },
             {
-                "family": "Frank", 
+                "family": "Frank",
                 "given": "Beauregarde"
             }
-        ], 
-        "id": "item-6", 
+        ],
+        "id": "item-6",
         "issued": {
             "date-parts": [
                 [
                     "1997"
                 ]
             ]
-        }, 
-        "title": "Book Six", 
+        },
+        "title": "Book Six",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "Al"
             }
-        ], 
-        "id": "item-2", 
+        ],
+        "id": "item-2",
         "issued": {
             "date-parts": [
                 [
                     "1989"
                 ]
             ]
-        }, 
-        "title": "Book Two", 
+        },
+        "title": "Book Two",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "Al"
-            }, 
+            },
             {
-                "family": "Frank", 
+                "family": "Frank",
                 "given": "Beauregarde"
             }
-        ], 
-        "id": "item-5", 
+        ],
+        "id": "item-5",
         "issued": {
             "date-parts": [
                 [
                     "1995"
                 ]
             ]
-        }, 
-        "title": "Book Five", 
+        },
+        "title": "Book Five",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "Al"
-            }, 
+            },
             {
-                "family": "Roberts", 
+                "family": "Roberts",
                 "given": "Lionel"
-            }, 
+            },
             {
-                "family": "Jones", 
+                "family": "Jones",
                 "given": "Theresa"
             }
-        ], 
-        "id": "item-7", 
+        ],
+        "id": "item-7",
         "issued": {
             "date-parts": [
                 [
                     "1993"
                 ]
             ]
-        }, 
-        "title": "Book Seven", 
+        },
+        "title": "Book Seven",
         "type": "book"
-    }, 
+    },
     {
         "editor": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "Al"
-            }, 
+            },
             {
-                "family": "Jones", 
+                "family": "Jones",
                 "given": "Theresa"
-            }, 
+            },
             {
-                "family": "Roberts", 
+                "family": "Roberts",
                 "given": "Lionel"
             }
-        ], 
-        "id": "item-8", 
+        ],
+        "id": "item-8",
         "issued": {
             "date-parts": [
                 [
                     "1997"
                 ]
             ]
-        }, 
-        "title": "Book Eight", 
+        },
+        "title": "Book Eight",
         "type": "book"
     }
 ]

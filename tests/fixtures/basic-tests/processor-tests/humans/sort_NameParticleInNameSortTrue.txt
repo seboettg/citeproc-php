@@ -48,34 +48,34 @@ bibliography
     {
         "author": [
             {
-                "family": "Roe", 
-                "given": "Jane", 
+                "family": "Roe",
+                "given": "Jane",
                 "non-dropping-particle": "van"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Noakes", 
-                "given": "John", 
+                "family": "Noakes",
+                "given": "John",
                 "non-dropping-particle": "di"
             }
-        ], 
-        "id": "ITEM-2", 
+        ],
+        "id": "ITEM-2",
         "type": "book"
-    }, 
+    },
     {
         "author": [
             {
-                "family": "Doe", 
-                "given": "John", 
+                "family": "Doe",
+                "given": "John",
                 "non-dropping-particle": "von"
             }
-        ], 
-        "id": "ITEM-3", 
+        ],
+        "id": "ITEM-3",
         "type": "book"
     }
 ]

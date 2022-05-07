@@ -1541,56 +1541,56 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "DOI": "", 
-        "ISBN": "", 
-        "ISSN": "", 
-        "URL": "http://www.uni-kassel.de/~seboettg/ba-thesis.pdf", 
-        "abstract": "Ein Abstract.", 
-        "annote": "", 
+        "DOI": "",
+        "ISBN": "",
+        "ISSN": "",
+        "URL": "http://www.uni-kassel.de/~seboettg/ba-thesis.pdf",
+        "abstract": "Ein Abstract.",
+        "annote": "",
         "author": [
             {
-                "family": "Böttger", 
+                "family": "Böttger",
                 "given": "Sebastian"
             }
-        ], 
-        "citation-label": "bottger2012konzept", 
-        "collection-editor": [], 
-        "collection-title": "", 
-        "container-author": [], 
-        "container-title": "", 
-        "edition": "", 
-        "editor": [], 
+        ],
+        "citation-label": "bottger2012konzept",
+        "collection-editor": [],
+        "collection-title": "",
+        "container-author": [],
+        "container-title": "",
+        "edition": "",
+        "editor": [],
         "event-date": {
             "date-parts": [
                 [
-                    "2012", 
+                    "2012",
                     "04"
                 ]
-            ], 
+            ],
             "literal": "2012"
-        }, 
-        "event-place": "Kassel", 
-        "genre": "Master thesis", 
-        "id": "3c2ffd52e7081b66bf420f993d9144bbseboettg", 
-        "issue": "", 
+        },
+        "event-place": "Kassel",
+        "genre": "Master thesis",
+        "id": "3c2ffd52e7081b66bf420f993d9144bbseboettg",
+        "issue": "",
         "issued": {
             "date-parts": [
                 [
-                    "2012", 
+                    "2012",
                     "04"
                 ]
             ]
-        }, 
-        "keyword": "ba-thesis bathesis folksonomy myown recommender tagging tagrecommendation thesis univideo video", 
-        "note": "", 
-        "number": "", 
-        "page": "", 
-        "page-first": "", 
-        "publisher": "Universität Kassel", 
-        "publisher-place": "Kassel", 
-        "status": "", 
-        "title": "Konzept und Umsetzung eines Tag-Recommenders für Video-Ressourcen am Beispiel UniVideo", 
-        "type": "thesis", 
+        },
+        "keyword": "ba-thesis bathesis folksonomy myown recommender tagging tagrecommendation thesis univideo video",
+        "note": "",
+        "number": "",
+        "page": "",
+        "page-first": "",
+        "publisher": "Universität Kassel",
+        "publisher-place": "Kassel",
+        "status": "",
+        "title": "Konzept und Umsetzung eines Tag-Recommenders für Video-Ressourcen am Beispiel UniVideo",
+        "type": "thesis",
         "volume": ""
     }
 ]

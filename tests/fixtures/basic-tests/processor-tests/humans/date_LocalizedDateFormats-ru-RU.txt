@@ -54,16 +54,16 @@ April 1998 г.
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
-                    1998, 
-                    4, 
+                    1998,
+                    4,
                     10
                 ]
             ]
-        }, 
+        },
         "title": "BookA"
     }
 ]

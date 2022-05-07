@@ -63,102 +63,102 @@ citation
 >>===== INPUT =====>>
 [
     {
-        "abstract": "The PUMA project fosters the Open Access movement und aims at a better support of the researcher’s publication work. PUMA stands for an integrated solution, where the upload of a publication results automatically in an update of both the personal and institutional homepage, the creation of an entry in a social bookmarking systems like BibSonomy, an entry in the academic reporting system of the university, and its publication in the institutional repository. In this poster, we present the main features of our solution.", 
-        "annote": "", 
+        "abstract": "The PUMA project fosters the Open Access movement und aims at a better support of the researcher’s publication work. PUMA stands for an integrated solution, where the upload of a publication results automatically in an update of both the personal and institutional homepage, the creation of an entry in a social bookmarking systems like BibSonomy, an entry in the academic reporting system of the university, and its publication in the institutional repository. In this poster, we present the main features of our solution.",
+        "annote": "",
         "author": [
             {
-                "family": "Benz", 
+                "family": "Benz",
                 "given": "Dominik"
-            }, 
+            },
             {
-                "family": "Hotho", 
+                "family": "Hotho",
                 "given": "Andreas"
-            }, 
+            },
             {
-                "family": "Jäschke", 
+                "family": "Jäschke",
                 "given": "Robert"
-            }, 
+            },
             {
-                "family": "Stumme", 
+                "family": "Stumme",
                 "given": "Gerd"
-            }, 
+            },
             {
-                "family": "Halle", 
+                "family": "Halle",
                 "given": "Axel"
-            }, 
+            },
             {
-                "family": "Lima", 
+                "family": "Lima",
                 "given": "Angela Gerlach Sanches"
-            }, 
+            },
             {
-                "family": "Steenweg", 
+                "family": "Steenweg",
                 "given": "Helge"
-            }, 
+            },
             {
-                "family": "Stefani", 
+                "family": "Stefani",
                 "given": "Sven"
-            }, 
+            },
             {
-                "family": "Dietrich", 
+                "family": "Dietrich",
                 "given": "Bernhard"
             }
-        ], 
-        "citation-label": "benz2010academic", 
-        "collection-title": "Lecture Notes in Computer Science", 
-        "container-title": "Proceedings of the European Conference on Research and Advanced Technology for Digital Libraries (ECDL) 2010", 
-        "edition": "", 
+        ],
+        "citation-label": "benz2010academic",
+        "collection-title": "Lecture Notes in Computer Science",
+        "container-title": "Proceedings of the European Conference on Research and Advanced Technology for Digital Libraries (ECDL) 2010",
+        "edition": "",
         "editor": [
             {
-                "family": "Lalmas", 
+                "family": "Lalmas",
                 "given": "M."
-            }, 
+            },
             {
-                "family": "Jose", 
+                "family": "Jose",
                 "given": "J."
-            }, 
+            },
             {
-                "family": "Rauber", 
+                "family": "Rauber",
                 "given": "A."
-            }, 
+            },
             {
-                "family": "Sebastiani", 
+                "family": "Sebastiani",
                 "given": "F."
-            }, 
+            },
             {
-                "family": "Frommholz", 
+                "family": "Frommholz",
                 "given": "I."
             }
-        ], 
+        ],
         "event-date": {
             "date-parts": [
                 [
                     "2010"
                 ]
-            ], 
+            ],
             "literal": "2010"
-        }, 
-        "event-place": "Berlin/Heidelberg", 
-        "id": "11bdf4636bc92aed96461eace25484f7jaeschke", 
-        "interhash": "db94bafecb815048ede11f6d28e5a9f1", 
-        "intrahash": "11bdf4636bc92aed96461eace25484f7", 
-        "issue": "", 
+        },
+        "event-place": "Berlin/Heidelberg",
+        "id": "11bdf4636bc92aed96461eace25484f7jaeschke",
+        "interhash": "db94bafecb815048ede11f6d28e5a9f1",
+        "intrahash": "11bdf4636bc92aed96461eace25484f7",
+        "issue": "",
         "issued": {
             "date-parts": [
                 [
                     "2010"
                 ]
-            ], 
+            ],
             "literal": "2010"
-        }, 
-        "keyword": "2010 ecdl myown puma", 
-        "number-of-pages": "3", 
-        "page": "417--420", 
-        "page-first": "417", 
-        "publisher": "Springer", 
-        "publisher-place": "Berlin/Heidelberg", 
-        "status": "", 
-        "title": "Academic Publication Management with PUMA - collect, organize and share publications", 
-        "type": "paper-conference", 
+        },
+        "keyword": "2010 ecdl myown puma",
+        "number-of-pages": "3",
+        "page": "417--420",
+        "page-first": "417",
+        "publisher": "Springer",
+        "publisher-place": "Berlin/Heidelberg",
+        "status": "",
+        "title": "Academic Publication Management with PUMA - collect, organize and share publications",
+        "type": "paper-conference",
         "volume": "6273"
     }
 ]

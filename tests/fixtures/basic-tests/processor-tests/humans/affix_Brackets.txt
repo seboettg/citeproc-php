@@ -41,21 +41,21 @@ citation
     {
         "author": [
             {
-                "family": "Smith", 
+                "family": "Smith",
                 "given": "John"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
-                    "2000", 
-                    "2", 
+                    "2000",
+                    "2",
                     "15"
                 ]
             ]
-        }, 
-        "title": "Book C", 
+        },
+        "title": "Book C",
         "type": "book"
     }
 ]

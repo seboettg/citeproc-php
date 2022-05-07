@@ -42,17 +42,17 @@ bibliography
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
+        ],
         "editor": [
             {
-                "family": "Roe", 
+                "family": "Roe",
                 "given": "Jane"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

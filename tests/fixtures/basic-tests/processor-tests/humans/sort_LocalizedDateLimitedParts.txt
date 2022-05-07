@@ -38,55 +38,55 @@ Book D; Book A; Book B; Book C
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
+        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
-                    "2000", 
-                    "11", 
+                    "2000",
+                    "11",
                     "2"
                 ]
             ]
-        }, 
-        "title": "Book A", 
+        },
+        "title": "Book A",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-2", 
+        "id": "ITEM-2",
         "issued": {
             "date-parts": [
                 [
                     "2001"
                 ]
             ]
-        }, 
-        "title": "Book C", 
+        },
+        "title": "Book C",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-3", 
+        "id": "ITEM-3",
         "issued": {
             "date-parts": [
                 [
                     "1999"
                 ]
             ]
-        }, 
-        "title": "Book D", 
+        },
+        "title": "Book D",
         "type": "book"
-    }, 
+    },
     {
-        "id": "ITEM-4", 
+        "id": "ITEM-4",
         "issued": {
             "date-parts": [
                 [
-                    "2000", 
-                    "11", 
+                    "2000",
+                    "11",
                     "1"
                 ]
             ]
-        }, 
-        "title": "Book B", 
+        },
+        "title": "Book B",
         "type": "book"
     }
 ]

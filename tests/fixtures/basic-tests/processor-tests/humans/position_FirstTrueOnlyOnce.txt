@@ -15,39 +15,39 @@ citation
 [
     [
         {
-            "citationID": "CITATION-1", 
+            "citationID": "CITATION-1",
             "citationItems": [
                 {
                     "id": "ITEM-1"
                 }
-            ], 
+            ],
             "properties": {
                 "noteIndex": 1
             }
-        }, 
-        [], 
+        },
+        [],
         []
-    ], 
+    ],
     [
         {
-            "citationID": "CITATION-2", 
+            "citationID": "CITATION-2",
             "citationItems": [
                 {
-                    "id": "ITEM-1", 
-                    "label": "page", 
+                    "id": "ITEM-1",
+                    "label": "page",
                     "locator": "23"
                 }
-            ], 
+            ],
             "properties": {
                 "noteIndex": 2
             }
-        }, 
+        },
         [
             [
-                "CITATION-1", 
+                "CITATION-1",
                 1
             ]
-        ], 
+        ],
         []
     ]
 ]

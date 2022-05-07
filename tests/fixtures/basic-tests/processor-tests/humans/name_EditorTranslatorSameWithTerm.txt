@@ -42,17 +42,17 @@ John Doe (ed. &#38; tran.)
     {
         "editor": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "translator": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
             }
-        ], 
+        ],
         "type": "book"
     }
 ]

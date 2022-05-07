@@ -42,19 +42,19 @@ John Doe, Jane Roe, et al.
     {
         "author": [
             {
-                "family": "Doe", 
+                "family": "Doe",
                 "given": "John"
-            }, 
+            },
             {
-                "family": "Roe", 
+                "family": "Roe",
                 "given": "Jane"
-            }, 
+            },
             {
-                "family": "Snoakes", 
+                "family": "Snoakes",
                 "given": "Richard"
             }
-        ], 
-        "id": "ITEM-1", 
+        ],
+        "id": "ITEM-1",
         "type": "book"
     }
 ]

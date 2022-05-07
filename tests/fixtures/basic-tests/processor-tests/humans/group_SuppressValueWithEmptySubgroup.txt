@@ -44,7 +44,7 @@ His Anonymous Life
 >>===== INPUT =====>>
 [
     {
-        "title": "His Anonymous Life", 
+        "title": "His Anonymous Life",
         "type": "book"
     }
 ]

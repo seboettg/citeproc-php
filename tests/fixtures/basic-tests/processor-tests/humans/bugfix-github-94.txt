@@ -366,16 +366,16 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "DOI": "10.4314/ajfm.v13i1.24385", 
-        "container-title": "African Journal of Finance and Management", 
-        "issue": 1, 
+        "DOI": "10.4314/ajfm.v13i1.24385",
+        "container-title": "African Journal of Finance and Management",
+        "issue": 1,
         "issued": {
-            "date-parts": [], 
+            "date-parts": [],
             "raw": "2020-10-29"
-        }, 
-        "page": "25-30", 
-        "title": "The Signalling Theory Dividends: A Review Of The Literature And Empirical Evidence", 
-        "type": "article-journal", 
+        },
+        "page": "25-30",
+        "title": "The Signalling Theory Dividends: A Review Of The Literature And Empirical Evidence",
+        "type": "article-journal",
         "volume": 13
     }
 ]

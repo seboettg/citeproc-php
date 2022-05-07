@@ -44,8 +44,8 @@ Some Book or Other (no date)
 >>===== INPUT =====>>
 [
     {
-        "id": "ITEM-1", 
-        "title": "Some Book or Other", 
+        "id": "ITEM-1",
+        "title": "Some Book or Other",
         "type": "book"
     }
 ]

@@ -323,62 +323,62 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "ISSN": "0031-7985", 
+        "ISSN": "0031-7985",
         "author": [
             {
-                "family": "Kersten", 
+                "family": "Kersten",
                 "given": "Markus"
             }
-        ], 
-        "container-title": "Philologus", 
-        "issue": 2, 
+        ],
+        "container-title": "Philologus",
+        "issue": 2,
         "issued": {
             "date-parts": [
                 [
                     "2018"
                 ]
             ]
-        }, 
-        "link_easyweb": "<a href=\"https://edoc.unibas.ch/70508/\" target=\"_blank\">edoc</a>", 
-        "note": "Publication type according to Uni Basel Research Database: Journal article", 
-        "page": "232-246", 
-        "publisher": "Akademie-Verlag", 
-        "title": "Denn dies ist mir viel wert, Kriton … Zu Text und Interpretation von Plat. Crit. 48e4", 
-        "type": "article-journal", 
+        },
+        "link_easyweb": "<a href=\"https://edoc.unibas.ch/70508/\" target=\"_blank\">edoc</a>",
+        "note": "Publication type according to Uni Basel Research Database: Journal article",
+        "page": "232-246",
+        "publisher": "Akademie-Verlag",
+        "title": "Denn dies ist mir viel wert, Kriton … Zu Text und Interpretation von Plat. Crit. 48e4",
+        "type": "article-journal",
         "volume": 162
-    }, 
+    },
     {
-        "DOI": "10.7717/peerj.3544", 
-        "ISSN": "2167-8359", 
-        "URL": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5502092/", 
+        "DOI": "10.7717/peerj.3544",
+        "ISSN": "2167-8359",
+        "URL": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5502092/",
         "author": [
             {
-                "family": "Amrhein", 
+                "family": "Amrhein",
                 "given": "Valentin"
-            }, 
+            },
             {
-                "family": "Korner-Nievergelt", 
+                "family": "Korner-Nievergelt",
                 "given": "Fränzi"
-            }, 
+            },
             {
-                "family": "Roth", 
+                "family": "Roth",
                 "given": "Tobias"
             }
-        ], 
-        "container-title": "PeerJ", 
+        ],
+        "container-title": "PeerJ",
         "issued": {
             "date-parts": [
                 [
                     "2017"
                 ]
             ]
-        }, 
-        "link_easyweb": "<a href=\"https://edoc.unibas.ch/59550/\" target=\"_blank\">edoc</a> | <a href=\"https://edoc.unibas.ch/id/document/41812\" target=\"_blank\">Open Access</a>", 
-        "note": "Publication type according to Uni Basel Research Database: Journal article", 
-        "page": "e3544", 
-        "publisher": "PeerJ", 
-        "title": "The earth is flat (p < 0.05): significance thresholds and the crisis of unreplicable research", 
-        "type": "article-journal", 
+        },
+        "link_easyweb": "<a href=\"https://edoc.unibas.ch/59550/\" target=\"_blank\">edoc</a> | <a href=\"https://edoc.unibas.ch/id/document/41812\" target=\"_blank\">Open Access</a>",
+        "note": "Publication type according to Uni Basel Research Database: Journal article",
+        "page": "e3544",
+        "publisher": "PeerJ",
+        "title": "The earth is flat (p < 0.05): significance thresholds and the crisis of unreplicable research",
+        "type": "article-journal",
         "volume": 5
     }
 ]

@@ -41,8 +41,8 @@ bibliography
 >>===== INPUT =====>>
 [
     {
-        "id": "item-1", 
-        "title": "This is 'The One'", 
+        "id": "item-1",
+        "title": "This is 'The One'",
         "type": "book"
     }
 ]

@@ -29,23 +29,23 @@ bibliography
     {
         "author": [
             {
-                "family": "Hotho", 
+                "family": "Hotho",
                 "given": "Andreas"
-            }, 
+            },
             {
-                "family": "Benz", 
+                "family": "Benz",
                 "given": "Dominik"
-            }, 
+            },
             {
-                "family": "Eisterlehner", 
+                "family": "Eisterlehner",
                 "given": "Folke"
-            }, 
+            },
             {
-                "family": "Jäschke", 
+                "family": "Jäschke",
                 "given": "Robert"
             }
-        ], 
-        "id": "item1", 
+        ],
+        "id": "item1",
         "title": "Publikationsmanagement mit BibSonomy - ein Social-Bookmarking-System für Wissenschaftler"
     }
 ]
