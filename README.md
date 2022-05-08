@@ -177,7 +177,7 @@ Since version 2.1 you have also the possibility to apply a filter so that just s
 ```php
 <p>This a wise sentence 
 <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"item-1"}]')); ?>.</p>
-<p>This is the most wise setence 
+<p>This is the most wise sentence 
 <?php echo $citeProc->render($data, "citation", json_decode('[{"id":"item-1"},{"id":"ITEM-2"}]')); ?>.</p>
 ```
 

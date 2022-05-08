@@ -205,7 +205,7 @@ class CiteProc
      */
     public function init($citationAsArray = false)
     {
-        self::$context = new Context($this);
+        self::$context = new Context();
         self::$context->setLocale(new Locale\Locale($this->lang)); //init locale
         self::$context->setCitationsAsArray($citationAsArray);
         // set markup extensions

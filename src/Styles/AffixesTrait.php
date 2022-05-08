@@ -42,7 +42,6 @@ trait AffixesTrait
     {
         /** @var SimpleXMLElement $attribute */
         foreach ($node->attributes() as $attribute) {
-            /** @var string $name */
             $name = (string) $attribute->getName();
             $value = (string) $attribute;
 

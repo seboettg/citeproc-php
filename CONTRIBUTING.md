@@ -21,7 +21,9 @@ I would suggest the following way:
 $ git clone https://github.com/<yourname>/citeproc-php
 ``` 
 * Setup your preferred IDE
-* Run the UnitTests within your IDE
+* create a new branch in your forked repo (do not commit your changes in the master branch)
+* implement your fix or feature
+* Run the UnitTests
 * Write a test case for your issue. My tests are based on the original [test-suite](https://github.com/citation-style-language/test-suite). You can build custom (human-readable) test cases following the described [Fixture layout](https://github.com/citation-style-language/test-suite#fixture-layout). 
 * Additionally, you have to translate (human-readable) test-cases into json format (machine-readable)
 ```bash
@@ -48,4 +50,10 @@ class MyNewClassTest extends TestCase
 ```
 * Make sure that your test case covers relevant code parts
 * Implement the code until all tests finishing successfully
-* Send a pull request
+* Send a pull request as follows:
+    1. create a new pull request and select the forked repo and the new branch as head
+    2. select the "seboettg/citeproc-php" and the master branch as base
+    3. select "Allow edits by maintainers"
+    4. add title and a meaningful description for your PR
+    5. submit the pull request
+
