@@ -11,6 +11,7 @@
 namespace Seboettg\CiteProc\Util;
 
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\Collection\ArrayList;
 
 /**
  * Class StringHelper
@@ -89,24 +90,33 @@ class StringHelper
      */
     public static function capitalizeForTitle($titleString)
     {
+        if (strlen($titleString) == 0) {
+            return "";
+        }
         if (preg_match('/(.+[^\<\>][\.:\/;\?\!]\s?)([a-z])(.+)/', $titleString, $match)) {
             $titleString = $match[1].StringHelper::mb_ucfirst($match[2]).$match[3];
         }
+        $pattern = "/(\s|\/)/";
+        if (!preg_match($pattern, $titleString, $matches)) {
+            return StringHelper::mb_ucfirst($titleString);
+        }
+        $delimiter = $matches[1];
+        $wordArray = preg_split($pattern, $titleString); //explode(" ", $titleString);
 
-        $wordArray = explode(" ", $titleString);
-
-        array_walk($wordArray, function (&$word) {
-            $words = explode("-", $word);
-            if (count($words) > 1) {
-                array_walk($words, function (&$w) {
-                    $w = StringHelper::keepLowerCase($w) ? $w : StringHelper::mb_ucfirst($w);
-                });
-                $word = implode("-", $words);
-            }
-            $word = StringHelper::keepLowerCase($word) ? $word : StringHelper::mb_ucfirst($word);
-        });
-
-        return implode(" ", array_filter($wordArray));
+        $wordList = new ArrayList(...$wordArray);
+        return $wordList
+            ->map(function(string $word) {
+                $wordParts = explode("-", $word);
+                if (count($wordParts) > 1) {
+                    $casedWordParts = [];
+                    foreach ($wordParts as $w) {
+                        $casedWordParts[] = StringHelper::keepLowerCase($w) ? $w : StringHelper::mb_ucfirst($w);
+                    }
+                    $word = implode("-", $casedWordParts);
+                }
+                return StringHelper::keepLowerCase($word) ? $word : StringHelper::mb_ucfirst($word);
+            })
+            ->collectToString($delimiter);
     }
 
     /**

@@ -27,9 +27,6 @@ trait TextCaseTrait
     protected function initTextCaseAttributes(SimpleXMLElement $node)
     {
         foreach ($node->attributes() as $attribute) {
-            /**
-             * @var string $name
-             */
             $name = $attribute->getName();
             $value = (string) $attribute;
 

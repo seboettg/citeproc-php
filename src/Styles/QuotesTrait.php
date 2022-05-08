@@ -50,7 +50,7 @@ trait QuotesTrait
             $punctuationInQuotes = CiteProc::getContext()->getLocale()->filter("options", "punctuation-in-quote");
             $text = $this->replaceOuterQuotes($text, $openQuote, $closeQuote);
             if (null !== $punctuationInQuotes || $punctuationInQuotes === false) {
-                if (preg_match("/([^\.,;]+)([\.,;]{1,})$/", $text, $match)) {
+                if (preg_match("/^(.+)([\.,;]+)$/", $text, $match)) {
                     $punctuation = substr($match[2], -1);
                     if ($this->suffix !== $punctuation) {
                         $text = $match[1] . substr($match[2], 0, strlen($match[2]) - 1);
