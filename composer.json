@@ -6,7 +6,7 @@
         {
             "name": "Sebastian Böttger",
             "email": "seboettg@gmail.com",
-            "homepage": "http://sebastianboettger.net",
+            "homepage": "https://sebastianboettger.net",
             "role": "Developer"
         }
     ],
@@ -46,13 +46,13 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "./install.sh styles-distribution",
+            "./install.sh styles",
             "./install.sh locales",
             "@compile-test-cases",
             "chmod +x vendor/bin/phpunit"
         ],
         "post-update-cmd": [
-            "./install.sh styles-distribution",
+            "./install.sh styles",
             "./install.sh locales",
             "@compile-test-cases",
             "chmod +x vendor/bin/phpunit"

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -32,10 +33,10 @@ class StyleSheet
      * @return string
      * @throws CiteProcException
      */
-    public static function loadStyleSheet($styleName)
+    public static function loadStyleSheet(string $styleName): string
     {
-        $stylesPath = self::vendorPath()."/citation-style-language/styles-distribution/";
-        return file_get_contents($stylesPath.$styleName.'.csl');
+        $stylesPath = self::vendorPath() . "/citation-style-language/styles";
+        return self::readFileContentsOrThrowException("$stylesPath/$styleName.csl");
     }
 
     /**
@@ -45,23 +46,33 @@ class StyleSheet
      * @return string
      * @throws CiteProcException
      */
-    public static function loadLocales($langKey)
+    public static function loadLocales(string $langKey): string
     {
-        $data = null;
-        $localesPath = self::vendorPath()."/citation-style-language/locales/";
-        $localeFile = $localesPath."locales-".$langKey.'.xml';
+        $localesPath = self::vendorPath()."/citation-style-language/locales";
+        $localeFile = "$localesPath/locales-${langKey}.xml";
         if (file_exists($localeFile)) {
-            $data = file_get_contents($localeFile);
+            return self::readFileContentsOrThrowException($localeFile);
         } else {
             $metadata = self::loadLocalesMetadata();
             if (!empty($metadata->{'primary-dialects'}->{$langKey})) {
-                $data = file_get_contents(
-                    $localesPath."locales-".$metadata->{'primary-dialects'}->{$langKey}.'.xml'
+                return self::readFileContentsOrThrowException(
+                    sprintf("%s/locales-%s.xml", $localesPath, $metadata->{'primary-dialects'}->{$langKey})
                 );
             }
         }
+        throw new CiteProcException("No Locale file found for $langKey");
+    }
 
-        return $data;
+    /**
+     * @throws CiteProcException
+     */
+    private static function readFileContentsOrThrowException($path): string
+    {
+        $fileContent = file_get_contents($path);
+        if (false === $fileContent) {
+            throw new CiteProcException("Couldn't read $path");
+        }
+        return $fileContent;
     }
 
     /**
@@ -70,8 +81,8 @@ class StyleSheet
      */
     public static function loadLocalesMetadata()
     {
-        $localesMetadataPath = self::vendorPath()."/citation-style-language/locales/locales.json";
-        return json_decode(file_get_contents($localesMetadataPath));
+        $localesMetadataPath = self::vendorPath() . "/citation-style-language/locales/locales.json";
+        return json_decode(self::readFileContentsOrThrowException($localesMetadataPath));
     }
 
     /**
@@ -80,11 +91,9 @@ class StyleSheet
      */
     private static function vendorPath()
     {
-        include_once realpath(__DIR__.'/../').'/vendorPath.php';
+        include_once realpath(__DIR__ . '/../') . '/vendorPath.php';
         if (!($vendorPath = vendorPath())) {
-            // @codeCoverageIgnoreStart
             throw new CiteProcException('vendor path not found. Use composer to initialize your project');
-            // @codeCoverageIgnoreEnd
         }
         return $vendorPath;
     }
