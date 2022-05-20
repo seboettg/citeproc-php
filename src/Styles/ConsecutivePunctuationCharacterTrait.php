@@ -37,7 +37,7 @@ trait ConsecutivePunctuationCharacterTrait
      * @param $subject
      * @return string
      */
-    public function removeConsecutivePunctuation($punctuationSign, $subject)
+    public function removeConsecutivePunctuation($punctuationSign, $subject): string
     {
         if (empty($punctuationSign) || preg_match("/^\s+$/", $punctuationSign)) {
             return $subject;
@@ -52,7 +52,7 @@ trait ConsecutivePunctuationCharacterTrait
     /**
      * @param $child
      */
-    protected function getChildsAffixesAndDelimiter($child)
+    protected function getChildrenAffixesAndDelimiter($child)
     {
         if (method_exists($child, "renderPrefix")) {
             if (!empty($child->renderPrefix()) && !in_array($child->renderPrefix(), $this->childrenPrefixes)) {

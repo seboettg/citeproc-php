@@ -43,7 +43,7 @@ class GlobalOptions
         foreach ($node->attributes() as $attribute) {
             switch ($attribute->getName()) {
                 case 'initialize-with-hyphen':
-                    $this->initializeWithHyphen = "false" === (string) $attribute ? false : true;
+                    $this->initializeWithHyphen = !("false" === (string) $attribute);
                     break;
                 case 'page-range-format':
                     $this->pageRangeFormat = new PageRangeFormats((string) $attribute);
@@ -59,7 +59,7 @@ class GlobalOptions
      * “true”, default) or without (“J.L.”, value “false”).
      * @return bool
      */
-    public function isInitializeWithHyphen()
+    public function isInitializeWithHyphen(): bool
     {
         return $this->initializeWithHyphen;
     }
@@ -71,7 +71,7 @@ class GlobalOptions
      * not set, page ranges are rendered without reformatting.
      * @return PageRangeFormats
      */
-    public function getPageRangeFormat()
+    public function getPageRangeFormat(): ?PageRangeFormats
     {
         return $this->pageRangeFormat;
     }
@@ -80,7 +80,7 @@ class GlobalOptions
      * Sets the display and sorting behavior of the non-dropping-particle in inverted names (e.g. “Koning, W. de”).
      * @return DemoteNonDroppingParticle
      */
-    public function getDemoteNonDroppingParticles()
+    public function getDemoteNonDroppingParticles(): ?DemoteNonDroppingParticle
     {
         return $this->demoteNonDroppingParticles;
     }

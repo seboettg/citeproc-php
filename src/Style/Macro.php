@@ -84,7 +84,7 @@ class Macro implements Rendering, HasParent
         /** @var Rendering $child */
         foreach ($this->children as $child) {
             $res = $child->render($data, $citationNumber);
-            $this->getChildsAffixesAndDelimiter($child);
+            $this->getChildrenAffixesAndDelimiter($child);
             if (!empty($res)) {
                 $ret[] = $res;
             }
