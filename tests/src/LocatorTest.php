@@ -5,7 +5,7 @@
  * created at 07.04.20, 18:49
  */
 
-namespace Seboettg\CiteProc;
+namespace Seboettg\CiteProc\Test;
 
 use PHPUnit\Framework\TestCase;
 

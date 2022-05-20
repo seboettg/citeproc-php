@@ -7,11 +7,11 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Style\Sort;
+namespace Seboettg\CiteProc\Test\Style\Sort;
 
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\CiteProc;
-use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\Test\TestSuiteTestCaseTrait;
 
 class SortTest extends TestCase
 {

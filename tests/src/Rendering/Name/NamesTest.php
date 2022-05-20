@@ -7,10 +7,15 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Rendering\Names;
+namespace Seboettg\CiteProc\Test\Rendering\Name;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
-use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Context;
+use Seboettg\CiteProc\Rendering\Name\Names;
+use Seboettg\CiteProc\Test\TestSuiteTestCaseTrait;
+use SimpleXMLElement;
 
 class NamesTest extends TestCase
 {

@@ -7,15 +7,13 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc;
+namespace Seboettg\CiteProc\Test;
 
 use PHPUnit\Framework\TestCase;
+use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\StyleSheet;
 
-/**
- * Class BugfixTest
- * @package Seboettg\CiteProc
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class BugfixTest extends TestCase
 {
 
@@ -57,7 +55,7 @@ class BugfixTest extends TestCase
     }
 
     /**
-     * @throws Exception\CiteProcException
+     * @throws CiteProcException
      */
     public function testBugfixGithub58()
     {
@@ -72,7 +70,7 @@ class BugfixTest extends TestCase
     }
 
     /**
-     * @throws Exception\CiteProcException
+     * @throws CiteProcException
      */
     public function testBugfixGithub59()
     {

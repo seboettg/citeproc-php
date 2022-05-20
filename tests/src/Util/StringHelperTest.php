@@ -7,16 +7,11 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Util;
+namespace Seboettg\CiteProc\Test\Util;
 
 use PHPUnit\Framework\TestCase;
+use Seboettg\CiteProc\Util\StringHelper;
 
-/**
- * Class StringHelper
- * @package src\Seboettg\CiteProc\Util
- *
- * @author Sebastian Böttger <boettger@hebis.uni-frankfurt.de>
- */
 class StringHelperTest extends TestCase
 {
     public function testCamelCase2Hyphen()
