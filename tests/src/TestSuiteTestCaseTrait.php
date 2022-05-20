@@ -7,11 +7,12 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc;
+namespace Seboettg\CiteProc\Test;
 
 use Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use RuntimeException;
+use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Exception\CiteProcException;
 
 trait TestSuiteTestCaseTrait

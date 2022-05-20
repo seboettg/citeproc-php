@@ -23,7 +23,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Seboettg\\CiteProc\\": "tests/src/"
+            "Seboettg\\CiteProc\\Test\\": "tests/src/"
         }
     },
     "require": {

@@ -7,9 +7,12 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc;
+namespace Seboettg\CiteProc\Test;
 
 use PHPUnit\Framework\TestCase;
+use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\StyleSheet;
 
 class CiteProcTest extends TestCase
 {
@@ -61,6 +64,9 @@ class CiteProcTest extends TestCase
         $this->runTestSuite("text_renderCitationNumber");
     }
 
+    /**
+     * @throws CiteProcException
+     */
     public function testRenderCssStyle()
     {
         $style = StyleSheet::loadStyleSheet("international-journal-of-humanoid-robotics");
@@ -71,6 +77,9 @@ class CiteProcTest extends TestCase
         $this->assertTrue(strpos($cssStyles, "csl-right-inline") !== false);
     }
 
+    /**
+     * @throws CiteProcException
+     */
     public function testRenderCssStyleHangingIndent()
     {
         $style = StyleSheet::loadStyleSheet("din-1505-2");
@@ -80,6 +89,9 @@ class CiteProcTest extends TestCase
         $this->assertTrue(strpos($cssStyles, "text-indent: -2em") !== false);
     }
 
+    /**
+     * @throws CiteProcException
+     */
     public function testRenderCssStyleLineAndEntrySpacing()
     {
         $style = StyleSheet::loadStyleSheet("harvard-north-west-university");
@@ -90,6 +102,9 @@ class CiteProcTest extends TestCase
         $this->assertTrue(strpos($cssStyles, "padding-left: 2em") !== false);
     }
 
+    /**
+     * @throws CiteProcException
+     */
     public function testGetInfo()
     {
         $style = StyleSheet::loadStyleSheet("harvard-north-west-university");
@@ -100,6 +115,9 @@ class CiteProcTest extends TestCase
         $this->assertEquals("North-West University - Harvard", $info->getTitle());
     }
 
+    /**
+     * @throws CiteProcException
+     */
     public function testFilterCitations()
     {
         $style = StyleSheet::loadStyleSheet("harvard-north-west-university");
@@ -167,6 +185,9 @@ class CiteProcTest extends TestCase
     }
 
 
+    /**
+     * @throws CiteProcException
+     */
     public function testRenderCitationNumberResultAsArray()
     {
         $style = StyleSheet::loadStyleSheet("elsevier-vancouver");

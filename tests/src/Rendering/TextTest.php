@@ -7,12 +7,12 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Rendering;
+namespace Seboettg\CiteProc\Test\Rendering;
 
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\StyleSheet;
-use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\Test\TestSuiteTestCaseTrait;
 
 class TextTest extends TestCase
 {

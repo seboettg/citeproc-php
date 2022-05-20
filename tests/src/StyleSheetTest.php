@@ -7,9 +7,12 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc;
+namespace Seboettg\CiteProc\Test;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
+use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\StyleSheet;
 use SimpleXMLElement;
 
 class StyleSheetTest extends TestCase
@@ -17,7 +20,8 @@ class StyleSheetTest extends TestCase
 
     /**
      * @coversNothing
-     * @throws Exception\CiteProcException
+     * @throws CiteProcException
+     * @throws Exception
      */
     public function testLoadStyleSheet()
     {
@@ -39,7 +43,8 @@ class StyleSheetTest extends TestCase
 
     /**
      * @coversNothing
-     * @throws Exception\CiteProcException
+     * @throws CiteProcException
+     * @throws Exception
      */
     public function testLoadLocales()
     {
@@ -62,6 +67,7 @@ class StyleSheetTest extends TestCase
 
     /**
      * @coversNothing
+     * @throws CiteProcException
      */
     public function testLoadLocalesMetadata()
     {
@@ -73,6 +79,8 @@ class StyleSheetTest extends TestCase
 
     /**
      * @coversNothing
+     * @throws CiteProcException
+     * @throws Exception
      */
     public function testLoadPrimaryDialectLocale()
     {

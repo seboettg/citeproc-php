@@ -7,13 +7,14 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Rendering;
+namespace Seboettg\CiteProc\Test\Rendering;
 
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\Locale\Locale;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
-use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\Rendering\Number;
+use Seboettg\CiteProc\Test\TestSuiteTestCaseTrait;
 
 class NumberTest extends TestCase
 {

@@ -7,10 +7,14 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc;
+namespace Seboettg\CiteProc\Test;
 
 use PHPUnit\Framework\TestCase;
+use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Data\DataList;
+use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\StyleSheet;
 
 class ContextTest extends TestCase
 {
@@ -28,6 +32,9 @@ class ContextTest extends TestCase
      */
     private $context;
 
+    /**
+     * @throws CiteProcException
+     */
     public function setUp(): void
     {
         $style = StyleSheet::loadStyleSheet("din-1505-2");

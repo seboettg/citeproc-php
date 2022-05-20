@@ -7,16 +7,11 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Rendering\Name;
+namespace Seboettg\CiteProc\Test\Rendering\Name;
 
 use PHPUnit\Framework\TestCase;
-use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\Test\TestSuiteTestCaseTrait;
 
-/**
- * Class NameDemoteNonDroppingParticleTest
- * @package src\Seboettg\CiteProc\Rendering\Name
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class NameorderTest extends TestCase
 {
     use TestSuiteTestCaseTrait;
