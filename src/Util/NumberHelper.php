@@ -20,7 +20,7 @@ use Closure;
 class NumberHelper
 {
 
-    const PATTERN_ORDINAL = "/\d+(st|nd|rd|th)?\.?$/";
+    const PATTERN_ORDINAL = "/\d+((st|nd|rd|th)\.?|\.)$/";
 
     const PATTERN_ROMAN = "/^[ivxlcdm]+\.?$/i";
 
@@ -28,7 +28,7 @@ class NumberHelper
 
     const PATTERN_AFFIXES = "/^[a-z]?\d+[a-z]?$/i";
 
-    const PATTERN_COMMA_AMPERSAND_RANGE = "/\d*([\s?\-&+,;\s])+\d+/";
+    const PATTERN_COMMA_AMPERSAND_RANGE = "/\d+([\s?\-&+,;\s])+\d+/";
 
     const ROMAN_NUMERALS = [
         ["", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"],

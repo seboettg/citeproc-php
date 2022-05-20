@@ -32,7 +32,8 @@
         "ext-simplexml": "*",
         "ext-json": "*",
         "php": ">=7.3",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "ext-intl": "*"
     },
     "require-dev": {
         "php-coveralls/php-coveralls": "^1",
@@ -41,8 +42,7 @@
         "phpmd/phpmd": "^2.8"
     },
     "suggest": {
-        "ext-intl": "*",
-        "symfony/polyfill-mbstring": "^1.10"
+      "symfony/polyfill-mbstring": "^1.10"
     },
     "scripts": {
         "post-install-cmd": [

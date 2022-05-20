@@ -113,8 +113,8 @@ class Text implements Rendering
                     unset($data->{$this->toRenderTypeValue});
                 }
                 if (!CiteProcHelper::isUsingAffixesByMarkupExtentsion($data, $this->toRenderTypeValue)) {
-					$renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
-				}
+                    $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
+                }
                 break;
             case 'macro':
                 $renderedText = $this->renderMacro($data);
@@ -241,17 +241,17 @@ class Text implements Rendering
     }
 
     /**
-	 * @param  $data
-	 * @param  $renderedText
+     * @param  $data
+     * @param  $renderedText
      * @return string
      */
     private function formatRenderedText($data, $renderedText)
     {
         $text = $this->format($renderedText);
         $res = $this->addAffixes($text);
-		if (CiteProcHelper::isUsingAffixesByMarkupExtentsion($data, $this->toRenderTypeValue)) {
-			$res = $this->applyAdditionalMarkupFunction($data, $res);
-		}
+        if (CiteProcHelper::isUsingAffixesByMarkupExtentsion($data, $this->toRenderTypeValue)) {
+            $res = $this->applyAdditionalMarkupFunction($data, $res);
+        }
         if (!empty($res)) {
             $res = $this->removeConsecutiveChars($res);
         }
@@ -267,9 +267,9 @@ class Text implements Rendering
     private function renderCitationNumber($data, $citationNumber)
     {
         $renderedText = $citationNumber + 1;
-		if (!CiteProcHelper::isUsingAffixesByMarkupExtentsion($data, $this->toRenderTypeValue)) {
-			$renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
-		}
+        if (!CiteProcHelper::isUsingAffixesByMarkupExtentsion($data, $this->toRenderTypeValue)) {
+            $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
+        }
         return $renderedText;
     }
 
