@@ -128,7 +128,7 @@ class Layout implements Rendering
         $margin = [];
         foreach ($this->children as $key => $child) {
             $rendered = $child->render($data, $citationNumber);
-            $this->getChildsAffixesAndDelimiter($child);
+            $this->getChildrenAffixesAndDelimiter($child);
             if (CiteProc::getContext()->isModeBibliography()
                 && $bibliographyOptions->getSecondFieldAlign() === "flush"
             ) {
