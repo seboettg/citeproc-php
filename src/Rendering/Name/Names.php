@@ -111,6 +111,11 @@ class Names implements Rendering, HasParent
     private $parent;
 
     /**
+     * @var bool
+     */
+    private $renderLabelBeforeName = false;
+
+    /**
      * Names constructor.
      *
      * @param  SimpleXMLElement $node
@@ -124,10 +129,14 @@ class Names implements Rendering, HasParent
         /**
          * @var SimpleXMLElement $child
          */
+
         foreach ($node->children() as $child) {
             switch ($child->getName()) {
                 case "name":
                     $this->name = Factory::create($child, $this);
+                    if ($this->label !== null) {
+                        $this->renderLabelBeforeName = true;
+                    }
                     break;
                 case "label":
                     $this->label = Factory::create($child);
@@ -246,7 +255,7 @@ class Names implements Rendering, HasParent
      * @param  $name
      * @return string
      */
-    private function appendLabel($data, $var, $name)
+    private function appendLabel($data, $var, $name): string
     {
         $this->label->setVariable($var);
         if (in_array($this->label->getForm(), ["verb", "verb-short"])) {
@@ -380,5 +389,21 @@ class Names implements Rendering, HasParent
         return array_filter($results, function ($item) {
             return !empty($item);
         });
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRenderLabelBeforeName(): bool
+    {
+        return $this->renderLabelBeforeName;
+    }
+
+    /**
+     * @param bool $renderLabelBeforeName
+     */
+    public function setRenderLabelBeforeName(bool $renderLabelBeforeName): void
+    {
+        $this->renderLabelBeforeName = $renderLabelBeforeName;
     }
 }

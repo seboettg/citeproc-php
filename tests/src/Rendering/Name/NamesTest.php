@@ -13,6 +13,7 @@ use Exception;
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
+use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use Seboettg\CiteProc\Rendering\Name\Names;
 use Seboettg\CiteProc\Test\TestSuiteTestCaseTrait;
 use SimpleXMLElement;
@@ -48,4 +49,39 @@ class NamesTest extends TestCase
         //$this->_testRenderTestSuite("name_EtAlWithCombined");
     }
     */
+
+    /**
+     * @throws Exception
+     */
+    public function testRenderLabelBeforeNameShouldBeTrueIfLabelTagBeforeName()
+    {
+        $csl = <<<EOD
+            <names variable="translator">
+              <label form="verb-short" prefix=", "/>
+              <name name-as-sort-order="first" and="text" sort-separator=", " delimiter=", " delimiter-precedes-last="always"/>
+            </names>
+        EOD;
+        CiteProc::setContext(new Context());
+        $style = new SimpleXMLElement($csl);
+        $names = new Names($style, null);
+        $this->assertTrue($names->isRenderLabelBeforeName());
+    }
+
+    /**
+     * @throws InvalidStylesheetException
+     * @throws Exception
+     */
+    public function testRenderLabelBeforeNameShouldBeFalseIfLabelTagAfterName()
+    {
+        $csl = <<<EOD
+            <names variable="translator">
+              <name name-as-sort-order="first" and="text" sort-separator=", " delimiter=", " delimiter-precedes-last="always"/>
+              <label form="verb-short" prefix=", "/>
+            </names>
+        EOD;
+        CiteProc::setContext(new Context());
+        $style = new SimpleXMLElement($csl);
+        $names = new Names($style, null);
+        $this->assertFalse($names->isRenderLabelBeforeName());
+    }
 }
