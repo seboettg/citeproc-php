@@ -19,10 +19,11 @@ class Punctuation extends Enum
 
     public static function getAllPunctuations(): array
     {
-        $values = new ArrayList(...Punctuation::values());
+        $values = new ArrayList();
         return $values
-            ->map(function (Punctuation $punctuation) {
-                return CiteProc::getContext()->getLocale()->filter("terms", $punctuation->value)->single;
+            ->setArray(Punctuation::toArray())
+            ->map(function (string $punctuation) {
+                return CiteProc::getContext()->getLocale()->filter("terms", $punctuation)->single;
             })
             ->collect(function ($items) {
                 return array_values($items);
