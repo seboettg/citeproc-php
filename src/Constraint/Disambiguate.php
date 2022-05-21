@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -9,27 +10,22 @@
 
 namespace Seboettg\CiteProc\Constraint;
 
+use stdClass;
+
 /**
  * Class Disambiguate
  * When set to “true” (the only allowed value), the element content is only rendered if it disambiguates two otherwise
  * identical citations. This attempt at disambiguation is only made when all other disambiguation methods have failed
  * to uniquely identify the target source.
- *
- * @package Seboettg\CiteProc\Constraint
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- *
  */
-/** @noinspection PhpUnused */
 class Disambiguate implements Constraint
 {
     /**
-     * @codeCoverageIgnore
-     * @param $value
+     * @param stdClass $data
      * @param int|null $citationNumber
      * @return bool
      */
-    public function validate($value, $citationNumber = null)
+    public function validate(stdClass $data, $citationNumber = null): bool
     {
         return false;
     }

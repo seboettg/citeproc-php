@@ -1,4 +1,5 @@
-<?php /** @noinspection PhpUnused */
+<?php
+declare(strict_types=1);
 /*
  * citeproc-php: AbstractConstraint.php
  * User: Sebastian Böttger <sebastian.boettger@thomascook.de>
@@ -9,11 +10,6 @@ namespace Seboettg\CiteProc\Constraint;
 
 use stdClass;
 
-/**
- * Class AbstractConstraint
- * @package Seboettg\CiteProc\Constraint
- * @noinspection PhpUnused
- */
 abstract class AbstractConstraint implements Constraint
 {
 
@@ -32,53 +28,52 @@ abstract class AbstractConstraint implements Constraint
      * @param stdClass $data;
      * @return bool
      */
-    abstract protected function matchForVariable($variable, $data);
+    abstract protected function matchForVariable(string $variable, stdClass $data): bool;
 
     /**
      * Variable constructor.
-     * @param string $value
+     * @param string $variableValues
      * @param string $match
      */
-    /** @noinspection PhpUnused */
-    public function __construct($value, $match = "any")
+    public function __construct(string $variableValues, string $match = "any")
     {
-        $this->conditionVariables = explode(" ", $value);
+        $this->conditionVariables = explode(" ", $variableValues);
         $this->match = $match;
     }
 
     /**
-     * @param $value
+     * @param stdClass $data
      * @param int|null $citationNumber
      * @return bool
      */
-    public function validate($value, $citationNumber = null)
+    public function validate(stdClass $data, int $citationNumber = null): bool
     {
         switch ($this->match) {
             case Constraint::MATCH_ALL:
-                return $this->matchAll($value);
+                return $this->matchAll($data);
             case Constraint::MATCH_NONE:
-                return !$this->matchAny($value); //no match for any value
+                return !$this->matchAny($data); //no match for any value
             case Constraint::MATCH_ANY:
             default:
-                return $this->matchAny($value);
+                return $this->matchAny($data);
         }
     }
 
-    private function matchAny($value)
+    private function matchAny($data): bool
     {
         $conditionMatched = false;
         foreach ($this->conditionVariables as $variable) {
-            $conditionMatched |= $this->matchForVariable($variable, $value);
+            $conditionMatched |= $this->matchForVariable($variable, $data);
         }
-        return (bool)$conditionMatched;
+        return $conditionMatched;
     }
 
-    private function matchAll($value)
+    private function matchAll($value): bool
     {
         $conditionMatched = true;
         foreach ($this->conditionVariables as $variable) {
             $conditionMatched &= $this->matchForVariable($variable, $value);
         }
-        return (bool)$conditionMatched;
+        return $conditionMatched;
     }
 }

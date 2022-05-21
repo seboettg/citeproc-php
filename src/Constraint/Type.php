@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -11,13 +12,6 @@ namespace Seboettg\CiteProc\Constraint;
 
 use stdClass;
 
-/**
- * Class Type
- * @package Seboettg\CiteProc\Choose\Constraint
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
-/** @noinspection PhpUnused */
 class Type extends AbstractConstraint
 {
 
@@ -26,7 +20,7 @@ class Type extends AbstractConstraint
      * @param stdClass $data ;
      * @return bool
      */
-    protected function matchForVariable($variable, $data)
+    protected function matchForVariable(string $variable, stdClass $data): bool
     {
         return in_array($data->type, $this->conditionVariables);
     }

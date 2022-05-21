@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -28,7 +29,7 @@ class IsUncertainDate extends AbstractConstraint
      * @param stdClass $data ;
      * @return bool
      */
-    protected function matchForVariable($variable, $data)
+    protected function matchForVariable(string $variable, stdClass $data): bool
     {
         if (!empty($data->{$variable})) {
             if (isset($data->{$variable}->{'circa'})) {

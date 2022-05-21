@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -12,24 +13,14 @@ namespace Seboettg\CiteProc\Constraint;
 use Seboettg\CiteProc\Exception\ClassNotFoundException;
 use function Seboettg\CiteProc\ucfirst;
 
-/**
- * Class Factory
- * @package Seboettg\CiteProc\Constraint
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class Factory extends \Seboettg\CiteProc\Util\Factory
 {
     const NAMESPACE_CONSTRAINTS = "Seboettg\\CiteProc\\Constraint\\";
 
     /**
-     * @param string $name
-     * @param string $value
-     * @param string $match
-     * @return mixed
      * @throws ClassNotFoundException
      */
-    public static function createConstraint(string $name, string $value, string $match)
+    public static function createConstraint(string $name, string $value, string $match): Constraint
     {
         $parts = explode("-", $name);
         $className = implode("", array_map(function ($part) {
