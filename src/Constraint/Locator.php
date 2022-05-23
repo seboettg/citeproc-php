@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -10,26 +11,20 @@
 namespace Seboettg\CiteProc\Constraint;
 
 use Seboettg\CiteProc\CiteProc;
+use stdClass;
 
 /**
  * Class Locator
  *
  * Tests whether the locator matches the given locator types (see Locators). Use “sub-verbo” to test for the
  * “sub verbo” locator type.
- *
- * @codeCoverageIgnore
- *
- * @package Seboettg\CiteProc\Constraint
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
  */
-/** @noinspection PhpUnused */
 class Locator extends AbstractConstraint
 {
     /**
      * @inheritDoc
      */
-    protected function matchForVariable($variable, $data)
+    protected function matchForVariable(string $variable, stdClass $data): bool
     {
         if (!empty($data->id)) {
             $citationItem = CiteProc::getContext()->getCitationItemById($data->id);

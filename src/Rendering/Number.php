@@ -27,11 +27,19 @@ use stdClass;
 class Number implements Rendering
 {
 
-    const RANGE_DELIMITER_HYPHEN = "-";
+    private const RANGE_DELIMITER_HYPHEN = "-";
 
-    const RANGE_DELIMITER_AMPERSAND = "&";
+    private const RANGE_DELIMITER_AMPERSAND = "&";
 
-    const RANGE_DELIMITER_COMMA = ",";
+    private const RANGE_DELIMITER_COMMA = ",";
+
+    private const PATTERN_ORDINAL = "/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/";
+
+    private const PATTERN_LONG_ORDINAL = "/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/";
+
+    private const PATTERN_ROMAN = "/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/";
+
+    private const PATTERN_NUMERIC_DEFAULT = "/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/";
 
     use FormattingTrait,
         AffixesTrait,
@@ -76,7 +84,7 @@ class Number implements Rendering
      * @param int|null $citationNumber
      * @return string
      */
-    public function render($data, $citationNumber = null)
+    public function render($data, $citationNumber = null): string
     {
         $lang = (isset($data->language) && $data->language != 'en') ? $data->language : 'en';
 
@@ -87,7 +95,7 @@ class Number implements Rendering
         $decimalNumber = $this->toDecimalNumber($number);
         switch ($this->form) {
             case 'ordinal':
-                if (preg_match("/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
+                if (preg_match(self::PATTERN_ORDINAL, $decimalNumber, $matches)) {
                     $num1 = self::ordinal($matches[1]);
                     $num2 = self::ordinal($matches[3]);
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
@@ -96,7 +104,7 @@ class Number implements Rendering
                 }
                 break;
             case 'long-ordinal':
-                if (preg_match("/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
+                if (preg_match(self::PATTERN_LONG_ORDINAL, $decimalNumber, $matches)) {
                     if ($this->textCase === "capitalize-first" || $this->textCase === "sentence") {
                         $num1 = self::longOrdinal($matches[1]);
                         $num2 = self::longOrdinal($matches[3]);
@@ -110,7 +118,7 @@ class Number implements Rendering
                 }
                 break;
             case 'roman':
-                if (preg_match("/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
+                if (preg_match(self::PATTERN_ROMAN, $decimalNumber, $matches)) {
                     $num1 = Util\NumberHelper::dec2roman($matches[1]);
                     $num2 = Util\NumberHelper::dec2roman($matches[3]);
                     $text = $this->buildNumberRangeString($num1, $num2, $matches[2]);
@@ -127,7 +135,7 @@ class Number implements Rendering
                  ampersand (“2&3” becomes “2 & 3”).
                  */
                 $decimalNumber = $data->{$this->variable};
-                if (preg_match("/\s*(\d+)\s*([\-\–&,])\s*(\d+)\s*/", $decimalNumber, $matches)) {
+                if (preg_match(self::PATTERN_NUMERIC_DEFAULT, $decimalNumber, $matches)) {
                     $text = $this->buildNumberRangeString($matches[1], $matches[3], $matches[2]);
                 } else {
                     $text = $decimalNumber;
@@ -141,7 +149,7 @@ class Number implements Rendering
      * @param $num
      * @return string
      */
-    public static function ordinal($num)
+    public static function ordinal($num): string
     {
         if (($num / 10) % 10 == 1) {
             $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal')->single;
@@ -157,7 +165,7 @@ class Number implements Rendering
         if (empty($ordinalSuffix)) {
             $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal')->single;
         }
-        return $num.$ordinalSuffix;
+        return $num . $ordinalSuffix;
     }
 
     /**

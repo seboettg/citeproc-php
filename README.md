@@ -54,11 +54,11 @@ Add the following lines to your `composer.json` file in order to add required pr
         {
             "type": "package",
             "package": {
-                "name": "citation-style-language/styles-distribution",
+                "name": "citation-style-language/styles",
                 "version":"1.0.0",
                 "source": {
                     "type": "git",
-                    "url": "https://github.com/citation-style-language/styles-distribution.git",
+                    "url": "https://github.com/citation-style-language/styles.git",
                     "reference": "master"
                 }
             }
@@ -66,7 +66,7 @@ Add the following lines to your `composer.json` file in order to add required pr
     ],
     "require": {
         "citation-style-language/locales":"@dev",
-        "citation-style-language/styles-distribution":"@dev",
+        "citation-style-language/styles":"@dev",
         "seboettg/citeproc-php": "^2"
     }
 }

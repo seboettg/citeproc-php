@@ -7,7 +7,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Node\Choose\Choose;
+namespace Seboettg\CiteProc\Test\Rendering\Choose;
 
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\CiteProc;
@@ -15,7 +15,7 @@ use Seboettg\CiteProc\Context;
 use Seboettg\CiteProc\Exception\ClassNotFoundException;
 use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use Seboettg\CiteProc\Rendering\Choose\Choose;
-use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\Test\TestSuiteTestCaseTrait;
 use SimpleXMLElement;
 
 class ChooseTest extends TestCase

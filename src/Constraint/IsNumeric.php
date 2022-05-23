@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -29,7 +30,7 @@ class IsNumeric extends AbstractConstraint
      * @param stdClass $data
      * @return bool
      */
-    protected function matchForVariable($variable, $data)
+    protected function matchForVariable(string $variable, stdClass $data): bool
     {
         if (isset($data->{$variable})) {
             return $this->parseValue($data->{$variable});
@@ -46,7 +47,7 @@ class IsNumeric extends AbstractConstraint
      * @param $evalValue
      * @return bool
      */
-    private function parseValue($evalValue)
+    private function parseValue($evalValue): bool
     {
         if (is_numeric($evalValue)) {
             return true;

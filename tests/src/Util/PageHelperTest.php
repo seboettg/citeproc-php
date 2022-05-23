@@ -7,11 +7,12 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Util;
+namespace Seboettg\CiteProc\Test\Util;
 
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\Style\Options\PageRangeFormats;
-use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\Test\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\Util\PageHelper;
 
 class PageHelperTest extends TestCase
 {

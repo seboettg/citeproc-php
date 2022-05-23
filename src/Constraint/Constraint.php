@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -8,6 +9,8 @@
  */
 
 namespace Seboettg\CiteProc\Constraint;
+
+use stdClass;
 
 /**
  * Interface ConstraintInterface
@@ -25,9 +28,9 @@ interface Constraint
     const MATCH_ALL = "all";
 
     /**
-     * @param $value
-     * @param null $citationNumber
+     * @param stdClass $data
+     * @param int|null $citationNumber
      * @return bool
      */
-    public function validate($value, $citationNumber = null);
+    public function validate(stdClass $data, int $citationNumber = null): bool;
 }

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -7,10 +7,10 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Rendering\Date;
+namespace Seboettg\CiteProc\Test\Rendering\Date;
 
 use PHPUnit\Framework\TestCase;
-use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\Test\TestSuiteTestCaseTrait;
 
 class DateTest extends TestCase
 {

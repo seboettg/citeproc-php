@@ -7,13 +7,17 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-namespace Seboettg\CiteProc\Rendering;
+namespace Seboettg\CiteProc\Test\Rendering;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Context;
+use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use Seboettg\CiteProc\Locale\Locale;
-use Seboettg\CiteProc\TestSuiteTestCaseTrait;
+use Seboettg\CiteProc\Rendering\Group;
+use Seboettg\CiteProc\Test\TestSuiteTestCaseTrait;
+use SimpleXMLElement;
 
 class GroupTest extends TestCase
 {
@@ -29,24 +33,36 @@ class GroupTest extends TestCase
         CiteProc::setContext($context);
     }
 
+    /**
+     * @throws InvalidStylesheetException
+     * @throws Exception
+     */
     public function testRenderDelimiter()
     {
         $str = '<group delimiter=" "><text term="retrieved"/><text term="from"/><text variable="URL"/></group>';
-        $group = new Group(new \SimpleXMLElement($str), null);
+        $group = new Group(new SimpleXMLElement($str), null);
         $this->assertEquals("abgerufen von http://foo.bar", $group->render(json_decode($this->data)));
     }
 
+    /**
+     * @throws InvalidStylesheetException
+     * @throws Exception
+     */
     public function testRenderAffixes()
     {
         $str = '<group prefix="[" suffix="]" delimiter=" "><text term="retrieved"/><text term="from"/><text variable="URL"/></group>';
-        $group = new Group(new \SimpleXMLElement($str), null);
+        $group = new Group(new SimpleXMLElement($str), null);
         $this->assertEquals("[abgerufen von http://foo.bar]", $group->render(json_decode($this->data)));
     }
 
+    /**
+     * @throws InvalidStylesheetException
+     * @throws Exception
+     */
     public function testRenderDisplay()
     {
         $str = '<group display="indent" prefix="[" suffix="]" delimiter=" "><text term="retrieved"/><text term="from"/><text variable="URL"/></group>';
-        $group = new Group(new \SimpleXMLElement($str), null);
+        $group = new Group(new SimpleXMLElement($str), null);
         $this->assertEquals("<div class=\"csl-indent\">[abgerufen von http://foo.bar]</div>", $group->render(json_decode($this->data)));
     }
 

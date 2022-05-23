@@ -6,7 +6,7 @@
         {
             "name": "Sebastian Böttger",
             "email": "seboettg@gmail.com",
-            "homepage": "http://sebastianboettger.net",
+            "homepage": "https://sebastianboettger.net",
             "role": "Developer"
         }
     ],
@@ -23,7 +23,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Seboettg\\CiteProc\\": "tests/src/"
+            "Seboettg\\CiteProc\\Test\\": "tests/src/"
         }
     },
     "require": {
@@ -32,7 +32,8 @@
         "ext-simplexml": "*",
         "ext-json": "*",
         "php": ">=7.3",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "ext-intl": "*"
     },
     "require-dev": {
         "php-coveralls/php-coveralls": "^1",
@@ -41,18 +42,17 @@
         "phpmd/phpmd": "^2.8"
     },
     "suggest": {
-        "ext-intl": "*",
-        "symfony/polyfill-mbstring": "^1.10"
+      "symfony/polyfill-mbstring": "^1.10"
     },
     "scripts": {
         "post-install-cmd": [
-            "./install.sh styles-distribution",
+            "./install.sh styles",
             "./install.sh locales",
             "@compile-test-cases",
             "chmod +x vendor/bin/phpunit"
         ],
         "post-update-cmd": [
-            "./install.sh styles-distribution",
+            "./install.sh styles",
             "./install.sh locales",
             "@compile-test-cases",
             "chmod +x vendor/bin/phpunit"

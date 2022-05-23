@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -20,16 +21,10 @@ use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 
-/**
- * Class ChooseIf
- * @package Seboettg\CiteProc\Node\Choose
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class ChooseIf implements Rendering, HasParent
 {
     /**
-     * @var ArrayList<Constraint>
+     * @var ArrayList<Constraint>|Constraint[]
      */
     private $constraints;
 
@@ -53,7 +48,7 @@ class ChooseIf implements Rendering, HasParent
      * @throws InvalidStylesheetException
      * @throws ClassNotFoundException
      */
-    public function __construct(SimpleXMLElement $node, $parent)
+    public function __construct(SimpleXMLElement $node, Choose $parent)
     {
         $this->parent = $parent;
         $this->constraints = new ArrayList();
@@ -76,7 +71,7 @@ class ChooseIf implements Rendering, HasParent
      * @param null|int $citationNumber
      * @return string
      */
-    public function render($data, $citationNumber = null)
+    public function render($data, $citationNumber = null): string
     {
         $ret = [];
         /** @var Rendering $child */
@@ -95,26 +90,40 @@ class ChooseIf implements Rendering, HasParent
      * @param null|int $citationNumber
      * @return bool
      */
-    public function match($data, $citationNumber = null)
+    public function match($data, int $citationNumber = null): bool
     {
         if ($this->constraints->count() === 1) {
             return $this->constraints->current()->validate($data);
         }
-        $result = true;
-        /** @var Constraint $constraint */
-        foreach ($this->constraints as $constraint) {
-            if ($this->match === "any") {
-                if ($constraint->validate($data, $citationNumber)) {
-                    return true;
-                }
-            } else {
-                $result &= $constraint->validate($data, $citationNumber);
-            }
-        }
-        if ($this->constraints->count() > 1 && $this->match === "all") {
-            return (bool) $result;
-        } elseif ($this->match === "none") {
-            return !((bool) $result);
+
+        switch ($this->match) {
+            case Constraint::MATCH_ANY:
+                return $this->constraints
+                    ->map(function (Constraint $constraint) use ($data) {
+                        return $constraint->validate($data);
+                    })
+                    ->filter(function (bool $match) {
+                        return $match === true;
+                    })
+                    ->count() > 0;
+            case Constraint::MATCH_ALL:
+                return $this->constraints
+                    ->map(function (Constraint $constraint) use ($data) {
+                        return $constraint->validate($data);
+                    })
+                    ->filter(function (bool $match) {
+                        return $match === true;
+                    })
+                    ->count() === $this->constraints->count();
+            case Constraint::MATCH_NONE:
+                return !$this->constraints
+                    ->map(function (Constraint $constraint) use ($data) {
+                        return $constraint->validate($data);
+                    })
+                    ->filter(function (bool $match) {
+                        return $match === false;
+                    })
+                    ->count() === $this->constraints->count();
         }
         return false;
     }
@@ -124,7 +133,7 @@ class ChooseIf implements Rendering, HasParent
      * @noinspection PhpUnused
      * @return Choose
      */
-    public function getParent()
+    public function getParent(): Choose
     {
         return $this->parent;
     }
