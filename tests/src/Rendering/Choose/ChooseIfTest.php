@@ -52,7 +52,7 @@ class ChooseIfTest extends TestCase
         $this->assertEquals($expectedResult, $choose->render(json_decode($dataString)));
     }
 
-    public function mockContext(): void
+    private function mockContext(): void
     {
         $mockedContext = $this->createMock(Context::class);
         $mockedContext

@@ -21,12 +21,6 @@ use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
 
-/**
- * Class ChooseIf
- * @package Seboettg\CiteProc\Node\Choose
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class ChooseIf implements Rendering, HasParent
 {
     /**

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -9,12 +10,6 @@
 
 namespace Seboettg\CiteProc\Rendering\Choose;
 
-/**
- * Class ChooseElse
- * @package Seboettg\CiteProc\Node\Choose
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class ChooseElse extends ChooseIf
 {
     //render function is inherited from ChooseIf
