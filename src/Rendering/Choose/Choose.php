@@ -46,57 +46,65 @@ class Choose implements Rendering, HasParent
     {
         $this->parent = $parent;
         $this->children = new ArrayList();
-        $elseIf = [];
+        $elseIf = new ArrayList();
         foreach ($node->children() as $child) {
             switch ($child->getName()) {
                 case 'if':
                     $this->children->add("if", new ChooseIf($child, $this));
                     break;
                 case 'else-if':
-                    $elseIf[] = new ChooseElseIf($child, $this);
+                    $elseIf->append(new ChooseElseIf($child, $this));
                     break;
                 case 'else':
                     $this->children->add("else", new ChooseElse($child, $this));
                     break;
             }
         }
-        if (!empty($elseIf)) {
+        if ($elseIf->count() > 0) {
             $this->children->add("elseif", $elseIf);
         }
     }
 
     /**
-     * @param  array|DataList $data
-     * @param  null|int       $citationNumber
+     * @param array|DataList $data
+     * @param null|int $citationNumber
      * @return string
+     * @throws ArrayList\NotConvertibleToStringException
      */
     public function render($data, $citationNumber = null)
     {
-        $arr = [];
+        $result = new ArrayList();
+        $matchedIfs = false;
 
-        // IF
-        if ($prevCondition = $this->children->get("if")->match($data)) {
-            $arr[] = $this->children->get("if")->render($data);
-        } elseif (!$prevCondition && $this->children->hasKey("elseif")) { // ELSEIF
-            /**
-             * @var ChooseElseIf $child
-             */
-            foreach ($this->children->get("elseif") as $child) {
-                $condition = $child->match($data);
-                if ($condition && !$prevCondition) {
-                    $arr[] = $child->render($data);
-                    $prevCondition = true;
-                    break; //break loop as soon as condition matches
-                }
-                $prevCondition = $condition;
+        $ifCondition = $this->children->get("if");
+
+        if ($ifCondition->match($data)) { //IF CONDITION
+            $matchedIfs = true;
+            $result->append($ifCondition->render($data));
+        } elseif ($this->children->hasKey("elseif")) { // ELSEIF
+            $elseIfs = $this->children->get("elseif")
+                ->map(function (ChooseIf $elseIf) use ($data) {
+                    return new Tuple($elseIf, $elseIf->match($data));
+                })
+                ->filter(function (Tuple $elseIfToMatch) {
+                    return $elseIfToMatch->second === true;
+                });
+            $matchedIfs = $elseIfs->count() > 0;
+            if ($matchedIfs) {
+                $result->append(
+                    $elseIfs
+                        ->first() //returns a Tuple
+                        ->first
+                        ->render($data)
+                );
             }
         }
 
-        //ELSE
-        if (!$prevCondition && $this->children->hasKey("else")) {
-            $arr[] = $this->children->get("else")->render($data);
+        // !$matchedIfs ensures that each previous condition has not been met
+        if (!$matchedIfs && $this->children->hasKey("else")) { //ELSE
+            $result->append($this->children->get("else")->render($data));
         }
-        return implode("", $arr);
+        return $result->collectToString("");
     }
 
     /**

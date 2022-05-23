@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -39,9 +40,6 @@ use stdClass;
  * Whenever position=”ibid-with-locator” tests true, position=”ibid” also tests true. And whenever position=”ibid” or
  * position=”near-note” test true, position=”subsequent” also tests true.
  *
- * @package Seboettg\CiteProc\Constraint
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
  */
 class Position implements Constraint
 {
@@ -51,42 +49,42 @@ class Position implements Constraint
     const SUBSEQUENT = "subsequent";
     const NEAR_NOTE = "near-note";
 
-    private $value;
+    private $position;
 
     private $match;
 
-    public function __construct($value, $match = "all")
+    public function __construct(string $position, string $match = "all")
     {
-        $this->value = $value;
+        $this->position = $position;
         $this->match = $match;
     }
 
     /**
      * @codeCoverageIgnore
-     * @param stdClass $object
+     * @param stdClass $data
      * @param int|null $citationNumber
      * @return bool
      */
-    public function validate($object, $citationNumber = null)
+    public function validate(stdClass $data, $citationNumber = null): bool
     {
         if (CiteProc::getContext()->isModeBibliography()) {
             return false;
         }
-        switch ($this->value) {
+        switch ($this->position) {
             case self::FIRST:
-                return $this->getPosition($object) === null;
+                return $this->getPosition($data) === null;
             case self::IBID:
             case self::IBID_WITH_LOCATOR:
             case self::SUBSEQUENT:
-                return $this->isOnLastPosition($object);
+                return $this->isOnLastPosition($data);
         }
         return true;
     }
 
-    private function getPosition($object)
+    private function getPosition(stdClass $data): ?string
     {
         foreach (CiteProc::getContext()->getCitedItems() as $key => $value) {
-            if (!empty($value->{'id'}) && $value->{'id'} === $object->{'id'}) {
+            if (!empty($value->{'id'}) && $value->{'id'} === $data->{'id'}) {
                 return $key;
             }
         }
@@ -94,12 +92,12 @@ class Position implements Constraint
     }
 
     /**
-     * @param stdClass $object
+     * @param stdClass $data
      * @return bool
      */
-    private function isOnLastPosition($object): bool
+    private function isOnLastPosition(stdClass $data): bool
     {
         $lastCitedItem = CiteProc::getContext()->getCitedItems()->last();
-        return !empty($lastCitedItem) ? $lastCitedItem->{'id'} === $object->{'id'} : false;
+        return !empty($lastCitedItem) && $lastCitedItem->{'id'} === $data->{'id'};
     }
 }

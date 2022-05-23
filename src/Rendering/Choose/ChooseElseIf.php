@@ -1,5 +1,6 @@
 <?php
-/**
+declare(strict_types=1);
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -9,12 +10,6 @@
 
 namespace Seboettg\CiteProc\Rendering\Choose;
 
-/**
- * Class ChooseElseIf
- * @package Seboettg\CiteProc\Node\Choose
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class ChooseElseIf extends ChooseElse
 {
 

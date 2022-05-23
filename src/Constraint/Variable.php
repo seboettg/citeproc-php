@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -12,13 +13,6 @@ namespace Seboettg\CiteProc\Constraint;
 use Seboettg\CiteProc\CiteProc;
 use stdClass;
 
-/**
- * Class Variable
- * @package Seboettg\CiteProc\Choose\Constraint
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
-/** @noinspection PhpUnused */
 class Variable extends AbstractConstraint
 {
     /**
@@ -26,15 +20,15 @@ class Variable extends AbstractConstraint
      * @param stdClass $data
      * @return bool
      */
-    protected function matchForVariable($variable, $data)
+    protected function matchForVariable(string $variable, stdClass $data): bool
     {
-        $variableExistInCitationItem = false;
+        $variableExistsInCitationItem = false;
         if (CiteProc::getContext()->isModeCitation() && isset($data->id)) {
             $citationItem = CiteProc::getContext()->getCitationItemById($data->id);
             if (!empty($citationItem)) {
-                $variableExistInCitationItem = !empty($citationItem->{$variable});
+                $variableExistsInCitationItem = !empty($citationItem->{$variable});
             }
         }
-        return !empty($data->{$variable}) || $variableExistInCitationItem;
+        return !empty($data->{$variable}) || $variableExistsInCitationItem;
     }
 }
