@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 /*
- * citeproc-php: AbstractConstraint.php
- * User: Sebastian Böttger <sebastian.boettger@thomascook.de>
- * created at 26.10.19, 14:12
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2019 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
  */
 
 namespace Seboettg\CiteProc\Constraint;
 
+use Seboettg\Collection\ArrayList;
 use stdClass;
 
 abstract class AbstractConstraint implements Constraint
@@ -19,7 +20,7 @@ abstract class AbstractConstraint implements Constraint
     protected $match;
 
     /**
-     * @var array
+     * @var ArrayList\ArrayListInterface
      */
     protected $conditionVariables;
 
@@ -37,7 +38,7 @@ abstract class AbstractConstraint implements Constraint
      */
     public function __construct(string $variableValues, string $match = "any")
     {
-        $this->conditionVariables = explode(" ", $variableValues);
+        $this->conditionVariables = new ArrayList(...explode(" ", $variableValues));
         $this->match = $match;
     }
 
@@ -52,28 +53,46 @@ abstract class AbstractConstraint implements Constraint
             case Constraint::MATCH_ALL:
                 return $this->matchAll($data);
             case Constraint::MATCH_NONE:
-                return !$this->matchAny($data); //no match for any value
+                return $this->matchNone($data); //no match for any value
             case Constraint::MATCH_ANY:
             default:
                 return $this->matchAny($data);
         }
     }
 
-    private function matchAny($data): bool
+    private function matchAny(stdClass $data): bool
     {
-        $conditionMatched = false;
-        foreach ($this->conditionVariables as $variable) {
-            $conditionMatched |= $this->matchForVariable($variable, $data);
-        }
-        return $conditionMatched;
+        return $this->conditionVariables
+            ->map(function (string $conditionVariable) use ($data) {
+                return $this->matchForVariable($conditionVariable, $data);
+            })
+            ->filter(function (bool $match) {
+                return $match === true;
+            })
+            ->count() > 0;
     }
 
-    private function matchAll($value): bool
+    private function matchAll(stdClass $data): bool
     {
-        $conditionMatched = true;
-        foreach ($this->conditionVariables as $variable) {
-            $conditionMatched &= $this->matchForVariable($variable, $value);
-        }
-        return $conditionMatched;
+        return $this->conditionVariables
+            ->map(function (string $conditionVariable) use ($data) {
+                return $this->matchForVariable($conditionVariable, $data);
+            })
+            ->filter(function (bool $match) {
+                return $match === true;
+            })
+            ->count() === $this->conditionVariables->count();
+    }
+
+    private function matchNone(stdClass $data): bool
+    {
+        return $this->conditionVariables
+            ->map(function (string $conditionVariable) use ($data) {
+                return $this->matchForVariable($conditionVariable, $data);
+            })
+            ->filter(function (bool $match) {
+                return $match === false;
+            })
+            ->count() === $this->conditionVariables->count();
     }
 }

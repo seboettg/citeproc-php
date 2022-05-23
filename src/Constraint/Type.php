@@ -22,6 +22,6 @@ class Type extends AbstractConstraint
      */
     protected function matchForVariable(string $variable, stdClass $data): bool
     {
-        return in_array($data->type, $this->conditionVariables);
+        return in_array($data->type, $this->conditionVariables->toArray());
     }
 }
