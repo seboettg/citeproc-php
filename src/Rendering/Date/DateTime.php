@@ -86,6 +86,7 @@ class DateTime extends \DateTime
      * @param int $day
      * @return $this
      */
+    #[\ReturnTypeWillChange]
     public function setDate($year, $month, $day)
     {
         $this->year = $year;
