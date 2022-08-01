@@ -9,6 +9,7 @@
 ![PHP](https://img.shields.io/badge/PHP-7.3-green.svg?style=flat)
 ![PHP](https://img.shields.io/badge/PHP-7.4-green.svg?style=flat)
 ![PHP](https://img.shields.io/badge/PHP-8.0-green.svg?style=flat)
+![PHP](https://img.shields.io/badge/PHP-8.1-green.svg?style=flat)
 
 citeproc-php is a full-featured CSL 1.0.1 processor that renders bibliographic metadata into html formatted citations or bibliographies using CSL stylesheets. citeproc-php renders bibliographies as well as citations (except of [Citation-specific Options](http://docs.citationstyles.org/en/stable/specification.html#citation-specific-options)).
 
