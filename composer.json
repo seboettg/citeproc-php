@@ -27,7 +27,7 @@
         }
     },
     "require": {
-        "seboettg/collection": ">=3.0",
+        "seboettg/collection": ">=v3.1.0",
         "myclabs/php-enum": "^1.8",
         "ext-simplexml": "*",
         "ext-json": "*",
