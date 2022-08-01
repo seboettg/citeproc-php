@@ -300,14 +300,14 @@ trait InheritableNameAttributesTrait
                     break;
                 case 'et-al-use-last':
                     if (!empty($attribute)) {
-                        $this->etAlUseLast = boolval((string) $attribute);
+                        $this->etAlUseLast = ((string) $attribute) === "true";
                     } elseif (!empty($parentStyleElement)) {
                         $this->etAlUseLast = $parentStyleElement->getEtAlUseLast();
                     }
                     break;
                 case 'initialize':
                     if (!empty($attribute)) {
-                        $this->initialize = boolval((string) $attribute);
+                        $this->initialize = ((string) $attribute) === "true";
                     } elseif (!empty($parentStyleElement)) {
                         $this->initialize = $parentStyleElement->getInitialize();
                     }
