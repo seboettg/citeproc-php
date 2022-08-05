@@ -151,7 +151,7 @@ class Number implements Rendering
      */
     public static function ordinal($num): string
     {
-        if (($num / 10) % 10 == 1) {
+        if ((int) ($num / 10) % 10 == 1) {
             $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal')->single;
         } elseif ($num % 10 == 1) {
             $ordinalSuffix = CiteProc::getContext()->getLocale()->filter('terms', 'ordinal-01')->single;
