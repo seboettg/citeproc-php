@@ -1,42 +1,43 @@
 <?php
+declare(strict_types=1);
 /*
- * citeproc-php: DateRangeYearMonthRenderer.php
- * User: Sebastian Böttger <sebastian.boettger@thomascook.de>
- * created at 03.11.19, 20:36
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2019 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
  */
 
 namespace Seboettg\CiteProc\Rendering\Date\DateRange;
 
 use Seboettg\CiteProc\Rendering\Date\DatePart;
 use Seboettg\CiteProc\Rendering\Date\DateTime;
-use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use Seboettg\Collection\Map\Pair;
+use function Seboettg\Collection\Map\emptyMap;
+use function Seboettg\Collection\Map\mapOf;
+use function Seboettg\Collection\Map\pair;
 
-/**
- * Class YearMonthRenderer
- * @package Seboettg\CiteProc\Rendering\Date\DateRange
- */
 class YearMonthRenderer extends DateRangeRenderer
 {
-
-    /**
-     * @param ArrayList<DatePart> $dateParts
-     * @param DateTime $from
-     * @param DateTime $to
-     * @param $delimiter
-     * @return string
-     */
-    public function parseDateRange(ArrayList $dateParts, DateTime $from, DateTime $to, $delimiter)
-    {
-        $dp = $dateParts->toArray();
-        $dateParts_ = [];
-        array_walk($dp, function ($datePart, $key) use (&$dateParts_) {
+    public function parseDateRange(
+        ListInterface $datePartsList,
+        DateTime $from,
+        DateTime $to,
+        string $delimiter
+    ): string {
+        $dp = $datePartsList->toArray();
+        $dateParts = [];
+        array_walk($dp, function (Pair $datePartPair) use (&$dateParts) {
+            $datePart = $datePartPair->getValue();
+            $key = $datePartPair->getKey();
             if (strpos($key, "year") !== false || strpos($key, "month") !== false) {
-                $dateParts_["yearmonth"][] = $datePart;
+                $dateParts["yearmonth"][] = $datePart;
             }
             if (strpos($key, "day") !== false) {
-                $dateParts_["day"] = $datePart;
+                $dateParts["day"] = $datePart;
             }
         });
-        return $this->renderDateParts($dateParts_, $from, $to, $delimiter);
+        $map = emptyMap();
+        $map->setArray($dateParts);
+        return $this->renderDateParts($map->toList(), $from, $to, $delimiter);
     }
 }

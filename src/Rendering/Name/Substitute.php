@@ -15,8 +15,12 @@ use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\CiteProc\RenderingState;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
 use SimpleXMLElement;
 use stdClass;
+use function Seboettg\Collection\Lists\emptyList;
+use function Seboettg\Collection\Lists\listOf;
+use function Seboettg\Collection\Map\mapOf;
 
 /**
  * Class Substitute
@@ -47,27 +51,20 @@ use stdClass;
 class Substitute implements Rendering
 {
 
-    /**
-     * @var ArrayList
-     */
-    private $children;
+    private ListInterface $children;
 
-    /**
-     * @var Names
-     */
-    private $parent;
+    private ?Names $parent;
 
     /**
      * Substitute constructor.
      * @param SimpleXMLElement $node
      * @param Names $parent
-     * @throws InvalidStylesheetException
-     * @throws InvalidStylesheetException
      */
     public function __construct(SimpleXMLElement $node, Names $parent)
     {
+
         $this->parent = $parent;
-        $this->children = new ArrayList();
+        $this->children = emptyList();
         foreach ($node->children() as $child) {
 
             /** @var SimpleXMLElement $child */
@@ -95,10 +92,10 @@ class Substitute implements Rendering
                     $names->setLabel($this->parent->getLabel());
                 }
 
-                $this->children->append($names);
+                $this->children->add($names);
             } else {
                 $object = Factory::create($child, $this);
-                $this->children->append($object);
+                $this->children->add($object);
             }
         }
     }

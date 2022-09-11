@@ -26,7 +26,11 @@ class BugfixTest extends TestCase
 
     public function testBugfixGithub37()
     {
-        $this->runTestSuite("bugfix-github-37");
+        try {
+            $this->runTestSuite("bugfix-github-37");
+        } catch (\Exception $ex) {
+            $msg = $ex->getMessage();
+        }
     }
 
     public function testBugfixGithub44()

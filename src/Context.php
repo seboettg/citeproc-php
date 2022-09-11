@@ -22,6 +22,9 @@ use Seboettg\CiteProc\Style\Sort\Sort;
 use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Styles\Css\CssStyle;
 use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use Seboettg\Collection\Map\MapInterface;
+use function Seboettg\Collection\Map\emptyMap;
 
 /**
  * Class Context
@@ -31,10 +34,7 @@ use Seboettg\Collection\ArrayList;
  */
 class Context
 {
-    /**
-     * @var ArrayList
-     */
-    private $macros;
+    private MapInterface $macros;
 
     /**
      * @var Locale
@@ -132,23 +132,19 @@ class Context
             $this->locale = $locale;
         }
 
-        $this->macros = new ArrayList();
+        $this->macros = emptyMap();
         $this->citationData = new DataList();
         $this->results = new ArrayList();
         $this->renderingState = RenderingState::RENDERING();
         $this->citedItems = new ArrayList();
     }
 
-    public function addMacro($key, $macro)
+    public function addMacro(string $key, Macro $macro): void
     {
-        $this->macros->add($key, $macro);
+        $this->macros->put($key, $macro);
     }
 
-    /**
-     * @param $key
-     * @return Macro
-     */
-    public function getMacro($key)
+    public function getMacro(string $key): ?Macro
     {
         return $this->macros->get($key);
     }
@@ -268,7 +264,7 @@ class Context
     }
 
     /**
-     * @param ArrayList|DataList $citationData
+     * @param DataList $citationData
      */
     public function setCitationData($citationData)
     {
@@ -283,23 +279,17 @@ class Context
         return $this->citationItems;
     }
 
-    /**
-     * @param ArrayList $citationItems
-     */
-    public function setCitationItems(ArrayList $citationItems): void
+    public function setCitationItems(ListInterface $citationItems): void
     {
         $this->citationItems = $citationItems;
     }
 
     public function hasCitationItems()
     {
-        return ($this->citationData->count() > 0);
+        return $this->citationData->isNotEmpty();
     }
 
-    /**
-     * @return ArrayList
-     */
-    public function getMacros()
+    public function getMacros(): MapInterface
     {
         return $this->macros;
     }
@@ -459,7 +449,7 @@ class Context
 
     public function appendCitedItem($citedItem)
     {
-        $this->citedItems->append($citedItem);
+        $this->citedItems->add($citedItem);
         return $this;
     }
 }

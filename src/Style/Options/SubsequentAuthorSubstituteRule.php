@@ -15,10 +15,10 @@ use MyCLabs\Enum\Enum;
  * Class SubsequentAuthorSubstituteRule
  *
  * Specifies when and how names are substituted as a result of subsequent-author-substitute.
- *
- * @package Seboettg\CiteProc\Style
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
+ * @method static COMPLETE_ALL
+ * @method static COMPLETE_EACH
+ * @method static PARTIAL_EACH
+ * @method static PARTIAL_FIRST
  */
 class SubsequentAuthorSubstituteRule extends Enum
 {

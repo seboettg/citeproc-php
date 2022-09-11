@@ -20,6 +20,7 @@ use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
+use function Seboettg\Collection\Lists\emptyList;
 
 class ChooseIf implements Rendering, HasParent
 {
@@ -51,19 +52,19 @@ class ChooseIf implements Rendering, HasParent
     public function __construct(SimpleXMLElement $node, Choose $parent)
     {
         $this->parent = $parent;
-        $this->constraints = new ArrayList();
-        $this->children = new ArrayList();
-        $this->match = (string) $node['match'];
+        $this->constraints = emptyList();
+        $this->children = emptyList();
+        $this->match = (string) $node["match"];
         if (empty($this->match)) {
             $this->match = Constraint::MATCH_ALL;
         }
         foreach ($node->attributes() as $name => $value) {
-            if ('match' !== $name) {
-                $this->constraints->append(Factory::createConstraint((string) $name, (string) $value, $this->match));
+            if ("match" !== $name) {
+                $this->constraints->add(Factory::createConstraint((string) $name, (string) $value, $this->match));
             }
         }
         foreach ($node->children() as $child) {
-            $this->children->append(Factory::create($child, $this));
+            $this->children->add(Factory::create($child, $this));
         }
     }
     /**
@@ -99,31 +100,19 @@ class ChooseIf implements Rendering, HasParent
         switch ($this->match) {
             case Constraint::MATCH_ANY:
                 return $this->constraints
-                    ->map(function (Constraint $constraint) use ($data) {
-                        return $constraint->validate($data);
-                    })
-                    ->filter(function (bool $match) {
-                        return $match === true;
-                    })
+                    ->map(fn (Constraint $constraint) => $constraint->validate($data))
+                    ->filter(fn (bool $match) => $match == true)
                     ->count() > 0;
             case Constraint::MATCH_ALL:
                 return $this->constraints
-                    ->map(function (Constraint $constraint) use ($data) {
-                        return $constraint->validate($data);
-                    })
-                    ->filter(function (bool $match) {
-                        return $match === true;
-                    })
-                    ->count() === $this->constraints->count();
+                    ->map(fn (Constraint $constraint) => $constraint->validate($data))
+                    ->filter(fn (bool $match) => $match == true)
+                    ->count() == $this->constraints->count();
             case Constraint::MATCH_NONE:
                 return !$this->constraints
-                    ->map(function (Constraint $constraint) use ($data) {
-                        return $constraint->validate($data);
-                    })
-                    ->filter(function (bool $match) {
-                        return $match === false;
-                    })
-                    ->count() === $this->constraints->count();
+                    ->map(fn (Constraint $constraint) => $constraint->validate($data))
+                    ->filter(fn (bool $match) => $match == false)
+                    ->count() == $this->constraints->count();
         }
         return false;
     }

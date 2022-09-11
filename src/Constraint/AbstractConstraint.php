@@ -8,21 +8,16 @@ declare(strict_types=1);
 
 namespace Seboettg\CiteProc\Constraint;
 
-use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
 use stdClass;
+use function Seboettg\Collection\Lists\listOf;
 
 abstract class AbstractConstraint implements Constraint
 {
 
-    /**
-     * @var string
-     */
-    protected $match;
+    protected string $match;
 
-    /**
-     * @var ArrayList\ArrayListInterface
-     */
-    protected $conditionVariables;
+    protected ListInterface $conditionVariables;
 
     /**
      * @param string $variable
@@ -38,7 +33,7 @@ abstract class AbstractConstraint implements Constraint
      */
     public function __construct(string $variableValues, string $match = "any")
     {
-        $this->conditionVariables = new ArrayList(...explode(" ", $variableValues));
+        $this->conditionVariables = listOf(...explode(" ", $variableValues));
         $this->match = $match;
     }
 
@@ -63,36 +58,18 @@ abstract class AbstractConstraint implements Constraint
     private function matchAny(stdClass $data): bool
     {
         return $this->conditionVariables
-            ->map(function (string $conditionVariable) use ($data) {
-                return $this->matchForVariable($conditionVariable, $data);
-            })
-            ->filter(function (bool $match) {
-                return $match === true;
-            })
-            ->count() > 0;
+            ->any(fn (string $conditionVariable) => $this->matchForVariable($conditionVariable, $data));
     }
 
     private function matchAll(stdClass $data): bool
     {
         return $this->conditionVariables
-            ->map(function (string $conditionVariable) use ($data) {
-                return $this->matchForVariable($conditionVariable, $data);
-            })
-            ->filter(function (bool $match) {
-                return $match === true;
-            })
-            ->count() === $this->conditionVariables->count();
+            ->all(fn (string $conditionVariable) => $this->matchForVariable($conditionVariable, $data));
     }
 
     private function matchNone(stdClass $data): bool
     {
         return $this->conditionVariables
-            ->map(function (string $conditionVariable) use ($data) {
-                return $this->matchForVariable($conditionVariable, $data);
-            })
-            ->filter(function (bool $match) {
-                return $match === false;
-            })
-            ->count() === $this->conditionVariables->count();
+            ->all(fn (string $conditionVariable) => !$this->matchForVariable($conditionVariable, $data));
     }
 }

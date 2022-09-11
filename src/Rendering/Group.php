@@ -19,6 +19,7 @@ use Seboettg\CiteProc\Util\Factory;
 use Seboettg\CiteProc\Util\StringHelper;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
+use function Seboettg\Collection\Lists\emptyList;
 
 /**
  * Class Group
@@ -64,16 +65,16 @@ class Group implements Rendering, HasParent
     /**
      * Group constructor.
      *
-     * @param  SimpleXMLElement $node
+     * @param SimpleXMLElement $node
      * @param  $parent
      * @throws InvalidStylesheetException
      */
     public function __construct(SimpleXMLElement $node, $parent)
     {
         $this->parent = $parent;
-        $this->children = new ArrayList();
+        $this->children = emptyList();
         foreach ($node->children() as $child) {
-            $this->children->append(Factory::create($child, $this));
+            $this->children->add(Factory::create($child, $this));
         }
         $this->initDisplayAttributes($node);
         $this->initAffixesAttributes($node);
@@ -83,7 +84,7 @@ class Group implements Rendering, HasParent
 
     /**
      * @param  $data
-     * @param  int|null $citationNumber
+     * @param int|null $citationNumber
      * @return string
      */
     public function render($data, $citationNumber = null)
@@ -93,29 +94,23 @@ class Group implements Rendering, HasParent
         foreach ($this->children as $child) {
             $elementCount++;
 
-            if (($child instanceof Text)
-                && ($child->getSource() == 'term'
-                || $child->getSource() == 'value')
-            ) {
+            // cs:group implicitly acts as a conditional: cs:group and its child elements are suppressed if
+            // a) at least one rendering element in cs:group calls a variable (either directly or via a macro), and
+            // b) all variables that are called are empty. This accommodates descriptive cs:text and `cs:label`elements.
+            if ($this->isChildATerm($child)) {
                 ++$terms;
             }
 
-            if (($child instanceof Label)) {
-                ++$terms;
-            }
-            if (method_exists($child, "getSource") && $child->getSource() == 'variable'
-                && !empty($child->getVariable()) && $child->getVariable() != "date"
-                && !empty($data->{$child->getVariable()})
-            ) {
+            if ($this->isChildAVariable($child)) {
                 ++$variables;
             }
 
             $text = $child->render($data, $citationNumber);
-            $delimiter = $this->delimiter;
             if (!empty($text)) {
+                /*
                 if ($delimiter && ($elementCount < count($this->children))) {
                     //check to see if the delimiter is already the last character of the text string
-                    //if so, remove it so we don't have two of them when the group will be merged
+                    //if so, remove it. So we don't have two of them when the group will be merged
                     $stext = strip_tags(trim($text));
                     if ((strrpos($stext, $delimiter[0]) + 1) == strlen($stext) && strlen($stext) > 1) {
                         $text = str_replace($stext, '----REPLACE----', $text);
@@ -123,18 +118,14 @@ class Group implements Rendering, HasParent
                         $text = str_replace('----REPLACE----', $stext, $text);
                     }
                 }
+                */
                 $textParts[] = $text;
 
-                if (method_exists($child, "getSource") && $child->getSource() == 'variable'
-                    || (method_exists(
-                        $child,
-                        "getVariable"
-                    ) && $child->getVariable() != "date" && !empty($child->getVariable()))
-                ) {
+                if ($this->isSourceVariable($child) || $this->isSourceVariableButNoDate($child)) {
                     $haveVariables++;
                 }
 
-                if (method_exists($child, "getSource") && $child->getSource() == 'macro') {
+                if ($this->isSourceMacro($child)) {
                     $haveVariables++;
                 }
             }
@@ -142,9 +133,6 @@ class Group implements Rendering, HasParent
         return $this->formatting($textParts, $variables, $haveVariables, $terms);
     }
 
-    /**
-     * @return mixed
-     */
     public function getParent()
     {
         return $this->parent;
@@ -194,5 +182,34 @@ class Group implements Rendering, HasParent
     public function getDelimiter()
     {
         return $this->delimiter;
+    }
+
+    private function isChildATerm($child): bool
+    {
+        return ($child instanceof Text) && ($child->getSource() == 'term' || $child->getSource() == 'value')
+            || ($child instanceof Label);
+    }
+
+    private function isChildAVariable($child): bool
+    {
+        return $this->isSourceVariable($child) && $this->isSourceVariableButNoDate($child)
+            && !empty($data->{$child->getVariable()});
+    }
+
+
+    private function isSourceVariable($child): bool
+    {
+        return method_exists($child, "getSource") && $child->getSource() == 'variable';
+    }
+
+    private function isSourceVariableButNoDate($child): bool
+    {
+        return method_exists($child, "getVariable") &&
+            $child->getVariable() !== "date" && !empty($child->getVariable());
+    }
+
+    private function isSourceMacro($child): bool
+    {
+        return method_exists($child, "getSource") && $child->getSource() == 'macro';
     }
 }

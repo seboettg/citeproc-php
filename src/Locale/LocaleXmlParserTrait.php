@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -10,8 +11,11 @@
 namespace Seboettg\CiteProc\Locale;
 
 use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Map\MapInterface;
 use SimpleXMLElement;
 use stdClass;
+use function Seboettg\Collection\Lists\emptyList;
+use function Seboettg\Collection\Map\emptyMap;
 
 /**
  * Trait LocaleXmlParserTrait
@@ -20,48 +24,24 @@ use stdClass;
  */
 trait LocaleXmlParserTrait
 {
-
-    /**
-     * @var ArrayList
-     */
-    private $options;
-
-    /**
-     * @var ArrayList
-     */
-    private $date;
-
-    /**
-     * @var ArrayList
-     */
-    private $terms;
-
-    /**
-     * @var ArrayList
-     */
-    private $optionsXml;
-
-    /**
-     * @var ArrayList
-     */
-    private $dateXml;
-
-    /**
-     * @var ArrayList
-     */
-    private $termsXml;
+    private MapInterface $options;
+    private MapInterface $date;
+    private MapInterface $terms;
+    private MapInterface $optionsXml;
+    private MapInterface $dateXml;
+    private MapInterface $termsXml;
 
     /**
      * init parser
      */
     protected function initLocaleXmlParser()
     {
-        $this->options = new ArrayList();
-        $this->optionsXml = new ArrayList();
-        $this->date = new ArrayList();
-        $this->dateXml = new ArrayList();
-        $this->terms = new ArrayList();
-        $this->termsXml = new ArrayList();
+        $this->options = emptyMap();
+        $this->optionsXml = emptyMap();
+        $this->date = emptyMap();
+        $this->dateXml = emptyMap();
+        $this->terms = emptyMap();
+        $this->termsXml = emptyMap();
     }
 
     /**
@@ -73,17 +53,18 @@ trait LocaleXmlParserTrait
         foreach ($locale as $node) {
             switch ($node->getName()) {
                 case 'style-options':
-                    $this->optionsXml->add('options', $node);
+                    $this->optionsXml->put('options', $node);
                     foreach ($node->attributes() as $name => $value) {
                         if ((string) $value == 'true') {
-                            $this->options->add($name, [true]);
+                            $this->options->put($name, [true]);
                         } else {
-                            $this->options->add($name, [false]);
+                            $this->options->put($name, [false]);
                         }
                     }
                     break;
                 case 'terms':
-                    $this->termsXml->add('terms', $node);
+                    $this->termsXml->put('terms', emptyList());
+                    $this->termsXml["terms"]->add($node);
                     $plural = ['single', 'multiple'];
 
                     /** @var SimpleXMLElement $child */
@@ -110,16 +91,16 @@ trait LocaleXmlParserTrait
                             $term->{'single'} = $value;
                             $term->{'multiple'} = $value;
                         }
-                        if (!$this->terms->hasKey($term->getName())) {
-                            $this->terms->add($term->getName(), []);
+                        if (!$this->terms->containsKey($term->getName())) {
+                            $this->terms->put($term->getName(), emptyList());
                         }
 
-                        $this->terms->add($term->getName(), $term);
+                        $this->terms[$term->getName()]->add($term);
                     }
                     break;
                 case 'date':
                     $form = (string) $node["form"];
-                    $this->dateXml->add($form, $node);
+                    $this->dateXml->put($form, $node);
                     foreach ($node->children() as $child) {
                         $date = new stdClass();
                         $name = "";
@@ -129,10 +110,10 @@ trait LocaleXmlParserTrait
                             }
                             $date->{$key} = (string) $value;
                         }
-                        if ($child->getName() !== "name-part" && !$this->terms->hasKey($name)) {
-                            $this->terms->add($name, []);
+                        if ($child->getName() !== "name-part" && !$this->terms->containsKey($name)) {
+                            $this->terms->put($name, []);
                         }
-                        $this->date->add($form, $date);
+                        $this->date->put($form, $date);
                     }
 
                     break;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -9,7 +10,8 @@
 
 namespace Seboettg\CiteProc\Styles\Css;
 
-use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use function Seboettg\Collection\Lists\emptyList;
 
 /**
  * Class CssRule
@@ -22,47 +24,25 @@ class CssRule
 
     const SELECTOR_TYPE_CLASS = ".";
 
-    /**
-     * @var string
-     */
-    private $selectorType;
+    private string $selectorType;
 
-    /**
-     * @var string
-     */
-    private $selector;
+    private string $selector;
 
-    /**
-     * @var ArrayList
-     */
-    private $directives;
+    private ListInterface $directives;
 
-    /**
-     * CssRule constructor.
-     * @param string $selector
-     * @param string $selectorType
-     */
-    public function __construct($selector, $selectorType = self::SELECTOR_TYPE_CLASS)
+    public function __construct(string $selector, string $selectorType = self::SELECTOR_TYPE_CLASS)
     {
         $this->selector = $selector;
         $this->selectorType = $selectorType;
-        $this->directives = new ArrayList();
+        $this->directives = emptyList();
     }
 
-    /**
-     *
-     * @param string $property
-     * @param string $value
-     */
-    public function addDirective($property, $value)
+    public function addDirective(string $property, string $value)
     {
-        $this->directives->append("$property: $value;");
+        $this->directives->add("$property: $value;");
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $directives = "\t".implode("\n\t", $this->directives->toArray());
         return $this->selectorType.$this->selector." {\n".$directives."\n}\n";

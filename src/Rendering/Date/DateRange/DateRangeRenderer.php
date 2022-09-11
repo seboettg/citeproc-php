@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
 /*
- * citeproc-php: DateRangeParser.php
- * User: Sebastian Böttger <sebastian.boettger@thomascook.de>
- * created at 03.11.19, 20:00
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2019 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
  */
 
 namespace Seboettg\CiteProc\Rendering\Date\DateRange;
@@ -10,27 +11,32 @@ namespace Seboettg\CiteProc\Rendering\Date\DateRange;
 use Seboettg\CiteProc\Rendering\Date\DatePart;
 use Seboettg\CiteProc\Rendering\Date\DateTime;
 use Seboettg\CiteProc\Rendering\Date\Date;
-use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use Seboettg\Collection\Map\MapInterface;
+use Seboettg\Collection\Map\Pair;
 
-/**
- * Class DatePartRenderer
- *
- * @package Seboettg\CiteProc\Rendering\Date\DateRange
- */
 abstract class DateRangeRenderer
 {
+    protected const YEAR = "year";
+    protected const MONTH = "month";
+    protected const DAY = "day";
+    protected const YEARMONTHDAY = "yearmonthday";
+    protected const YEARMONTH = "yearmonth";
+    protected const YEARDAY = "yearday";
+    protected const MONTHDAY = "monthday";
+
 
     /**
      * @var Date
      */
-    protected $parentDateObject;
+    protected Date $parentDateObject;
 
     /**
      * @param  Date $dateObject
-     * @param  int  $toRender
+     * @param int $toRender
      * @return DateRangeRenderer
      */
-    public static function factory(Date $dateObject, $toRender)
+    public static function factory(Date $dateObject, int $toRender): DateRangeRenderer
     {
         $className = self::getRenderer($toRender);
         return new $className($dateObject);
@@ -46,7 +52,7 @@ abstract class DateRangeRenderer
         $this->parentDateObject = $parentDateObject;
     }
 
-    private static function getRenderer($toRender)
+    private static function getRenderer($toRender): string
     {
         $className = "";
         switch ($toRender) {
@@ -75,23 +81,14 @@ abstract class DateRangeRenderer
         return __NAMESPACE__ . "\\" . $className;
     }
 
-    /**
-     * @param  ArrayList<DatePart> $dateParts
-     * @param  DateTime            $from
-     * @param  DateTime            $to
-     * @param  $delimiter
-     * @return string
-     */
-    abstract public function parseDateRange(ArrayList $dateParts, DateTime $from, DateTime $to, $delimiter);
+    abstract public function parseDateRange(
+        ListInterface $datePartsList,
+        DateTime      $from,
+        DateTime      $to,
+        string        $delimiter
+    ): string;
 
-    /**
-     * @param  DatePart $datePart
-     * @param  DateTime $from
-     * @param  DateTime $to
-     * @param  $delimiter
-     * @return string
-     */
-    protected function renderOneRangePart(DatePart $datePart, DateTime $from, DateTime $to, $delimiter)
+    protected function renderOneRangePart(DatePart $datePart, DateTime $from, DateTime $to, string $delimiter): string
     {
         $prefix = $datePart->renderPrefix();
         $from = $datePart->renderWithoutAffixes($from, $this->parentDateObject);
@@ -100,22 +97,25 @@ abstract class DateRangeRenderer
         return $prefix . $from . $delimiter . $to . $suffix;
     }
 
-    protected function renderDateParts($dateParts, $from, $to, $delimiter)
-    {
-        $ret = "";
-        foreach ($dateParts as $datePart) {
-            if (is_array($datePart)) {
+    protected function renderDateParts(
+        ListInterface $dateParts,
+        DateTime $from,
+        DateTime $to,
+        string $delimiter
+    ): string {
+        return $dateParts->map(function (Pair $datePartPair) use ($from, $to, $delimiter) {
+            $datePart = $datePartPair->getValue();
+            if ($datePart instanceof MapInterface || is_array($datePart)) {
                 $renderedFrom  = $datePart[0]->render($from, $this->parentDateObject);
                 $renderedFrom .= $datePart[1]->renderPrefix();
                 $renderedFrom .= $datePart[1]->renderWithoutAffixes($from, $this->parentDateObject);
                 $renderedTo  = $datePart[0]->renderWithoutAffixes($to, $this->parentDateObject);
                 $renderedTo .= $datePart[0]->renderSuffix();
                 $renderedTo .= $datePart[1]->render($to, $this->parentDateObject);
-                $ret .= $renderedFrom . $delimiter . $renderedTo;
+                return $renderedFrom . $delimiter . $renderedTo;
             } else {
-                $ret .= $datePart->render($from, $this->parentDateObject);
+                return $datePart->render($from, $this->parentDateObject);
             }
-        }
-        return $ret;
+        })->joinToString("");
     }
 }

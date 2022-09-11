@@ -1,35 +1,33 @@
 <?php
+declare(strict_types=1);
 /*
- * citeproc-php: DateRangeMonthDayRenderer.php
- * User: Sebastian Böttger <sebastian.boettger@thomascook.de>
- * created at 03.11.19, 20:51
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2019 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
  */
 
 namespace Seboettg\CiteProc\Rendering\Date\DateRange;
 
 use Seboettg\CiteProc\Rendering\Date\DatePart;
 use Seboettg\CiteProc\Rendering\Date\DateTime;
-use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use Seboettg\Collection\Map\MapInterface;
+use Seboettg\Collection\Map\Pair;
+use function Seboettg\Collection\Lists\emptyList;
+use function Seboettg\Collection\Lists\listOf;
+use function Seboettg\Collection\Map\emptyMap;
+use function Seboettg\Collection\Map\mapOf;
+use function Seboettg\Collection\Map\pair;
 
-/**
- * Class MonthDayRenderer
- * @package Seboettg\CiteProc\Rendering\Date\DateRange
- */
 class MonthDayRenderer extends DateRangeRenderer
 {
-    /**
-     * @param ArrayList<DatePart> $dateParts
-     * @param DateTime $from
-     * @param DateTime $to
-     * @param $delimiter
-     * @return string
-     */
-    public function parseDateRange(ArrayList $dateParts, DateTime $from, DateTime $to, $delimiter)
+    public function parseDateRange(ListInterface $datePartsList, DateTime $from, DateTime $to, string $delimiter): string
     {
-        $dp = $dateParts->toArray();
+        $dp = $datePartsList->toArray();
         $dateParts_ = [];
-        array_walk($dp, function ($datePart, $key) use (&$dateParts_) {
-            //$bit = sprintf("%03d", decbin($differentParts));
+        array_walk($dp, function (Pair $datePartPair) use (&$dateParts_) {
+            $datePart = $datePartPair->getValue();
+            $key = $datePartPair->getKey();
             if (strpos($key, "month") !== false || strpos($key, "day") !== false) {
                 $dateParts_["monthday"][] = $datePart;
             }
@@ -37,6 +35,8 @@ class MonthDayRenderer extends DateRangeRenderer
                 $dateParts_["year"] = $datePart;
             }
         });
-        return $this->renderDateParts($dateParts_, $from, $to, $delimiter);
+        $datePartsMap = emptyMap();
+        $datePartsMap->setArray($dateParts_);
+        return $this->renderDateParts($datePartsMap->toList(), $from, $to, $delimiter);
     }
 }

@@ -15,7 +15,10 @@ use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use Seboettg\CiteProc\Rendering\HasParent;
 use Seboettg\CiteProc\Rendering\Rendering;
 use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Map\MapInterface;
 use SimpleXMLElement;
+use function Seboettg\Collection\Lists\emptyList;
+use function Seboettg\Collection\Map\emptyMap;
 
 /**
  * Class Choose
@@ -27,10 +30,11 @@ use SimpleXMLElement;
 class Choose implements Rendering, HasParent
 {
 
-    /**
-     * @var ArrayList
-     */
-    private $children;
+    private const IF = "if";
+    private const ELSE_IF = "elseif";
+    private const ELSE = "else";
+
+    private MapInterface $children;
 
     private $parent;
 
@@ -45,23 +49,23 @@ class Choose implements Rendering, HasParent
     public function __construct(SimpleXMLElement $node, $parent)
     {
         $this->parent = $parent;
-        $this->children = new ArrayList();
-        $elseIf = new ArrayList();
+        $this->children = emptyMap();
+        $elseIf = emptyList();
         foreach ($node->children() as $child) {
             switch ($child->getName()) {
                 case 'if':
-                    $this->children->add("if", new ChooseIf($child, $this));
+                    $this->children->put(self::IF, new ChooseIf($child, $this));
                     break;
                 case 'else-if':
-                    $elseIf->append(new ChooseElseIf($child, $this));
+                    $elseIf->add(new ChooseElseIf($child, $this));
                     break;
                 case 'else':
-                    $this->children->add("else", new ChooseElse($child, $this));
+                    $this->children->put(self::ELSE, new ChooseElse($child, $this));
                     break;
             }
         }
         if ($elseIf->count() > 0) {
-            $this->children->add("elseif", $elseIf);
+            $this->children->put(self::ELSE_IF, $elseIf);
         }
     }
 
@@ -69,29 +73,25 @@ class Choose implements Rendering, HasParent
      * @param array|DataList $data
      * @param null|int $citationNumber
      * @return string
-     * @throws ArrayList\NotConvertibleToStringException
      */
-    public function render($data, $citationNumber = null)
+    public function render($data, $citationNumber = null): string
     {
-        $result = new ArrayList();
+        $result = emptyList();
         $matchedIfs = false;
 
-        $ifCondition = $this->children->get("if");
+        $ifCondition = $this->children->get(self::IF);
 
         if ($ifCondition->match($data)) { //IF CONDITION
             $matchedIfs = true;
-            $result->append($ifCondition->render($data));
-        } elseif ($this->children->hasKey("elseif")) { // ELSEIF
-            $elseIfs = $this->children->get("elseif")
-                ->map(function (ChooseIf $elseIf) use ($data) {
-                    return new Tuple($elseIf, $elseIf->match($data));
-                })
-                ->filter(function (Tuple $elseIfToMatch) {
-                    return $elseIfToMatch->second === true;
-                });
+            $result->add($ifCondition->render($data));
+        } elseif ($this->children->containsKey(self::ELSE_IF)) { // ELSEIF
+            $elseIfs = $this->children
+                ->get(self::ELSE_IF)
+                ->map(fn (ChooseIf $elseIf) => new Tuple($elseIf, $elseIf->match($data)))
+                ->filter(fn (Tuple $elseIfToMatch) => $elseIfToMatch->second === true);
             $matchedIfs = $elseIfs->count() > 0;
             if ($matchedIfs) {
-                $result->append(
+                $result->add(
                     $elseIfs
                         ->first() //returns a Tuple
                         ->first
@@ -101,10 +101,10 @@ class Choose implements Rendering, HasParent
         }
 
         // !$matchedIfs ensures that each previous condition has not been met
-        if (!$matchedIfs && $this->children->hasKey("else")) { //ELSE
-            $result->append($this->children->get("else")->render($data));
+        if (!$matchedIfs && $this->children->containsKey(self::ELSE)) { //ELSE
+            $result->add($this->children->get(self::ELSE)->render($data));
         }
-        return $result->collectToString("");
+        return $result->joinToString("");
     }
 
     /**

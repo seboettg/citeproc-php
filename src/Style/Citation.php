@@ -14,6 +14,8 @@ use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Exception\InvalidStylesheetException;
 use Seboettg\CiteProc\Style\Options\CitationOptions;
 use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use Seboettg\Collection\Map\MapInterface;
 use SimpleXMLElement;
 
 /**
@@ -47,12 +49,7 @@ class Citation extends StyleElement
         $this->node = $node;
     }
 
-    /**
-     * @param array|DataList $data
-     * @param ArrayList $citationItems
-     * @return string
-     */
-    public function render($data, $citationItems)
+    public function render(DataList $data, MapInterface $citationItems)
     {
         if (!$this->attributesInitialized) {
             $this->initInheritableNameAttributes($this->node);

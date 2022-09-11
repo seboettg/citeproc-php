@@ -1,36 +1,26 @@
 <?php
+declare(strict_types=1);
 /*
- * citeproc-php: DateRangeYearMonthDayRenderer.php
- * User: Sebastian Böttger <sebastian.boettger@thomascook.de>
- * created at 03.11.19, 20:24
+ * @link        http://github.com/seboettg/citeproc-php for the source repository
+ * @copyright   Copyright (c) 2019 Sebastian Böttger.
+ * @license     https://opensource.org/licenses/MIT
  */
 
 namespace Seboettg\CiteProc\Rendering\Date\DateRange;
 
 use Seboettg\CiteProc\Rendering\Date\DatePart;
 use Seboettg\CiteProc\Rendering\Date\DateTime;
-use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
 
-/**
- * Class YearMonthDayRenderer
- * @package Seboettg\CiteProc\Rendering\Date\DateRange
- */
 class YearMonthDayRenderer extends DateRangeRenderer
 {
-
-    /**
-     * @param ArrayList<DatePart> $dateParts
-     * @param DateTime $from
-     * @param DateTime $to
-     * @param $delimiter
-     * @return string
-     */
-    public function parseDateRange(ArrayList $dateParts, DateTime $from, DateTime $to, $delimiter)
+    public function parseDateRange(ListInterface $datePartsList, DateTime $from, DateTime $to, string $delimiter): string
     {
         $ret = "";
         $i = 0;
-        foreach ($dateParts as $datePart) {
-            if ($i === $dateParts->count() - 1) {
+        foreach ($datePartsList as $datePartPair) {
+            $datePart = $datePartPair->getValue();
+            if ($i === $datePartsList->count() - 1) {
                 $ret .= $datePart->renderPrefix();
                 $ret .= $datePart->renderWithoutAffixes($from, $this->parentDateObject);
             } else {
@@ -41,7 +31,8 @@ class YearMonthDayRenderer extends DateRangeRenderer
         $ret .= $delimiter;
         $i = 0;
         /** @var DatePart $datePart */
-        foreach ($dateParts as $datePart) {
+        foreach ($datePartsList as $datePartPair) {
+            $datePart = $datePartPair->getValue();
             if ($i == 0) {
                 $ret .= $datePart->renderWithoutAffixes($to, $this->parentDateObject);
                 $ret .= $datePart->renderSuffix();

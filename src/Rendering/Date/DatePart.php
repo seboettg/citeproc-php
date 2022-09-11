@@ -1,5 +1,6 @@
 <?php
-/**
+declare(strict_types=1);
+/*
  * citeproc-php
  *
  * @link        http://github.com/seboettg/citeproc-php for the source repository
@@ -18,12 +19,6 @@ use Seboettg\CiteProc\Styles\RangeDelimiterTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
 use SimpleXMLElement;
 
-/**
- * Class DatePart
- * @package Seboettg\CiteProc\Rendering\Date
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class DatePart
 {
 

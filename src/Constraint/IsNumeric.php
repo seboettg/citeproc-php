@@ -15,13 +15,6 @@ use Seboettg\CiteProc\CiteProc;
 use Seboettg\CiteProc\Util\NumberHelper;
 use stdClass;
 
-/**
- * Class IsNumeric
- * @package Seboettg\CiteProc\Choose\Constraint
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
-/** @noinspection PhpUnused */
 class IsNumeric extends AbstractConstraint
 {
 

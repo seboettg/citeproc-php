@@ -22,8 +22,11 @@ use Seboettg\CiteProc\Util\CiteProcHelper;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\CiteProc\Util\StringHelper;
 use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use Seboettg\Collection\Map\MapInterface;
 use SimpleXMLElement;
 use stdClass;
+use function Seboettg\Collection\Lists\emptyList;
 
 /**
  * Class Layout
@@ -58,42 +61,24 @@ class Layout implements Rendering
     private $parent;
 
     /**
-     * @param  SimpleXMLElement $node
-     * @param  StyleElement     $parent
-     * @throws InvalidStylesheetException
-     */
-    public function __construct($node, $parent)
-    {
-        $this->parent = $parent;
-        self::$numberOfCitedItems = 0;
-        $this->children = new ArrayList();
-        foreach ($node->children() as $child) {
-            $this->children->append(Factory::create($child, $this));
-        }
-        $this->initDelimiterAttributes($node);
-        $this->initAffixesAttributes($node);
-        $this->initFormattingAttributes($node);
-    }
-
-    /**
-     * @param  array|DataList  $data
-     * @param  array|ArrayList $citationItems
+     * @param  DataList  $data
+     * @param  MapInterface $citationItems
      * @return string|array
      */
-    public function render($data, $citationItems = [])
+    public function render(DataList $data, $citationItems)
     {
         $ret = "";
         $sorting = CiteProc::getContext()->getSorting();
         if (!empty($sorting)) {
-            CiteProc::getContext()->setRenderingState(new RenderingState("sorting"));
+            CiteProc::getContext()->setRenderingState(RenderingState::SORTING());
             $sorting->sort($data);
-            CiteProc::getContext()->setRenderingState(new RenderingState("rendering"));
+            CiteProc::getContext()->setRenderingState(RenderingState::RENDERING());
         }
 
         if (CiteProc::getContext()->isModeBibliography()) {
             foreach ($data as $citationNumber => $item) {
                 ++self::$numberOfCitedItems;
-                CiteProc::getContext()->getResults()->append(
+                CiteProc::getContext()->getResults()->add(
                     $this->wrapBibEntry($item, $this->renderSingle($item, $citationNumber))
                 );
             }
@@ -101,7 +86,7 @@ class Layout implements Rendering
             $ret = StringHelper::clearApostrophes($ret);
             return "<div class=\"csl-bib-body\">".$ret."\n</div>";
         } elseif (CiteProc::getContext()->isModeCitation()) {
-            if ($citationItems->count() > 0) { //is there a filter for specific citations?
+            if ($citationItems->isNotEmpty()) { //is there a filter for specific citations?
                 if ($this->isGroupedCitations($citationItems)) { //if citation items grouped?
                     return $this->renderGroupedCitations($data, $citationItems);
                 } else {
@@ -114,6 +99,24 @@ class Layout implements Rendering
         }
         $ret = StringHelper::clearApostrophes($ret);
         return $this->addAffixes($ret);
+    }
+
+    /**
+     * @param  SimpleXMLElement $node
+     * @param  StyleElement     $parent
+     * @throws InvalidStylesheetException
+     */
+    public function __construct($node, $parent)
+    {
+        $this->parent = $parent;
+        self::$numberOfCitedItems = 0;
+        $this->children = emptyList();
+        foreach ($node->children() as $child) {
+            $this->children->add(Factory::create($child, $this));
+        }
+        $this->initDelimiterAttributes($node);
+        $this->initAffixesAttributes($node);
+        $this->initFormattingAttributes($node);
     }
 
     /**
@@ -202,39 +205,34 @@ class Layout implements Rendering
         foreach ($data as $citationNumber => $item) {
             $renderedItem = $this->renderSingle($item, $citationNumber);
             $renderedItem = CiteProcHelper::applyAdditionMarkupFunction($item, "csl-entry", $renderedItem);
-            CiteProc::getContext()->getResults()->append($renderedItem);
+            CiteProc::getContext()->getResults()->add($renderedItem);
             CiteProc::getContext()->appendCitedItem($item);
         }
         $ret .= implode($this->delimiter, CiteProc::getContext()->getResults()->toArray());
         return $ret;
     }
 
-    /**
-     * @param  DataList  $data
-     * @param  ArrayList $citationItems
-     * @return mixed
-     */
-    private function filterCitationItems($data, $citationItems)
+    private function filterCitationItems(DataList $data, MapInterface $citationItems): DataList
     {
-        $arr = $data->toArray();
-
-        $arr_ = array_filter($arr, function ($dataItem) use ($citationItems) {
-            foreach ($citationItems as $citationItem) {
-                if ($dataItem->id === $citationItem->id) {
-                    return true;
-                }
-            }
-            return false;
-        });
-
-        return $data->replace($arr_);
+        $newDataList = new DataList();
+        $newDataList->setArray($data
+            ->filter(fn ($dataItem) => $citationItems->containsValue($dataItem->id))
+            ->map(function ($dataItem) use ($citationItems) {
+                    $dataItem->citationNumber = $citationItems
+                        ->filter(fn ($_, $citationItem) => $citationItem === $dataItem->id)
+                        ->getKeys()
+                        ->first();
+                    return $dataItem;
+            })
+            ->toArray());
+        return $newDataList;
     }
 
     /**
-     * @param  ArrayList $citationItems
+     * @param  MapInterface $citationItems
      * @return bool
      */
-    private function isGroupedCitations(ArrayList $citationItems)
+    private function isGroupedCitations(MapInterface $citationItems): bool
     {
         $firstItem = array_values($citationItems->toArray())[0];
         if (is_array($firstItem)) {
@@ -243,16 +241,11 @@ class Layout implements Rendering
         return false;
     }
 
-    /**
-     * @param  DataList  $data
-     * @param  ArrayList $citationItems
-     * @return array|string
-     */
-    private function renderGroupedCitations($data, $citationItems)
+    private function renderGroupedCitations(DataList $data, MapInterface $citationItems)
     {
         $group = [];
         foreach ($citationItems as $citationItemGroup) {
-            $data_ = $this->filterCitationItems(clone $data, $citationItemGroup);
+            $data_ = $this->filterCitationItems($data, $citationItemGroup);
             CiteProc::getContext()->setCitationData($data_);
             $group[] = $this->addAffixes(StringHelper::clearApostrophes($this->renderCitations($data_, "")));
         }

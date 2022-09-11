@@ -12,12 +12,6 @@ namespace Seboettg\CiteProc\Constraint;
 
 use stdClass;
 
-/**
- * Class Jurisdiction
- * @package Seboettg\CiteProc\Constraint
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class Jurisdiction implements Constraint
 {
     /**

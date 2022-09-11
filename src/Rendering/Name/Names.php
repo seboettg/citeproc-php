@@ -24,8 +24,12 @@ use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\CiteProc\Util\NameHelper;
 use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use Seboettg\Collection\Map\MapInterface;
 use SimpleXMLElement;
 use stdClass;
+use function Seboettg\Collection\Lists\listOf;
+use function Seboettg\Collection\Map\mapOf;
 
 /**
  * Class Names
@@ -45,10 +49,8 @@ class Names implements Rendering, HasParent
      * Variables (selected with the required variable attribute), each of which can contain multiple names (e.g. the
      * “author” variable contains all the author names of the cited item). If multiple variables are selected
      * (separated by single spaces, see example below), each variable is independently rendered in the order specified.
-     *
-     * @var ArrayList
      */
-    private $variables;
+    private ListInterface $variables;
 
     /**
      * The Name element, an optional child element of Names, can be used to describe the formatting of individual
@@ -155,7 +157,7 @@ class Names implements Rendering, HasParent
          */
         foreach ($node->attributes() as $attribute) {
             if ("variable" === $attribute->getName()) {
-                $this->variables = new ArrayList(...explode(" ", (string) $attribute));
+                $this->variables = listOf(...explode(" ", (string) $attribute));
                 break;
             }
         }
@@ -187,7 +189,7 @@ class Names implements Rendering, HasParent
         is identical, then the contents of only one name variable is rendered. In addition, the “editortranslator”
         term is used if the cs:names element contains a cs:label element, replacing the default “editor” and
         “translator” terms (e.g. resulting in “Doe (editor & translator)”) */
-        if ($this->variables->hasElement("editor") && $this->variables->hasElement("translator")) {
+        if ($this->variables->contains("editor") && $this->variables->contains("translator")) {
             if (isset($data->editor)
                 && isset($data->translator) && NameHelper::sameNames($data->editor, $data->translator)
             ) {

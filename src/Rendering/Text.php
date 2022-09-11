@@ -46,17 +46,17 @@ class Text implements Rendering
     /**
      * @var string
      */
-    private $toRenderType;
+    private string $toRenderType;
 
     /**
      * @var string
      */
-    private $toRenderTypeValue;
+    private string $toRenderTypeValue;
 
     /**
      * @var string
      */
-    private $form = "long";
+    private string $form = "long";
 
     /**
      * Text constructor.
@@ -266,7 +266,7 @@ class Text implements Rendering
      */
     private function renderCitationNumber($data, $citationNumber)
     {
-        $renderedText = $citationNumber + 1;
+        $renderedText = property_exists($data, "citationNumber") ? $data->citationNumber : $citationNumber + 1;
         if (!CiteProcHelper::isUsingAffixesByMarkupExtentsion($data, $this->toRenderTypeValue)) {
             $renderedText = $this->applyAdditionalMarkupFunction($data, $renderedText);
         }

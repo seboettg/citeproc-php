@@ -13,6 +13,8 @@ use InvalidArgumentException;
 use Seboettg\CiteProc\Exception\CiteProcException;
 use Seboettg\CiteProc\StyleSheet;
 use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use Seboettg\Collection\Map\MapInterface;
 use SimpleXMLElement;
 use stdClass;
 
@@ -37,20 +39,18 @@ class Locale
     /**
      * @var SimpleXMLElement
      */
-    private $localeXml;
+    private SimpleXMLElement $localeXml;
 
     /**
      * @var string
      */
-    private $language;
+    private string $language;
 
     /**
      * Locale constructor.
-     * @param string $lang
-     * @param ?string $xmlString
      * @throws CiteProcException
      */
-    public function __construct($lang = "en-US", $xmlString = null)
+    public function __construct(string $lang = "en-US", string $xmlString = null)
     {
         $this->language = $lang;
 
@@ -85,13 +85,7 @@ class Locale
         return $this->language;
     }
 
-    /**
-     * @param string $type
-     * @param $name
-     * @param string $form
-     * @return stdClass
-     */
-    public function filter($type, $name, $form = "long")
+    public function filter(string $type, string $name, string $form = "long")
     {
         if ('options' === $type) {
             return $this->option($name);
@@ -100,17 +94,17 @@ class Locale
             throw new InvalidArgumentException("There is no locale of type \"$type\".");
         }
 
-        /** @var ArrayList $localeList */
+        /** @var MapInterface $localeList */
         $localeList = $this->{$type};
 
         if (is_null($name)) {
             $name = "";
         }
 
-        //filter by name
-        $array = $localeList->get($name);
+        /** @var ListInterface $list */
+        $list = $localeList[$name];
 
-        if (empty($array)) {
+        if (empty($list)) {
             $ret = new stdClass();
             $ret->name = null;
             $ret->single = null;
@@ -121,15 +115,15 @@ class Locale
         //filter by form
         if ($type !== "options") {
             /** @var Term $value */
-            $array = array_filter($array, function ($term) use ($form) {
+            return $list->filter(function ($term) use ($form) {
                 return $term->form === $form;
-            });
+            })->last();
         }
 
-        return array_pop($array);
+        return $list->last();
     }
 
-    private function option($name)
+    private function option(string $name)
     {
         $result = null;
         foreach ($this->options as $key => $value) {

@@ -189,7 +189,7 @@ class Name implements HasParent
         }
 
         $renderedResult = $this->getNamesString($nameObj, $rank);
-        CiteProcHelper::applyAdditionMarkupFunction($nameItem, $this->parent->getVariables()[0], $renderedResult);
+        CiteProcHelper::applyAdditionMarkupFunction($nameItem, $this->parent->getVariables()->first(), $renderedResult);
         return trim($renderedResult);
     }
 
@@ -390,14 +390,11 @@ class Name implements HasParent
     }
 
     /**
-     * @param  array $data
-     * @param  int   $citationNumber
-     * @return array
      * @throws CiteProcException
      */
-    private function handleSubsequentAuthorSubstitution($data, $citationNumber)
+    private function handleSubsequentAuthorSubstitution($data, $citationNumber): array
     {
-        $hasPreceding = CiteProc::getContext()->getCitationData()->hasKey($citationNumber - 1);
+        $hasPreceding = CiteProc::getContext()->getCitationData()->has($citationNumber - 1);
         $subsequentSubstitution = CiteProc::getContext()->getCitationData()->getSubsequentAuthorSubstitute();
         $subsequentSubstitutionRule = CiteProc::getContext()->getCitationData()->getSubsequentAuthorSubstituteRule();
         $preceding = CiteProc::getContext()->getCitationData()->get($citationNumber - 1);

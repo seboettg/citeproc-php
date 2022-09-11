@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -9,23 +10,14 @@
 
 namespace Seboettg\CiteProc\Styles\Css;
 
-use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Map;
 
-/**
- * Class CssRules
- * @package Seboettg\CiteProc\Styles\Css
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
-class CssRules extends ArrayList
+class CssRules extends Map
 {
-    /**
-     * @param $rule
-     * @return CssRule
-     */
-    public function getRule($rule)
+    public function getRule(string $rule): CssRule
     {
-        if (!$this->hasKey($rule)) {
-            $this->set($rule, new CssRule(substr($rule, 1), substr($rule, 0, 1)));
+        if (!$this->containsKey($rule)) {
+            $this->put($rule, new CssRule(substr($rule, 1), substr($rule, 0, 1)));
         }
         return $this->get($rule);
     }

@@ -18,6 +18,8 @@ use Seboettg\CiteProc\Styles\ConsecutivePunctuationCharacterTrait;
 use Seboettg\CiteProc\Util\Factory;
 use Seboettg\Collection\ArrayList;
 use SimpleXMLElement;
+use function Seboettg\Collection\Lists\emptyList;
+use function Seboettg\Collection\Lists\listOf;
 
 /**
  * Class Macro
@@ -67,9 +69,9 @@ class Macro implements Rendering, HasParent
         }
         $this->name = (string) $attr['name'];
 
-        $this->children = new ArrayList();
+        $this->children = emptyList();
         foreach ($node->children() as $child) {
-            $this->children->append(Factory::create($child, $this));
+            $this->children->add(Factory::create($child, $this));
         }
     }
 

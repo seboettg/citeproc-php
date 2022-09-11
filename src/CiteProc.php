@@ -9,6 +9,7 @@
 
 namespace Seboettg\CiteProc;
 
+use Exception;
 use InvalidArgumentException;
 use Seboettg\CiteProc\Data\DataList;
 use Seboettg\CiteProc\Exception\CiteProcException;
@@ -21,7 +22,11 @@ use Seboettg\CiteProc\Root\Root;
 use Seboettg\CiteProc\Styles\Css\CssStyle;
 use Seboettg\CiteProc\Util\CiteProcHelper;
 use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use Seboettg\Collection\Map\MapInterface;
 use SimpleXMLElement;
+use function Seboettg\Collection\Lists\listOf;
+use function Seboettg\Collection\Map\emptyMap;
 
 /**
  * Class CiteProc
@@ -137,12 +142,7 @@ class CiteProc
         return self::$context->getBibliography()->render($data);
     }
 
-    /**
-     * @param DataList $data
-     * @param ArrayList $citationItems
-     * @return string
-     */
-    protected function citation($data, $citationItems)
+    protected function citation(DataList $data, MapInterface $citationItems)
     {
         return self::$context->getCitation()->render($data, $citationItems);
     }
@@ -152,13 +152,17 @@ class CiteProc
      * @param string $mode (citation|bibliography)
      * @param array $citationItems
      * @param bool $citationAsArray
-     * @return string
+     * @return string|array
      * @throws CiteProcException
      */
-    public function render($data, $mode = "bibliography", $citationItems = [], $citationAsArray = false)
-    {
-        if (is_array($data)) {
-            $data = CiteProcHelper::cloneArray($data);
+    public function render(
+        $data_,
+        string $mode = "bibliography",
+        array $citationItems = [],
+        bool $citationAsArray = false
+    ) {
+        if (is_array($data_)) {
+            $data_ = CiteProcHelper::cloneArray($data_);
         }
 
         if (!in_array($mode, ['citation', 'bibliography'])) {
@@ -167,31 +171,46 @@ class CiteProc
 
         $this->init($citationAsArray); //initialize
 
-        $res = "";
 
-        if (is_array($data)) {
-            $data = new DataList(...$data);
-        } elseif (!($data instanceof DataList)) {
-            throw new CiteProcException('No valid format for variable data. Either DataList or array expected');
+        if ($data_ instanceof Data\DataList) {
+            $dataList = $data_;
+        } else {
+            if (is_array($data_)) {
+                $dataList = new DataList();
+                $dataList->setArray($data_);
+            } else {
+                throw new CiteProcException('No valid format for variable data. Either DataList or array expected');
+            }
         }
 
         switch ($mode) {
             case 'bibliography':
                 self::$context->setMode($mode);
                 // set CitationItems to Context
-                self::getContext()->setCitationData($data);
-                $res = $this->bibliography($data);
+                self::getContext()->setCitationData($dataList);
+                $res = $this->bibliography($dataList);
                 break;
             case 'citation':
                 if (is_array($citationItems)) {
-                    $citationItems = new ArrayList(...$citationItems);
-                } elseif (!($citationItems instanceof ArrayList)) {
+                    $citeItems = emptyMap();
+                    $citationItems = listOfLists(...$citationItems);
+                    foreach ($data_ as $key => $value) {
+                        if (property_exists($value, "id") && $citationItems
+                                ->map(fn ($item) => $item->id)->contains($value->id)) {
+                            $k = $key + 1;
+                            $citeItems->put("$k", $value->id);
+                        }
+                    }
+                } elseif (!($citationItems instanceof ListInterface)) {
                     throw new CiteProcException('No valid format for variable `citationItems`, ArrayList expected.');
                 }
                 self::$context->setMode($mode);
                 // set CitationItems to Context
                 self::getContext()->setCitationItems($citationItems);
-                $res = $this->citation($data, $citationItems);
+                $res = $this->citation($dataList, $citeItems);
+                break;
+            default:
+                throw new CiteProcException("Invalid mode $mode");
         }
         self::setContext(null);
 
@@ -202,8 +221,9 @@ class CiteProc
      * initializes CiteProc and start parsing XML stylesheet
      * @param bool $citationAsArray
      * @throws CiteProcException
+     * @throws Exception
      */
-    public function init($citationAsArray = false)
+    public function init(bool $citationAsArray = false)
     {
         self::$context = new Context();
         self::$context->setLocale(new Locale\Locale($this->lang)); //init locale

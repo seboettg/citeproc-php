@@ -21,11 +21,5 @@ use stdClass;
  */
 interface Rendering
 {
-
-    /**
-     * @param array|DataList|stdClass $data
-     * @param int|null $citationNumber
-     * @return string
-     */
-    public function render($data, $citationNumber = []);
+    public function render(DataList $data, $citationNumber);
 }

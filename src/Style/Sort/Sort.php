@@ -49,7 +49,7 @@ class Sort
         /** @var SimpleXMLElement $child */
         foreach ($node->children() as $child) {
             if ("key" === $child->getName()) {
-                $this->sortingKeys->append(new Key($child));
+                $this->sortingKeys->add(new Key($child));
             }
         }
     }
@@ -67,11 +67,13 @@ class Sort
     public function sort(&$data)
     {
         if (is_array($data)) {
-            $data = new DataList(...$data);
+            $dataList = new DataList();
+            $dataList->setArray($data);
+            $data = $dataList;
         }
         $dataToSort = $data->toArray();
         try {
-            $data->replace($this->performSort(0, $dataToSort));
+            $data->setArray($this->performSort(0, $dataToSort));
         } catch (CiteProcException $e) {
             //nothing to do, because $data is passed by referenced
         }
@@ -104,7 +106,7 @@ class Sort
                 $newKey = clone $key;
                 $newKey->setRangePart(2);
                 $key->setRangePart(1);
-                $this->sortingKeys->append($newKey);
+                $this->sortingKeys->add($newKey);
             }
         }
 

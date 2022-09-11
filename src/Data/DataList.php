@@ -9,32 +9,23 @@
 
 namespace Seboettg\CiteProc\Data;
 
-use Seboettg\CiteProc\Style\Citation;
 use Seboettg\CiteProc\Style\Options\SubsequentAuthorSubstituteRule;
 use Seboettg\Collection\ArrayList;
 
-/**
- * Class DataList
- *
- * @package Seboettg\CiteProc\Data
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class DataList extends ArrayList
 {
-    /**
-     * @var string
-     */
-    private $subsequentAuthorSubstitute;
+    private ?string $subsequentAuthorSubstitute;
+    private SubsequentAuthorSubstituteRule $subsequentAuthorSubstituteRule;
 
-    /**
-     * @var SubsequentAuthorSubstituteRule
-     */
-    private $subsequentAuthorSubstituteRule = "complete-all";
 
-    /**
-     * @return string
-     */
-    public function getSubsequentAuthorSubstitute()
+    public function __construct()
+    {
+        parent::__construct();
+        $this->subsequentAuthorSubstitute = null;
+        $this->subsequentAuthorSubstituteRule = SubsequentAuthorSubstituteRule::COMPLETE_ALL();
+    }
+
+    public function getSubsequentAuthorSubstitute(): ?string
     {
         return $this->subsequentAuthorSubstitute;
     }
@@ -42,7 +33,7 @@ class DataList extends ArrayList
     /**
      * @param string $subsequentAuthorSubstitute
      */
-    public function setSubsequentAuthorSubstitute($subsequentAuthorSubstitute)
+    public function setSubsequentAuthorSubstitute(string $subsequentAuthorSubstitute)
     {
         $this->subsequentAuthorSubstitute = $subsequentAuthorSubstitute;
     }
@@ -50,7 +41,7 @@ class DataList extends ArrayList
     /**
      * @return SubsequentAuthorSubstituteRule
      */
-    public function getSubsequentAuthorSubstituteRule()
+    public function getSubsequentAuthorSubstituteRule(): SubsequentAuthorSubstituteRule
     {
         return $this->subsequentAuthorSubstituteRule;
     }

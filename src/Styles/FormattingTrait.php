@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -9,8 +10,9 @@
 
 namespace Seboettg\CiteProc\Styles;
 
-use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Map\MapInterface;
 use SimpleXMLElement;
+use function Seboettg\Collection\Map\emptyMap;
 
 /**
  * Trait FormattingTrait
@@ -23,7 +25,7 @@ trait FormattingTrait
     /**
      * @var array
      */
-    private static $formattingAttributes = [
+    private static array $formattingAttributes = [
         'font-style',
         'font-family',
         'font-weight',
@@ -32,38 +34,23 @@ trait FormattingTrait
         'vertical-align'
     ];
 
-    /**
-     * @var ArrayList
-     */
-    private $formattingOptions;
-
-    /**
-     * @var bool
-     */
-    private $stripPeriods = false;
-
-    /**
-     * @var string
-     */
-    private $format;
+    private MapInterface $formattingOptions;
+    private bool $stripPeriods = false;
+    private string $format;
 
     /**
      * @param SimpleXMLElement $node
      */
     protected function initFormattingAttributes(SimpleXMLElement $node)
     {
-        $this->formattingOptions = new ArrayList();
+        $this->formattingOptions = emptyMap();
 
         /** @var SimpleXMLElement $attribute */
         foreach ($node->attributes() as $attribute) {
-
-            /** @var string $name */
-            $name = (string) $attribute->getName();
+            $name = $attribute->getName();
             $value = (string) $attribute;
-
             if (in_array($name, self::$formattingAttributes)) {
-                $this->formattingOptions->add($name, $value);
-                continue;
+                $this->formattingOptions->put($name, $value);
             }
         }
     }
@@ -97,7 +84,7 @@ trait FormattingTrait
                 }
             }
             if (!empty($format)) {
-                $text = '<span style="' . $format . '">' . $text . '</span>';
+                $text = sprintf("<span style=\"%s\">%s</span>", $format, $text);
             }
         }
         return $text;

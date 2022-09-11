@@ -5,6 +5,7 @@ namespace Seboettg\CiteProc\Rendering\Term;
 use MyCLabs\Enum\Enum;
 use Seboettg\CiteProc\CiteProc;
 use Seboettg\Collection\ArrayList;
+use function Seboettg\Collection\Lists\listOf;
 
 class Punctuation extends Enum
 {
@@ -19,14 +20,9 @@ class Punctuation extends Enum
 
     public static function getAllPunctuations(): array
     {
-        $values = new ArrayList();
-        return $values
-            ->setArray(Punctuation::toArray())
-            ->map(function (string $punctuation) {
-                return CiteProc::getContext()->getLocale()->filter("terms", $punctuation)->single;
-            })
-            ->collect(function ($items) {
-                return array_values($items);
-            });
+        return listOf(...Punctuation::toArray())
+            ->map(fn (string $punctuation) =>
+                CiteProc::getContext()->getLocale()->filter("terms", $punctuation)->single)
+            ->collect(fn ($items) => array_values($items));
     }
 }

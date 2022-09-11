@@ -42,7 +42,8 @@ class ContextTest extends TestCase
         $this->citeProc->init();
         $this->context = $this->citeProc->getContext();
         $this->context->setMode("bibliography");
-        $dataList = new DataList(...json_decode($this->data));
+        $dataList = new DataList();
+        $dataList->setArray(json_decode($this->data));
         $this->context->setCitationData($dataList);
     }
 
@@ -72,7 +73,7 @@ class ContextTest extends TestCase
      */
     public function testHasCitationItems()
     {
-        static::assertTrue($this->citeProc::getContext()->hasCitationItems());
+        static::assertTrue(CiteProc::getContext()->hasCitationItems());
     }
 
     /**

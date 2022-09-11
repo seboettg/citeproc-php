@@ -15,7 +15,7 @@ use function Seboettg\CiteProc\ucfirst;
 
 class Factory extends \Seboettg\CiteProc\Util\Factory
 {
-    const NAMESPACE_CONSTRAINTS = "Seboettg\\CiteProc\\Constraint\\";
+    private const NAMESPACE_CONSTRAINTS = "Seboettg\\CiteProc\\Constraint\\";
 
     /**
      * @throws ClassNotFoundException

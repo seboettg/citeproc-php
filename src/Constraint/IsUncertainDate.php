@@ -12,15 +12,6 @@ namespace Seboettg\CiteProc\Constraint;
 
 use stdClass;
 
-/**
- * Class isUncertainDate
- * Tests whether the given date variables contain approximate dates.
- *
- * @package Seboettg\CiteProc\Constraint
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
-/** @noinspection PhpUnused */
 class IsUncertainDate extends AbstractConstraint
 {
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * citeproc-php
  *
@@ -19,15 +20,15 @@ use Seboettg\CiteProc\Styles\DisplayTrait;
 use Seboettg\CiteProc\Styles\FormattingTrait;
 use Seboettg\CiteProc\Styles\TextCaseTrait;
 use Seboettg\CiteProc\Util;
-use Seboettg\Collection\ArrayList;
+use Seboettg\Collection\Lists\ListInterface;
+use Seboettg\Collection\Map\MapInterface;
+use Seboettg\Collection\Map\Pair;
 use SimpleXMLElement;
+use function Seboettg\Collection\Lists\emptyList;
+use function Seboettg\Collection\Lists\listOf;
+use function Seboettg\Collection\Map\emptyMap;
+use function Seboettg\Collection\Map\pair;
 
-/**
- * Class Date
- * @package Seboettg\CiteProc\Rendering
- *
- * @author Sebastian Böttger <seboettg@gmail.com>
- */
 class Date
 {
     use AffixesTrait,
@@ -36,39 +37,24 @@ class Date
         TextCaseTrait;
 
     // bitmask: ymd
-    const DATE_RANGE_STATE_NONE         = 0; // 000
-    const DATE_RANGE_STATE_DAY          = 1; // 001
-    const DATE_RANGE_STATE_MONTH        = 2; // 010
-    const DATE_RANGE_STATE_MONTHDAY     = 3; // 011
-    const DATE_RANGE_STATE_YEAR         = 4; // 100
-    const DATE_RANGE_STATE_YEARDAY      = 5; // 101
-    const DATE_RANGE_STATE_YEARMONTH    = 6; // 110
-    const DATE_RANGE_STATE_YEARMONTHDAY = 7; // 111
+    public const DATE_RANGE_STATE_NONE         = 0; // 000
+    public const DATE_RANGE_STATE_DAY          = 1; // 001
+    public const DATE_RANGE_STATE_MONTH        = 2; // 010
+    public const DATE_RANGE_STATE_MONTHDAY     = 3; // 011
+    public const DATE_RANGE_STATE_YEAR         = 4; // 100
+    public const DATE_RANGE_STATE_YEARDAY      = 5; // 101
+    public const DATE_RANGE_STATE_YEARMONTH    = 6; // 110
+    public const DATE_RANGE_STATE_YEARMONTHDAY = 7; // 111
 
     private static $localizedDateFormats = [
         'numeric',
         'text'
     ];
 
-    /**
-     * @var ArrayList
-     */
-    private $dateParts;
-
-    /**
-     * @var string
-     */
-    private $form = "";
-
-    /**
-     * @var string
-     */
-    private $variable = "";
-
-    /**
-     * @var string
-     */
-    private $datePartsAttribute = "";
+    private ListInterface $dateParts;
+    private string $form = "numeric";
+    private string $variable = "";
+    private string $datePartsAttribute = "";
 
     /**
      * Date constructor.
@@ -77,7 +63,7 @@ class Date
      */
     public function __construct(SimpleXMLElement $node)
     {
-        $this->dateParts = new ArrayList();
+        $this->dateParts = emptyList();
 
         /** @var SimpleXMLElement $attribute */
         foreach ($node->attributes() as $attribute) {
@@ -96,7 +82,7 @@ class Date
         foreach ($node->children() as $child) {
             if ($child->getName() === "date-part") {
                 $datePartName = (string) $child->attributes()["name"];
-                $this->dateParts->set($this->form . "-" . $datePartName, Util\Factory::create($child));
+                $this->dateParts->add(pair($this->form . "-" . $datePartName, Util\Factory::create($child)));
             }
         }
 
@@ -138,16 +124,15 @@ class Date
         }
 
         $form = $this->form;
-        $dateParts = !empty($this->datePartsAttribute) ? explode("-", $this->datePartsAttribute) : [];
+        $dateParts = !empty($this->datePartsAttribute) ?
+            listOf(...explode("-", $this->datePartsAttribute)) : emptyList();
         $this->prepareDatePartsChildren($dateParts, $form);
 
         // No date-parts in date-part attribute defined, take into account that the defined date-part children will
         // be used.
         if (empty($this->datePartsAttribute) && $this->dateParts->count() > 0) {
             /** @var DatePart $part */
-            foreach ($this->dateParts as $part) {
-                $dateParts[] = $part->getName();
-            }
+            $dateParts = $this->dateParts->map(fn (Pair $pair) => $pair->getValue()->getName());
         }
 
         /* cs:date may have one or more cs:date-part child elements (see Date-part). The attributes set on
@@ -162,35 +147,47 @@ class Date
             }
 
             if (count($data->{$this->variable}->{'date-parts'}) === 1) {
-                $data_ = $this->createDateTime($data->{$this->variable}->{'date-parts'});
-                $ret .= $this->iterateAndRenderDateParts($dateParts, $data_);
+                list($from) = $this->createDateTime($data->{$this->variable}->{'date-parts'});
+                $ret .= $this->iterateAndRenderDateParts($dateParts, $from);
             } elseif (count($var->{'date-parts'}) === 2) { //date range
-                $data_ = $this->createDateTime($var->{'date-parts'});
-                $from = $data_[0];
-                $to = $data_[1];
+                list($from, $to) = $this->createDateTime($var->{'date-parts'});
+
+
                 $interval = $to->diff($from);
                 $delimiter = "";
                 $toRender = 0;
-                if ($interval->y > 0 && in_array('year', $dateParts)) {
+                if ($interval->y > 0 && $dateParts->contains("year")) {
                     $toRender |= self::DATE_RANGE_STATE_YEAR;
-                    $delimiter = $this->dateParts->get($this->form."-year")->getRangeDelimiter();
+                    $delimiter = $this->dateParts
+                        ->filter(fn (Pair $pair) => $pair->getKey() === $this->form . "-year")
+                        ->first()
+                        ->getValue()
+                        ->getRangeDelimiter();
                 }
-                if ($interval->m > 0 && $from->getMonth() - $to->getMonth() !== 0 && in_array('month', $dateParts)) {
+                if ($interval->m > 0 && $from->getMonth() - $to->getMonth() !== 0 && $dateParts->contains("month")) {
                     $toRender |= self::DATE_RANGE_STATE_MONTH;
-                    $delimiter = $this->dateParts->get($this->form."-month")->getRangeDelimiter();
+                    $delimiter = $this->dateParts
+                        ->filter(fn (Pair $pair) => $pair->getKey() === $this->form . "-month")
+                        ->first()
+                        ->getValue()
+                        ->getRangeDelimiter();
                 }
-                if ($interval->d > 0 && $from->getDay() - $to->getDay() !== 0 && in_array('day', $dateParts)) {
+                if ($interval->d > 0 && $from->getDay() - $to->getDay() !== 0 && $dateParts->contains("day")) {
                     $toRender |= self::DATE_RANGE_STATE_DAY;
-                    $delimiter = $this->dateParts->get($this->form."-day")->getRangeDelimiter();
+                    $delimiter = $this->dateParts
+                        ->filter(fn (Pair $pair) => $pair->getKey() === "$this->form-day")
+                        ->first()
+                        ->getValue()
+                        ->getRangeDelimiter();
                 }
                 if ($toRender === self::DATE_RANGE_STATE_NONE) {
-                    $ret .= $this->iterateAndRenderDateParts($dateParts, $data_);
+                    $ret .= $this->iterateAndRenderDateParts($dateParts, $from);
                 } else {
                     $ret .= $this->renderDateRange($toRender, $from, $to, $delimiter);
                 }
             }
 
-            if (isset($var->raw) && preg_match("/(\p{L}+)\s?([\-\–&,])\s?(\p{L}+)/u", $var->raw, $matches)) {
+            if (isset($var->raw) && preg_match("/(\p{L}+)\s?([\-–&,])\s?(\p{L}+)/u", $var->raw, $matches)) {
                 return $matches[1].$matches[2].$matches[3];
             }
         } elseif (!empty($this->datePartsAttribute)) {
@@ -205,11 +202,9 @@ class Date
     }
 
     /**
-     * @param array $dates
-     * @return array
      * @throws Exception
      */
-    private function createDateTime($dates)
+    private function createDateTime(array $dates): array
     {
         $data = [];
         foreach ($dates as $date) {
@@ -236,34 +231,19 @@ class Date
         return $data;
     }
 
-    /**
-     * @param int $toRender
-     * @param DateTime $from
-     * @param DateTime $to
-     * @param $delimiter
-     * @return string
-     */
-    private function renderDateRange($toRender, DateTime $from, DateTime $to, $delimiter)
+    private function renderDateRange(int $toRender, DateTime $from, DateTime $to, $delimiter): string
     {
         $datePartRenderer = DateRangeRenderer::factory($this, $toRender);
         return $datePartRenderer->parseDateRange($this->dateParts, $from, $to, $delimiter);
     }
 
-    /**
-     * @param string $format
-     * @return bool
-     */
-    private function hasDatePartsFromLocales($format)
+    private function hasDatePartsFromLocales(string $format): bool
     {
         $dateXml = CiteProc::getContext()->getLocale()->getDateXml();
         return !empty($dateXml[$format]);
     }
 
-    /**
-     * @param string $format
-     * @return array
-     */
-    private function getDatePartsFromLocales($format)
+    private function getDatePartsFromLocales($format): array
     {
         $ret = [];
         // date parts from locales
@@ -319,7 +299,7 @@ class Date
     }
 
     /**
-     * @param $dateParts
+     * @param ListInterface $dateParts
      * @param string $form
      * @throws InvalidStylesheetException
      */
@@ -337,12 +317,12 @@ class Date
             if ($this->hasDatePartsFromLocales($form)) {
                 $datePartsFromLocales = $this->getDatePartsFromLocales($form);
                 array_filter($datePartsFromLocales, function (SimpleXMLElement $item) use ($dateParts) {
-                    return in_array($item["name"], $dateParts);
+                    return $dateParts->contains($item["name"]);
                 });
 
                 foreach ($datePartsFromLocales as $datePartNode) {
                     $datePart = $datePartNode["name"];
-                    $this->dateParts->set("$form-$datePart", Util\Factory::create($datePartNode));
+                    $this->dateParts->add(pair("$form-$datePart", Util\Factory::create($datePartNode)));
                 }
             } else { //otherwise create default date parts
                 foreach ($dateParts as $datePart) {
@@ -378,35 +358,32 @@ class Date
     }
 
     /**
-     * @param array $dateParts
-     * @param array $data_
+     * @param ListInterface $dateParts
+     * @param DateTime $from
      * @return string
      */
-    private function iterateAndRenderDateParts(array $dateParts, array $data_)
+    private function iterateAndRenderDateParts(ListInterface $dateParts, DateTime $from): string
     {
-        $result = [];
-        /** @var DatePart $datePart */
-        foreach ($this->dateParts as $key => $datePart) {
-            /** @noinspection PhpUnusedLocalVariableInspection */
-            list($f, $p) = explode("-", $key);
-            if (in_array($p, $dateParts)) {
-                $result[] = $datePart->render($data_[0], $this);
-            }
-        }
-        $result = array_filter($result);
         $glue = $this->datePartsHaveAffixes() ? "" : " ";
-        $return = implode($glue, $result);
-        return trim($return);
+        $result = $this->dateParts
+            ->filter(function (Pair $datePartPair) use ($dateParts) {
+                list($_, $p) = explode("-", $datePartPair->getKey());
+                return $dateParts->contains($p);
+            })
+            ->map(fn (Pair $datePartPair) => $datePartPair->getValue()->render($from, $this))
+            ->filter()
+            ->joinToString($glue);
+        return trim($result);
     }
 
     /**
      * @return bool
      */
-    private function datePartsHaveAffixes()
+    private function datePartsHaveAffixes(): bool
     {
-        $result = $this->dateParts->filter(function (DatePart $datePart) {
-            return $datePart->renderSuffix() !== "" || $datePart->renderPrefix() !== "";
-        });
-        return $result->count() > 0;
+        return $this->dateParts
+            ->filter(fn (Pair $datePartPair) =>
+                $datePartPair->getValue()->renderSuffix() !== "" || $datePartPair->getValue()->renderPrefix() !== "")
+            ->count() > 0;
     }
 }
