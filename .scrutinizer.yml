@@ -2,6 +2,8 @@ filter:
     excluded_paths:
         - 'tests/*'
 build:
+    environment:
+        php: 7.4.32
     tests:
         override:
             - command: 'mkdir -p build/logs'
