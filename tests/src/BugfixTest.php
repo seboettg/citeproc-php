@@ -163,4 +163,9 @@ class BugfixTest extends TestCase
     {
         $this->runTestSuite('bugfix-github-114');
     }
+
+    public function testBugfixGithub143()
+    {
+        $this->runTestSuite('bugfix-github-143');
+    }
 }
