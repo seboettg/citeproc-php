@@ -142,12 +142,18 @@ class StringHelper
     public static function mb_ucfirst($string, $encoding = 'UTF-8')
     {// phpcs:enable
         $strlen = mb_strlen($string, $encoding);
+        if ($strlen == 0) return '';
         $firstChar = mb_substr($string, 0, 1, $encoding);
         $then = mb_substr($string, 1, $strlen - 1, $encoding);
 
         /** @noinspection PhpInternalEntityUsedInspection */
+        // We can not rely on mb_detect_encoding. See https://www.php.net/manual/en/function.mb-detect-encoding.php.
+        // We need to double-check if the first char is not a multibyte char otherwise mb_strtoupper() process it
+        // incorrectly, and it causes issues later. For example 'こ' transforms to 'Á�'.
+        $original_ord = mb_ord($firstChar, $encoding);
         $encoding = mb_detect_encoding($firstChar, self::ISO_ENCODINGS, true);
-        return in_array($encoding, self::ISO_ENCODINGS) ?
+        $new_ord = mb_ord($firstChar, $encoding);
+        return $original_ord === $new_ord && in_array($encoding, self::ISO_ENCODINGS) ?
             mb_strtoupper($firstChar, $encoding).$then : $firstChar.$then;
     }
     // phpcs:disable
