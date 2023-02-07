@@ -147,7 +147,7 @@ class Name implements HasParent
         possible when the original name list has at least two more names than the truncated name list (for this
         the value of et-al-use-first/et-al-subsequent-min must be at least 2 less than the value of
         et-al-min/et-al-subsequent-use-first). */
-        if ($this->etAlUseLast) {
+        if ($this->etAlUseLast && $this->isEtAl($name, $resultNames)) {
             $this->and = "…"; // set "and"
             $this->etAl = null; //reset $etAl;
         }
@@ -245,6 +245,26 @@ class Name implements HasParent
     }
 
     /**
+     * @param $data
+     * @param $resultNames
+     * @return bool
+     */
+    protected function isEtAl($data, $resultNames): bool
+    {
+        if (count($data) > 1
+            && !empty($resultNames)
+            && !empty($this->etAl)
+            && !empty($this->etAlMin)
+            && !empty($this->etAlUseFirst)
+            && count($data) != count($resultNames)
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param  $data
      * @param  $text
      * @param  $resultNames
@@ -253,13 +273,7 @@ class Name implements HasParent
     protected function appendEtAl($data, $text, $resultNames)
     {
         //append et al abbreviation
-        if (count($data) > 1
-            && !empty($resultNames)
-            && !empty($this->etAl)
-            && !empty($this->etAlMin)
-            && !empty($this->etAlUseFirst)
-            && count($data) != count($resultNames)
-        ) {
+        if ($this->isEtAl($data, $resultNames)) {
             /* By default, when a name list is truncated to a single name, the name and the “et-al” (or “and others”)
             term are separated by a space (e.g. “Doe et al.”). When a name list is truncated to two or more names, the
             name delimiter is used (e.g. “Doe, Smith, et al.”). This behavior can be changed with the
