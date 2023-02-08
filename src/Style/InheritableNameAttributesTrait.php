@@ -232,18 +232,15 @@ trait InheritableNameAttributesTrait
     {
         $context = CiteProc::getContext();
         $parentStyleElement = null;
+        $root = $context->getRoot();
         if ($this instanceof  Name || $this instanceof Names) {
             if ($context->getMode() === "bibliography") {
-                if ($this->isDescendantOfMacro()) {
-                    $parentStyleElement = $context->getRoot();
-                } else {
-                    $parentStyleElement = $context->getBibliography();
-                }
+                $parentStyleElement = $context->getBibliography();
             } else {
                 $parentStyleElement = $context->getCitation();
             }
         } elseif ($this instanceof StyleElement) {
-            $parentStyleElement = $context->getRoot();
+            $parentStyleElement = $root;
         }
 
         foreach (self::$attributes as $nameAttribute) {
@@ -251,86 +248,111 @@ trait InheritableNameAttributesTrait
             switch ($nameAttribute) {
                 case 'and':
                     if (!empty($attribute)) {
-                        $this->and = (string) $attribute;
-                    } elseif (!empty($parentStyleElement)) { //inherit from parent style
-                        $this->and = $parentStyleElement->getAnd();
+                        $this->setAnd((string) $attribute);
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getAnd())) {
+                        $this->setAnd($parentStyleElement->getAnd());
+                    } elseif (!empty($root) && !empty($root->getAnd())) {
+                        $this->setAnd($root->getAnd());
                     }
                     break;
                 case 'delimiter-precedes-et-al':
                     if (!empty($attribute)) {
-                        $this->delimiterPrecedesEtAl = (string) $attribute;
-                    } elseif (!empty($parentStyleElement)) { //inherit from parent style
-                        $this->delimiterPrecedesEtAl = $parentStyleElement->getDelimiterPrecedesEtAl();
+                        $this->setDelimiterPrecedesEtAl((string) $attribute);
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getDelimiterPrecedesEtAl())) {
+                        $this->setDelimiterPrecedesEtAl($parentStyleElement->getDelimiterPrecedesEtAl());
+                    } elseif (!empty($root)) {
+                        $this->setDelimiterPrecedesEtAl($root->getDelimiterPrecedesEtAl());
                     }
                     break;
                 case 'delimiter-precedes-last':
                     if (!empty($attribute)) {
-                        $this->delimiterPrecedesLast = (string) $attribute;
-                    } elseif (!empty($parentStyleElement)) { //inherit from parent style
-                        $this->delimiterPrecedesLast = $parentStyleElement->getDelimiterPrecedesLast();
+                        $this->setDelimiterPrecedesLast((string) $attribute);
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getDelimiterPrecedesLast())) {
+                        $this->setDelimiterPrecedesLast($parentStyleElement->getDelimiterPrecedesLast());
+                    } elseif (!empty($root)) {
+                        $this->setDelimiterPrecedesLast($root->getDelimiterPrecedesLast());
                     }
                     break;
                 case 'et-al-min':
                     if (!empty($attribute)) {
-                        $this->etAlMin = intval((string) $attribute);
-                    } elseif (!empty($parentStyleElement)) {
-                        $this->etAlMin = $parentStyleElement->getEtAlMin();
+                        $this->setEtAlMin(intval((string) $attribute));
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getEtAlMin())) {
+                        $this->setEtAlMin($parentStyleElement->getEtAlMin());
+                    } elseif (!empty($root)) {
+                        $this->setEtAlMin($root->getEtAlMin());
                     }
                     break;
                 case 'et-al-use-first':
                     if (!empty($attribute)) {
-                        $this->etAlUseFirst = intval((string) $attribute);
-                    } elseif (!empty($parentStyleElement)) {
-                        $this->etAlUseFirst = $parentStyleElement->getEtAlUseFirst();
+                        $this->setEtAlUseFirst(intval((string) $attribute));
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getEtAlUseFirst())) {
+                        $this->setEtAlUseFirst($parentStyleElement->getEtAlUseFirst());
+                    } elseif (!empty($root)) {
+                        $this->setEtAlUseFirst($root->getEtAlUseFirst());
                     }
                     break;
                 case 'et-al-subsequent-min':
                     if (!empty($attribute)) {
-                        $this->etAlSubsequentMin = intval((string) $attribute);
-                    } elseif (!empty($parentStyleElement)) {
-                        $this->etAlSubsequentMin = $parentStyleElement->getEtAlSubsequentMin();
+                        $this->setEtAlSubsequentMin(intval((string) $attribute));
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getEtAlSubsequentMin())) {
+                        $this->setEtAlSubsequentMin($parentStyleElement->getEtAlSubsequentMin());
+                    } elseif (!empty($root)) {
+                        $this->setEtAlSubsequentMin($root->getEtAlSubsequentMin());
                     }
                     break;
                 case 'et-al-subsequent-use-first':
                     if (!empty($attribute)) {
                         $this->etAlSubsequentUseFirst = intval((string) $attribute);
-                    } elseif (!empty($parentStyleElement)) {
-                        $this->etAlSubsequentUseFirst = $parentStyleElement->getEtAlSubsequentUseFirst();
+                        $this->setEtAlSubsequentUseFirst(intval((string) $attribute));
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getEtAlSubsequentUseFirst())) {
+                        $this->setEtAlSubsequentUseFirst($parentStyleElement->getEtAlSubsequentUseFirst());
+                    } elseif (!empty($root)) {
+                        $this->setEtAlSubsequentUseFirst($root->getEtAlSubsequentUseFirst());
                     }
                     break;
                 case 'et-al-use-last':
                     if (!empty($attribute)) {
-                        $this->etAlUseLast = ((string) $attribute) === "true";
-                    } elseif (!empty($parentStyleElement)) {
-                        $this->etAlUseLast = $parentStyleElement->getEtAlUseLast();
+                        $this->setEtAlUseLast(((string) $attribute) === "true");
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getEtAlUseLast())) {
+                        $this->setEtAlUseLast($parentStyleElement->getEtAlUseLast());
+                    } elseif (!empty($root)) {
+                        $this->setEtAlUseLast($root->getEtAlUseLast());
                     }
                     break;
                 case 'initialize':
                     if (!empty($attribute)) {
-                        $this->initialize = ((string) $attribute) === "true";
-                    } elseif (!empty($parentStyleElement)) {
-                        $this->initialize = $parentStyleElement->getInitialize();
+                        $this->setInitialize(((string) $attribute) === "true");
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getInitialize())) {
+                        $this->setInitialize($parentStyleElement->getInitialize());
+                    } elseif (!empty($root)) {
+                        $this->setInitialize($root->getInitialize());
                     }
                     break;
                 case 'initialize-with':
                     if (!empty($attribute)) {
-                        $this->initializeWith = (string) $attribute;
-                    } elseif (!empty($parentStyleElement)) {
-                        $this->initializeWith = $parentStyleElement->getInitializeWith();
+                        $this->setInitializeWith((string) $attribute);
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getInitializeWith())) {
+                        $this->setInitializeWith($parentStyleElement->getInitializeWith());
+                    } elseif (!empty($root)) {
+                        $this->setInitializeWith($root->getInitializeWith());
                     }
                     break;
                 case 'name-as-sort-order':
                     if (!empty($attribute)) {
-                        $this->nameAsSortOrder = (string) $attribute;
-                    } elseif (!empty($parentStyleElement)) {
-                        $this->nameAsSortOrder = $parentStyleElement->getNameAsSortOrder();
+                        $this->setNameAsSortOrder((string) $attribute);
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getNameAsSortOrder())) {
+                        $this->setNameAsSortOrder($parentStyleElement->getNameAsSortOrder());
+                    } elseif (!empty($root)) {
+                        $this->setNameAsSortOrder($root->getNameAsSortOrder());
                     }
                     break;
                 case 'sort-separator':
                     if (!empty($attribute)) {
-                        $this->sortSeparator = (string) $attribute;
-                    } elseif (!empty($parentStyleElement)) {
-                        $this->sortSeparator = $parentStyleElement->getSortSeparator();
+                        $this->setSortSeparator((string) $attribute);
+                    } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getSortSeparator())) {
+                        $this->setSortSeparator($parentStyleElement->getSortSeparator());
+                    } elseif (!empty($root)) {
+                        $this->setSortSeparator($root->getSortSeparator());
                     }
                     break;
                 case 'name-form':
@@ -346,8 +368,10 @@ trait InheritableNameAttributesTrait
                     if ($this instanceof Name) {
                         if (!empty($attribute)) {
                             $this->setForm((string) $attribute);
-                        } elseif (!empty($parentStyleElement)) {
+                        } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getNameForm())) {
                             $this->setForm($parentStyleElement->getNameForm());
+                        } elseif (!empty($root)) {
+                            $this->setForm($root->getNameForm());
                         }
                     }
                     break;
@@ -363,8 +387,10 @@ trait InheritableNameAttributesTrait
                            on cs:name. Similarly, names-delimiter corresponds to the delimiter attribute on cs:names. */
                         if (!empty($attribute)) {
                             $this->nameDelimiter = $this->delimiter = (string) $attribute;
-                        } elseif (!empty($parentStyleElement)) {
+                        } elseif (!empty($parentStyleElement) && !empty($parentStyleElement->getNameDelimiter())) {
                             $this->nameDelimiter = $this->delimiter = $parentStyleElement->getNameDelimiter();
+                        } elseif (!empty($root)) {
+                            $this->nameDelimiter = $this->delimiter = $root->getNameDelimiter();
                         }
                     }
                     break;
@@ -374,6 +400,8 @@ trait InheritableNameAttributesTrait
                             $this->setDelimiter((string) $attribute);
                         } elseif (!empty($parentStyleElement)) {
                             $this->setDelimiter($parentStyleElement->getNameDelimiter());
+                        } elseif (!empty($root)) {
+                            $this->setDelimiter($root->getNameDelimiter());
                         }
                     }
             }
