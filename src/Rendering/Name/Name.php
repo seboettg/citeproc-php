@@ -251,17 +251,12 @@ class Name implements HasParent
      */
     protected function isEtAl($data, $resultNames): bool
     {
-        if (count($data) > 1
+        return count($data) > 1
             && !empty($resultNames)
             && !empty($this->etAl)
             && !empty($this->etAlMin)
             && !empty($this->etAlUseFirst)
-            && count($data) != count($resultNames)
-        ) {
-            return true;
-        }
-
-        return false;
+            && count($data) != count($resultNames);
     }
 
     /**
