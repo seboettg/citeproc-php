@@ -1,0 +1,22 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@master
+        with:
+          bootstrap: tests/bootstrap.php
+          configuration: phpunit.xml
+          php_version: "8.0"
+          php_extensions: xdebug
+          args: --coverage-clover
+        env:
+          XDEBUG_MODE: coverage
+
