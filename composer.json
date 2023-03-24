@@ -27,8 +27,8 @@
         }
     },
     "require": {
-        "citation-style-language/styles": "v0.0.192",
-        "citation-style-language/locales": "v0.0.5",
+        "citation-style-language/styles": "v0.0.*",
+        "citation-style-language/locales": "v0.0.*",
         "seboettg/collection": ">=v3.1.0",
         "myclabs/php-enum": "^1.8",
         "ext-simplexml": "*",
