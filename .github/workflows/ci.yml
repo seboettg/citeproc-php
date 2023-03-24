@@ -11,7 +11,7 @@ jobs:
       - uses: php-actions/composer@v6
       - uses: shivammathur/setup-php@master
       - name: PHPUnit Tests
-        uses: php-actions/phpunit@v8.5
+        uses: php-actions/phpunit@8.5
         with:
           extension-csv: intl
           bootstrap: tests/bootstrap.php
