@@ -1246,56 +1246,56 @@ bibliography
         "author": [
             {
                 "family": "First",
-               "given": "James"
+                "given": "James"
             },
             {
                 "family": "Second",
-               "given": "Jay"
+                "given": "Jay"
             },
             {
                 "family": "Third",
-               "given": "John"
+                "given": "John"
             },
             {
                 "family": "Fourth",
-               "given": "Jack"
+                "given": "Jack"
             },
             {
                 "family": "Fifth",
-               "given": "Jacob"
+                "given": "Jacob"
             },
             {
                 "family": "Sixth",
-               "given": "Joseph"
+                "given": "Joseph"
             },
             {
                 "family": "Seventh",
-               "given": "Julian"
+                "given": "Julian"
             },
             {
                 "family": "Eighth",
-               "given": "Jayden"
+                "given": "Jayden"
             },
             {
                 "family": "Ninth",
-               "given": "Jackson"
+                "given": "Jackson"
             },
             {
                 "family": "Tenth",
-               "given": "Jasper"
+                "given": "Jasper"
             },
             {
                 "family": "Eleventh",
-               "given": "Jonathan"
+                "given": "Jonathan"
             },
             {
                 "family": "Twelfth",
-               "given": "Jeremiah"
+                "given": "Jeremiah"
             }
         ],
         "id": "ITEM-1",
-        "type": "book",
-        "title": "Test"
+        "title": "Test",
+        "type": "book"
     }
 ]
 <<===== INPUT =====<<

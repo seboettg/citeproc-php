@@ -1249,8 +1249,8 @@ bibliography
                 "given": "John"
             }
         ],
-        "title": "こんにちは世界",
         "id": "ITEM-2",
+        "title": "こんにちは世界",
         "type": "book"
     }
 ]
