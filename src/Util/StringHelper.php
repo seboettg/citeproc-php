@@ -202,10 +202,11 @@ class StringHelper
             $spaceExploded = explode(" ", $explode);
             foreach ($spaceExploded as $givenPart) {
                 $firstLetter = mb_substr($givenPart, 0, 1, "UTF-8");
-                if (StringHelper::isLatinString($firstLetter)) {
-                    $res .= ctype_upper($firstLetter) ? $firstLetter.$initializeSign : " ".$givenPart." ";
-                } else {
+                // first letter is upper case
+                if (preg_match('/\p{Lu}/u', $firstLetter)) {
                     $res .= $firstLetter.$initializeSign;
+                } else {
+                    $res .= " ".$givenPart." ";
                 }
             }
             if ($i < count($exploded) - 1 && $initializeWithHyphen) {
