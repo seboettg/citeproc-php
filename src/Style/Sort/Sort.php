@@ -123,7 +123,12 @@ class Sort
             } elseif ($variable === "citation-number") {
                 $sortKey = $citationNumber + 1;
             } else {
-                $sortKey = mb_strtolower(strip_tags($dataItem->{$variable}));
+                if (!isset($dataItem->{$variable})) {
+                    $sortKey = "status"; 
+                }
+                else {
+                    $sortKey = mb_strtolower(strip_tags($dataItem->{$variable}));
+                }
             }
             $groupedItems[$sortKey][] = $dataItem;
         }
