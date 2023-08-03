@@ -184,7 +184,7 @@ class Name implements HasParent
         $nameObj = $this->cloneNamePOSC($nameItem);
 
         $useInitials = $this->initialize && !is_null($this->initializeWith) && $this->initializeWith !== false;
-        if ($useInitials && isset($nameItem->given)) {
+        if ($useInitials && isset($nameItem->given) && !empty($nameItem->given)) {
             $nameObj->given = StringHelper::initializeBySpaceOrHyphen($nameItem->given, $this->initializeWith);
         }
 
