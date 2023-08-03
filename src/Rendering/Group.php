@@ -93,6 +93,8 @@ class Group implements Rendering, HasParent
         foreach ($this->children as $child) {
             $elementCount++;
 
+            $text = $child->render($data, $citationNumber);
+
             if (($child instanceof Text)
                 && ($child->getSource() == 'term'
                 || $child->getSource() == 'value')
@@ -100,7 +102,7 @@ class Group implements Rendering, HasParent
                 ++$terms;
             }
 
-            if (($child instanceof Label)) {
+            if (($child instanceof Label) && !empty($text)) {
                 ++$terms;
             }
             if (method_exists($child, "getSource") && $child->getSource() == 'variable'
@@ -110,7 +112,6 @@ class Group implements Rendering, HasParent
                 ++$variables;
             }
 
-            $text = $child->render($data, $citationNumber);
             $delimiter = $this->delimiter;
             if (!empty($text)) {
                 if ($delimiter && ($elementCount < count($this->children))) {
