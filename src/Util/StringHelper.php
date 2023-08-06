@@ -60,6 +60,23 @@ class StringHelper
     ];
 
     /**
+     * Guard against repeated chars,
+     * some strtr transliterations
+     */
+    const PUN_SAME = [
+        "." => [
+            "…" => ".",
+            "!" => ".",
+            "?" => ".",
+            ":" => ".",
+            ";" => ".",
+        ],
+        "," => [
+            ";" => ",",
+        ]
+    ];
+
+    /**
      * opening quote sign
      */
     const OPENING_QUOTE = "“";
@@ -173,18 +190,37 @@ class StringHelper
      */
     public static function implodeAndPreventConsecutiveChars($delimiter, $arrayOfStrings)
     {
-        $delim = trim($delimiter);
-        if (!empty($delim)) {
-            foreach ($arrayOfStrings as $key => $textPart) {
-                $pos = mb_strpos(StringHelper::mb_strrev($textPart), StringHelper::mb_strrev($delim));
-                if ($pos === 0) {
-                    $length = mb_strlen($textPart) - mb_strlen($delim);
-                    $textPart = mb_substr($textPart, 0, $length);
-                    $arrayOfStrings[$key] = $textPart;
-                }
-            }
+        $count = count($arrayOfStrings);
+        if (!$count) return;
+        // guard against repeated chars
+        // get first non space char of delimiter
+        $delimiterFirst =  mb_substr(preg_replace('/\p{Z}/u', '', $delimiter), 0, 1);
+        if (empty($delimiterFirst)) { // nothing to do
+            return implode($delimiter, $arrayOfStrings);
         }
-        return implode($delimiter, array_filter($arrayOfStrings));
+        // loop on segments
+        // do not cut the segment but the delimiter
+        $text = "";
+        for($i = 0; $i < $count; $i++) {
+            $segment = $arrayOfStrings[$i];
+            $noTags = strip_tags($segment);
+            if (empty($noTags)) continue;
+            $text .= $segment;
+            if ($i == ($count- 1)) continue; // should be last one
+            // avoid succession like ?.
+            if (isset(StringHelper::PUN_SAME[$delimiterFirst])) {
+                $noTags = strtr($noTags, StringHelper::PUN_SAME[$delimiterFirst]);
+            }
+            // last char of part = first non space char of delimeter
+            if (mb_substr($noTags, -1) == $delimiterFirst) {
+                // append delimiter without first non space char
+                $text .= mb_substr($delimiter, mb_strpos($delimiter, $delimiterFirst) + 1);
+                continue;
+            }
+            // common cae, append simply the delimiter
+            $text .= $delimiter;
+        }
+        return $text;
     }
 
     /**
