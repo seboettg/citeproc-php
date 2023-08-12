@@ -22,57 +22,79 @@ use Seboettg\Collection\ArrayList;
 class StringHelper
 {
     const PREPOSITIONS = [
-        'about',
-        'above',
-        'across',
-        'ago',
-        'at',
-        'below',
-        'by',
-        'before',
-        'de',
-        'du',
-        'for',
-        'from',
-        'in',
-        'into',
-        'of',
-        'off',
-        'on',
-        'onto',
-        'over', 
-        'past',
-        'since',
-        'through',
-        'till',
-        'to',
-        'towards',
-        'under',
-        'until',
-        'via'
+        "a",       // es
+        "ante",    // es
+        'about',   // en
+        'above',   // en
+        'across',  // en
+        'ago',     // en
+        'at',      // en
+        'bajo',    // es
+        'below',   // en
+        'by',      // en
+        'before',  // en
+        'cabe',    // es
+        'con',     // es
+        'contra',  // es
+        'de',      // es, fr
+        'del',     // es
+        'desde',   // es
+        'du',      // fr
+        'en',      // fr
+        'entre',   // es
+        'for',     // en
+        'from',    // en
+        'hacia',   // es
+        'in',      // en
+        'into',    // en
+        'of',      // en
+        'off',     // en
+        'on',      // en
+        'onto',    // en
+        'over',    // en
+        'past',    // en
+        'por',     // es
+        'since',   // en
+        'through', // en
+        'till',    // en
+        'to',      // en
+        'towards', // en
+        'under',   // en
+        'until',   // en
+        'versus',  // en, es, fr
+        'via',     // en, es, fr
     ];
 
     const ARTICLES = [
-        'a',
-        'an',
-        'la',
-        'le',
-        'les',
-        'the',
-        'un',
-        'une',
+        'a',       // en
+        'an',      // en
+        'la',      // fr
+        'le',      // fr
+        'les',     // fr
+        'the',     // en
+        'un',      // fr
+        'une',     // fr
     ];
 
     const ADVERBS = [
-        'yet', 'so', 'just', 'only'
+        'just',    // en
+        'only',    // en
+        'so',      // en
+        'yet',     // en
     ];
 
     const CONJUNCTIONS = [
-        'nor', 'so', 'and', 'or'
+        'and',     // en
+        "et",      // fr 
+        'nor',     // en
+        'or',      // en
+        'ou',      // fr
+        'so',      // en
     ];
 
     const ADJECTIVES = [
-        'down', 'up'
+        'down',
+        'up',
     ];
 
     const ISO_ENCODINGS = [
@@ -175,12 +197,23 @@ class StringHelper
      */
     public static function keepLowerCase($word)
     {
+        // keep lower case words as a dictionary O(1)
+        static $lcDic = null;
+        // compile one time
+        if ($lcDic === null) {
+            $lcDic = array_flip(array_merge(
+                self::PREPOSITIONS, 
+                self::ARTICLES,
+                self::ADVERBS,
+                self::CONJUNCTIONS,
+                self::ADJECTIVES,
+            ));
+        }
+        if (isset($lcDic[$word])) return true;
         // keep lower case if the first char is not an utf-8 letter
-        return in_array($word, self::PREPOSITIONS) ||
-            in_array($word, self::ARTICLES) ||
-            in_array($word, self::CONJUNCTIONS) ||
-            in_array($word, self::ADJECTIVES) ||
-            (bool) preg_match("/[^\p{L}].+/", $word);
+        if (preg_match("/^[^\p{L}]/u", $word)) return true;
+        // no info
+        return false;
     }
 
     /**
@@ -251,7 +284,7 @@ class StringHelper
                 $text .= mb_substr($delimiter, mb_strpos($delimiter, $delimiterFirst) + 1);
                 continue;
             }
-            // common cae, append simply the delimiter
+            // common case, append simply the delimiter
             $text .= $delimiter;
         }
         return $text;
