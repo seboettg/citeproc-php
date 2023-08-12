@@ -114,7 +114,13 @@ class Group implements Rendering, HasParent
 
             $delimiter = $this->delimiter;
             if (!empty($text)) {
+                // bug with title finishing by..., 
+                // do not modify a text part
+                // logic is handled  in
+                // implodeAndPreventConsecutiveChars
+                /*
                 if ($delimiter && ($elementCount < count($this->children))) {
+
                     //check to see if the delimiter is already the last character of the text string
                     //if so, remove it so we don't have two of them when the group will be merged
                     $stext = strip_tags(trim($text));
@@ -124,6 +130,7 @@ class Group implements Rendering, HasParent
                         $text = str_replace('----REPLACE----', $stext, $text);
                     }
                 }
+                */
                 $textParts[] = $text;
 
                 if (method_exists($child, "getSource") && $child->getSource() == 'variable'
