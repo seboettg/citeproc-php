@@ -22,12 +22,45 @@ use Seboettg\Collection\ArrayList;
 class StringHelper
 {
     const PREPOSITIONS = [
-        'on', 'in', 'at', 'since', 'for', 'ago', 'before', 'to', 'past', 'till', 'until', 'by', 'under', 'below',
-        'over', 'above', 'across', 'through', 'into', 'towards', 'onto', 'from', 'of', 'off', 'about', 'via'
+        'about',
+        'above',
+        'across',
+        'ago',
+        'at',
+        'below',
+        'by',
+        'before',
+        'de',
+        'du',
+        'for',
+        'from',
+        'in',
+        'into',
+        'of',
+        'off',
+        'on',
+        'onto',
+        'over', 
+        'past',
+        'since',
+        'through',
+        'till',
+        'to',
+        'towards',
+        'under',
+        'until',
+        'via'
     ];
 
     const ARTICLES = [
-        'a', 'an', 'the'
+        'a',
+        'an',
+        'la',
+        'le',
+        'les',
+        'the',
+        'un',
+        'une',
     ];
 
     const ADVERBS = [
@@ -196,7 +229,8 @@ class StringHelper
         // get first non space char of delimiter
         $delimiterFirst =  mb_substr(preg_replace('/\p{Z}/u', '', $delimiter), 0, 1);
         if (empty($delimiterFirst)) { // nothing to do
-            return implode($delimiter, $arrayOfStrings);
+            $text = implode($delimiter, $arrayOfStrings);
+            return $text;
         }
         // loop on segments
         // do not cut the segment but the delimiter
