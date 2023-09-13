@@ -112,7 +112,7 @@ class Sort
         foreach ($dataToSort as $citationNumber => $dataItem) {
             if ($key->isNameVariable()) {
                 $sortKey = Variables::nameHash($dataItem, $variable);
-            } elseif ($key->isNumberVariable()) {
+            } elseif ($key->isNumberVariable() && isset($dataItem->{$variable}) ) {
                 $sortKey = $dataItem->{$variable};
             } elseif ($key->isDateVariable()) {
                 $sortKey = DateHelper::getSortKeyDate($dataItem, $key);

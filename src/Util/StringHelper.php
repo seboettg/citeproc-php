@@ -199,7 +199,7 @@ class StringHelper
     {
         // keep lower case words as a dictionary O(1)
         static $lcDic = null;
-        // compile one time
+        // because of static, compilation is done only one time
         if ($lcDic === null) {
             $lcDic = array_flip(array_merge(
                 self::PREPOSITIONS, 
