@@ -110,18 +110,16 @@ class DateHelper
      */
     public static function hasDateRanges($items, $variable, $match = "all")
     {
-        $ret = true;
+        $isRange = false;
         foreach ($items as $item) {
-            if (!isset($item->{$variable})) return false;
-            $dateParts = $item->{$variable}->{"date-parts"};
-            if ($match === "all" && count($dateParts) !== 2) {
-                return false;
-            } elseif ($match === "any" && count($dateParts) === 2) {
-                return true;
-            } else {
-                $ret = ($match === "all") ? $ret&true : $ret|true;
-            }
+            $isRange = isset($item->{$variable})
+            && isset($item->{$variable}->{"date-parts"})
+            && count($item->{$variable}->{"date-parts"}) == 2;
+            // exit ASAP
+            if (!$isRange && $match == "all") return false;
+            if ($isRange && $match == "any") return true;
         }
-        return (bool) $ret;
+        // last isRange should have good answer in case of all or any
+        return $isRange;
     }
 }
