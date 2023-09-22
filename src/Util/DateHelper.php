@@ -75,24 +75,31 @@ class DateHelper
     public static function getSortKeyDate($dataItem, $key)
     {
         $variable = $variable = $key->getVariable();
-        $part = $key->getRangePart();
+        // no date
+        if (!isset($dataItem->{$variable})) {
+            return "00000000";
+        }
+        // date not encoded with date parts (raw ?)
+        else if (!isset($dataItem->{$variable}->{'date-parts'})) {
+            $dateParts = self::parseDateParts($dataItem->{$variable});
+            return self::serializeDate($dateParts);
+        }
+        // date range
         if (count($dataItem->{$variable}->{'date-parts'}) > 1) {
-            //Date range
+            $part = $key->getRangePart();
+            // Date range
             $datePart = $dataItem->{$variable}->{'date-parts'}[$part];
             $sortKey = self::serializeDate($datePart);
             if ($key->getSort() === "descending" && $part === 0 ||
                 $key->getSort() === "ascending" && $part === 1) {
                 $sortKey .= "-";
             }
-        } else {
-            if (!isset($dataItem->{$variable}->{'date-parts'})) {
-                $dateParts = self::parseDateParts($dataItem->{$variable});
-            } else {
-                $dateParts = $dataItem->{$variable}->{'date-parts'}[0];
-            }
-            $sortKey = self::serializeDate($dateParts);
+            return $sortKey;
+        } 
+        // simple date
+        else {
+            return self::serializeDate($dataItem->{$variable}->{'date-parts'}[0]);
         }
-        return $sortKey;
     }
 
     /**
@@ -105,6 +112,7 @@ class DateHelper
     {
         $ret = true;
         foreach ($items as $item) {
+            if (!isset($item->{$variable})) return false;
             $dateParts = $item->{$variable}->{"date-parts"};
             if ($match === "all" && count($dateParts) !== 2) {
                 return false;
