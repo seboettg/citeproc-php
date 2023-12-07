@@ -31,7 +31,7 @@ class EtAl implements Rendering
 {
     use FormattingTrait;
 
-    private $term;
+    private $term = 'et-al';
 
     public function __construct(SimpleXMLElement $node)
     {
