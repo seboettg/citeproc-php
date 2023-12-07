@@ -49,7 +49,7 @@ class StyleSheet
     public static function loadLocales(string $langKey): string
     {
         $localesPath = self::vendorPath()."/citation-style-language/locales";
-        $localeFile = "$localesPath/locales-${langKey}.xml";
+        $localeFile = "$localesPath/locales-{$langKey}.xml";
         if (file_exists($localeFile)) {
             return self::readFileContentsOrThrowException($localeFile);
         } else {
