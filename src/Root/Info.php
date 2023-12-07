@@ -98,11 +98,13 @@ class Info
         return $this->links;
     }
 
-    public function __get(string $name) {
+    public function __get(string $name) 
+    {
       return $this->misc[$name] ?? NULL;
     }
 
-    public function __set(string $name, $value) : void {
+    public function __set(string $name, $value) : void 
+    {
       $this->misc[$name][] = $value;
     }
 
