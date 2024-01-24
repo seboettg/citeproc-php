@@ -109,7 +109,9 @@ abstract class DateRangeRenderer
                 $renderedFrom .= $datePart[1]->renderPrefix();
                 $renderedFrom .= $datePart[1]->renderWithoutAffixes($from, $this->parentDateObject);
                 $renderedTo  = $datePart[0]->renderWithoutAffixes($to, $this->parentDateObject);
-                $renderedTo .= $datePart[0]->renderSuffix();
+                if ($renderedTo) { // space bug "septembre– octobre"
+                    $renderedTo .= $datePart[0]->renderSuffix();
+                }
                 $renderedTo .= $datePart[1]->render($to, $this->parentDateObject);
                 $ret .= $renderedFrom . $delimiter . $renderedTo;
             } else {

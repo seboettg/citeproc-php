@@ -35,6 +35,8 @@ class StyleSheet
      */
     public static function loadStyleSheet(string $styleName): string
     {
+        // default encoding for multi byte, maybe useful on some old systems 
+        mb_internal_encoding("UTF-8");
         $stylesPath = self::vendorPath() . "/citation-style-language/styles";
         return self::readFileContentsOrThrowException("$stylesPath/$styleName.csl");
     }
