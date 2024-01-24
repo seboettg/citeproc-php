@@ -212,7 +212,7 @@ class Name implements HasParent
         //contains nbsp prefixed by normal space or followed by normal space?
         $text = htmlentities($text);
         if (strpos($text, " &nbsp;") !== false || strpos($text, "&nbsp; ") !== false) {
-            $text = preg_replace("/[\s]+/", "", $text); //remove normal spaces
+            $text = preg_replace("/\s+/", "", $text); //remove normal spaces
             return preg_replace("/&nbsp;+/", " ", $text);
         }
         $text = html_entity_decode(preg_replace("/[\s]+/", " ", $text));
