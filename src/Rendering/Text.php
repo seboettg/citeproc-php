@@ -234,7 +234,7 @@ class Text implements Rendering
         }
         return $this->applyTextCase(
             StringHelper::clearApostrophes(
-                htmlspecialchars($value, ENT_HTML5)
+                htmlspecialchars(gettype($value) === "string" ? $value : implode($value), ENT_HTML5)
             ),
             $lang
         );
