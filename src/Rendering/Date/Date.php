@@ -121,7 +121,6 @@ class Date
         } else {
             return "";
         }
-
         try {
             $this->prepareDatePartsInVariable($data, $var);
         } catch (CiteProcException $e) {
@@ -129,9 +128,9 @@ class Date
                 !preg_match("/(\p{L}+)\s?([\-\–&,])\s?(\p{L}+)/u", $data->{$this->variable}->{'raw'})) {
                 return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->{'raw'})));
             } else {
-                if (isset($data->{$this->variable}->{'string-literal'})) {
+                if (isset($data->{$this->variable}->{'literal'})) {
                     return $this->addAffixes(
-                        $this->format($this->applyTextCase($data->{$this->variable}->{'string-literal'}))
+                        $this->format($this->applyTextCase($data->{$this->variable}->{'literal'}))
                     );
                 }
             }
@@ -207,8 +206,15 @@ class Date
             $data = $this->createDateTime($var->{'date-parts'});
             $ret = $this->renderNumeric($data[0]);
         }
-
-        return !empty($ret) ? $this->addAffixes($this->format($this->applyTextCase($ret))) : "";
+        if (is_array($ret)) {
+            // ??
+        }
+        else if (empty($ret)) {
+            return "";
+        }
+        else {
+            return $this->addAffixes($this->format($this->applyTextCase($ret)));
+        }
     }
 
     /**
