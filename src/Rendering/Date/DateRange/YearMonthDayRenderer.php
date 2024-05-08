@@ -41,15 +41,18 @@ class YearMonthDayRenderer extends DateRangeRenderer
         $ret .= $delimiter;
         $i = 0;
         /** @var DatePart $datePart */
+        $renderTo = '';
         foreach ($dateParts as $datePart) {
             if ($i == 0) {
-                $ret .= $datePart->renderWithoutAffixes($to, $this->parentDateObject);
-                $ret .= $datePart->renderSuffix();
+                $part = $datePart->renderWithoutAffixes($to, $this->parentDateObject);
+                // bug december 1946– january 1947
+                if ($part) $part .=  $datePart->renderSuffix();
+                $renderTo .= $part;
             } else {
-                $ret .= $datePart->render($to, $this->parentDateObject);
+                $renderTo .= $datePart->render($to, $this->parentDateObject);
             }
             ++$i;
         }
-        return $ret;
+        return $ret . $renderTo;
     }
 }

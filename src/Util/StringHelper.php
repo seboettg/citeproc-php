@@ -22,24 +22,79 @@ use Seboettg\Collection\ArrayList;
 class StringHelper
 {
     const PREPOSITIONS = [
-        'on', 'in', 'at', 'since', 'for', 'ago', 'before', 'to', 'past', 'till', 'until', 'by', 'under', 'below',
-        'over', 'above', 'across', 'through', 'into', 'towards', 'onto', 'from', 'of', 'off', 'about', 'via'
+        "a",       // es
+        "ante",    // es
+        'about',   // en
+        'above',   // en
+        'across',  // en
+        'ago',     // en
+        'at',      // en
+        'bajo',    // es
+        'below',   // en
+        'by',      // en
+        'before',  // en
+        'cabe',    // es
+        'con',     // es
+        'contra',  // es
+        'de',      // es, fr
+        'del',     // es
+        'desde',   // es
+        'du',      // fr
+        'en',      // fr
+        'entre',   // es
+        'for',     // en
+        'from',    // en
+        'hacia',   // es
+        'in',      // en
+        'into',    // en
+        'of',      // en
+        'off',     // en
+        'on',      // en
+        'onto',    // en
+        'over',    // en
+        'past',    // en
+        'por',     // es
+        'since',   // en
+        'through', // en
+        'till',    // en
+        'to',      // en
+        'towards', // en
+        'under',   // en
+        'until',   // en
+        'versus',  // en, es, fr
+        'via',     // en, es, fr
     ];
 
     const ARTICLES = [
-        'a', 'an', 'the'
+        'a',       // en
+        'an',      // en
+        'la',      // fr
+        'le',      // fr
+        'les',     // fr
+        'the',     // en
+        'un',      // fr
+        'une',     // fr
     ];
 
     const ADVERBS = [
-        'yet', 'so', 'just', 'only'
+        'just',    // en
+        'only',    // en
+        'so',      // en
+        'yet',     // en
     ];
 
     const CONJUNCTIONS = [
-        'nor', 'so', 'and', 'or'
+        'and',     // en
+        "et",      // fr 
+        'nor',     // en
+        'or',      // en
+        'ou',      // fr
+        'so',      // en
     ];
 
     const ADJECTIVES = [
-        'down', 'up'
+        'down',
+        'up',
     ];
 
     const ISO_ENCODINGS = [
@@ -57,6 +112,23 @@ class StringHelper
         'ISO-8859-14',
         'ISO-8859-15',
         'ISO-8859-16'
+    ];
+
+    /**
+     * Guard against repeated chars,
+     * some strtr transliterations
+     */
+    const PUN_SAME = [
+        "." => [
+            "…" => ".",
+            "!" => ".",
+            "?" => ".",
+            ":" => ".",
+            ";" => ".",
+        ],
+        "," => [
+            ";" => ",",
+        ]
     ];
 
     /**
@@ -125,12 +197,23 @@ class StringHelper
      */
     public static function keepLowerCase($word)
     {
+        // keep lower case words as a dictionary O(1)
+        static $lcDic = null;
+        // because of static, compilation is done only one time
+        if ($lcDic === null) {
+            $lcDic = array_flip(array_merge(
+                self::PREPOSITIONS, 
+                self::ARTICLES,
+                self::ADVERBS,
+                self::CONJUNCTIONS,
+                self::ADJECTIVES,
+            ));
+        }
+        if (isset($lcDic[$word])) return true;
         // keep lower case if the first char is not an utf-8 letter
-        return in_array($word, self::PREPOSITIONS) ||
-            in_array($word, self::ARTICLES) ||
-            in_array($word, self::CONJUNCTIONS) ||
-            in_array($word, self::ADJECTIVES) ||
-            (bool) preg_match("/[^\p{L}].+/", $word);
+        if (preg_match("/^[^\p{L}]/u", $word)) return true;
+        // no info
+        return false;
     }
 
     /**
@@ -173,18 +256,38 @@ class StringHelper
      */
     public static function implodeAndPreventConsecutiveChars($delimiter, $arrayOfStrings)
     {
-        $delim = trim($delimiter);
-        if (!empty($delim)) {
-            foreach ($arrayOfStrings as $key => $textPart) {
-                $pos = mb_strpos(StringHelper::mb_strrev($textPart), StringHelper::mb_strrev($delim));
-                if ($pos === 0) {
-                    $length = mb_strlen($textPart) - mb_strlen($delim);
-                    $textPart = mb_substr($textPart, 0, $length);
-                    $arrayOfStrings[$key] = $textPart;
-                }
-            }
+        $count = count($arrayOfStrings);
+        if (!$count) return;
+        // guard against repeated chars
+        // get first non space char of delimiter
+        $delimiterFirst =  mb_substr(preg_replace('/\p{Z}/u', '', $delimiter), 0, 1);
+        if (empty($delimiterFirst)) { // nothing to do
+            $text = implode($delimiter, $arrayOfStrings);
+            return $text;
         }
-        return implode($delimiter, array_filter($arrayOfStrings));
+        // loop on segments
+        // do not cut the segment but the delimiter
+        $text = "";
+        for($i = 0; $i < $count; $i++) {
+            $segment = $arrayOfStrings[$i];
+            $noTags = strip_tags($segment);
+            if (empty($noTags)) continue;
+            $text .= $segment;
+            if ($i == ($count- 1)) continue; // should be last one
+            // avoid succession like ?.
+            if (isset(StringHelper::PUN_SAME[$delimiterFirst])) {
+                $noTags = strtr($noTags, StringHelper::PUN_SAME[$delimiterFirst]);
+            }
+            // last char of part = first non space char of delimeter
+            if (mb_substr($noTags, -1) == $delimiterFirst) {
+                // append delimiter without first non space char
+                $text .= mb_substr($delimiter, mb_strpos($delimiter, $delimiterFirst) + 1);
+                continue;
+            }
+            // common case, append simply the delimiter
+            $text .= $delimiter;
+        }
+        return $text;
     }
 
     /**
@@ -202,10 +305,11 @@ class StringHelper
             $spaceExploded = explode(" ", $explode);
             foreach ($spaceExploded as $givenPart) {
                 $firstLetter = mb_substr($givenPart, 0, 1, "UTF-8");
-                if (StringHelper::isLatinString($firstLetter)) {
-                    $res .= ctype_upper($firstLetter) ? $firstLetter.$initializeSign : " ".$givenPart." ";
-                } else {
+                // first letter is upper case
+                if (preg_match('/\p{Lu}/u', $firstLetter)) {
                     $res .= $firstLetter.$initializeSign;
+                } else {
+                    $res .= " ".$givenPart." ";
                 }
             }
             if ($i < count($exploded) - 1 && $initializeWithHyphen) {
