@@ -121,7 +121,6 @@ class Date
         } else {
             return "";
         }
-
         try {
             $this->prepareDatePartsInVariable($data, $var);
         } catch (CiteProcException $e) {
@@ -129,9 +128,9 @@ class Date
                 !preg_match("/(\p{L}+)\s?([\-\–&,])\s?(\p{L}+)/u", $data->{$this->variable}->{'raw'})) {
                 return $this->addAffixes($this->format($this->applyTextCase($data->{$this->variable}->{'raw'})));
             } else {
-                if (isset($data->{$this->variable}->{'string-literal'})) {
+                if (isset($data->{$this->variable}->{'literal'})) {
                     return $this->addAffixes(
-                        $this->format($this->applyTextCase($data->{$this->variable}->{'string-literal'}))
+                        $this->format($this->applyTextCase($data->{$this->variable}->{'literal'}))
                     );
                 }
             }
@@ -164,22 +163,29 @@ class Date
             if (count($data->{$this->variable}->{'date-parts'}) === 1) {
                 $data_ = $this->createDateTime($data->{$this->variable}->{'date-parts'});
                 $ret .= $this->iterateAndRenderDateParts($dateParts, $data_);
-            } elseif (count($var->{'date-parts'}) === 2) { //date range
+            } 
+            elseif (count($var->{'date-parts'}) === 2) { //date range
+
+
                 $data_ = $this->createDateTime($var->{'date-parts'});
                 $from = $data_[0];
                 $to = $data_[1];
-                $interval = $to->diff($from);
+                // diff give durations, but detect badly close boundaries like 1999-12-31/200-01-01 
+                // $interval = $to->diff($from);
                 $delimiter = "";
                 $toRender = 0;
-                if ($interval->y > 0 && in_array('year', $dateParts)) {
+                $yearDiff = $from->getYear() - $to->getYear();
+                $monthDiff = $from->getMonth() - $to->getMonth();
+                $dayDiff = $from->getDay() - $to->getDay();
+                if ( $yearDiff !== 0 && in_array('year', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_YEAR;
                     $delimiter = $this->dateParts->get($this->form."-year")->getRangeDelimiter();
                 }
-                if ($interval->m > 0 && $from->getMonth() - $to->getMonth() !== 0 && in_array('month', $dateParts)) {
+                if ( ($yearDiff !== 0 || $monthDiff !== 0) && in_array('month', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_MONTH;
                     $delimiter = $this->dateParts->get($this->form."-month")->getRangeDelimiter();
                 }
-                if ($interval->d > 0 && $from->getDay() - $to->getDay() !== 0 && in_array('day', $dateParts)) {
+                if (($yearDiff !== 0 || $monthDiff !== 0 || $dayDiff !== 0) && in_array('day', $dateParts)) {
                     $toRender |= self::DATE_RANGE_STATE_DAY;
                     $delimiter = $this->dateParts->get($this->form."-day")->getRangeDelimiter();
                 }
@@ -200,8 +206,15 @@ class Date
             $data = $this->createDateTime($var->{'date-parts'});
             $ret = $this->renderNumeric($data[0]);
         }
-
-        return !empty($ret) ? $this->addAffixes($this->format($this->applyTextCase($ret))) : "";
+        if (is_array($ret)) {
+            // ??
+        }
+        else if (empty($ret)) {
+            return "";
+        }
+        else {
+            return $this->addAffixes($this->format($this->applyTextCase($ret)));
+        }
     }
 
     /**

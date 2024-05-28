@@ -26,8 +26,10 @@ class Locator extends AbstractConstraint
      */
     protected function matchForVariable(string $variable, stdClass $data): bool
     {
-        if (!empty($data->id)) {
-            $citationItem = CiteProc::getContext()->getCitationItemById($data->id);
+        if (empty($data->id)) return false;
+        $context = CiteProc::getContext();
+        if ($context->isModeCitation()) {
+            $citationItem = $context->getCitationItemById($data->id);
             return !empty($citationItem) && !empty($citationItem->label) && $citationItem->label === $variable;
         }
         return false;

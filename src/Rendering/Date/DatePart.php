@@ -197,6 +197,7 @@ class DatePart
 
         $text = $date->getDay();
         $form = !empty($this->form) ? $this->form : $this->parent->getForm();
+
         switch ($form) {
             case 'numeric':
                 break;
@@ -204,9 +205,13 @@ class DatePart
                 $text = sprintf("%02d", $text);
                 break;
             case 'ordinal':
-                $limitDayOrdinals =
+                // https://docs.citationstyles.org/en/v1.0.2/specification.html#locale-options
+                $day1only =
                     CiteProc::getContext()->getLocale()->filter("options", "limit-day-ordinals-to-day-1");
-                if (!$limitDayOrdinals || Layout::getNumberOfCitedItems() <= 1) {
+                if ($day1only) {
+                    if ((int)$text === 1) $text = Number::ordinal($text);
+                }
+                else if (Layout::getNumberOfCitedItems() <= 1) {
                     $text = Number::ordinal($text);
                 }
         }

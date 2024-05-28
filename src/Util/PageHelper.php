@@ -27,7 +27,10 @@ class PageHelper
     {
         list($from, $to) = $ranges;
 
-        if (!empty($pageRangeFormat)) {
+        // We check to see if the page values are numeric since it is now 
+        // common to encounter electronic identifiers 'E123-45' which will
+        // throw TypeErrors if we try and process them below.
+        if (!empty($pageRangeFormat) && is_numeric($from) && is_numeric($to)) {
             switch ($pageRangeFormat) {
                 case PageRangeFormats::MINIMAL:
                     $resTo = self::renderMinimal($from, $to, 0);

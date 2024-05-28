@@ -1,0 +1,635 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry"> @misc{Elder_Newman_2023, title={Monitoring G20 Countries’ SDG Implementation Policies and Budgets Reported in Their Voluntary National Reviews (VNRs)}, volume={15}, rights={https://creativecommons.org/licenses/by/4.0/}, ISSN={["2071-1050"]}, url={http://dx.doi.org/10.3390/su152215733}, DOI={10.3390/su152215733}, abstractNote={&lt;jats:p&gt;Monitoring Sustainable Development Goals (SDGs) has mainly focused on levels of achievement of targets and indicators, but few studies have examined policies and implementation efforts systematically. The Sustainable Development Solutions Network (SDSN) has called for more monitoring of policy efforts, which is necessary to understand why overall progress on SDGs has been insufficient. Responding to this call, this paper analyzes how the G20 countries’ SDG implementation policies and budgets were reported in their Voluntary National Reviews and creates a dataset of these SDG policies and budgets. The results showed that the G20 countries cumulatively listed a large number of policies—over 4100—in their VNRs. These policies were widely distributed among SDGs. The combined total of listed budgets was over USD 2.7 trillion. Most of the policies were substantive, broad-scoped action plans, national strategies, frameworks, programs, or laws/regulations, not just small projects or awareness-raising campaigns. Overall, VNRs listed more policies after 2018 than before. Also, VNRs tended to include relatively more policies relating to SDGs highlighted at the High-Level Political Forum (HLPF) in the year the VNR was prepared. The results also showed that smaller or developing countries generally did not indicate fewer policies than larger or developed countries. Despite the large number of reported policies, some areas of under-reporting were identified, especially regarding environmental SDGs and targets. Budgetary information was fragmented, and clearly did not match the scale of the reported policies, so actual SDG budget expenditures are probably much higher than reported in the VNRs. In conclusion, insufficient progress on the SDGs cannot be attributed to a simple lack of policies. Therefore, further research is needed to examine the policies’ actual contents, their appropriateness, level of ambition, level of funding, extent of implementation, and effectiveness. The database of policies created by this study is a necessary first step. The policy database can also be used to identify the G20 countries’ relevant policies for specific SDGs or issue areas which span several SDGs for monitoring implementation of specific issue areas.&lt;/jats:p&gt;}, number={22}, journal={Sustainability}, publisher={MDPI AG}, author={Elder, Mark and Newman, Elli}, year={2023}, month=nov., pages={15733}, language={en}</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="en-US">
+  <info>
+    <title>BibTeX generic citation style</title>
+    <id>http://www.zotero.org/styles/bibtex</id>
+    <link href="http://www.zotero.org/styles/bibtex" rel="self"/>
+    <link href="http://www.bibtex.org/" rel="documentation"/>
+    <author>
+      <name>Markus Schaffner</name>
+    </author>
+    <contributor>
+      <name>Richard Karnesky</name>
+      <email>karnesky+zotero@gmail.com</email>
+      <uri>http://arc.nucapt.northwestern.edu/Richard_Karnesky</uri>
+    </contributor>
+    <contributor>
+      <name>Brenton M. Wiernik</name>
+      <email>zotero@wiernik.org</email>
+    </contributor>
+    <category citation-format="label"/>
+    <category field="generic-base"/>
+    <updated>2012-09-14T21:22:32+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <macro name="zotero2bibtexType">
+    <choose>
+      <if type="bill book graphic legal_case legislation motion_picture report song" match="any">
+        <text value="book"/>
+      </if>
+      <else-if type="chapter" match="any">
+        <text value="inbook"/>
+      </else-if>
+      <else-if type="article article-journal article-magazine article-newspaper" match="any">
+        <text value="article"/>
+      </else-if>
+      <else-if type="thesis" match="any">
+        <text value="phdthesis"/>
+      </else-if>
+      <else-if type="manuscript" match="any">
+        <text value="unpublished"/>
+      </else-if>
+      <else-if type="paper-conference" match="any">
+        <text value="inproceedings"/>
+      </else-if>
+      <else-if type="report" match="any">
+        <text value="techreport"/>
+      </else-if>
+      <else>
+        <text value="misc"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="citeKey">
+    <group delimiter="_">
+      <text macro="author-short" text-case="lowercase"/>
+      <text macro="issued-year"/>
+    </group>
+  </macro>
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" delimiter="_" delimiter-precedes-last="always" et-al-min="11" et-al-use-first="10"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <choose>
+          <if type="bill book graphic legal_case legislation motion_picture report song" match="any">
+            <text variable="title" form="short"/>
+          </if>
+          <else>
+            <text variable="title" form="short"/>
+          </else>
+        </choose>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="issued-year">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+  <macro name="issued-month">
+    <date variable="issued">
+      <date-part name="month" form="short" strip-periods="true" text-case="lowercase"/>
+    </date>
+  </macro>
+  <macro name="author">
+    <names variable="author">
+      <name sort-separator=", " delimiter=" and " delimiter-precedes-last="always" name-as-sort-order="all"/>
+    </names>
+  </macro>
+  <macro name="editor-translator">
+    <names variable="editor translator" delimiter=", ">
+      <name sort-separator=", " delimiter=" and " delimiter-precedes-last="always" name-as-sort-order="all"/>
+    </names>
+  </macro>
+  <macro name="title">
+    <text variable="title"/>
+  </macro>
+  <macro name="number">
+    <text variable="issue"/>
+    <text variable="number"/>
+  </macro>
+  <macro name="container-title">
+    <choose>
+      <if type="chapter paper-conference" match="any">
+        <text variable="container-title" prefix=" booktitle={" suffix="}"/>
+      </if>
+      <else>
+        <text variable="container-title" prefix=" journal={" suffix="}"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="publisher">
+    <choose>
+      <if type="thesis">
+        <text variable="publisher" prefix=" school={" suffix="}"/>
+      </if>
+      <else-if type="report">
+        <text variable="publisher" prefix=" institution={" suffix="}"/>
+      </else-if>
+      <else>
+        <text variable="publisher" prefix=" publisher={" suffix="}"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="pages">
+    <text variable="page"/>
+  </macro>
+  <macro name="edition">
+    <!-- This should probably be ordinal? -->
+    <text variable="edition"/>
+  </macro>
+  <citation disambiguate-add-year-suffix="true" disambiguate-add-names="false" disambiguate-add-givenname="false" collapse="year">
+    <sort>
+      <key macro="author"/>
+      <key variable="issued"/>
+    </sort>
+    <layout delimiter="_">
+      <text macro="citeKey"/>
+    </layout>
+  </citation>
+  <bibliography hanging-indent="false">
+    <sort>
+      <key macro="author"/>
+      <key variable="issued"/>
+    </sort>
+    <layout>
+      <text macro="zotero2bibtexType" prefix=" @"/>
+      <group prefix="{" suffix=" }" delimiter=", ">
+        <text macro="citeKey"/>
+        <text variable="publisher-place" prefix=" address={" suffix="}"/>
+        <!--Fix This-->
+        <text variable="chapter-number" prefix=" chapter={" suffix="}"/>
+        <!--Fix This-->
+        <text macro="edition" prefix=" edition={" suffix="}"/>
+        <text variable="genre" prefix=" type={" suffix="}"/>
+        <text variable="collection-title" prefix=" series={" suffix="}"/>
+        <text macro="title" prefix=" title={" suffix="}"/>
+        <text variable="volume" prefix=" volume={" suffix="}"/>
+        <text variable="license" prefix=" rights={" suffix="}"/>
+        <text variable="ISBN" prefix=" ISBN={" suffix="}"/>
+        <text variable="ISSN" prefix=" ISSN={" suffix="}"/>
+        <text variable="call-number" prefix=" callNumber={" suffix="}"/>
+        <text variable="archive_location" prefix=" archiveLocation={" suffix="}"/>
+        <text variable="URL" prefix=" url={" suffix="}"/>
+        <text variable="DOI" prefix=" DOI={" suffix="}"/>
+        <text variable="abstract" prefix=" abstractNote={" suffix="}"/>
+        <text variable="note" prefix=" note={" suffix="}"/>
+        <text macro="number" prefix=" number={" suffix="}"/>
+        <text macro="container-title"/>
+        <text macro="publisher"/>
+        <text macro="author" prefix=" author={" suffix="}"/>
+        <text macro="editor-translator" prefix=" editor={" suffix="}"/>
+        <text macro="issued-year" prefix=" year={" suffix="}"/>
+        <text macro="issued-month" prefix=" month=" suffix=""/>
+        <text macro="pages" prefix=" pages={" suffix="}"/>
+        <text variable="collection-title" prefix=" collection={" suffix="}"/>
+        <text variable="keyword" prefix=" keywords={" suffix="}"/>
+        <text variable="language" prefix="language={" suffix="}"/>
+        <text variable="annote" prefix="annote={" suffix="}"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+>>===== INPUT =====>>
+[
+    {
+        "DOI": "10.3390/su152215733",
+        "ISSN": [
+            "2071-1050"
+        ],
+        "URL": "http://dx.doi.org/10.3390/su152215733",
+        "abstract": "<jats:p>Monitoring Sustainable Development Goals (SDGs) has mainly focused on levels of achievement of targets and indicators, but few studies have examined policies and implementation efforts systematically. The Sustainable Development Solutions Network (SDSN) has called for more monitoring of policy efforts, which is necessary to understand why overall progress on SDGs has been insufficient. Responding to this call, this paper analyzes how the G20 countries’ SDG implementation policies and budgets were reported in their Voluntary National Reviews and creates a dataset of these SDG policies and budgets. The results showed that the G20 countries cumulatively listed a large number of policies—over 4100—in their VNRs. These policies were widely distributed among SDGs. The combined total of listed budgets was over USD 2.7 trillion. Most of the policies were substantive, broad-scoped action plans, national strategies, frameworks, programs, or laws/regulations, not just small projects or awareness-raising campaigns. Overall, VNRs listed more policies after 2018 than before. Also, VNRs tended to include relatively more policies relating to SDGs highlighted at the High-Level Political Forum (HLPF) in the year the VNR was prepared. The results also showed that smaller or developing countries generally did not indicate fewer policies than larger or developed countries. Despite the large number of reported policies, some areas of under-reporting were identified, especially regarding environmental SDGs and targets. Budgetary information was fragmented, and clearly did not match the scale of the reported policies, so actual SDG budget expenditures are probably much higher than reported in the VNRs. In conclusion, insufficient progress on the SDGs cannot be attributed to a simple lack of policies. Therefore, further research is needed to examine the policies’ actual contents, their appropriateness, level of ambition, level of funding, extent of implementation, and effectiveness. The database of policies created by this study is a necessary first step. The policy database can also be used to identify the G20 countries’ relevant policies for specific SDGs or issue areas which span several SDGs for monitoring implementation of specific issue areas.</jats:p>",
+        "alternative-id": [
+            "su152215733"
+        ],
+        "author": [
+            {
+                "ORCID": "http://orcid.org/0000-0002-1651-7843",
+                "affiliation": [
+                    {
+                        "name": "Institute for Global Environmental Strategies, Hayama 240-0115, Japan"
+                    }
+                ],
+                "authenticated-orcid": false,
+                "family": "Elder",
+                "given": "Mark",
+                "sequence": "first"
+            },
+            {
+                "ORCID": "http://orcid.org/0000-0003-0671-5026",
+                "affiliation": [
+                    {
+                        "name": "Energy Innovation, San Francisco, CA 94111, USA"
+                    }
+                ],
+                "authenticated-orcid": false,
+                "family": "Newman",
+                "given": "Elli",
+                "sequence": "additional"
+            }
+        ],
+        "container-title": "Sustainability",
+        "container-title-short": "Sustainability",
+        "content-domain": {
+            "crossmark-restriction": false,
+            "domain": []
+        },
+        "created": {
+            "date-parts": [
+                [
+                    2023,
+                    11,
+                    8
+                ]
+            ],
+            "date-time": "2023-11-08T12:02:05Z",
+            "timestamp": 1699444925000
+        },
+        "deposited": {
+            "date-parts": [
+                [
+                    2023,
+                    11,
+                    8
+                ]
+            ],
+            "date-time": "2023-11-08T12:31:10Z",
+            "timestamp": 1699446670000
+        },
+        "funder": [
+            {
+                "name": "Institute of Global Environmental Strategies, Hayama, Japan"
+            }
+        ],
+        "indexed": {
+            "date-parts": [
+                [
+                    2023,
+                    11,
+                    9
+                ]
+            ],
+            "date-time": "2023-11-09T00:41:10Z",
+            "timestamp": 1699490470291
+        },
+        "is-referenced-by-count": 0,
+        "issue": "22",
+        "issued": {
+            "date-parts": [
+                [
+                    2023,
+                    11,
+                    8
+                ]
+            ]
+        },
+        "journal-issue": {
+            "issue": "22",
+            "published-online": {
+                "date-parts": [
+                    [
+                        2023,
+                        11
+                    ]
+                ]
+            }
+        },
+        "language": "en",
+        "license": [
+            {
+                "URL": "https://creativecommons.org/licenses/by/4.0/",
+                "content-version": "vor",
+                "delay-in-days": 0,
+                "start": {
+                    "date-parts": [
+                        [
+                            2023,
+                            11,
+                            8
+                        ]
+                    ],
+                    "date-time": "2023-11-08T00:00:00Z",
+                    "timestamp": 1699401600000
+                }
+            }
+        ],
+        "link": [
+            {
+                "URL": "https://www.mdpi.com/2071-1050/15/22/15733/pdf",
+                "content-type": "unspecified",
+                "content-version": "vor",
+                "intended-application": "similarity-checking"
+            }
+        ],
+        "member": "1968",
+        "original-title": [],
+        "page": "15733",
+        "prefix": "10.3390",
+        "published": {
+            "date-parts": [
+                [
+                    2023,
+                    11,
+                    8
+                ]
+            ]
+        },
+        "published-online": {
+            "date-parts": [
+                [
+                    2023,
+                    11,
+                    8
+                ]
+            ]
+        },
+        "publisher": "MDPI AG",
+        "reference": [
+            {
+                "DOI": "10.3390/su15129443",
+                "doi-asserted-by": "crossref",
+                "key": "ref_1",
+                "unstructured": "Ali, S.M., Appolloni, A., Cavallaro, F., D’adamo, I., Di Vaio, A., Ferella, F., Gastaldi, M., Ikram, M., Kumar, N.M., and Martin, M.A. (2023). Development Goals towards Sustainability. Sustainability, 15."
+            },
+            {
+                "key": "ref_2",
+                "unstructured": "UNDESA (2022). Handbook for the Preparation of Voluntary National Reviews: The 2022 Edition, Department of Economic and Social Affairs (DESA) United Nations. Available online: https://sustainabledevelopment.un.org/content/documents/29410VNR_Handbook_2022_English.pdf."
+            },
+            {
+                "key": "ref_3",
+                "unstructured": "United Nations (2023, June 05). Transforming Our World: The 2030 Agenda for Sustainable Development. Available online: https://sustainabledevelopment.un.org/post2015/transformingourworld/publication."
+            },
+            {
+                "key": "ref_4",
+                "unstructured": "United Nations (2021). The Sustainable Development Goals Report 2021, United Nations. Available online: https://unstats.un.org/sdgs/report/2021/."
+            },
+            {
+                "DOI": "10.1017/9781009106559",
+                "doi-asserted-by": "crossref",
+                "key": "ref_5",
+                "unstructured": "Sachs, J.D., Kroll, C., Lafortune, G., Fuller, G., and Woelm, F. (2021). Sustainable Development Report 2021: The Decade of Action for the Sustainable Development Goals, Cambridge University Press."
+            },
+            {
+                "key": "ref_6",
+                "unstructured": "Independent Group of Scientists (2019). Global Sustainable Development Report 2019, United Nations."
+            },
+            {
+                "key": "ref_7",
+                "unstructured": "Kharas, H., and McArthur, J. (2019). Building the SDG Economy: Needs, Spending, and Financing for Universal Achievement of the Sustainable Development Goals, Brookings Institution. Available online: https://www.brookings.edu/wp-content/uploads/2019/10/Building-the-SDG-economy.pdf."
+            },
+            {
+                "DOI": "10.1515/9783110733488",
+                "doi-asserted-by": "crossref",
+                "key": "ref_8",
+                "unstructured": "Cadman, T., and Sarker, T. (2022). De Gruyter Handbook of Sustainable Development and Finance, Walter de Gruyter GmbH."
+            },
+            {
+                "DOI": "10.3846/tede.2020.13863",
+                "article-title": "The Role of Sustainable Finance in Achieving Sustainable Development Goals: Does It Work?",
+                "author": "Ziolo",
+                "doi-asserted-by": "crossref",
+                "first-page": "45",
+                "journal-title": "Technol. Econ. Dev. Econ.",
+                "key": "ref_9",
+                "volume": "27",
+                "year": "2021"
+            },
+            {
+                "DOI": "10.1017/9781009210058",
+                "doi-asserted-by": "crossref",
+                "key": "ref_10",
+                "unstructured": "Sachs, J.D., Lafortune, G., Kroll, C., Fuller, G., and Woelm, F. (2022). Sustainable Development Report 2022: From Crisis to Sustainable Development—The SDGs as Roadmap to 2030 and Beyond, Cambridge University Press."
+            },
+            {
+                "DOI": "10.1007/s11625-017-0437-1",
+                "article-title": "Indicator-Based Assessments of Progress towards the Sustainable Development Goals (SDGs): A Case Study from the Arab Region",
+                "author": "Allen",
+                "doi-asserted-by": "crossref",
+                "first-page": "975",
+                "journal-title": "Sustain. Sci.",
+                "key": "ref_11",
+                "volume": "12",
+                "year": "2017"
+            },
+            {
+                "DOI": "10.1007/s11625-018-0649-z",
+                "article-title": "Sustainable Development Goal 6: Two Gaps in the Race for Indicators",
+                "author": "Guppy",
+                "doi-asserted-by": "crossref",
+                "first-page": "501",
+                "journal-title": "Sustain. Sci.",
+                "key": "ref_12",
+                "volume": "14",
+                "year": "2019"
+            },
+            {
+                "key": "ref_13",
+                "unstructured": "UNEP (2019). Measuring Progress: Towards Achieving the Environmental Dimensions of the SDGs, United Nations Environment Programme."
+            },
+            {
+                "DOI": "10.1017/9781108992411",
+                "doi-asserted-by": "crossref",
+                "key": "ref_14",
+                "unstructured": "Sachs, J., Schmidt-Traub, G., Kroll, C., Lafortune, G., Fuller, G., and Woelm, F. (2020). Sustainable Development Report 2020: The Sustainable Development Goals and COVID-19, Cambridge University Press."
+            },
+            {
+                "DOI": "10.3390/su13116461",
+                "doi-asserted-by": "crossref",
+                "key": "ref_15",
+                "unstructured": "Cheng, Y., Liu, H., Wang, S., Cui, X., and Li, Q. (2021). Global Action on SDGs: Policy Review and Outlook in a Post-Pandemic Era. Sustainability, 13."
+            },
+            {
+                "key": "ref_16",
+                "unstructured": "Elder, M., and Bartalini, A. (2019). Assessment of the G20 Countries’ Concrete SDG Implementation Efforts: Policies and Budgets Reported in Their 2016-2018 Voluntary National Reviews, Institute for Global Environmental Strategies. Available online: https://iges.or.jp/en/pub/assessment-g20-countries’-concrete-sdg."
+            },
+            {
+                "DOI": "10.1007/s10668-022-02514-0",
+                "article-title": "ASEAN Countries’ Environmental Policies for the Sustainable Development Goals (SDGs)",
+                "author": "Elder",
+                "doi-asserted-by": "crossref",
+                "first-page": "10975",
+                "journal-title": "Environ. Dev. Sustain.",
+                "key": "ref_17",
+                "volume": "25",
+                "year": "2022"
+            },
+            {
+                "key": "ref_18",
+                "unstructured": "Chattopadhyay, S., and Manea, S. (2019). ‘Leave No One Behind’ Index 2019, ODI. ODI Briefing Note."
+            },
+            {
+                "key": "ref_19",
+                "unstructured": "Villalona, C., Romano, J., Wong, E., Vucinic, I.B., Tiwana, M.S., Konig-Reis, S., Villalobos, C., Selvaratnam, S.J., Scrimgeour, J., and Brosbøl, K. (2021). Global SDG Accountability Report: A Snapshot on the State of Accountability for the 2030 Agenda, Campaign for a Decade of Accountability for the SDGs and Transparency, Accountability and Participation (TAP) Network. Available online: https://9bz99d.p3cdn1.secureserver.net/wp-content/uploads/2021/06/GlobalSDGAccountabilityReport_pages_hRes-1.pdf."
+            },
+            {
+                "key": "ref_20",
+                "unstructured": "De Oliveira, A., and Kindornay, S. (2021). Progressing National SDG Implementation: An Independent Assessment of the Voluntary National Review Reports Submitted to the United Nations High-Level Political Forum in 2020, Cooperation Canada."
+            },
+            {
+                "key": "ref_21",
+                "unstructured": "De Oliveria, A. (2022). Progressing National SDGs Implementation: An Independent Assessment of the Voluntary National Review Reports Submitted to the United Nations High-Level Political Forum in 2021, Cooperation Canada. Available online: https://drive.google.com/file/d/1UAptKt6djbLCTtlpiHNJLR21zQmWBesc/view."
+            },
+            {
+                "key": "ref_22",
+                "unstructured": "Ortiz-Moya, F., and Kataoka, Y. (2022). State of the Voluntary Local Reviews 2022: Overcoming Barriers to Implementation, Institute for Global Environmental Strategies. Available online: https://www.iges.or.jp/en/pub/vlrs-2022/en."
+            },
+            {
+                "key": "ref_23",
+                "unstructured": "Ortiz-Moya, F., Marcos, E.S., Kataoka, Y., and Fujino, J. (2021). State of the Voluntary Local Reviews 2021: From Reporting to Action, Institute for Global Environmental Strategies (IGES). Available online: https://www.iges.or.jp/en/pub/vlrs-2021/en."
+            },
+            {
+                "key": "ref_24",
+                "unstructured": "Elder, M. (2020). Assessment of ASEAN Countries’ Concrete SDG Implementation Efforts: Policies and Budgets Reported in Their 2016-2020 Voluntary National Reviews (VNRs), Institute for Global Environmental Strategies. Available online: https://www.iges.or.jp/en/pub/asean-sdg-vnrs/en."
+            },
+            {
+                "key": "ref_25",
+                "unstructured": "HLPF (2023, June 05). Voluntary National Reviews. High-Level Political Forum. Available online: https://hlpf.un.org/vnrs."
+            },
+            {
+                "key": "ref_26",
+                "unstructured": "Australian Government (2023, June 05). Report on the Implementation of the Sustainable Development Goals 2018, Available online: https://www.pmc.gov.au/government/."
+            },
+            {
+                "key": "ref_27",
+                "unstructured": "Government of Brazil (2023, June 05). Voluntary National Review on the Sustainable Development Goals. Available online: https://hlpf.un.org/sites/default/files/vnrs/2021/15806Brazil_English.pdf."
+            },
+            {
+                "key": "ref_28",
+                "unstructured": "Government of Canada (2023, June 05). Canada’s Implementation of the 2030 Agenda for Sustainable Development. Available online: https://sustainabledevelopment.un.org/content/documents/20312Canada_ENGLISH_18122_Canadas_Voluntary_National_ReviewENv7.pdf."
+            },
+            {
+                "key": "ref_29",
+                "unstructured": "Government of France (2023, June 05). Report on the Implementation by France of the Sustainable Development Goals. Available online: https://sustainabledevelopment.un.org/content/documents/10726Report%20SDGs%20France.pdf."
+            },
+            {
+                "key": "ref_30",
+                "unstructured": "Republic of Korea (2023, June 05). Year One of Implementing the SDGs in the Republic of Korea: From a Model of Development Success to a Vision for Sustainable Development. Available online: https://hlpf.un.org/sites/default/files/vnrs/2021/10632National%20Voluntary%20Review%20Report%20%28rev_final%29.pdf."
+            },
+            {
+                "key": "ref_31",
+                "unstructured": "Russian Federation (2023, June 05). Voluntary National Review of the Progress Made in the Implementation of the 2030 Agenda for Sustainable Development. Available online: https://hlpf.un.org/sites/default/files/vnrs/2021/26962VNR_2020_Russia_Report_English.pdf."
+            },
+            {
+                "key": "ref_32",
+                "unstructured": "Kingdom of Saudi Arabia (2023, June 05). Towards Saudi Arabia’s Sustainable Tomorrow: First Voluntary National Review. Available online: https://sustainabledevelopment.un.org/content/documents/20230SDGs_English_Report972018_FINAL.pdf."
+            },
+            {
+                "key": "ref_33",
+                "unstructured": "Government of South Africa (2023, June 05). South Africa’s Voluntary National Review (VNR) Report 2019: Empowering People and Ensuring Inclusiveness and Equality; Government of South Africa: 2019. Available online: https://sustainabledevelopment.un.org/content/documents/23402RSA_Voluntary_National_Review_Report__9_July_2019.pdf."
+            },
+            {
+                "key": "ref_34",
+                "unstructured": "United Kingdom (2023, June 05). Voluntary National Review of Progress towards the Sustainable Development Goals. Available online: https://sustainabledevelopment.un.org/content/documents/23678UK_12072019_UK_Voluntary_National_Review_2019.pdf."
+            },
+            {
+                "key": "ref_35",
+                "unstructured": "Republic of Italy (2023, June 05). Voluntary National Review Italy: National Sustainable Development Strategy. Available online: www.minambiente.it."
+            },
+            {
+                "key": "ref_36",
+                "unstructured": "Government of Argentina (2023, June 05). Informe Voluntario Nacional: Ante El Foro Politico de Alto Nivel Para El Desarrollo Sostenible. Available online: http://www.politicassociales.gob.ar."
+            },
+            {
+                "key": "ref_37",
+                "unstructured": "Government of Argentina (2023, June 05). Segundo Informe Volunario Nacional. Available online: https://sustainabledevelopment.un.org/content/documents/26364VNR_2020_Argentina_Report_Spanish.pdf."
+            },
+            {
+                "key": "ref_38",
+                "unstructured": "Government of the People’s Republic of China (2023, November 03). China’s National Plan on Implementation of the 2030 Agenda for Sustainable Development, Available online: https://www.fmprc.gov.cn/mfa_eng/topics_665678/2030kcxfzyc/201610/P020210525474814580752.pdf."
+            },
+            {
+                "key": "ref_39",
+                "unstructured": "Government of the People’s Republic of China (2023, June 05). China’s VNR Report on Implementation of the 2030 Agenda for Sustainable Development China’s VNR Report on Implementation of the 2030 Agenda for Sustainable Development Contents. Available online: https://sustainabledevelopment.un.org/content/documents/280812021_VNR_Report_China_English.pdf."
+            },
+            {
+                "key": "ref_40",
+                "unstructured": "German Federal Government (2016). Report of the German Federal Government to the High-Level Political Forum on Sustainable Development 2016, German Federal Government. Available online: https://hlpf.un.org/sites/default/files/vnrs/2021/10686HLPF-Bericht_final_EN.pdf."
+            },
+            {
+                "key": "ref_41",
+                "unstructured": "German Federal Government (2023, June 05). Report on the Implementation of the 2030 Agenda for Sustainable Development. Available online: https://sustainabledevelopment.un.org/content/documents/279522021_VNR_Report_Germany.pdf."
+            },
+            {
+                "key": "ref_42",
+                "unstructured": "Government of India (2023, June 05). Voluntary National Review Report on the Implementation of the Sustainable Development Goals. Available online: https://hlpf.un.org/sites/default/files/vnrs/2021/16693India.pdf."
+            },
+            {
+                "key": "ref_43",
+                "unstructured": "Government of India (2023, June 05). Decade of Action: Taking SDGs from Global to Local. Available online: https://sustainabledevelopment.un.org/content/documents/26281VNR_2020_India_Report.pdf."
+            },
+            {
+                "key": "ref_44",
+                "unstructured": "Government of Japan (2023, June 05). Japan’s Voluntary National Review: Report on the Implementation of the Sustainable Development Goals. Available online: https://hlpf.un.org/sites/default/files/vnrs/2021/16445JapanVNR2017.pdf."
+            },
+            {
+                "key": "ref_45",
+                "unstructured": "Government of Japan (2023, June 05). Voluntary National Review 2021: Report on the Implementation of 2030 Agenda, Toward Achieving the SDGs in the Post-COVID19 Era. Available online: https://sustainabledevelopment.un.org/content/documents/28957210714_VNR_2021_Japan.pdf."
+            },
+            {
+                "key": "ref_46",
+                "unstructured": "Government of Turkey (2023, June 05). Report on Turkey’s Initial Steps towards the Implementation of the 2030 Agenda for Sustainable Development. Available online: https://sustainabledevelopment.un.org/content/documents/107102030%20Agenda%20Turkey%20Report.pdf."
+            },
+            {
+                "key": "ref_47",
+                "unstructured": "Government of Turkey (2023, June 05). Turkey’s Sustainable Development Goals 2nd VNR 2019: ‘Strong Ground towards Common Goals’. Available online: https://sustainabledevelopment.un.org/content/documents/23862Turkey_VNR_110719.pdf."
+            },
+            {
+                "key": "ref_48",
+                "unstructured": "Republic of Indonesia (2023, June 05). Voluntary National Review (VNR) ‘Eradicating Poverty and Promoting Prosperity in a Changing World’; Republic of Indonesia. Available online: https://sustainabledevelopment.un.org/content/documents/15705Indonesia.pdf."
+            },
+            {
+                "key": "ref_49",
+                "unstructured": "Republic of Indonesia (2023, June 05). Voluntary National Reviews (VNR): Empowering People and Ensuring Inclusiveness and Equality. Available online: https://sdgs.un.org/sites/default/files/documents/23423INDONESIA_E_File_Final_VNR_2019_Indonesia.pdf."
+            },
+            {
+                "key": "ref_50",
+                "unstructured": "Republic of Indonesia (2023, June 05). Indonesia’s Voluntary National Review (VNR) 2021: Sustainable and Resilient Recovery from the COVID-19 Pandemic for the Achievement of the 2030 Agenda. Available online: https://sustainabledevelopment.un.org/content/documents/280892021_VNR_Report_Indonesia.pdf."
+            },
+            {
+                "key": "ref_51",
+                "unstructured": "Federal Government of Mexico (2023, June 05). Voluntary National Review for the High-Level Political Forum on Sustainable Development: Basis for a Long-Term Sustainable Development Vision in Mexico. Available online: https://sustainabledevelopment.un.org/content/documents/20122VOLUNTARY_NATIONAL_REPORT_060718.pdf."
+            },
+            {
+                "key": "ref_52",
+                "unstructured": "Federal Government of Mexico (2023, November 03). Informe Nacional Voluntario 2021: Agenda 2030 En Mexico. Available online: https://hlpf.un.org/sites/default/files/vnrs/2021/288982021_VNR_Report_Mexico.pdf."
+            },
+            {
+                "key": "ref_53",
+                "unstructured": "United Nations Department of Economic and Social Affairs (2014). World Economic Situation and Prospects 2014, United Nations."
+            },
+            {
+                "DOI": "10.1111/1758-5899.12592",
+                "article-title": "The Framing of Sustainable Consumption and Production in SDG 12",
+                "author": "Gasper",
+                "doi-asserted-by": "crossref",
+                "first-page": "83",
+                "journal-title": "Glob. Policy",
+                "key": "ref_54",
+                "volume": "10",
+                "year": "2019"
+            }
+        ],
+        "reference-count": 54,
+        "references-count": 54,
+        "relation": {},
+        "resource": {
+            "primary": {
+                "URL": "https://www.mdpi.com/2071-1050/15/22/15733"
+            }
+        },
+        "score": 1,
+        "short-title": [],
+        "source": "Crossref",
+        "subject": [],
+        "subtitle": [],
+        "title": "Monitoring G20 Countries’ SDG Implementation Policies and Budgets Reported in Their Voluntary National Reviews (VNRs)",
+        "type": "journal-article",
+        "volume": "15"
+    }
+]
+<<===== INPUT =====<<
