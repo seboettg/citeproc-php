@@ -89,7 +89,9 @@ class Text implements Rendering
      */
     public function render($data, $citationNumber = null)
     {
-        $lang = (isset($data->language) && $data->language != 'en') ? $data->language : 'en';
+        $lang = (isset($data->language)) ? 
+            $data->language : 
+            strtok(CiteProc::getContext()->getLocale()->getLanguage(), '-');
 
         $renderedText = "";
         switch ($this->toRenderType) {

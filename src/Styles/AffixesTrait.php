@@ -10,6 +10,7 @@
 namespace Seboettg\CiteProc\Styles;
 
 use Seboettg\CiteProc\CiteProc;
+use Seboettg\CiteProc\Util\StringHelper;
 use SimpleXMLElement;
 
 /**
@@ -67,12 +68,26 @@ trait AffixesTrait
         $prefix = $this->prefix;
         $suffix = $this->suffix;
 
-        if (!empty($suffix)) { // guard against repeated suffixes...
-            $no_tags = strip_tags($text);
-            if (strlen($no_tags) && ($no_tags[(strlen($no_tags) - 1)] == $suffix[0])) {
-                $suffix = substr($suffix, 1);
+        // suffix, a complex chain of tests
+        do {
+            if (empty($suffix)) break;
+            // suffix, get first char after space 
+            $suffixFirst = mb_substr(preg_replace('/\p{Z}/u', '', $suffix), 0, 1);
+            if (empty($suffixFirst)) break;
+            $noTags = strip_tags($text);
+            if (empty($noTags)) break;
+            // reduce pun equivalent
+            if (isset(StringHelper::PUN_SAME[$suffixFirst])) {
+                $noTags = strtr($noTags, StringHelper::PUN_SAME[$suffixFirst]);
             }
-
+            if (empty($noTags)) break;
+            // last char of text = first non space char of delimeter
+            if (mb_substr($noTags, -1) == $suffixFirst) {
+                // strip first non space char of suffix
+                $suffix = mb_substr($suffix, mb_strpos($suffix, $suffixFirst) + 1);
+                break;
+            }
+            
             // punctuation in quote?
             $piq = CiteProc::getContext()
                 ->getLocale()
@@ -87,7 +102,7 @@ trait AffixesTrait
                     return $prefix . $text . $suffix . $lastChar;
                 }
             }
-        }
+        } while (false);
 
         return $prefix . $text . $suffix;
     }

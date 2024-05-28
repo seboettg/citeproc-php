@@ -75,24 +75,31 @@ class DateHelper
     public static function getSortKeyDate($dataItem, $key)
     {
         $variable = $variable = $key->getVariable();
-        $part = $key->getRangePart();
+        // no date
+        if (!isset($dataItem->{$variable})) {
+            return "00000000";
+        }
+        // date not encoded with date parts (raw ?)
+        else if (!isset($dataItem->{$variable}->{'date-parts'})) {
+            $dateParts = self::parseDateParts($dataItem->{$variable});
+            return self::serializeDate($dateParts);
+        }
+        // date range
         if (count($dataItem->{$variable}->{'date-parts'}) > 1) {
-            //Date range
+            $part = $key->getRangePart();
+            // Date range
             $datePart = $dataItem->{$variable}->{'date-parts'}[$part];
             $sortKey = self::serializeDate($datePart);
             if ($key->getSort() === "descending" && $part === 0 ||
                 $key->getSort() === "ascending" && $part === 1) {
                 $sortKey .= "-";
             }
-        } else {
-            if (!isset($dataItem->{$variable}->{'date-parts'})) {
-                $dateParts = self::parseDateParts($dataItem->{$variable});
-            } else {
-                $dateParts = $dataItem->{$variable}->{'date-parts'}[0];
-            }
-            $sortKey = self::serializeDate($dateParts);
+            return $sortKey;
+        } 
+        // simple date
+        else {
+            return self::serializeDate($dataItem->{$variable}->{'date-parts'}[0]);
         }
-        return $sortKey;
     }
 
     /**
@@ -103,17 +110,16 @@ class DateHelper
      */
     public static function hasDateRanges($items, $variable, $match = "all")
     {
-        $ret = true;
+        $isRange = false;
         foreach ($items as $item) {
-            $dateParts = $item->{$variable}->{"date-parts"};
-            if ($match === "all" && count($dateParts) !== 2) {
-                return false;
-            } elseif ($match === "any" && count($dateParts) === 2) {
-                return true;
-            } else {
-                $ret = ($match === "all") ? $ret&true : $ret|true;
-            }
+            $isRange = isset($item->{$variable})
+            && isset($item->{$variable}->{"date-parts"})
+            && count($item->{$variable}->{"date-parts"}) == 2;
+            // exit ASAP
+            if (!$isRange && $match == "all") return false;
+            if ($isRange && $match == "any") return true;
         }
-        return (bool) $ret;
+        // last isRange should have good answer in case of all or any
+        return $isRange;
     }
 }
