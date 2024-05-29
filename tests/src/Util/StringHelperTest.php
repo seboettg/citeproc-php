@@ -67,4 +67,26 @@ class StringHelperTest extends TestCase
         static::assertFalse(StringHelper::isCyrillicString("Nicht"));
         static::assertFalse(StringHelper::isCyrillicString("пеpеводчиком"));
     }
+
+    public function testCapitalizeForTitle(){
+
+        $testItems = [
+            ["test"=> "Hello/wORLD", "expected" => "Hello/WORLD"],
+            ["test"=> "Title/with a slash", "expected" => "Title/With a Slash"],
+            ["test"=> "Title/with two/ slashes", "expected" => "Title/With Two/ Slashes"],
+            ["test"=> "///Title/with Consecutive/ slashes", "expected" => "///Title/With Consecutive/ Slashes"],
+            ["test"=> "/\/|/Title/with wierd/ slashes", "expected" => "/\/|/Title/With Wierd/ Slashes"],
+            ["test"=> "?/\/|/Title/with Consecutive/ slashes", "expected" => "?/\/|/Title/With Consecutive/ Slashes"],
+            ["test"=> "?/\/|/Title/with /Consecutive/ slashes", "expected" => "?/\/|/Title/With /Consecutive/ Slashes"],
+            ["test"=> "?/\/|/Title/with Con/secutive slashes", "expected" => "?/\/|/Title/With Con/Secutive Slashes"],
+            ["test"=> "braintree/Braintree_php", "expected" => "Braintree/Braintree_php"], // issue105
+            ["test"=> "T7/G7 task force", "expected" => "T7/G7 Task Force"], // issue141
+          //["test"=> "ö/ö örb å ø", "expected" => "Ö/Ö Örb Å Ø"], // Doesn't work
+        ];
+
+        foreach($testItems as $item){
+            static::assertEquals($item["expected"], StringHelper::capitalizeForTitle($item["test"]));
+        }
+
+    }
 }
