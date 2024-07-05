@@ -130,24 +130,35 @@ class CiteProc
     /**
      * @param DataList $data
      * @return string
+     * @throws CiteProcException
      */
     protected function bibliography($data)
     {
-
-        return self::$context->getBibliography()->render($data);
+        $bibliography = self::$context->getBibliography();
+        if ($bibliography === null) {
+            throw new CiteProcException('Bibliography is not set in context.');
+        }
+        return $bibliography->render($data);
     }
 
     /**
      * @param DataList $data
      * @param ArrayList $citationItems
      * @return string
+     * @throws CiteProcException
      */
     protected function citation($data, $citationItems)
     {
-        return self::$context->getCitation()->render($data, $citationItems);
+        $citation = self::$context->getCitation();
+        if ($citation === null) {
+            throw new CiteProcException('Citation is not set in context.');
+        }
+        return $citation->render($data, $citationItems);
     }
 
     /**
+     * Renders the bibliography or citation based on the provided mode.
+     *
      * @param array|DataList $data
      * @param string $mode (citation|bibliography)
      * @param array $citationItems
@@ -199,7 +210,8 @@ class CiteProc
     }
 
     /**
-     * initializes CiteProc and start parsing XML stylesheet
+     * Initializes CiteProc and starts parsing the XML stylesheet.
+     *
      * @param bool $citationAsArray
      * @throws CiteProcException
      */
@@ -212,6 +224,10 @@ class CiteProc
         self::$context->setMarkupExtension($this->markupExtension);
         $this->styleSheetXml = new SimpleXMLElement($this->styleSheet);
         $this->parse($this->styleSheetXml);
+
+        if (self::$context->getBibliography() === null) {
+            throw new CiteProcException('Bibliography was not initialized correctly.');
+        }
     }
 
     /**
