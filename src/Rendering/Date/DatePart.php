@@ -95,7 +95,7 @@ class DatePart
      * @param Date|null $parent
      * @return string
      */
-    public function renderWithoutAffixes(DateTime $date, Date $parent = null)
+    public function renderWithoutAffixes(DateTime $date, ?Date $parent = null)
     {
         if (!is_null($parent)) {
             $this->parent = $parent;
