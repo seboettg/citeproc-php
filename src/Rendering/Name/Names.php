@@ -202,8 +202,7 @@ class Names implements Rendering, HasParent
                     $str .= implode($this->delimiter, $arr);
                 }
                 if (isset($this->label)) {
-                    $this->label->setVariable("editortranslator");
-                    $str .= $this->label->render($data);
+                    $str = $this->appendLabel($data, "editortranslator", $str);
                 }
                 $vars = $this->variables->toArray();
                 $vars = array_filter($vars, function ($value) {
