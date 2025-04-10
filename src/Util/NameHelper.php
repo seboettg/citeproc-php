@@ -103,9 +103,9 @@ class NameHelper
         }
 
         array_walk($persons1, function ($name, $key) use ($persons2, &$same) {
-            $family1 = $name->family;
-            $family2 = $persons2[$key]->family;
-            $same = $same && ($family1 === $family2);
+            $name1 = self::normalizeName($name);
+            $name2 = self::normalizeName($persons2[$key]);
+            $same = $same && ($name1 === $name2);
         });
 
         return (bool) $same;
