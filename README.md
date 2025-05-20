@@ -1,3 +1,9 @@
+
+
+# Pilots and co-pilots wanted # 
+I no longer have time for the maintenance and further development of citeproc-php. I am looking for a successor for the maintenance and further development of citeproc-php. Follow the discussion at [https://github.com/seboettg/citeproc-php/discussions/200](https://github.com/seboettg/citeproc-php/discussions/200).
+
+
 # citeproc-php #
 [![Latest Stable Version](https://poser.pugx.org/seboettg/citeproc-php/v/stable)](https://packagist.org/packages/seboettg/citeproc-php) 
 [![Total Downloads](https://poser.pugx.org/seboettg/citeproc-php/downloads)](https://packagist.org/packages/seboettg/citeproc-php/stats) 
