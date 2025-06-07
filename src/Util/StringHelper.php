@@ -85,7 +85,7 @@ class StringHelper
 
     const CONJUNCTIONS = [
         'and',     // en
-        "et",      // fr 
+        "et",      // fr
         'nor',     // en
         'or',      // en
         'ou',      // fr
@@ -176,7 +176,7 @@ class StringHelper
         $wordArray = preg_split($pattern, $titleString); //explode(" ", $titleString);
 
         $wordList = new ArrayList(...$wordArray);
-        return $wordList
+        $convertedString = $wordList
             ->map(function(string $word) {
                 $wordParts = explode("-", $word);
                 if (count($wordParts) > 1) {
@@ -187,8 +187,36 @@ class StringHelper
                     $word = implode("-", $casedWordParts);
                 }
                 return StringHelper::keepLowerCase($word) ? $word : StringHelper::mb_ucfirst($word);
-            })
-            ->collectToString($delimiter);
+            })->collectToString($delimiter);
+
+        return self::replaceDelimeters($titleString, $convertedString);
+    }
+
+    /**
+     * Compare two strings, return a new string that uses the characters of the
+     * first string and the capitalizations from the second string.
+     *
+     * For example, given the strings "hello worlD" and "Hello/WORLD", the
+     * function will return "Hello WORLD".
+     *
+     * @param string $original
+     * @param string $converted
+     *
+     * @return string
+     */
+    private static function replaceDelimeters(string $original, string $converted): string {
+        $result = "";
+
+        $originalChars = str_split($original);
+        $convertedChars = str_split($converted);
+
+        foreach($originalChars as $i => $char) {
+            $result .= mb_strtolower($char) === mb_strtolower($convertedChars[$i])
+              ? $convertedChars[$i]
+              : $char;
+        }
+
+        return $result;
     }
 
     /**
@@ -202,7 +230,7 @@ class StringHelper
         // because of static, compilation is done only one time
         if ($lcDic === null) {
             $lcDic = array_flip(array_merge(
-                self::PREPOSITIONS, 
+                self::PREPOSITIONS,
                 self::ARTICLES,
                 self::ADVERBS,
                 self::CONJUNCTIONS,
