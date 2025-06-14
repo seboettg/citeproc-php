@@ -90,7 +90,7 @@ class ChooseIf implements Rendering, HasParent
      * @param null|int $citationNumber
      * @return bool
      */
-    public function match($data, int $citationNumber = null): bool
+    public function match($data, ?int $citationNumber = null): bool
     {
         if ($this->constraints->count() === 1) {
             return $this->constraints->current()->validate($data);
