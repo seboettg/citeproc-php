@@ -89,8 +89,8 @@ class Text implements Rendering
      */
     public function render($data, $citationNumber = null)
     {
-        $lang = (isset($data->language)) ? 
-            $data->language : 
+        $lang = (isset($data->language)) ?
+            $data->language :
             strtok(CiteProc::getContext()->getLocale()->getLanguage(), '-');
 
         $renderedText = "";
@@ -236,7 +236,7 @@ class Text implements Rendering
         }
         return $this->applyTextCase(
             StringHelper::clearApostrophes(
-                htmlspecialchars($value, ENT_HTML5)
+                htmlspecialchars($this->asString($value), ENT_HTML5)
             ),
             $lang
         );
@@ -292,5 +292,31 @@ class Text implements Rendering
             $renderedText = $macro->render($data);
         }
         return $renderedText;
+    }
+
+    /**
+     * Converts the given value to a string.
+     *
+     * @param  mixed $value
+     * @return string
+     */
+    private function asString(mixed $value): string
+    {
+
+        if (is_string($value)) {
+            return $value;
+        }
+
+        if (is_array($value)) {
+            // This is just an idea. It assumes the item relates to the
+            // Copyright field and specifically looks for the URL. Maybe we can
+            // ignore arrays altogether, or fix it upstream, as it gets more
+            // complicated if the array includes complex JSON objects.
+            if(isset($value[0]) && isset($value[0]->URL)) {
+                return $value[0]->URL;
+            }
+        }
+
+        return json_encode($value);
     }
 }
