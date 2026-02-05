@@ -114,10 +114,8 @@ class Group implements Rendering, HasParent
 
             $delimiter = $this->delimiter;
             if (!empty($text)) {
-                // bug with title finishing by..., 
-                // do not modify a text part
-                // logic is handled  in
-                // implodeAndPreventConsecutiveChars
+                // Do not modify text parts here; consecutive punctuation
+                // is handled in implodeAndPreventConsecutiveChars
                 /*
                 if ($delimiter && ($elementCount < count($this->children))) {
 
@@ -172,11 +170,11 @@ class Group implements Rendering, HasParent
         }
 
         if ($variables && !$haveVariables) {
-            return ""; // there has to be at least one other none empty value before the term is output
+            return ""; // At least one non-empty value is required before the term is output
         }
 
         if (count($textParts) == $terms) {
-            return ""; // there has to be at least one other none empty value before the term is output
+            return ""; // At least one non-empty value is required before the term is output
         }
 
         $text = StringHelper::implodeAndPreventConsecutiveChars($this->delimiter, $textParts);

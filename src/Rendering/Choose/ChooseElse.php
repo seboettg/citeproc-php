@@ -12,5 +12,5 @@ namespace Seboettg\CiteProc\Rendering\Choose;
 
 class ChooseElse extends ChooseIf
 {
-    //render function is inherited from ChooseIf
+    // The render function is inherited from ChooseIf
 }

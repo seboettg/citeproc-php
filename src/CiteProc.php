@@ -165,7 +165,7 @@ class CiteProc
             throw new InvalidArgumentException("\"$mode\" is not a valid mode.");
         }
 
-        $this->init($citationAsArray); //initialize
+        $this->init($citationAsArray); // Initialize
 
         $res = "";
 
@@ -206,7 +206,7 @@ class CiteProc
     public function init($citationAsArray = false)
     {
         self::$context = new Context();
-        self::$context->setLocale(new Locale\Locale($this->lang)); //init locale
+        self::$context->setLocale(new Locale\Locale($this->lang)); // Initialize locale
         self::$context->setCitationsAsArray($citationAsArray);
         // set markup extensions
         self::$context->setMarkupExtension($this->markupExtension);

@@ -236,7 +236,7 @@ class Label implements Rendering
             $text = str_replace('.', '', $text);
         }
 
-        $text = preg_replace("/\s&\s/", " &#38; ", $text); //replace ampersands by html entity
+        $text = preg_replace("/\s&\s/", " &#38; ", $text); // Replace ampersands with HTML entity
         $text = $this->format($this->applyTextCase($text, $lang));
         return $this->addAffixes($text);
     }

@@ -70,8 +70,8 @@ class NameHelper
     public static function appendParticleTo(&$data, $namePart, $particle)
     {
         if (isset($data->{$particle}) && isset($data->{$namePart})) {
-            $data->{$namePart} = $data->{$namePart}." ".$data->{$particle}; // append $particle to $namePart
-            unset($data->{$particle}); //remove particle from $data
+            $data->{$namePart} = $data->{$namePart}." ".$data->{$particle}; // Append particle to name part
+            unset($data->{$particle}); // Remove particle from data
         }
     }
 
@@ -84,8 +84,8 @@ class NameHelper
     public static function prependParticleTo(&$data, $namePart, $particle)
     {
         if (isset($data->{$particle}) && isset($data->{$namePart})) {
-            $data->{$namePart} = $data->{$particle}." ".$data->{$namePart}; //prepend $particle to $namePart
-            unset($data->{$particle}); //remove particle from $data
+            $data->{$namePart} = $data->{$particle}." ".$data->{$namePart}; // Prepend particle to name part
+            unset($data->{$particle}); // Remove particle from data
         }
     }
 

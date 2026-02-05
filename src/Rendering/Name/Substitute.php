@@ -79,18 +79,18 @@ class Substitute implements Rendering
                 /* A shorthand version of cs:names without child elements, which inherits the attributes values set on
                 the cs:name and cs:et-al child elements of the original cs:names element, may also be used. */
                 if (!$names->hasEtAl()) {
-                    // inherit et-al
+                    // Inherit et-al from parent
                     if ($this->parent->hasEtAl()) {
                         $names->setEtAl($this->parent->getEtAl());
                     }
                 }
                 if (!$names->hasName()) {
-                    // inherit name
+                    // Inherit name from parent
                     if ($this->parent->hasName()) {
                         $names->setName($this->parent->getName());
                     }
                 }
-                // inherit label
+                // Inherit label from parent
                 if (!$names->hasLabel() && $this->parent->hasLabel()) {
                     $names->setLabel($this->parent->getLabel());
                 }

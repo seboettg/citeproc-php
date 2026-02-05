@@ -148,8 +148,8 @@ class Name implements HasParent
         the value of et-al-use-first/et-al-subsequent-min must be at least 2 less than the value of
         et-al-min/et-al-subsequent-use-first). */
         if ($this->etAlUseLast && $this->isEtAl($name, $resultNames)) {
-            $this->and = "…"; // set "and"
-            $this->etAl = null; //reset $etAl;
+            $this->and = "…"; // Use ellipsis as "and" connector
+            $this->etAl = null; // Reset etAl
         }
 
         /* add "and" */
@@ -209,10 +209,10 @@ class Name implements HasParent
 
         $text = $this->nameOrder($name, $rank);
 
-        //contains nbsp prefixed by normal space or followed by normal space?
+        // Check if text contains nbsp prefixed or followed by normal space
         $text = htmlentities($text);
         if (strpos($text, " &nbsp;") !== false || strpos($text, "&nbsp; ") !== false) {
-            $text = preg_replace("/\s+/", "", $text); //remove normal spaces
+            $text = preg_replace("/\s+/", "", $text); // Remove normal spaces
             return preg_replace("/&nbsp;+/", " ", $text);
         }
         $text = html_entity_decode(preg_replace("/[\s]+/", " ", $text));
@@ -267,7 +267,7 @@ class Name implements HasParent
      */
     protected function appendEtAl($data, $text, $resultNames)
     {
-        //append et al abbreviation
+        // Append "et al." abbreviation
         if ($this->isEtAl($data, $resultNames)) {
             /* By default, when a name list is truncated to a single name, the name and the “et-al” (or “and others”)
             term are separated by a space (e.g. “Doe et al.”). When a name list is truncated to two or more names, the
@@ -313,7 +313,7 @@ class Name implements HasParent
                     than the truncated name list (for this the value of et-al-use-first/et-al-subsequent-min must be at
                     least 2 less than the value of et-al-min/et-al-subsequent-use-first).*/
 
-                    $lastName = array_pop($resultNames); //remove last Element and remember in $lastName
+                    $lastName = array_pop($resultNames); // Remove and store last element
                 }
                 for ($i = $this->etAlUseFirst; $i < $cnt; ++$i) {
                     unset($resultNames[$i]);
@@ -321,7 +321,7 @@ class Name implements HasParent
 
                 $resultNames = array_values($resultNames);
 
-                if (!empty($lastName)) { // append $lastName if exist
+                if (!empty($lastName)) { // Append $lastName if it exists
                     $resultNames[] = $lastName;
                 }
 
@@ -463,7 +463,7 @@ class Name implements HasParent
                 $text = $resultNames[0];
             } elseif (count($resultNames) === 2) {
                 $text = implode(" ", $resultNames);
-            } else { // >2
+            } else { // More than 2 names
                 $lastName = array_pop($resultNames);
                 $text = implode($this->delimiter, $resultNames)." ".$lastName;
             }
@@ -494,8 +494,9 @@ class Name implements HasParent
     {
         $count = count($resultNames);
         if (!empty($this->and) && $count > 1 && empty($this->etAl)) {
-            $new = $this->and.' '.end($resultNames); // add and-prefix of the last name if "and" is defined
-            // set prefixed last name at the last position of $resultNames array
+            // Add "and" prefix to the last name
+            $new = $this->and.' '.end($resultNames);
+            // Replace the last element with the prefixed version
             $resultNames[count($resultNames) - 1] = $new;
         }
     }
@@ -510,7 +511,7 @@ class Name implements HasParent
         if (!empty($this->and) && empty($this->etAl)) {
             switch ($this->delimiterPrecedesLast) {
                 case 'after-inverted-name':
-                    //TODO: implement
+                    // TODO: Implement
                     break;
                 case 'always':
                     $text = implode($this->delimiter, $resultNames);
@@ -574,7 +575,7 @@ class Name implements HasParent
                 // [La] [Fontaine]
                 NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
                 $text = $data->family;
-            } else {// form "long" (default)
+            } else { // Form "long" (default)
                 // [Jean] [de] [La] [Fontaine] [III]
                 NameHelper::prependParticleTo($data, "family", "non-dropping-particle");
                 NameHelper::prependParticleTo($data, "family", "dropping-particle");

@@ -222,7 +222,7 @@ class Names implements Rendering, HasParent
                     if (!empty($this->label)) {
                         $name = $this->appendLabel($data, $var, $name);
                     }
-                    //add multiple counting values
+                    // Add multiple counting values
                     if (is_numeric($name) && $this->name->getForm() === "count") {
                         $results = $this->addCountValues($res, $results);
                     } else {
@@ -234,7 +234,7 @@ class Names implements Rendering, HasParent
                         $results[] = NameHelper::addExtendedMarkup($var, $name, $formatted);
                     }
                 }
-                // suppress substituted variables
+                // Suppress substituted variables to prevent duplication
                 if (CiteProc::getContext()->getRenderingState()->getValue() === RenderingState::SUBSTITUTION) {
                     unset($data->{$var});
                 }

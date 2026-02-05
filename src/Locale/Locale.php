@@ -107,7 +107,7 @@ class Locale
             $name = "";
         }
 
-        //filter by name
+        // Filter by name
         $array = $localeList->get($name);
 
         if (empty($array)) {
@@ -118,7 +118,7 @@ class Locale
             return $ret;
         }
 
-        //filter by form
+        // Filter by form
         if ($type !== "options") {
             /** @var Term $value */
             $array = array_filter($array, function ($term) use ($form) {

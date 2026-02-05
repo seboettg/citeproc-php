@@ -173,7 +173,7 @@ class StringHelper
             return StringHelper::mb_ucfirst($titleString);
         }
         $delimiter = $matches[1];
-        $wordArray = preg_split($pattern, $titleString); //explode(" ", $titleString);
+        $wordArray = preg_split($pattern, $titleString);
 
         $wordList = new ArrayList(...$wordArray);
         return $wordList
@@ -273,12 +273,12 @@ class StringHelper
             $noTags = strip_tags($segment);
             if (empty($noTags)) continue;
             $text .= $segment;
-            if ($i == ($count- 1)) continue; // should be last one
+            if ($i == ($count- 1)) continue; // Skip delimiter for last element
             // avoid succession like ?.
             if (isset(StringHelper::PUN_SAME[$delimiterFirst])) {
                 $noTags = strtr($noTags, StringHelper::PUN_SAME[$delimiterFirst]);
             }
-            // last char of part = first non space char of delimeter
+            // Last char of part equals first non-space char of delimiter
             if (mb_substr($noTags, -1) == $delimiterFirst) {
                 // append delimiter without first non space char
                 $text .= mb_substr($delimiter, mb_strpos($delimiter, $delimiterFirst) + 1);
@@ -388,7 +388,6 @@ class StringHelper
     public static function isLatinString($string)
     {
         return boolval(preg_match_all("/^[\p{Latin}\p{Common}]+$/u", $string));
-        //return !$noLatin;
     }
 
     /**
