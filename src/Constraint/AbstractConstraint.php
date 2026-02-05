@@ -53,7 +53,7 @@ abstract class AbstractConstraint implements Constraint
             case Constraint::MATCH_ALL:
                 return $this->matchAll($data);
             case Constraint::MATCH_NONE:
-                return $this->matchNone($data); //no match for any value
+                return $this->matchNone($data); // No match for any value
             case Constraint::MATCH_ANY:
             default:
                 return $this->matchAny($data);

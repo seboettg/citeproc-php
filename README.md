@@ -1,3 +1,9 @@
+
+
+# Pilots and co-pilots wanted # 
+I no longer have time for the maintenance and further development of citeproc-php. I am looking for a successor for the maintenance and further development of citeproc-php. Follow the discussion at [https://github.com/seboettg/citeproc-php/discussions/200](https://github.com/seboettg/citeproc-php/discussions/200).
+
+
 # citeproc-php #
 [![Latest Stable Version](https://poser.pugx.org/seboettg/citeproc-php/v/stable)](https://packagist.org/packages/seboettg/citeproc-php) 
 [![Total Downloads](https://poser.pugx.org/seboettg/citeproc-php/downloads)](https://packagist.org/packages/seboettg/citeproc-php/stats) 
@@ -11,7 +17,7 @@
 ![PHP](https://img.shields.io/badge/PHP-8.0-green.svg?style=flat)
 ![PHP](https://img.shields.io/badge/PHP-8.1-green.svg?style=flat)
 
-citeproc-php is a full-featured CSL 1.0.1 processor that renders bibliographic metadata into html formatted citations or bibliographies using CSL stylesheets. citeproc-php renders bibliographies as well as citations (except of [Citation-specific Options](http://docs.citationstyles.org/en/stable/specification.html#citation-specific-options)).
+citeproc-php is a full-featured CSL 1.0.1 processor that renders bibliographic metadata into HTML-formatted citations or bibliographies using CSL stylesheets. It supports both bibliographies and citations (except for [Citation-specific Options](http://docs.citationstyles.org/en/stable/specification.html#citation-specific-options)).
 
 ## Citation Style Language CSL ##
 
@@ -95,8 +101,7 @@ If you have trouble using composer you will find further information on [https:/
 
 ## How to use citeproc-php ##
 
-citeproc-php renders bibliographical metadata into html formatted citations or bibliographies using a stylesheet which defines the 
-citation rules. 
+citeproc-php renders bibliographic metadata into HTML-formatted citations or bibliographies using a stylesheet that defines the citation rules. 
 
 
 ### Get the metadata of your publications ###
@@ -108,8 +113,8 @@ $ mkdir mycslproject
 $ cd mycslproject
 ```
 
-First, you need json formatted metadata array of publication's metadata. There are a lot of services that supports CSL exports. For instance [BibSonomy](https://www.bibsonomy.org), [Zotero](https://www.zotero.org/), [Mendeley](https://www.mendeley.com/). 
-If you don't use any of these services, you can use the following test data for a first step.
+First, you need a JSON-formatted array of publication metadata. Many services support CSL exports, such as [BibSonomy](https://www.bibsonomy.org), [Zotero](https://www.zotero.org/), and [Mendeley](https://www.mendeley.com/).
+If you don't use any of these services, you can use the following test data as a starting point.
 
 ```javascript
 [
@@ -173,7 +178,7 @@ echo $citeProc->render(json_decode($data), "citation");
 
 ### Filter Citations ###
 
-Since version 2.1 you have also the possibility to apply a filter so that just specific citations appear.
+Since version 2.1, you can also apply a filter to render only specific citations.
 
 ```php
 <p>This a wise sentence 
@@ -184,8 +189,8 @@ Since version 2.1 you have also the possibility to apply a filter so that just s
 
 ### Bibliography-specific styles using CSS ###
 
-Some CSL stylesheets use bibliography-specific style options like hanging indents or alignments. To get an effect of these options you can render separated Cascading Stylesheets using CiteProc. 
-You have to insert these styles within the `<head>` tag of your html output page.
+Some CSL stylesheets use bibliography-specific style options such as hanging indents or alignments. To apply these options, you can render the corresponding CSS using CiteProc.
+Insert these styles within the `<head>` tag of your HTML output page.
 
 ```php
 <?php
@@ -221,12 +226,12 @@ $ php -S localhost:8080
 
 Start your Browser and open the URL `http://localhost:8080`.
 
-Under `examples` folder you will find another example script.
+You can find additional example scripts in the `examples` folder.
 
 
 ## Advanced usage of citeproc-php ##
 
-Since version 2.1, citeproc-php comes with additional features that are not a part of the CSL specifications.
+Since version 2.1, citeproc-php comes with additional features that are not part of the CSL specification.
 
 You can enrich bibliographies and citations with additional HTML tags to inject links (i.e. to set a link to an author's CV), or to add other html markup.
 
@@ -241,12 +246,12 @@ use Seboettg\CiteProc\CiteProc;
 $data = file_get_contents("metadata.json");
 $style = StyleSheet::loadStyleSheet("elsevier-vancouver");
 
-// pimp the title
+// Enhance the title
 $titleFunction = function($cslItem, $renderedText) {
     return '<a href="https://example.org/publication/' . $cslItem->id . '">' . $renderedText . '</a>';
 };
 
-//pimp author names
+// Enhance author names
 $authorFunction = function($authorItem, $renderedText) {
     if (isset($authorItem->id)) {
         return '<a href="https://example.org/author/' . $authorItem->id . '">' . $renderedText . '</a>';
@@ -256,7 +261,7 @@ $authorFunction = function($authorItem, $renderedText) {
 ?>
 ```
 
-As you can see, `$titleFunction` wraps the title and `$authorFunction` wraps author's name in a link.
+As you can see, `$titleFunction` wraps the title and `$authorFunction` wraps the author's name in a link.
 
 Assign these functions to its associated CSL variable (in this case title and author) as follows.
 
@@ -305,38 +310,36 @@ $additionalMarkup = [
 $citeProc = new CiteProc($style, "en-US", $additionalMarkup);
 
 ?>
-<p>This ia a wise sentence <?php echo $citeProc->render(json_decode($data), "citation", json_decode('[{"id":"item-1"}]')); ?>.</p>
+<p>This is a wise sentence <?php echo $citeProc->render(json_decode($data), "citation", json_decode('[{"id":"item-1"}]')); ?>.</p>
 <h3>Literature</h3>
 <?php echo $citeProc->render(json_decode($data), "bibliography");
 
 ```
-In this example each entry of the bibliography gets an anchor by its `id` and the citation (in Elsevier-Vancouver style [1]) gets an URL with a fragment by its `id`. Hence, every citation mark gets a link to its entry in the bibliography.
-Further examples you will find in the example folder.
+In this example, each bibliography entry receives an anchor based on its `id`, and the citation (in Elsevier-Vancouver style [1]) gets a URL with a fragment identifier. This way, every citation links to its corresponding entry in the bibliography.
+You can find further examples in the `examples` folder.
 
 ### Good to know ###
-* A custom Lambda Function must have two parameters (`function ($item, $renderedValue) { ... }`) in their signature and must return a string.
-* The 1st parameter of a custom Lambda Function is the item (either a citation item or a name item. Both of type `\stdClass`). The 2nd parameter is the rendered result of the associated item.
-* Custom Lambda Functions may be applied on all Standard Variables (according to the [CSL specification](http://docs.citationstyles.org/en/1.0.1/specification.html#standard-variables)).
-* Custom Lambda Functions may be applied on all Name Variables (according to the [CSL specification](http://docs.citationstyles.org/en/1.0.1/specification.html#name-variables)). Be aware, just one name item will passed as parameter instead of the full citation item.
-* Custom Lambda Function for Number Variables or Date Variables will be ignored.
-* ```csl-entry``` is not a valid variable according to the CSL specifications. citeproc-php use ```csl-entry``` to hook in and apply a custom Lambda Function after a whole citation item or bibliography entry is rendered. 
+* A custom lambda function must have two parameters (`function ($item, $renderedValue) { ... }`) in its signature and must return a string.
+* The first parameter is the item (either a citation item or a name item, both of type `\stdClass`). The second parameter is the rendered result of the associated item.
+* Custom lambda functions can be applied to all Standard Variables (according to the [CSL specification](http://docs.citationstyles.org/en/1.0.1/specification.html#standard-variables)).
+* Custom lambda functions can be applied to all Name Variables (according to the [CSL specification](http://docs.citationstyles.org/en/1.0.1/specification.html#name-variables)). Note that only a single name item is passed as a parameter instead of the full citation item.
+* Custom lambda functions for Number Variables or Date Variables are ignored.
+* `csl-entry` is not a valid variable according to the CSL specification. citeproc-php uses `csl-entry` as a hook to apply a custom lambda function after an entire citation item or bibliography entry has been rendered. 
 
 ## Contribution ##
 
 citeproc-php is an Open Source project. You can support it by reporting bugs, contributing code or contributing documentation.
 
 ### Star the Repo ###
-Developing software is a hard job and one has to spend a lot of time. Every open-source developer is looking forward 
-about esteem for his work. If you use citeproc-php and if you like it, star it and talk about it in Blogs.
+Developing software is a demanding task that requires a lot of time. Every open-source developer appreciates recognition for their work. If you use citeproc-php and find it helpful, consider starring the repository and sharing it on your blog.
 
 ### Reporting a Bug ###
 Use the [Issue Tracker](https://github.com/seboettg/citeproc-php/issues) in order to report a bug.
 
 ### Contribute Code ###
-You are a developer and you like to help developing new features or bug fixes? Fork citeproc-php, setup a workspace and send
-a pull request.
+Are you a developer who wants to help develop new features or fix bugs? Fork citeproc-php, set up a workspace, and send a pull request.
 
-I would suggest the following way:
+Here is the recommended workflow:
 
 * Fork citeproc-php on Github
 * Clone the forked repo
@@ -345,13 +348,13 @@ $ git clone https://github.com/<yourname>/citeproc-php
 ``` 
 * Setup your preferred IDE
 * Run the UnitTests within your IDE
-* Write a test case for your issue. My tests are based on the original [test-suite](https://github.com/citation-style-language/test-suite). You can build custom (human-readable) test cases following the described [Fixture layout](https://github.com/citation-style-language/test-suite#fixture-layout). 
-* Additionally, you have to translate (human-readable) test-cases into json format (machine-readable)
+* Write a test case for your issue. The tests are based on the original [test-suite](https://github.com/citation-style-language/test-suite). You can build custom human-readable test cases following the [Fixture layout](https://github.com/citation-style-language/test-suite#fixture-layout).
+* Then translate the human-readable test cases into JSON format (machine-readable)
 ```bash
 $ cd <project-root>/tests/fixtures/basic-tests
 $ ./processor.py -g
 ```
-* create a test function within an already existing test class or create a new test class:
+* Create a test function within an existing test class or create a new test class:
 ```php
 <?php 
 namespace Seboettg\CiteProc;
@@ -363,13 +366,13 @@ class MyNewClassTest extends TestCase
     // ...
     public function testMyBrandNewFunction() 
     {
-        //my brand new function is the file name (without file extension)
+        // "myBrandNewFunction" is the file name (without extension)
         $this->_testRenderTestSuite("myBrandNewFunction");
     }
     // ...
 }
 ```
-* Implement or adapt your code as long as all tests finishing successfully
+* Implement or adapt your code until all tests pass successfully
 * Make sure that your test case covers relevant code parts
 * Send a pull request
 
@@ -381,7 +384,7 @@ You can also run test cases without IDE:
 $ composer test
 ```
 
-## Known projects that use citeproc-php
+## Projects using citeproc-php
 
 * [Citation Style Language plugin for Open Journal Systems 3](https://github.com/pkp/citationStyleLanguage)
 * [Islandora Scholar](https://github.com/Islandora/islandora_scholar)

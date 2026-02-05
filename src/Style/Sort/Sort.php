@@ -73,7 +73,7 @@ class Sort
         try {
             $data->replace($this->performSort(0, $dataToSort));
         } catch (CiteProcException $e) {
-            //nothing to do, because $data is passed by referenced
+            // Nothing to do because $data is passed by reference
         }
     }
 
@@ -108,7 +108,7 @@ class Sort
             }
         }
 
-        //grouping by value
+        // Group items by value
         foreach ($dataToSort as $citationNumber => $dataItem) {
             if ($key->isNameVariable()) {
                 $sortKey = Variables::nameHash($dataItem, $variable);
@@ -141,14 +141,14 @@ class Sort
             }
         }
 
-        //sorting by array keys
+        // Sort by array keys
         if ($key->getSort() === "ascending") {
-            ksort($groupedItems); //ascending
+            ksort($groupedItems);
         } else {
-            krsort($groupedItems); //reverse
+            krsort($groupedItems);
         }
 
-        //the flattened array is the result
+        // Flatten and return the result
         $sortedDataGroups = array_values($groupedItems);
         return $this->flatten($sortedDataGroups);
     }

@@ -68,27 +68,27 @@ trait AffixesTrait
         $prefix = $this->prefix;
         $suffix = $this->suffix;
 
-        // suffix, a complex chain of tests
+        // Handle suffix with consecutive punctuation prevention
         do {
             if (empty($suffix)) break;
-            // suffix, get first char after space 
+            // Get first non-space char of suffix
             $suffixFirst = mb_substr(preg_replace('/\p{Z}/u', '', $suffix), 0, 1);
             if (empty($suffixFirst)) break;
             $noTags = strip_tags($text);
             if (empty($noTags)) break;
-            // reduce pun equivalent
+            // Normalize equivalent punctuation characters
             if (isset(StringHelper::PUN_SAME[$suffixFirst])) {
                 $noTags = strtr($noTags, StringHelper::PUN_SAME[$suffixFirst]);
             }
             if (empty($noTags)) break;
-            // last char of text = first non space char of delimeter
+            // If last char of text equals first non-space char of delimiter
             if (mb_substr($noTags, -1) == $suffixFirst) {
-                // strip first non space char of suffix
+                // Strip first non-space char of suffix to avoid duplication
                 $suffix = mb_substr($suffix, mb_strpos($suffix, $suffixFirst) + 1);
                 break;
             }
-            
-            // punctuation in quote?
+
+            // Check punctuation-in-quote locale option
             $piq = CiteProc::getContext()
                 ->getLocale()
                 ->filter('options', 'punctuation-in-quote');
@@ -97,8 +97,8 @@ trait AffixesTrait
             if ($punctuationInQuote && in_array($suffix, [',', ';', '.'])) {
                 $closeQuote = CiteProc::getContext()->getLocale()->filter("terms", "close-quote")->single;
                 $lastChar = mb_substr($text, -1, 1);
-                if ($closeQuote === $lastChar) { // last char is closing quote?
-                    $text = mb_substr($text, 0, mb_strlen($text) - 1); //set suffix before
+                if ($closeQuote === $lastChar) { // Last char is closing quote
+                    $text = mb_substr($text, 0, mb_strlen($text) - 1); // Insert suffix before closing quote
                     return $prefix . $text . $suffix . $lastChar;
                 }
             }

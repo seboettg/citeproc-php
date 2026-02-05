@@ -78,10 +78,10 @@ class Choose implements Rendering, HasParent
 
         $ifCondition = $this->children->get("if");
 
-        if ($ifCondition->match($data)) { //IF CONDITION
+        if ($ifCondition->match($data)) { // IF condition matched
             $matchedIfs = true;
             $result->append($ifCondition->render($data));
-        } elseif ($this->children->hasKey("elseif")) { // ELSEIF
+        } elseif ($this->children->hasKey("elseif")) { // Check ELSE-IF conditions
             $elseIfs = $this->children->get("elseif")
                 ->map(function (ChooseIf $elseIf) use ($data) {
                     return new Tuple($elseIf, $elseIf->match($data));
@@ -93,15 +93,15 @@ class Choose implements Rendering, HasParent
             if ($matchedIfs) {
                 $result->append(
                     $elseIfs
-                        ->first() //returns a Tuple
+                        ->first() // Returns a Tuple
                         ->first
                         ->render($data)
                 );
             }
         }
 
-        // !$matchedIfs ensures that each previous condition has not been met
-        if (!$matchedIfs && $this->children->hasKey("else")) { //ELSE
+        // Ensure no previous conditions have been met before falling through to ELSE
+        if (!$matchedIfs && $this->children->hasKey("else")) { // ELSE clause
             $result->append($this->children->get("else")->render($data));
         }
         return $result->collectToString("");

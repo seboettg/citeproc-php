@@ -40,9 +40,9 @@ class IsNumeric extends AbstractConstraint
 
     /**
      * Tests whether the given variables (Appendix IV - Variables) contain numeric content. Content is considered
-     * numeric if it solely consists of numbers. Numbers may have prefixes and suffixes (“D2”, “2b”, “L2d”), and may be
-     * separated by a comma, hyphen, or ampersand, with or without spaces (“2, 3”, “2-4”, “2 & 4”). For example, “2nd”
-     * tests “true” whereas “second” and “2nd edition” test “false”.
+     * numeric if it solely consists of numbers. Numbers may have prefixes and suffixes ("D2", "2b", "L2d"), and may be
+     * separated by a comma, hyphen, or ampersand, with or without spaces ("2, 3", "2-4", "2 & 4"). For example, "2nd"
+     * tests "true" whereas "second" and "2nd edition" test "false".
      *
      * @param $evalValue
      * @return bool
@@ -52,8 +52,10 @@ class IsNumeric extends AbstractConstraint
         if (is_numeric($evalValue)) {
             return true;
         } elseif (preg_match(NumberHelper::PATTERN_ORDINAL, $evalValue)) {
+            $locale = CiteProc::getContext()->getLocale();
+            $language = $locale !== null ? $locale->getLanguage() : 'en-US';
             $numberFormatter = new NumberFormatter(
-                CiteProc::getContext()->getLocale()->getLanguage(),
+                $language,
                 NumberFormatter::ORDINAL
             );
             return $numberFormatter->parse($evalValue) !== false;

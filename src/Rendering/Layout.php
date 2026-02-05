@@ -101,8 +101,8 @@ class Layout implements Rendering
             $ret = StringHelper::clearApostrophes($ret);
             return "<div class=\"csl-bib-body\">".$ret."\n</div>";
         } elseif (CiteProc::getContext()->isModeCitation()) {
-            if ($citationItems->count() > 0) { //is there a filter for specific citations?
-                if ($this->isGroupedCitations($citationItems)) { //if citation items grouped?
+            if ($citationItems->count() > 0) { // Is there a filter for specific citations?
+                if ($this->isGroupedCitations($citationItems)) { // Are citation items grouped?
                     return $this->renderGroupedCitations($data, $citationItems);
                 } else {
                     $data = $this->filterCitationItems($data, $citationItems);

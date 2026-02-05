@@ -24,7 +24,7 @@ class Factory extends \Seboettg\CiteProc\Util\Factory
     {
         $parts = explode("-", $name);
         $className = implode("", array_map(function ($part) {
-            return ucfirst($part);//overridden function
+            return ucfirst($part); // Uses custom ucfirst function
         }, $parts));
         $className = self::NAMESPACE_CONSTRAINTS . $className;
 
