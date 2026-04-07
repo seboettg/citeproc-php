@@ -1,11 +1,10 @@
+# PKP welcomes citeproc-php to our GitHub organization! # 
 
-
-# Pilots and co-pilots wanted # 
-I no longer have time for the maintenance and further development of citeproc-php. I am looking for a successor for the maintenance and further development of citeproc-php. Follow the discussion at [https://github.com/seboettg/citeproc-php/discussions/200](https://github.com/seboettg/citeproc-php/discussions/200).
-
+The Public Knowledge Project has taken over stewardship of citeproc-php from @seboettg. Thanks for your many years of hard work, Sebastian!
+Follow the discussion leading to this change at [https://github.com/pkp/citeproc-php/discussions/200](https://github.com/pkp/citeproc-php/discussions/200).
 
 # citeproc-php #
-[![Latest Stable Version](https://poser.pugx.org/seboettg/citeproc-php/v/stable)](https://packagist.org/packages/seboettg/citeproc-php) 
+[![Latest Stable Version](https://poser.pugx.org/seboettg/citeproc-php/v/stable)](https://packagist.org/packages/pkp/citeproc-php) 
 [![Total Downloads](https://poser.pugx.org/seboettg/citeproc-php/downloads)](https://packagist.org/packages/seboettg/citeproc-php/stats) 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![Build Status](https://scrutinizer-ci.com/g/seboettg/citeproc-php/badges/build.png?b=master)](https://scrutinizer-ci.com/g/seboettg/citeproc-php/build-status/master)
@@ -334,7 +333,7 @@ citeproc-php is an Open Source project. You can support it by reporting bugs, co
 Developing software is a demanding task that requires a lot of time. Every open-source developer appreciates recognition for their work. If you use citeproc-php and find it helpful, consider starring the repository and sharing it on your blog.
 
 ### Reporting a Bug ###
-Use the [Issue Tracker](https://github.com/seboettg/citeproc-php/issues) in order to report a bug.
+Use the [Issue Tracker](https://github.com/pkp/citeproc-php/issues) in order to report a bug.
 
 ### Contribute Code ###
 Are you a developer who wants to help develop new features or fix bugs? Fork citeproc-php, set up a workspace, and send a pull request.
