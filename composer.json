@@ -1,5 +1,5 @@
 {
-    "name": "seboettg/citeproc-php",
+    "name": "pkp/citeproc-php",
     "description": "Full-featured CSL processor (https://citationstyles.org)",
     "license": "MIT",
     "authors": [
@@ -11,7 +11,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/seboettg/citeproc-php/issues"
+        "issues": "https://github.com/pkp/citeproc-php/issues"
     },
     "autoload": {
         "psr-4": {
