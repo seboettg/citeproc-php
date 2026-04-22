@@ -47,7 +47,7 @@ abstract class AbstractConstraint implements Constraint
      * @param int|null $citationNumber
      * @return bool
      */
-    public function validate(stdClass $data, int $citationNumber = null): bool
+    public function validate(stdClass $data, ?int $citationNumber = null): bool
     {
         switch ($this->match) {
             case Constraint::MATCH_ALL:

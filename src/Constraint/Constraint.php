@@ -32,5 +32,5 @@ interface Constraint
      * @param int|null $citationNumber
      * @return bool
      */
-    public function validate(stdClass $data, int $citationNumber = null): bool;
+    public function validate(stdClass $data, ?int $citationNumber = null): bool;
 }
